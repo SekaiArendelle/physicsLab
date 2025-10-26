@@ -411,7 +411,8 @@ class CircuitBase(ElementBase, metaclass=_CircuitMeta):
 
 class _TwoPinMixIn(CircuitBase):
     """双引脚模拟电路元件的基类"""
-    _all_pins: Tuple[Tuple[str, Pin]]
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -424,7 +425,7 @@ class _TwoPinMixIn(CircuitBase):
             setattr(self, name, pin)
 
     def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
-        return self._all_pins.iter()
+        return iter(self._all_pins)
 
     @property
     def red(self) -> Pin:

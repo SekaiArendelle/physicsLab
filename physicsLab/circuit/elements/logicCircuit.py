@@ -8,12 +8,12 @@ from physicsLab._typing import (
     Optional,
     num_type,
     CircuitElementData,
-    Self,
     Generate,
     final,
     Tuple,
     Iterator,
     Union,
+    Literal,
 )
 
 
@@ -64,7 +64,7 @@ class _LogicBase(CircuitBase):
 class Logic_Input(_LogicBase):
     """逻辑输入"""
 
-    _all_pins: Tuple[Tuple[str, Union[InputPin, OutputPin]]]
+    _all_pins: Tuple[Tuple[Literal["_o_pin"], OutputPin]]
     _o_pin: OutputPin
 
     def __init__(
@@ -81,9 +81,7 @@ class Logic_Input(_LogicBase):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
-        self._all_pins = (
-            ("_o_pin", OutputPin(self, 0)),
-        )
+        self._all_pins = (("_o_pin", OutputPin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         self.data: CircuitElementData = {
@@ -108,8 +106,10 @@ class Logic_Input(_LogicBase):
         self.high_level = high_level
         self.low_level = low_level
 
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return self._all_pins.iter()
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     @final
@@ -154,7 +154,7 @@ class Logic_Input(_LogicBase):
 class Logic_Output(_LogicBase):
     """逻辑输出"""
 
-    _all_pins: Tuple[Tuple[str, Union[InputPin, OutputPin]]]
+    _all_pins: Tuple[Tuple[Literal["_i_pin"], InputPin]]
     _i_pin: InputPin
 
     def __init__(
@@ -170,9 +170,7 @@ class Logic_Output(_LogicBase):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
-        self._all_pins = (
-            ("_i_pin", InputPin(self, 0)),
-        )
+        self._all_pins = (("_i_pin", InputPin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         self.data: CircuitElementData = {
@@ -196,8 +194,10 @@ class Logic_Output(_LogicBase):
         self.high_level = high_level
         self.low_level = low_level
 
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return self._all_pins.iter()
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @final
     @staticmethod
@@ -212,7 +212,9 @@ class Logic_Output(_LogicBase):
 class _2_Pin_Gate(_LogicBase):
     """2引脚门电路基类"""
 
-    _all_pins: Tuple[Tuple[str, Union[InputPin, OutputPin]]]
+    _all_pins: Tuple[
+        Tuple[Literal["_i_pin"], InputPin], Tuple[Literal["_o_pin"], OutputPin]
+    ]
     _i_pin: InputPin
     _o_pin: OutputPin
 
@@ -252,8 +254,10 @@ class _2_Pin_Gate(_LogicBase):
         self.high_level = high_level
         self.low_level = low_level
 
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return self._all_pins.iter()
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i(self) -> InputPin:
@@ -317,7 +321,11 @@ class No_Gate(_2_Pin_Gate):
 class _3_Pin_Gate(_LogicBase):
     """3引脚门电路基类"""
 
-    _all_pins: Tuple[Tuple[str, Union[InputPin, OutputPin]]]
+    _all_pins: Tuple[
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+        Tuple[Literal["_o_pin"], OutputPin],
+    ]
     _i_up_pin: InputPin
     _i_low_pin: InputPin
     _o_pin: OutputPin
@@ -359,8 +367,10 @@ class _3_Pin_Gate(_LogicBase):
         self.high_level = high_level
         self.low_level = low_level
 
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return self._all_pins.iter()
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
@@ -609,11 +619,16 @@ class _BigElement(_LogicBase):
 class Half_Adder(_BigElement):
     """半加器"""
 
-    _all_pins: Tuple[Tuple[str, Union[InputPin, OutputPin]]]
-    _i_up_pin: InputPin
-    _i_low_pin: InputPin
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
 
     def __init__(
         self,
@@ -639,8 +654,10 @@ class Half_Adder(_BigElement):
             setattr(self, name, pin)
         self.data["ModelID"] = "Half Adder"
 
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return self._all_pins.iter()
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
@@ -667,6 +684,19 @@ class Half_Adder(_BigElement):
 class Full_Adder(_BigElement):
     """全加器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_mid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _i_up_pin: InputPin
+    _i_mid_pin: InputPin
+    _i_low_pin: InputPin
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+
     def __init__(
         self,
         x: num_type,
@@ -681,27 +711,41 @@ class Full_Adder(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_mid_pin", InputPin(self, 3)),
+            ("_i_low_pin", InputPin(self, 4)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Full Adder"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_mid(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_mid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -712,6 +756,17 @@ class Full_Adder(_BigElement):
 class Half_Subtractor(_BigElement):
     """半减器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -730,23 +785,36 @@ class Half_Subtractor(_BigElement):
             _warn.warning("Physics-Lab-AR's version less than 2.5.0")
 
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Half Subtractor"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -757,6 +825,19 @@ class Half_Subtractor(_BigElement):
 class Full_Subtractor(_BigElement):
     """全减器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_mid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_mid_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -775,27 +856,41 @@ class Full_Subtractor(_BigElement):
             _warn.warning("Physics-Lab-AR's version less than 2.5.0")
 
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_mid_pin", InputPin(self, 3)),
+            ("_i_low_pin", InputPin(self, 4)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Full Subtractor"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_mid(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_mid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -806,6 +901,25 @@ class Full_Subtractor(_BigElement):
 class Multiplier(_BigElement):
     """二位乘法器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_upmid_pin"], OutputPin],
+        Tuple[Literal["_o_lowmid_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_upmid_pin"], InputPin],
+        Tuple[Literal["_i_lowmid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_upmid_pin: OutputPin
+    _o_lowmid_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_upmid_pin: InputPin
+    _i_lowmid_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -820,39 +934,56 @@ class Multiplier(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_upmid_pin", OutputPin(self, 1)),
+            ("_o_lowmid_pin", OutputPin(self, 2)),
+            ("_o_low_pin", OutputPin(self, 3)),
+            ("_i_up_pin", InputPin(self, 4)),
+            ("_i_upmid_pin", InputPin(self, 5)),
+            ("_i_lowmid_pin", InputPin(self, 6)),
+            ("_i_low_pin", InputPin(self, 7)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Multiplier"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_up_pin
 
     @property
     def i_upmid(self) -> InputPin:
-        return InputPin(self, 5)
+        return self._i_upmid_pin
 
     @property
     def i_lowmid(self) -> InputPin:
-        return InputPin(self, 6)
+        return self._i_lowmid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 7)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_upmid(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_upmid_pin
 
     @property
     def o_lowmid(self) -> OutputPin:
-        return OutputPin(self, 2)
+        return self._o_lowmid_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 3)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -863,6 +994,17 @@ class Multiplier(_BigElement):
 class D_Flipflop(_BigElement):
     """D触发器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -877,23 +1019,36 @@ class D_Flipflop(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "D Flipflop"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -904,6 +1059,17 @@ class D_Flipflop(_BigElement):
 class T_Flipflop(_BigElement):
     """T'触发器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -918,23 +1084,36 @@ class T_Flipflop(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "T Flipflop"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -945,6 +1124,17 @@ class T_Flipflop(_BigElement):
 class Real_T_Flipflop(_BigElement):
     """T触发器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -959,23 +1149,36 @@ class Real_T_Flipflop(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Real-T Flipflop"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -986,6 +1189,19 @@ class Real_T_Flipflop(_BigElement):
 class JK_Flipflop(_BigElement):
     """JK触发器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_mid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_mid_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -1000,27 +1216,41 @@ class JK_Flipflop(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_low_pin", OutputPin(self, 1)),
+            ("_i_up_pin", InputPin(self, 2)),
+            ("_i_mid_pin", InputPin(self, 3)),
+            ("_i_low_pin", InputPin(self, 4)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "JK Flipflop"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_up_pin
 
     @property
     def i_mid(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_mid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -1031,6 +1261,21 @@ class JK_Flipflop(_BigElement):
 class Counter(_BigElement):
     """计数器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_upmid_pin"], OutputPin],
+        Tuple[Literal["_o_lowmid_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_upmid_pin: OutputPin
+    _o_lowmid_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -1045,31 +1290,46 @@ class Counter(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_upmid_pin", OutputPin(self, 1)),
+            ("_o_lowmid_pin", OutputPin(self, 2)),
+            ("_o_low_pin", OutputPin(self, 3)),
+            ("_i_up_pin", InputPin(self, 4)),
+            ("_i_low_pin", InputPin(self, 5)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Counter"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 5)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_upmid(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_upmid_pin
 
     @property
     def o_lowmid(self) -> OutputPin:
-        return OutputPin(self, 2)
+        return self._o_lowmid_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 3)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -1080,6 +1340,21 @@ class Counter(_BigElement):
 class Random_Generator(_BigElement):
     """随机数发生器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_upmid_pin"], OutputPin],
+        Tuple[Literal["_o_lowmid_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+    ]
+    _o_up_pin: OutputPin
+    _o_upmid_pin: OutputPin
+    _o_lowmid_pin: OutputPin
+    _o_low_pin: OutputPin
+    _i_up_pin: InputPin
+    _i_low_pin: InputPin
+
     def __init__(
         self,
         x: num_type,
@@ -1094,31 +1369,46 @@ class Random_Generator(_BigElement):
         low_level: num_type = 0,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level)
+        self._all_pins = (
+            ("_o_up_pin", OutputPin(self, 0)),
+            ("_o_upmid_pin", OutputPin(self, 1)),
+            ("_o_lowmid_pin", OutputPin(self, 2)),
+            ("_o_low_pin", OutputPin(self, 3)),
+            ("_i_up_pin", InputPin(self, 4)),
+            ("_i_low_pin", InputPin(self, 5)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Random Generator"
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 4)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 5)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 0)
+        return self._o_up_pin
 
     @property
     def o_upmid(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_upmid_pin
 
     @property
     def o_lowmid(self) -> OutputPin:
-        return OutputPin(self, 2)
+        return self._o_lowmid_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 3)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -1129,7 +1419,26 @@ class Random_Generator(_BigElement):
 class Eight_Bit_Input(_LogicBase):
     """八位输入器"""
 
-    is_bigElement = True
+    is_bigElement: bool = True
+
+    _all_pins: Tuple[
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_upmid_pin"], InputPin],
+        Tuple[Literal["_i_lowmid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_upmid_pin"], OutputPin],
+        Tuple[Literal["_o_lowmid_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+    ]
+    _i_up_pin: InputPin
+    _i_upmid_pin: InputPin
+    _i_lowmid_pin: InputPin
+    _i_low_pin: InputPin
+    _o_up_pin: OutputPin
+    _o_upmid_pin: OutputPin
+    _o_lowmid_pin: OutputPin
+    _o_low_pin: OutputPin
 
     def __init__(
         self,
@@ -1144,6 +1453,18 @@ class Eight_Bit_Input(_LogicBase):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        self._all_pins = (
+            ("_i_up_pin", InputPin(self, 0)),
+            ("_i_upmid_pin", InputPin(self, 1)),
+            ("_i_lowmid_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 4)),
+            ("_o_upmid_pin", OutputPin(self, 5)),
+            ("_o_lowmid_pin", OutputPin(self, 6)),
+            ("_o_low_pin", OutputPin(self, 7)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "8bit Input",
             "Identifier": Generate,
@@ -1182,37 +1503,42 @@ class Eight_Bit_Input(_LogicBase):
         else:
             raise RuntimeError("The number range entered is incorrect")
 
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
+
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 0)
+        return self._i_up_pin
 
     @property
     def i_upmid(self) -> InputPin:
-        return InputPin(self, 1)
+        return self._i_upmid_pin
 
     @property
     def i_lowmid(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_lowmid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 4)
+        return self._o_up_pin
 
     @property
     def o_upmid(self) -> OutputPin:
-        return OutputPin(self, 5)
+        return self._o_upmid_pin
 
     @property
     def o_lowmid(self) -> OutputPin:
-        return OutputPin(self, 6)
+        return self._o_lowmid_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 7)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -1224,6 +1550,25 @@ class Eight_Bit_Display(_LogicBase):
     """八位显示器"""
 
     is_bigElement = True
+
+    _all_pins: Tuple[
+        Tuple[Literal["_i_up_pin"], InputPin],
+        Tuple[Literal["_i_upmid_pin"], InputPin],
+        Tuple[Literal["_i_lowmid_pin"], InputPin],
+        Tuple[Literal["_i_low_pin"], InputPin],
+        Tuple[Literal["_o_up_pin"], OutputPin],
+        Tuple[Literal["_o_upmid_pin"], OutputPin],
+        Tuple[Literal["_o_lowmid_pin"], OutputPin],
+        Tuple[Literal["_o_low_pin"], OutputPin],
+    ]
+    _i_up_pin: InputPin
+    _i_upmid_pin: InputPin
+    _i_lowmid_pin: InputPin
+    _i_low_pin: InputPin
+    _o_up_pin: OutputPin
+    _o_upmid_pin: OutputPin
+    _o_lowmid_pin: OutputPin
+    _o_low_pin: OutputPin
 
     def __init__(
         self,
@@ -1238,6 +1583,18 @@ class Eight_Bit_Display(_LogicBase):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        self._all_pins = (
+            ("_i_up_pin", InputPin(self, 0)),
+            ("_i_upmid_pin", InputPin(self, 1)),
+            ("_i_lowmid_pin", InputPin(self, 2)),
+            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 4)),
+            ("_o_upmid_pin", OutputPin(self, 5)),
+            ("_o_lowmid_pin", OutputPin(self, 6)),
+            ("_o_low_pin", OutputPin(self, 7)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "8bit Display",
             "Identifier": Generate,
@@ -1269,37 +1626,42 @@ class Eight_Bit_Display(_LogicBase):
         self.high_level = high_level
         self.low_level = low_level
 
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
+
     @property
     def i_up(self) -> InputPin:
-        return InputPin(self, 0)
+        return self._i_up_pin
 
     @property
     def i_upmid(self) -> InputPin:
-        return InputPin(self, 1)
+        return self._i_upmid_pin
 
     @property
     def i_lowmid(self) -> InputPin:
-        return InputPin(self, 2)
+        return self._i_lowmid_pin
 
     @property
     def i_low(self) -> InputPin:
-        return InputPin(self, 3)
+        return self._i_low_pin
 
     @property
     def o_up(self) -> OutputPin:
-        return OutputPin(self, 4)
+        return self._o_up_pin
 
     @property
     def o_upmid(self) -> OutputPin:
-        return OutputPin(self, 5)
+        return self._o_upmid_pin
 
     @property
     def o_lowmid(self) -> OutputPin:
-        return OutputPin(self, 6)
+        return self._o_lowmid_pin
 
     @property
     def o_low(self) -> OutputPin:
-        return OutputPin(self, 7)
+        return self._o_low_pin
 
     @final
     @staticmethod
@@ -1309,6 +1671,13 @@ class Eight_Bit_Display(_LogicBase):
 
 class Schmitt_Trigger(CircuitBase):
     """施密特触发器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_i_pin"], InputPin],
+        Tuple[Literal["_o_pin"], OutputPin],
+    ]
+    _i_pin: InputPin
+    _o_pin: OutputPin
 
     def __init__(
         self,
@@ -1324,6 +1693,12 @@ class Schmitt_Trigger(CircuitBase):
         low_level: Optional[num_type] = None,
         inverted: bool = False,
     ) -> None:
+        self._all_pins = (
+            ("_i_pin", InputPin(self, 0)),
+            ("_o_pin", OutputPin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Schmitt Trigger",
             "Identifier": Generate,
@@ -1348,6 +1723,11 @@ class Schmitt_Trigger(CircuitBase):
         self.high_level = high_level
         self.low_level = low_level
         self.inverted = inverted
+
+    def all_pins_experimental_unstable(
+        self,
+    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
+        return iter(self._all_pins)
 
     @property
     def high_level(self) -> num_type:
@@ -1435,8 +1815,8 @@ class Schmitt_Trigger(CircuitBase):
 
     @property
     def i(self) -> InputPin:
-        return InputPin(self, 0)
+        return self._i_pin
 
     @property
     def o(self) -> OutputPin:
-        return OutputPin(self, 1)
+        return self._o_pin
