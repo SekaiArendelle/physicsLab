@@ -52,7 +52,8 @@ class Simple_Switch(_SwitchBase, _TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__(x, y, z)
+        _SwitchBase.__init__(self, x, y, z)
+        _TwoPinMixIn.__init__(self)
         self.data["ModelID"] = "Simple Switch"
 
     @final
@@ -217,6 +218,7 @@ class Push_Switch(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Push Switch",
             "Identifier": Generate,
@@ -251,6 +253,7 @@ class Air_Switch(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Air Switch",
             "Identifier": Generate,
@@ -306,6 +309,7 @@ class Incandescent_Lamp(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Incandescent Lamp",
             "Identifier": Generate,
@@ -351,6 +355,7 @@ class Battery_Source(_TwoPinMixIn):
         voltage: num_type = 1.5,
         internal_resistance: num_type = 0,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Battery Source",
             "Identifier": Generate,
@@ -497,6 +502,7 @@ class Resistor(_TwoPinMixIn):
         experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Resistor",
             "Identifier": Generate,
@@ -572,6 +578,7 @@ class Fuse_Component(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Fuse Component",
             "Identifier": Generate,
@@ -682,6 +689,7 @@ class Multimeter(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Multimeter",
             "Identifier": Generate,

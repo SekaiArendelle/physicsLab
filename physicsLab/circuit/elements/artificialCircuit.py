@@ -115,6 +115,7 @@ class Basic_Capacitor(_TwoPinMixIn):
         @param peak_voltage: 峰值电压, 单位为V
         @param internal_resistance: 内阻, 单位为Ω
         """
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Capacitor",
             "Identifier": Generate,
@@ -257,6 +258,7 @@ class Basic_Inductor(_TwoPinMixIn):
         @param internal_resistance: 电感内部阻抗，单位为 Ohm
         @param is_ideal: 是否为理想模式
         """
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Inductor",
             "Identifier": Generate,
@@ -395,6 +397,7 @@ class Basic_Diode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Diode",
             "Identifier": Generate,
@@ -435,6 +438,7 @@ class Light_Emitting_Diode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Light-Emitting Diode",
             "Identifier": Generate,
@@ -1355,6 +1359,7 @@ class Current_Source(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Current Source",
             "Identifier": Generate,
@@ -1383,6 +1388,7 @@ class _SourceElectricity(_TwoPinMixIn):
     """波形发生器基类"""
 
     def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,

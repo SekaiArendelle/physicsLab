@@ -353,6 +353,7 @@ class Photodiode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Photodiode",
             "Identifier": Generate,
@@ -394,6 +395,7 @@ class Photoresistor(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Photoresistor",
             "Identifier": Generate,

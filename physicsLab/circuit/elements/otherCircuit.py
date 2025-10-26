@@ -33,6 +33,7 @@ class Buzzer(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Buzzer",
             "Identifier": Generate,
@@ -74,6 +75,7 @@ class Spark_Gap(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Spark Gap",
             "Identifier": Generate,
@@ -113,6 +115,7 @@ class Tesla_Coil(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Tesla Coil",
             "Identifier": Generate,
@@ -224,6 +227,7 @@ class Dual_Light_Emitting_Diode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Dual Light-Emitting Diode",
             "Identifier": Generate,
@@ -274,6 +278,7 @@ class Electric_Bell(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Electric Bell",
             "Identifier": Generate,
@@ -315,6 +320,7 @@ class Musical_Box(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Musical Box",
             "Identifier": Generate,
@@ -527,6 +533,7 @@ class Electric_Fan(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Electric Fan",
             "Identifier": Generate,

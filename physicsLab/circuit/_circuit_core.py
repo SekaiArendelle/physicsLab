@@ -407,11 +407,17 @@ class CircuitBase(ElementBase, metaclass=_CircuitMeta):
 
 class _TwoPinMixIn(CircuitBase):
     """双引脚模拟电路元件的基类"""
+    _red: Pin
+    _black: Pin
+
+    def __init__(self) -> None:
+        self._red = Pin(self, 0)
+        self._black = Pin(self, 1)
 
     @property
     def red(self) -> Pin:
-        return Pin(self, 0)
+        return self._red
 
     @property
     def black(self) -> Pin:
-        return Pin(self, 1)
+        return self._black
