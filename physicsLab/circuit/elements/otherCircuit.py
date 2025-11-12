@@ -3,7 +3,7 @@ import physicsLab.plAR as plar
 import physicsLab as _warn
 
 from physicsLab._core import _Experiment
-from .._circuit_core import _TwoPinMixIn, CircuitBase, Pin
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -13,7 +13,6 @@ from physicsLab._typing import (
     Union,
     List,
     override,
-    Union,
     Tuple,
     final,
     Literal,
@@ -21,8 +20,12 @@ from physicsLab._typing import (
 )
 
 
-class Buzzer(_TwoPinMixIn):
+class Buzzer(CircuitBase):
     """蜂鸣器"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -35,7 +38,12 @@ class Buzzer(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Buzzer",
             "Identifier": Generate,
@@ -62,9 +70,24 @@ class Buzzer(_TwoPinMixIn):
     def zh_name() -> str:
         return "嗡鸣器"
 
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
 
-class Spark_Gap(_TwoPinMixIn):
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+
+class Spark_Gap(CircuitBase):
     """火花隙"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -77,7 +100,12 @@ class Spark_Gap(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Spark Gap",
             "Identifier": Generate,
@@ -102,9 +130,24 @@ class Spark_Gap(_TwoPinMixIn):
     def zh_name() -> str:
         return "火花隙"
 
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
 
-class Tesla_Coil(_TwoPinMixIn):
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+
+class Tesla_Coil(CircuitBase):
     """特斯拉线圈"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -117,7 +160,12 @@ class Tesla_Coil(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Tesla Coil",
             "Identifier": Generate,
@@ -143,6 +191,17 @@ class Tesla_Coil(_TwoPinMixIn):
     @staticmethod
     def zh_name() -> str:
         return "特斯拉线圈"
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Color_Light_Emitting_Diode(CircuitBase):
@@ -237,8 +296,12 @@ class Color_Light_Emitting_Diode(CircuitBase):
         return iter(self._all_pins)
 
 
-class Dual_Light_Emitting_Diode(_TwoPinMixIn):
+class Dual_Light_Emitting_Diode(CircuitBase):
     """演示发光二极管"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -251,7 +314,12 @@ class Dual_Light_Emitting_Diode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Dual Light-Emitting Diode",
             "Identifier": Generate,
@@ -287,9 +355,24 @@ class Dual_Light_Emitting_Diode(_TwoPinMixIn):
     def zh_name() -> str:
         return "演示发光二极管"
 
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
 
-class Electric_Bell(_TwoPinMixIn):
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+
+class Electric_Bell(CircuitBase):
     """电铃"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -302,7 +385,12 @@ class Electric_Bell(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Electric Bell",
             "Identifier": Generate,
@@ -329,9 +417,24 @@ class Electric_Bell(_TwoPinMixIn):
     def zh_name() -> str:
         return "电铃"
 
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
 
-class Musical_Box(_TwoPinMixIn):
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+
+class Musical_Box(CircuitBase):
     """八音盒"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -344,7 +447,12 @@ class Musical_Box(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Musical Box",
             "Identifier": Generate,
@@ -370,6 +478,17 @@ class Musical_Box(_TwoPinMixIn):
     @staticmethod
     def zh_name() -> str:
         return "八音盒"
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Resistance_Law(CircuitBase):
@@ -599,8 +718,12 @@ class Solenoid(CircuitBase):
         return iter(self._all_pins)
 
 
-class Electric_Fan(_TwoPinMixIn):
+class Electric_Fan(CircuitBase):
     """小电扇"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -613,7 +736,12 @@ class Electric_Fan(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Electric Fan",
             "Identifier": Generate,
@@ -655,6 +783,17 @@ class Electric_Fan(_TwoPinMixIn):
     @staticmethod
     def zh_name() -> str:
         return "小电扇"
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Simple_Instrument(CircuitBase):

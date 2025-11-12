@@ -2,7 +2,7 @@
 from physicsLab import errors
 from physicsLab._tools import round_data
 from physicsLab._core import _Experiment
-from .._circuit_core import CircuitBase, _TwoPinMixIn, Pin
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -11,6 +11,8 @@ from physicsLab._typing import (
     Generate,
     override,
     final,
+    Iterator,
+    Tuple,
 )
 
 
@@ -38,7 +40,7 @@ class _SwitchBase(CircuitBase):
         return self
 
 
-class Simple_Switch(_SwitchBase, _TwoPinMixIn):
+class Simple_Switch(_SwitchBase):
     """简单开关"""
 
     def __init__(
@@ -53,8 +55,24 @@ class Simple_Switch(_SwitchBase, _TwoPinMixIn):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         _SwitchBase.__init__(self, x, y, z)
-        _TwoPinMixIn.__init__(self)
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "Simple Switch"
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -204,7 +222,7 @@ class DPDT_Switch(_SwitchBase):
         return Pin(self, 2)
 
 
-class Push_Switch(_TwoPinMixIn):
+class Push_Switch(CircuitBase):
     """按钮开关"""
 
     def __init__(
@@ -218,7 +236,12 @@ class Push_Switch(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Push Switch",
             "Identifier": Generate,
@@ -233,13 +256,24 @@ class Push_Switch(_TwoPinMixIn):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
     @final
     @staticmethod
     def zh_name() -> str:
         return "按钮开关"
 
 
-class Air_Switch(_TwoPinMixIn):
+class Air_Switch(CircuitBase):
     """空气开关"""
 
     def __init__(
@@ -253,7 +287,12 @@ class Air_Switch(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Air Switch",
             "Identifier": Generate,
@@ -267,6 +306,17 @@ class Air_Switch(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -295,7 +345,7 @@ class Air_Switch(_TwoPinMixIn):
         return self
 
 
-class Incandescent_Lamp(_TwoPinMixIn):
+class Incandescent_Lamp(CircuitBase):
     """白炽灯泡"""
 
     def __init__(
@@ -309,7 +359,12 @@ class Incandescent_Lamp(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Incandescent Lamp",
             "Identifier": Generate,
@@ -333,13 +388,24 @@ class Incandescent_Lamp(_TwoPinMixIn):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
     @final
     @staticmethod
     def zh_name() -> str:
         return "白炽灯泡"
 
 
-class Battery_Source(_TwoPinMixIn):
+class Battery_Source(CircuitBase):
     """一节电池"""
 
     def __init__(
@@ -355,7 +421,12 @@ class Battery_Source(_TwoPinMixIn):
         voltage: num_type = 1.5,
         internal_resistance: num_type = 0,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Battery Source",
             "Identifier": Generate,
@@ -377,6 +448,17 @@ class Battery_Source(_TwoPinMixIn):
 
         self.voltage = voltage
         self.internal_resistance = internal_resistance
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @property
     def voltage(self) -> num_type:
@@ -487,7 +569,7 @@ class Student_Source(CircuitBase):
         return Pin(self, 3)
 
 
-class Resistor(_TwoPinMixIn):
+class Resistor(CircuitBase):
     """电阻"""
 
     def __init__(
@@ -502,7 +584,12 @@ class Resistor(_TwoPinMixIn):
         experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Resistor",
             "Identifier": Generate,
@@ -529,6 +616,17 @@ class Resistor(_TwoPinMixIn):
             "DiagramRotation": 0,
         }
         self.resistance = resistance
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -564,7 +662,7 @@ class Resistor(_TwoPinMixIn):
         )
 
 
-class Fuse_Component(_TwoPinMixIn):
+class Fuse_Component(CircuitBase):
     """保险丝"""
 
     def __init__(
@@ -578,7 +676,12 @@ class Fuse_Component(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Fuse Component",
             "Identifier": Generate,
@@ -599,6 +702,17 @@ class Fuse_Component(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -675,7 +789,7 @@ class Slide_Rheostat(CircuitBase):
         return Pin(self, 3)
 
 
-class Multimeter(_TwoPinMixIn):
+class Multimeter(CircuitBase):
     """多用电表"""
 
     def __init__(
@@ -689,7 +803,12 @@ class Multimeter(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Multimeter",
             "Identifier": Generate,
@@ -710,6 +829,17 @@ class Multimeter(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod

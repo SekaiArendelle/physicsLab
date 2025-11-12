@@ -2,7 +2,7 @@
 from physicsLab import errors
 from physicsLab._core import _Experiment
 from physicsLab._tools import round_data
-from .._circuit_core import CircuitBase, _TwoPinMixIn, Pin
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -11,7 +11,8 @@ from physicsLab._typing import (
     Self,
     override,
     final,
-    Self,
+    Tuple,
+    Iterator,
 )
 
 
@@ -92,8 +93,12 @@ class NE555(CircuitBase):
         return Pin(self, 7)
 
 
-class Basic_Capacitor(_TwoPinMixIn):
+class Basic_Capacitor(CircuitBase):
     """电容"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -139,6 +144,23 @@ class Basic_Capacitor(_TwoPinMixIn):
         self.capacitance = capacitance
         self.internal_resistance = internal_resistance
         self.is_ideal = is_ideal
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -235,8 +257,12 @@ class Basic_Capacitor(_TwoPinMixIn):
         )
 
 
-class Basic_Inductor(_TwoPinMixIn):
+class Basic_Inductor(CircuitBase):
     """电感"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -282,6 +308,23 @@ class Basic_Inductor(_TwoPinMixIn):
         self.inductance = inductance
         self.internal_resistance = internal_resistance
         self.is_ideal = is_ideal
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -383,8 +426,12 @@ class Basic_Inductor(_TwoPinMixIn):
         )
 
 
-class Basic_Diode(_TwoPinMixIn):
+class Basic_Diode(CircuitBase):
     """二极管"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -417,6 +464,23 @@ class Basic_Diode(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -424,8 +488,12 @@ class Basic_Diode(_TwoPinMixIn):
         return "二极管"
 
 
-class Light_Emitting_Diode(_TwoPinMixIn):
+class Light_Emitting_Diode(CircuitBase):
     """发光二极管"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -459,6 +527,23 @@ class Light_Emitting_Diode(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -1345,8 +1430,12 @@ class P_MOSFET(CircuitBase):
         return Pin(self, 1)
 
 
-class Current_Source(_TwoPinMixIn):
+class Current_Source(CircuitBase):
     """电流源"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -1377,6 +1466,23 @@ class Current_Source(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
@@ -1384,8 +1490,12 @@ class Current_Source(_TwoPinMixIn):
         return "电流源"
 
 
-class _SourceElectricity(_TwoPinMixIn):
+class _SourceElectricity(CircuitBase):
     """波形发生器基类"""
+
+    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
         super().__init__()
@@ -1409,6 +1519,23 @@ class _SourceElectricity(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
 
 class Sinewave_Source(_SourceElectricity):
