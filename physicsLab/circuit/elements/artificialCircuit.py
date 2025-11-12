@@ -120,7 +120,6 @@ class Basic_Capacitor(CircuitBase):
         @param peak_voltage: 峰值电压, 单位为V
         @param internal_resistance: 内阻, 单位为Ω
         """
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Capacitor",
             "Identifier": Generate,
@@ -284,7 +283,6 @@ class Basic_Inductor(CircuitBase):
         @param internal_resistance: 电感内部阻抗，单位为 Ohm
         @param is_ideal: 是否为理想模式
         """
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Inductor",
             "Identifier": Generate,
@@ -444,7 +442,6 @@ class Basic_Diode(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Basic Diode",
             "Identifier": Generate,
@@ -506,7 +503,6 @@ class Light_Emitting_Diode(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Light-Emitting Diode",
             "Identifier": Generate,
@@ -1448,7 +1444,6 @@ class Current_Source(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": "Current Source",
             "Identifier": Generate,
@@ -1498,7 +1493,6 @@ class _SourceElectricity(CircuitBase):
     _black_pin: Pin
 
     def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
-        super().__init__()
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,

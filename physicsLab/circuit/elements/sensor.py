@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from physicsLab import errors
-from .._circuit_core import _TwoPinMixIn, CircuitBase, Pin
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._core import _Experiment
 from .logicCircuit import _LogicBase
 from physicsLab._typing import (
@@ -9,7 +9,8 @@ from physicsLab._typing import (
     CircuitElementData,
     Generate,
     final,
-    Self,
+    Iterator,
+    Tuple,
 )
 
 
@@ -339,7 +340,7 @@ class Magnetic_Field_Sensor(_MemsBase):
         return "磁场传感器"
 
 
-class Photodiode(_TwoPinMixIn):
+class Photodiode(CircuitBase):
     """光电二极管"""
 
     def __init__(
@@ -353,7 +354,12 @@ class Photodiode(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Photodiode",
             "Identifier": Generate,
@@ -375,13 +381,24 @@ class Photodiode(_TwoPinMixIn):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
+
     @final
     @staticmethod
     def zh_name() -> str:
         return "光电二极管"
 
 
-class Photoresistor(_TwoPinMixIn):
+class Photoresistor(CircuitBase):
     """光敏电阻"""
 
     def __init__(
@@ -395,7 +412,12 @@ class Photoresistor(_TwoPinMixIn):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
-        super().__init__()
+        self._all_pins = (
+            ("_red_pin", Pin(self, 0)),
+            ("_black_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Photoresistor",
             "Identifier": Generate,
@@ -416,6 +438,17 @@ class Photoresistor(_TwoPinMixIn):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
         }
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
+    @property
+    def red(self) -> Pin:
+        return self._red_pin
+
+    @property
+    def black(self) -> Pin:
+        return self._black_pin
 
     @final
     @staticmethod
