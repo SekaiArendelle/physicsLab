@@ -12,10 +12,10 @@ class CircuitElementData(TypedDict):
     IsBroken: bool
     IsLocked: bool
     Identifier: Union[str, Type[Generate]]
-    Properties: dict
-    Statistics: dict
+    Properties: Dict[Any, Any]
+    Statistics: Dict[Any, Any]
     Position: Union[str, Type[Generate]]
     Rotation: Union[str, Type[Generate]]
     DiagramCached: bool
-    DiagramPosition: dict
+    DiagramPosition: Dict[Any, Any]
     DiagramRotation: int

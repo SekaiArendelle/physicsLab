@@ -16,6 +16,8 @@ from physicsLab._typing import (
     Union,
     Tuple,
     final,
+    Literal,
+    Iterator,
 )
 
 
@@ -146,6 +148,17 @@ class Tesla_Coil(_TwoPinMixIn):
 class Color_Light_Emitting_Diode(CircuitBase):
     """彩色发光二极管"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_l_mid_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _l_mid_pin: Pin
+    _l_low_pin: Pin
+    _r_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -157,6 +170,14 @@ class Color_Light_Emitting_Diode(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_l_mid_pin", Pin(self, 1)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_r_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Color Light-Emitting Diode",
             "Identifier": Generate,
@@ -198,19 +219,22 @@ class Color_Light_Emitting_Diode(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def l_mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._l_mid_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Dual_Light_Emitting_Diode(_TwoPinMixIn):
@@ -351,6 +375,25 @@ class Musical_Box(_TwoPinMixIn):
 class Resistance_Law(CircuitBase):
     """电阻定律实验"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_l_lowmid_pin"], Pin],
+        Tuple[Literal["_l_upmid_pin"], Pin],
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+        Tuple[Literal["_r_lowmid_pin"], Pin],
+        Tuple[Literal["_r_upmid_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+    ]
+    _l_low_pin: Pin
+    _l_lowmid_pin: Pin
+    _l_upmid_pin: Pin
+    _l_up_pin: Pin
+    _r_low_pin: Pin
+    _r_lowmid_pin: Pin
+    _r_upmid_pin: Pin
+    _r_up_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -362,6 +405,18 @@ class Resistance_Law(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_low_pin", Pin(self, 0)),
+            ("_l_lowmid_pin", Pin(self, 1)),
+            ("_l_upmid_pin", Pin(self, 2)),
+            ("_l_up_pin", Pin(self, 3)),
+            ("_r_low_pin", Pin(self, 4)),
+            ("_r_lowmid_pin", Pin(self, 5)),
+            ("_r_upmid_pin", Pin(self, 6)),
+            ("_r_up_pin", Pin(self, 7)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Resistance Law",
             "Identifier": Generate,
@@ -422,39 +477,53 @@ class Resistance_Law(CircuitBase):
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_low_pin
 
     @property
     def l_lowmid(self) -> Pin:
-        return Pin(self, 1)
+        return self._l_lowmid_pin
 
     @property
     def l_upmid(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_upmid_pin
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 3)
+        return self._l_up_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 4)
+        return self._r_low_pin
 
     @property
     def r_lowmid(self) -> Pin:
-        return Pin(self, 5)
+        return self._r_lowmid_pin
 
     @property
     def r_upmid(self) -> Pin:
-        return Pin(self, 6)
+        return self._r_upmid_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 7)
+        return self._r_up_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Solenoid(CircuitBase):
     """通电螺线管"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_subred_pin"], Pin],
+        Tuple[Literal["_subblack_pin"], Pin],
+        Tuple[Literal["_red_pin"], Pin],
+        Tuple[Literal["_black_pin"], Pin],
+    ]
+    _subred_pin: Pin
+    _subblack_pin: Pin
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -467,6 +536,14 @@ class Solenoid(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_subred_pin", Pin(self, 0)),
+            ("_subblack_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 2)),
+            ("_black_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Solenoid",
             "Identifier": Generate,
@@ -504,19 +581,22 @@ class Solenoid(CircuitBase):
 
     @property
     def subred(self) -> Pin:
-        return Pin(self, 0)
+        return self._subred_pin
 
     @property
     def subblack(self) -> Pin:
-        return Pin(self, 1)
+        return self._subblack_pin
 
     @property
     def red(self) -> Pin:
-        return Pin(self, 2)
+        return self._red_pin
 
     @property
     def black(self) -> Pin:
-        return Pin(self, 3)
+        return self._black_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
 
 class Electric_Fan(_TwoPinMixIn):
@@ -580,6 +660,10 @@ class Electric_Fan(_TwoPinMixIn):
 class Simple_Instrument(CircuitBase):
     """简单乐器"""
 
+    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin], Tuple[Literal["_o_pin"], Pin]]
+    _i_pin: Pin
+    _o_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -606,6 +690,12 @@ class Simple_Instrument(CircuitBase):
         @param is_ideal: 是否为理想模式
         @param is_pulse: 简单乐器是否只响一次
         """
+        self._all_pins = (
+            ("_i_pin", Pin(self, 0)),
+            ("_o_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self._data: CircuitElementData = {
             "ModelID": "Simple Instrument",
             "Identifier": Generate,
@@ -735,11 +825,14 @@ class Simple_Instrument(CircuitBase):
 
     @property
     def i(self) -> Pin:
-        return Pin(self, 0)
+        return self._i_pin
 
     @property
     def o(self) -> Pin:
-        return Pin(self, 1)
+        return self._o_pin
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @override
     def __repr__(self) -> str:
