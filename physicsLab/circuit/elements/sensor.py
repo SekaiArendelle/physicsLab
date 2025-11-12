@@ -18,7 +18,11 @@ from physicsLab._typing import (
 class _MemsBase(CircuitBase):
     """三引脚集成式传感器基类"""
 
-    _all_pins: Tuple[Tuple[Literal["_x_pin"], Pin], Tuple[Literal["_y_pin"], Pin], Tuple[Literal["_z_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_x_pin"], Pin],
+        Tuple[Literal["_y_pin"], Pin],
+        Tuple[Literal["_z_pin"], Pin],
+    ]
     _x_pin: Pin
     _y_pin: Pin
     _z_pin: Pin

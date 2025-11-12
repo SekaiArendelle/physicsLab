@@ -546,8 +546,3 @@ class TestCircuitElement(unittest.TestCase):
             for cls in self.get_all_elements(CircuitBase):
                 test_method_name = f"test_{cls.__name__.lower()}"
                 self.assertIn(test_method_name, tested_elements, f"{cls.__name__} has not been tested")
-
-    def test_method2(self):
-        tested_elements_count = len(dir(TestAllCircuitElements))
-        test_method_count = len(list(self.get_all_elements(CircuitBase)))
-        # self.assertEqual(tested_elements_count, test_method_count, "Some circuit elements have not been tested")

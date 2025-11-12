@@ -15,6 +15,16 @@
         <td>['black', 'red']</td>
     </tr>
     <tr>
+        <td> <a href="#SPDT_Switch">单刀双掷开关</a> </td>
+        <td>SPDT_Switch</td>
+        <td>['l', 'mid', 'r']</td>
+    </tr>
+    <tr>
+        <td> <a href="#DPDT_Switch">双刀双掷开关</a> </td>
+        <td>DPDT_Switch</td>
+        <td>['l_low', 'l_up', 'mid_low', 'mid_up', 'r_low', 'r_up']</td>
+    </tr>
+    <tr>
         <td> <a href="#Push_Switch">按钮开关</a> </td>
         <td>Push_Switch</td>
         <td>['black', 'red']</td>
@@ -35,6 +45,11 @@
         <td>['black', 'red']</td>
     </tr>
     <tr>
+        <td> <a href="#Student_Source">学生电源</a> </td>
+        <td>Student_Source</td>
+        <td>['l', 'l_mid', 'r', 'r_mid']</td>
+    </tr>
+    <tr>
         <td> <a href="#Resistor">电阻</a> </td>
         <td>Resistor</td>
         <td>['black', 'red']</td>
@@ -45,129 +60,14 @@
         <td>['black', 'red']</td>
     </tr>
     <tr>
-        <td> <a href="#Multimeter">多用电表</a> </td>
-        <td>Multimeter</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Basic_Capacitor">电容</a> </td>
-        <td>Basic_Capacitor</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Basic_Inductor">电感</a> </td>
-        <td>Basic_Inductor</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Basic_Diode">二极管</a> </td>
-        <td>Basic_Diode</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Light_Emitting_Diode">发光二极管</a> </td>
-        <td>Light_Emitting_Diode</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Current_Source">电流源</a> </td>
-        <td>Current_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Sinewave_Source">正弦波发生器</a> </td>
-        <td>Sinewave_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Square_Source">方波发生器</a> </td>
-        <td>Square_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Triangle_Source">三角波发生器</a> </td>
-        <td>Triangle_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Sawtooth_Source">锯齿波发生器</a> </td>
-        <td>Sawtooth_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Pulse_Source">尖峰波发生器</a> </td>
-        <td>Pulse_Source</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Photodiode">光电二极管</a> </td>
-        <td>Photodiode</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Photoresistor">光敏电阻</a> </td>
-        <td>Photoresistor</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Buzzer">嗡鸣器</a> </td>
-        <td>Buzzer</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Spark_Gap">火花隙</a> </td>
-        <td>Spark_Gap</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Tesla_Coil">特斯拉线圈</a> </td>
-        <td>Tesla_Coil</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Dual_Light_Emitting_Diode">演示发光二极管</a> </td>
-        <td>Dual_Light_Emitting_Diode</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Electric_Bell">电铃</a> </td>
-        <td>Electric_Bell</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Musical_Box">八音盒</a> </td>
-        <td>Musical_Box</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Electric_Fan">小电扇</a> </td>
-        <td>Electric_Fan</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Simple_Switch">简单开关</a> </td>
-        <td>Simple_Switch</td>
-        <td>['black', 'red']</td>
-    </tr>
-    <tr>
-        <td> <a href="#SPDT_Switch">单刀双掷开关</a> </td>
-        <td>SPDT_Switch</td>
-        <td>['l', 'mid', 'r']</td>
-    </tr>
-    <tr>
-        <td> <a href="#DPDT_Switch">双刀双掷开关</a> </td>
-        <td>DPDT_Switch</td>
-        <td>['l_low', 'l_up', 'mid_low', 'mid_up', 'r_low', 'r_up']</td>
-    </tr>
-    <tr>
-        <td> <a href="#Student_Source">学生电源</a> </td>
-        <td>Student_Source</td>
-        <td>['l', 'l_mid', 'r', 'r_mid']</td>
-    </tr>
-    <tr>
         <td> <a href="#Slide_Rheostat">滑动变阻器</a> </td>
         <td>Slide_Rheostat</td>
         <td>['l_low', 'l_up', 'r_low', 'r_up']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Multimeter">多用电表</a> </td>
+        <td>Multimeter</td>
+        <td>['black', 'red']</td>
     </tr>
     <tr>
         <td> <a href="#Galvanometer">灵敏电流计</a> </td>
@@ -340,6 +240,26 @@
         <td>['Ctrl', 'Dis', 'Ground', 'Out', 'Reset', 'Thr', 'Trig', 'VCC']</td>
     </tr>
     <tr>
+        <td> <a href="#Basic_Capacitor">电容</a> </td>
+        <td>Basic_Capacitor</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Basic_Inductor">电感</a> </td>
+        <td>Basic_Inductor</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Basic_Diode">二极管</a> </td>
+        <td>Basic_Diode</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Light_Emitting_Diode">发光二极管</a> </td>
+        <td>Light_Emitting_Diode</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
         <td> <a href="#Ground_Component">接地</a> </td>
         <td>Ground_Component</td>
         <td>['i']</td>
@@ -395,6 +315,36 @@
         <td>['D', 'G', 'S']</td>
     </tr>
     <tr>
+        <td> <a href="#Current_Source">电流源</a> </td>
+        <td>Current_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Sinewave_Source">正弦波发生器</a> </td>
+        <td>Sinewave_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Square_Source">方波发生器</a> </td>
+        <td>Square_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Triangle_Source">三角波发生器</a> </td>
+        <td>Triangle_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Sawtooth_Source">锯齿波发生器</a> </td>
+        <td>Sawtooth_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Pulse_Source">尖峰波发生器</a> </td>
+        <td>Pulse_Source</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
         <td> <a href="#Accelerometer">加速度计</a> </td>
         <td>Accelerometer</td>
         <td>['x', 'y', 'z']</td>
@@ -430,9 +380,49 @@
         <td>['x1', 'x2', 'x3', 'y1', 'y2', 'y3']</td>
     </tr>
     <tr>
+        <td> <a href="#Photodiode">光电二极管</a> </td>
+        <td>Photodiode</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Photoresistor">光敏电阻</a> </td>
+        <td>Photoresistor</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Buzzer">嗡鸣器</a> </td>
+        <td>Buzzer</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Spark_Gap">火花隙</a> </td>
+        <td>Spark_Gap</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Tesla_Coil">特斯拉线圈</a> </td>
+        <td>Tesla_Coil</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
         <td> <a href="#Color_Light_Emitting_Diode">彩色发光二极管</a> </td>
         <td>Color_Light_Emitting_Diode</td>
         <td>['l_low', 'l_mid', 'l_up', 'r']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Dual_Light_Emitting_Diode">演示发光二极管</a> </td>
+        <td>Dual_Light_Emitting_Diode</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Electric_Bell">电铃</a> </td>
+        <td>Electric_Bell</td>
+        <td>['black', 'red']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Musical_Box">八音盒</a> </td>
+        <td>Musical_Box</td>
+        <td>['black', 'red']</td>
     </tr>
     <tr>
         <td> <a href="#Resistance_Law">电阻定律实验</a> </td>
@@ -443,6 +433,11 @@
         <td> <a href="#Solenoid">通电螺线管</a> </td>
         <td>Solenoid</td>
         <td>['black', 'red', 'subblack', 'subred']</td>
+    </tr>
+    <tr>
+        <td> <a href="#Electric_Fan">小电扇</a> </td>
+        <td>Electric_Fan</td>
+        <td>['black', 'red']</td>
     </tr>
     <tr>
         <td> <a href="#Simple_Instrument">简单乐器</a> </td>
@@ -633,6 +628,152 @@ name: 将元件重命名为name
     def turn_on_switch(self) -> Self
 ```
 闭合开关  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="SPDT_Switch"> SPDT_Switch </h2>
+```Python
+class SPDT_Switch(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### left_turn_on_switch
+```Python
+    def left_turn_on_switch(self) -> Self
+```
+向左闭合开关  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### right_turn_on_switch
+```Python
+    def right_turn_on_switch(self) -> Self
+```
+向右闭合开关  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### turn_off_switch
+```Python
+    def turn_off_switch(self) -> Self
+```
+断开开关  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="DPDT_Switch"> DPDT_Switch </h2>
+```Python
+class DPDT_Switch(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### left_turn_on_switch
+```Python
+    def left_turn_on_switch(self) -> Self
+```
+向左闭合开关  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### right_turn_on_switch
+```Python
+    def right_turn_on_switch(self) -> Self
+```
+向右闭合开关  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### turn_off_switch
+```Python
+    def turn_off_switch(self) -> Self
+```
+断开开关  
 
 ### zh_name
 ```Python
@@ -871,6 +1012,61 @@ name: 将元件重命名为name
     def zh_name() -> str
 ```
 
+## <h2 id="Student_Source"> Student_Source </h2>
+```Python
+class Student_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
 ## <h2 id="Resistor"> Resistor </h2>
 ```Python
 class Resistor(CircuitBase):
@@ -987,6 +1183,61 @@ name: 将元件重命名为name
     def zh_name() -> str
 ```
 
+## <h2 id="Slide_Rheostat"> Slide_Rheostat </h2>
+```Python
+class Slide_Rheostat(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
 ## <h2 id="Multimeter"> Multimeter </h2>
 ```Python
 class Multimeter(CircuitBase):
@@ -1042,1372 +1293,15 @@ name: 将元件重命名为name
     def zh_name() -> str
 ```
 
-## <h2 id="Basic_Capacitor"> Basic_Capacitor </h2>
-```Python
-class Basic_Capacitor(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, peak_voltage: Union[int, float] = 16, capacitance: Union[int, float] = 1e-06, internal_resistance: Union[int, float] = 5, is_ideal: bool = False) -> None
-```
-@param capacitance: 电容, 单位为F  
-@param is_ideal: 是否为理想模式  
-@param peak_voltage: 峰值电压, 单位为V  
-@param internal_resistance: 内阻, 单位为Ω  
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Basic_Inductor"> Basic_Inductor </h2>
-```Python
-class Basic_Inductor(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, rated_current: Union[int, float] = 1, inductance: Union[int, float] = 0.05, internal_resistance: Union[int, float] = 1, is_ideal: bool = False) -> None
-```
-@param rated_current: 电感额定电流，单位为 A  
-@param inductance: 电感，单位为 Henry  
-@param internal_resistance: 电感内部阻抗，单位为 Ohm  
-@param is_ideal: 是否为理想模式  
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### fix_inductance
-```Python
-    def fix_inductance(self) -> Self
-```
-修正电感值的浮点误差  
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Basic_Diode"> Basic_Diode </h2>
-```Python
-class Basic_Diode(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Light_Emitting_Diode"> Light_Emitting_Diode </h2>
-```Python
-class Light_Emitting_Diode(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Current_Source"> Current_Source </h2>
-```Python
-class Current_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Sinewave_Source"> Sinewave_Source </h2>
-```Python
-class Sinewave_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Square_Source"> Square_Source </h2>
-```Python
-class Square_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Triangle_Source"> Triangle_Source </h2>
-```Python
-class Triangle_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Sawtooth_Source"> Sawtooth_Source </h2>
-```Python
-class Sawtooth_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Pulse_Source"> Pulse_Source </h2>
-```Python
-class Pulse_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Photodiode"> Photodiode </h2>
-```Python
-class Photodiode(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Photoresistor"> Photoresistor </h2>
-```Python
-class Photoresistor(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Buzzer"> Buzzer </h2>
-```Python
-class Buzzer(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Spark_Gap"> Spark_Gap </h2>
-```Python
-class Spark_Gap(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Tesla_Coil"> Tesla_Coil </h2>
-```Python
-class Tesla_Coil(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Dual_Light_Emitting_Diode"> Dual_Light_Emitting_Diode </h2>
-```Python
-class Dual_Light_Emitting_Diode(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Electric_Bell"> Electric_Bell </h2>
-```Python
-class Electric_Bell(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Musical_Box"> Musical_Box </h2>
-```Python
-class Musical_Box(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Electric_Fan"> Electric_Fan </h2>
-```Python
-class Electric_Fan(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Simple_Switch"> Simple_Switch </h2>
-```Python
-class Simple_Switch(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### all_pins_experimental_unstable
-```Python
-    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### turn_off_switch
-```Python
-    def turn_off_switch(self) -> Self
-```
-断开开关  
-
-### turn_on_switch
-```Python
-    def turn_on_switch(self) -> Self
-```
-闭合开关  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="SPDT_Switch"> SPDT_Switch </h2>
-```Python
-class SPDT_Switch(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### left_turn_on_switch
-```Python
-    def left_turn_on_switch(self) -> Self
-```
-向左闭合开关  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### right_turn_on_switch
-```Python
-    def right_turn_on_switch(self) -> Self
-```
-向右闭合开关  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### turn_off_switch
-```Python
-    def turn_off_switch(self) -> Self
-```
-断开开关  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="DPDT_Switch"> DPDT_Switch </h2>
-```Python
-class DPDT_Switch(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### left_turn_on_switch
-```Python
-    def left_turn_on_switch(self) -> Self
-```
-向左闭合开关  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### right_turn_on_switch
-```Python
-    def right_turn_on_switch(self) -> Self
-```
-向右闭合开关  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### turn_off_switch
-```Python
-    def turn_off_switch(self) -> Self
-```
-断开开关  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Student_Source"> Student_Source </h2>
-```Python
-class Student_Source(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
-## <h2 id="Slide_Rheostat"> Slide_Rheostat </h2>
-```Python
-class Slide_Rheostat(CircuitBase):
-    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
-```
-
-### get_all_pins_property
-```Python
-    def get_all_pins_property()
-```
-获取该元件的所有引脚对应的property  
-
-### get_index
-```Python
-    def get_index(self) -> int
-```
-获取元件的index (每创建一个元件, index就加1 (index从1开始))  
-
-### get_position
-```Python
-    def get_position(self) -> physicsLab._tools.position
-```
-获取元件的坐标  
-
-### rename
-```Python
-    def rename(self, name: str) -> Self
-```
-重命名元件  
-  
-Args:  
-name: 将元件重命名为name  
-
-### set_position
-```Python
-    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
-```
-设置元件的位置  
-
-### set_rotation
-```Python
-    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
-```
-设置元件的角度  
-
-### zh_name
-```Python
-    def zh_name() -> str
-```
-
 ## <h2 id="Galvanometer"> Galvanometer </h2>
 ```Python
 class Galvanometer(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -2460,6 +1354,11 @@ class Microammeter(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2508,6 +1407,11 @@ name: 将元件重命名为name
 ```Python
 class Electricity_Meter(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -2560,6 +1464,11 @@ class Resistance_Box(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, resistance: Union[int, float] = 10) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2610,6 +1519,11 @@ class Simple_Ammeter(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2658,6 +1572,11 @@ name: 将元件重命名为name
 ```Python
 class Simple_Voltmeter(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -3425,6 +2344,11 @@ class Full_Adder(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3473,6 +2397,11 @@ name: 将元件重命名为name
 ```Python
 class Half_Subtractor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
 ### get_all_pins_property
@@ -3525,6 +2454,11 @@ class Full_Subtractor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3573,6 +2507,11 @@ name: 将元件重命名为name
 ```Python
 class Multiplier(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
 ### get_all_pins_property
@@ -3625,6 +2564,11 @@ class D_Flipflop(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3673,6 +2617,11 @@ name: 将元件重命名为name
 ```Python
 class T_Flipflop(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
 ### get_all_pins_property
@@ -3725,6 +2674,11 @@ class Real_T_Flipflop(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3773,6 +2727,11 @@ name: 将元件重命名为name
 ```Python
 class JK_Flipflop(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
 ### get_all_pins_property
@@ -3825,6 +2784,11 @@ class Counter(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3875,6 +2839,11 @@ class Random_Generator(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3923,6 +2892,11 @@ name: 将元件重命名为name
 ```Python
 class Eight_Bit_Input(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
 ### get_all_pins_property
@@ -3980,6 +2954,11 @@ class Eight_Bit_Display(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 3, low_level: Union[int, float] = 0) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4028,6 +3007,11 @@ name: 将元件重命名为name
 ```Python
 class Proximity_Sensor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -4080,6 +3064,11 @@ class Schmitt_Trigger(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, high_level: Union[int, float] = 5.0, low_level: Union[int, float, NoneType] = None, inverted: bool = False) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4128,6 +3117,245 @@ name: 将元件重命名为name
 ```Python
 class NE555(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Basic_Capacitor"> Basic_Capacitor </h2>
+```Python
+class Basic_Capacitor(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, peak_voltage: Union[int, float] = 16, capacitance: Union[int, float] = 1e-06, internal_resistance: Union[int, float] = 5, is_ideal: bool = False) -> None
+```
+@param capacitance: 电容, 单位为F  
+@param is_ideal: 是否为理想模式  
+@param peak_voltage: 峰值电压, 单位为V  
+@param internal_resistance: 内阻, 单位为Ω  
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Basic_Inductor"> Basic_Inductor </h2>
+```Python
+class Basic_Inductor(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, rated_current: Union[int, float] = 1, inductance: Union[int, float] = 0.05, internal_resistance: Union[int, float] = 1, is_ideal: bool = False) -> None
+```
+@param rated_current: 电感额定电流，单位为 A  
+@param inductance: 电感，单位为 Henry  
+@param internal_resistance: 电感内部阻抗，单位为 Ohm  
+@param is_ideal: 是否为理想模式  
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### fix_inductance
+```Python
+    def fix_inductance(self) -> Self
+```
+修正电感值的浮点误差  
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Basic_Diode"> Basic_Diode </h2>
+```Python
+class Basic_Diode(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Light_Emitting_Diode"> Light_Emitting_Diode </h2>
+```Python
+class Light_Emitting_Diode(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -4727,10 +3955,345 @@ name: 将元件重命名为name
     def zh_name() -> str
 ```
 
+## <h2 id="Current_Source"> Current_Source </h2>
+```Python
+class Current_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Sinewave_Source"> Sinewave_Source </h2>
+```Python
+class Sinewave_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Square_Source"> Square_Source </h2>
+```Python
+class Square_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Triangle_Source"> Triangle_Source </h2>
+```Python
+class Triangle_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Sawtooth_Source"> Sawtooth_Source </h2>
+```Python
+class Sawtooth_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Pulse_Source"> Pulse_Source </h2>
+```Python
+class Pulse_Source(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
 ## <h2 id="Accelerometer"> Accelerometer </h2>
 ```Python
 class Accelerometer(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 2, shifting: Union[int, float] = 0.75, response_factor: Union[int, float] = 0.2290000021457672) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -4783,6 +4346,11 @@ class Attitude_Sensor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 180, shifting: Union[int, float] = 2.5, response_factor: Union[int, float] = 0.0125) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4831,6 +4399,11 @@ name: 将元件重命名为name
 ```Python
 class Gravity_Sensor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 2, shifting: Union[int, float] = 0.75, response_factor: Union[int, float] = 0.229) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -4883,6 +4456,11 @@ class Gyroscope(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 150, shifting: Union[int, float] = 2.5, response_factor: Union[int, float] = 0.0125) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4931,6 +4509,11 @@ name: 将元件重命名为name
 ```Python
 class Linear_Accelerometer(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 2, shifting: Union[int, float] = 0.75, response_factor: Union[int, float] = 0.229) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -4983,6 +4566,11 @@ class Magnetic_Field_Sensor(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None, ranges: Union[int, float] = 0.04, shifting: Union[int, float] = 3.2, response_factor: Union[int, float] = 80) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5031,6 +4619,286 @@ name: 将元件重命名为name
 ```Python
 class Analog_Joystick(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Photodiode"> Photodiode </h2>
+```Python
+class Photodiode(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Photoresistor"> Photoresistor </h2>
+```Python
+class Photoresistor(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Buzzer"> Buzzer </h2>
+```Python
+class Buzzer(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Spark_Gap"> Spark_Gap </h2>
+```Python
+class Spark_Gap(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Tesla_Coil"> Tesla_Coil </h2>
+```Python
+class Tesla_Coil(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -5083,6 +4951,176 @@ class Color_Light_Emitting_Diode(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Dual_Light_Emitting_Diode"> Dual_Light_Emitting_Diode </h2>
+```Python
+class Dual_Light_Emitting_Diode(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Electric_Bell"> Electric_Bell </h2>
+```Python
+class Electric_Bell(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Musical_Box"> Musical_Box </h2>
+```Python
+class Musical_Box(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5133,6 +5171,11 @@ class Resistance_Law(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
 ```
 
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5181,6 +5224,66 @@ name: 将元件重命名为name
 ```Python
 class Solenoid(CircuitBase):
     def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### get_all_pins_property
+```Python
+    def get_all_pins_property()
+```
+获取该元件的所有引脚对应的property  
+
+### get_index
+```Python
+    def get_index(self) -> int
+```
+获取元件的index (每创建一个元件, index就加1 (index从1开始))  
+
+### get_position
+```Python
+    def get_position(self) -> physicsLab._tools.position
+```
+获取元件的坐标  
+
+### rename
+```Python
+    def rename(self, name: str) -> Self
+```
+重命名元件  
+  
+Args:  
+name: 将元件重命名为name  
+
+### set_position
+```Python
+    def set_position(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], elementXYZ: Optional[bool] = None) -> Self
+```
+设置元件的位置  
+
+### set_rotation
+```Python
+    def set_rotation(self, x_r: Union[int, float] = 0, y_r: Union[int, float] = 0, z_r: Union[int, float] = 180) -> Self
+```
+设置元件的角度  
+
+### zh_name
+```Python
+    def zh_name() -> str
+```
+
+## <h2 id="Electric_Fan"> Electric_Fan </h2>
+```Python
+class Electric_Fan(CircuitBase):
+    def __init__(self, x: Union[int, float], y: Union[int, float], z: Union[int, float], /, *, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None, experiment: Optional[physicsLab._core._Experiment] = None) -> None
+```
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
 ### get_all_pins_property
@@ -5239,6 +5342,11 @@ class Simple_Instrument(CircuitBase):
 @param bpm: 节奏  
 @param is_ideal: 是否为理想模式  
 @param is_pulse: 简单乐器是否只响一次  
+
+### all_pins_experimental_unstable
+```Python
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
 
 ### get_all_pins_property
 ```Python

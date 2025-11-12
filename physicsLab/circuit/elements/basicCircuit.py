@@ -103,7 +103,11 @@ class Simple_Switch(_SwitchBase):
 class SPDT_Switch(_SwitchBase):
     """单刀双掷开关"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _mid_pin: Pin
     _r_pin: Pin
@@ -970,7 +974,11 @@ class Multimeter(CircuitBase):
 class Galvanometer(CircuitBase):
     """灵敏电流计"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _mid_pin: Pin
     _r_pin: Pin
@@ -1031,7 +1039,11 @@ class Galvanometer(CircuitBase):
 class Microammeter(CircuitBase):
     """微安表"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _mid_pin: Pin
     _r_pin: Pin
@@ -1092,7 +1104,12 @@ class Microammeter(CircuitBase):
 class Electricity_Meter(CircuitBase):
     """电能表"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_l_mid_pin"], Pin], Tuple[Literal["_r_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_l_mid_pin"], Pin],
+        Tuple[Literal["_r_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _l_mid_pin: Pin
     _r_mid_pin: Pin
@@ -1246,7 +1263,11 @@ class Resistance_Box(CircuitBase):
 class Simple_Ammeter(CircuitBase):
     """直流安培表"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _mid_pin: Pin
     _r_pin: Pin
@@ -1307,7 +1328,11 @@ class Simple_Ammeter(CircuitBase):
 class Simple_Voltmeter(CircuitBase):
     """直流电压表"""
 
-    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
     _l_pin: Pin
     _mid_pin: Pin
     _r_pin: Pin
