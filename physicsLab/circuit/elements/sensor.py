@@ -11,11 +11,17 @@ from physicsLab._typing import (
     final,
     Iterator,
     Tuple,
+    Literal,
 )
 
 
 class _MemsBase(CircuitBase):
     """三引脚集成式传感器基类"""
+
+    _all_pins: Tuple[Tuple[Literal["_x_pin"], Pin], Tuple[Literal["_y_pin"], Pin], Tuple[Literal["_z_pin"], Pin]]
+    _x_pin: Pin
+    _y_pin: Pin
+    _z_pin: Pin
 
     def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
         self.data: CircuitElementData = {
@@ -37,18 +43,28 @@ class _MemsBase(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_x_pin", Pin(self, 0)),
+            ("_y_pin", Pin(self, 1)),
+            ("_z_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @property
     def x(self) -> Pin:
-        return Pin(self, 0)
+        return self._x_pin
 
     @property
     def y(self) -> Pin:
-        return Pin(self, 1)
+        return self._y_pin
 
     @property
     def z(self) -> Pin:
-        return Pin(self, 2)
+        return self._z_pin
 
     @property
     @final
@@ -140,6 +156,21 @@ class Accelerometer(_MemsBase):
 class Analog_Joystick(CircuitBase):
     """模拟摇杆"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_x1_pin"], Pin],
+        Tuple[Literal["_x2_pin"], Pin],
+        Tuple[Literal["_x3_pin"], Pin],
+        Tuple[Literal["_y1_pin"], Pin],
+        Tuple[Literal["_y2_pin"], Pin],
+        Tuple[Literal["_y3_pin"], Pin],
+    ]
+    _x1_pin: Pin
+    _x2_pin: Pin
+    _x3_pin: Pin
+    _y1_pin: Pin
+    _y2_pin: Pin
+    _y3_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -164,6 +195,19 @@ class Analog_Joystick(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_x1_pin", Pin(self, 0)),
+            ("_x2_pin", Pin(self, 1)),
+            ("_x3_pin", Pin(self, 2)),
+            ("_y1_pin", Pin(self, 3)),
+            ("_y2_pin", Pin(self, 4)),
+            ("_y3_pin", Pin(self, 5)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @final
     @staticmethod
@@ -172,27 +216,27 @@ class Analog_Joystick(CircuitBase):
 
     @property
     def x1(self) -> Pin:
-        return Pin(self, 0)
+        return self._x1_pin
 
     @property
     def x2(self) -> Pin:
-        return Pin(self, 1)
+        return self._x2_pin
 
     @property
     def x3(self) -> Pin:
-        return Pin(self, 2)
+        return self._x3_pin
 
     @property
     def y1(self) -> Pin:
-        return Pin(self, 3)
+        return self._y1_pin
 
     @property
     def y2(self) -> Pin:
-        return Pin(self, 4)
+        return self._y2_pin
 
     @property
     def y3(self) -> Pin:
-        return Pin(self, 5)
+        return self._y3_pin
 
 
 class Attitude_Sensor(_MemsBase):
@@ -343,6 +387,10 @@ class Magnetic_Field_Sensor(_MemsBase):
 class Photodiode(CircuitBase):
     """光电二极管"""
 
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -400,6 +448,10 @@ class Photodiode(CircuitBase):
 
 class Photoresistor(CircuitBase):
     """光敏电阻"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -459,6 +511,9 @@ class Photoresistor(CircuitBase):
 class Proximity_Sensor(_LogicBase):
     """临近传感器"""
 
+    _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
+    _o_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -470,6 +525,9 @@ class Proximity_Sensor(_LogicBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (("_o_pin", Pin(self, 0)),)
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Proximity Sensor",
             "Identifier": Generate,
@@ -484,6 +542,9 @@ class Proximity_Sensor(_LogicBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -491,4 +552,4 @@ class Proximity_Sensor(_LogicBase):
 
     @property
     def o(self) -> Pin:
-        return Pin(self, 0)
+        return self._o_pin

@@ -13,6 +13,7 @@ from physicsLab._typing import (
     final,
     Iterator,
     Tuple,
+    Literal,
 )
 
 
@@ -42,6 +43,10 @@ class _SwitchBase(CircuitBase):
 
 class Simple_Switch(_SwitchBase):
     """简单开关"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -98,6 +103,11 @@ class Simple_Switch(_SwitchBase):
 class SPDT_Switch(_SwitchBase):
     """单刀双掷开关"""
 
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _mid_pin: Pin
+    _r_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -110,7 +120,17 @@ class SPDT_Switch(_SwitchBase):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         super().__init__(x, y, z)
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "SPDT Switch"
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @final
     @staticmethod
@@ -141,19 +161,34 @@ class SPDT_Switch(_SwitchBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_pin
 
 
 class DPDT_Switch(_SwitchBase):
     """双刀双掷开关"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_mid_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_mid_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+    ]
+    _l_low_pin: Pin
+    _mid_low_pin: Pin
+    _r_low_pin: Pin
+    _l_up_pin: Pin
+    _mid_up_pin: Pin
+    _r_up_pin: Pin
 
     def __init__(
         self,
@@ -167,7 +202,20 @@ class DPDT_Switch(_SwitchBase):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         super().__init__(x, y, z)
+        self._all_pins = (
+            ("_l_low_pin", Pin(self, 0)),
+            ("_mid_low_pin", Pin(self, 1)),
+            ("_r_low_pin", Pin(self, 2)),
+            ("_l_up_pin", Pin(self, 3)),
+            ("_mid_up_pin", Pin(self, 4)),
+            ("_r_up_pin", Pin(self, 5)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data["ModelID"] = "DPDT Switch"
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @final
     @staticmethod
@@ -199,31 +247,35 @@ class DPDT_Switch(_SwitchBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 3)
+        return self._l_up_pin
 
     @property
     def mid_up(self) -> Pin:
-        return Pin(self, 4)
+        return self._mid_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 5)
+        return self._r_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_low_pin
 
     @property
     def mid_low(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_low_pin
 
 
 class Push_Switch(CircuitBase):
     """按钮开关"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -275,6 +327,10 @@ class Push_Switch(CircuitBase):
 
 class Air_Switch(CircuitBase):
     """空气开关"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -348,6 +404,10 @@ class Air_Switch(CircuitBase):
 class Incandescent_Lamp(CircuitBase):
     """白炽灯泡"""
 
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -407,6 +467,10 @@ class Incandescent_Lamp(CircuitBase):
 
 class Battery_Source(CircuitBase):
     """一节电池"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -501,6 +565,17 @@ class Battery_Source(CircuitBase):
 class Student_Source(CircuitBase):
     """学生电源"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_l_pin"], Pin],
+        Tuple[Literal["_l_mid_pin"], Pin],
+        Tuple[Literal["_r_mid_pin"], Pin],
+        Tuple[Literal["_r_pin"], Pin],
+    ]
+    _l_pin: Pin
+    _l_mid_pin: Pin
+    _r_mid_pin: Pin
+    _r_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -512,6 +587,14 @@ class Student_Source(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_l_mid_pin", Pin(self, 1)),
+            ("_r_mid_pin", Pin(self, 2)),
+            ("_r_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Student Source",
             "Identifier": Generate,
@@ -547,6 +630,9 @@ class Student_Source(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -554,23 +640,27 @@ class Student_Source(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def l_mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._l_mid_pin
 
     @property
     def r_mid(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_pin
 
 
 class Resistor(CircuitBase):
     """电阻"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -665,6 +755,10 @@ class Resistor(CircuitBase):
 class Fuse_Component(CircuitBase):
     """保险丝"""
 
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -723,6 +817,17 @@ class Fuse_Component(CircuitBase):
 class Slide_Rheostat(CircuitBase):
     """滑动变阻器"""
 
+    _all_pins: Tuple[
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+    ]
+    _l_low_pin: Pin
+    _r_low_pin: Pin
+    _l_up_pin: Pin
+    _r_up_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -734,6 +839,14 @@ class Slide_Rheostat(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_low_pin", Pin(self, 0)),
+            ("_r_low_pin", Pin(self, 1)),
+            ("_l_up_pin", Pin(self, 2)),
+            ("_r_up_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Slide Rheostat",
             "Identifier": Generate,
@@ -767,6 +880,9 @@ class Slide_Rheostat(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -774,23 +890,27 @@ class Slide_Rheostat(CircuitBase):
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_low_pin
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_up_pin
 
 
 class Multimeter(CircuitBase):
     """多用电表"""
+
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
+    _red_pin: Pin
+    _black_pin: Pin
 
     def __init__(
         self,
@@ -850,6 +970,11 @@ class Multimeter(CircuitBase):
 class Galvanometer(CircuitBase):
     """灵敏电流计"""
 
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _mid_pin: Pin
+    _r_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -861,6 +986,13 @@ class Galvanometer(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Galvanometer",
             "Identifier": Generate,
@@ -875,6 +1007,9 @@ class Galvanometer(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -882,19 +1017,24 @@ class Galvanometer(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_pin
 
 
 class Microammeter(CircuitBase):
     """微安表"""
+
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _mid_pin: Pin
+    _r_pin: Pin
 
     def __init__(
         self,
@@ -907,6 +1047,13 @@ class Microammeter(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Microammeter",
             "Identifier": Generate,
@@ -921,6 +1068,9 @@ class Microammeter(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -928,19 +1078,25 @@ class Microammeter(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_pin
 
 
 class Electricity_Meter(CircuitBase):
     """电能表"""
+
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_l_mid_pin"], Pin], Tuple[Literal["_r_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _l_mid_pin: Pin
+    _r_mid_pin: Pin
+    _r_pin: Pin
 
     def __init__(
         self,
@@ -953,6 +1109,14 @@ class Electricity_Meter(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_l_mid_pin", Pin(self, 2)),
+            ("_r_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Electricity Meter",
             "Identifier": Generate,
@@ -967,6 +1131,9 @@ class Electricity_Meter(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -974,23 +1141,27 @@ class Electricity_Meter(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def l_mid(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_mid_pin
 
     @property
     def r_mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_pin
 
 
 class Resistance_Box(CircuitBase):
     """电阻箱"""
+
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _r_pin: Pin
 
     def __init__(
         self,
@@ -1004,6 +1175,12 @@ class Resistance_Box(CircuitBase):
         experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_r_pin", Pin(self, 1)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Resistance Box",
             "Identifier": Generate,
@@ -1032,6 +1209,9 @@ class Resistance_Box(CircuitBase):
 
         self.resistance = resistance
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1039,11 +1219,11 @@ class Resistance_Box(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_pin
 
     @property
     def resistance(self) -> num_type:
@@ -1066,6 +1246,11 @@ class Resistance_Box(CircuitBase):
 class Simple_Ammeter(CircuitBase):
     """直流安培表"""
 
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _mid_pin: Pin
+    _r_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -1077,6 +1262,13 @@ class Simple_Ammeter(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Simple Ammeter",
             "Identifier": Generate,
@@ -1091,6 +1283,9 @@ class Simple_Ammeter(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1098,19 +1293,24 @@ class Simple_Ammeter(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_pin
 
 
 class Simple_Voltmeter(CircuitBase):
     """直流电压表"""
+
+    _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_mid_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
+    _l_pin: Pin
+    _mid_pin: Pin
+    _r_pin: Pin
 
     def __init__(
         self,
@@ -1123,6 +1323,13 @@ class Simple_Voltmeter(CircuitBase):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        self._all_pins = (
+            ("_l_pin", Pin(self, 0)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
         self.data: CircuitElementData = {
             "ModelID": "Simple Voltmeter",
             "Identifier": Generate,
@@ -1137,6 +1344,9 @@ class Simple_Voltmeter(CircuitBase):
             "DiagramRotation": 0,
         }
 
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1144,12 +1354,12 @@ class Simple_Voltmeter(CircuitBase):
 
     @property
     def l(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r(self) -> Pin:
-        return Pin(self, 2)
+        return self._r_pin

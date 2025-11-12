@@ -13,6 +13,7 @@ from physicsLab._typing import (
     final,
     Tuple,
     Iterator,
+    Literal,
 )
 
 
@@ -20,6 +21,25 @@ class NE555(CircuitBase):
     """555定时器"""
 
     is_bigElement = True
+
+    _all_pins: Tuple[
+        Tuple[Literal["_vcc_pin"], Pin],
+        Tuple[Literal["_dis_pin"], Pin],
+        Tuple[Literal["_thr_pin"], Pin],
+        Tuple[Literal["_ctrl_pin"], Pin],
+        Tuple[Literal["_trig_pin"], Pin],
+        Tuple[Literal["_out_pin"], Pin],
+        Tuple[Literal["_reset_pin"], Pin],
+        Tuple[Literal["_ground_pin"], Pin],
+    ]
+    _vcc_pin: Pin
+    _dis_pin: Pin
+    _thr_pin: Pin
+    _ctrl_pin: Pin
+    _trig_pin: Pin
+    _out_pin: Pin
+    _reset_pin: Pin
+    _ground_pin: Pin
 
     def __init__(
         self,
@@ -54,6 +74,21 @@ class NE555(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_vcc_pin", Pin(self, 0)),
+            ("_dis_pin", Pin(self, 1)),
+            ("_thr_pin", Pin(self, 2)),
+            ("_ctrl_pin", Pin(self, 3)),
+            ("_trig_pin", Pin(self, 4)),
+            ("_out_pin", Pin(self, 5)),
+            ("_reset_pin", Pin(self, 6)),
+            ("_ground_pin", Pin(self, 7)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
+
+    def all_pins_experimental_unstable(self) -> Iterator[Tuple[str, Pin]]:
+        return iter(self._all_pins)
 
     @final
     @staticmethod
@@ -62,41 +97,41 @@ class NE555(CircuitBase):
 
     @property
     def VCC(self) -> Pin:
-        return Pin(self, 0)
+        return self._vcc_pin
 
     @property
     def Dis(self) -> Pin:
-        return Pin(self, 1)
+        return self._dis_pin
 
     @property
     def Thr(self) -> Pin:
-        return Pin(self, 2)
+        return self._thr_pin
 
     @property
     def Ctrl(self) -> Pin:
-        return Pin(self, 3)
+        return self._ctrl_pin
 
     @property
     def Trig(self) -> Pin:
-        return Pin(self, 4)
+        return self._trig_pin
 
     @property
     def Out(self) -> Pin:
-        return Pin(self, 5)
+        return self._out_pin
 
     @property
     def Reset(self) -> Pin:
-        return Pin(self, 6)
+        return self._reset_pin
 
     @property
     def Ground(self) -> Pin:
-        return Pin(self, 7)
+        return self._ground_pin
 
 
 class Basic_Capacitor(CircuitBase):
     """电容"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -259,7 +294,7 @@ class Basic_Capacitor(CircuitBase):
 class Basic_Inductor(CircuitBase):
     """电感"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -427,7 +462,7 @@ class Basic_Inductor(CircuitBase):
 class Basic_Diode(CircuitBase):
     """二极管"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -488,7 +523,7 @@ class Basic_Diode(CircuitBase):
 class Light_Emitting_Diode(CircuitBase):
     """发光二极管"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -550,6 +585,9 @@ class Light_Emitting_Diode(CircuitBase):
 class Ground_Component(CircuitBase):
     """接地元件"""
 
+    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
+    _i_pin: Pin
+
     def __init__(
         self,
         x: num_type,
@@ -574,6 +612,9 @@ class Ground_Component(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (("_i_pin", Pin(self, 0)),)
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -582,11 +623,22 @@ class Ground_Component(CircuitBase):
 
     @property
     def i(self) -> Pin:
-        return Pin(self, 0)
+        return self._i_pin
 
 
 class Transformer(CircuitBase):
     """理想变压器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _r_up_pin: Pin
+    _l_low_pin: Pin
+    _r_low_pin: Pin
 
     def __init__(
         self,
@@ -625,6 +677,14 @@ class Transformer(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_r_up_pin", Pin(self, 1)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_r_low_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -633,23 +693,36 @@ class Transformer(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_low_pin
 
 
 class Tapped_Transformer(CircuitBase):
     """中心抽头变压器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _r_up_pin: Pin
+    _l_low_pin: Pin
+    _r_low_pin: Pin
+    _mid_pin: Pin
 
     def __init__(
         self,
@@ -687,6 +760,15 @@ class Tapped_Transformer(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_r_up_pin", Pin(self, 1)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_r_low_pin", Pin(self, 3)),
+            ("_mid_pin", Pin(self, 4)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -695,27 +777,38 @@ class Tapped_Transformer(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_low_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 4)
+        return self._mid_pin
 
 
 class Mutual_Inductor(CircuitBase):
     """理想互感"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _r_up_pin: Pin
+    _l_low_pin: Pin
+    _r_low_pin: Pin
 
     def __init__(
         self,
@@ -748,6 +841,14 @@ class Mutual_Inductor(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_r_up_pin", Pin(self, 1)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_r_low_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -756,23 +857,34 @@ class Mutual_Inductor(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_low_pin
 
 
 class Rectifier(CircuitBase):
     """全波整流器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _r_up_pin: Pin
+    _l_low_pin: Pin
+    _r_low_pin: Pin
 
     def __init__(
         self,
@@ -798,6 +910,14 @@ class Rectifier(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_r_up_pin", Pin(self, 1)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_r_low_pin", Pin(self, 3)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -806,23 +926,32 @@ class Rectifier(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 1)
+        return self._r_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_low_pin
 
 
 class Transistor(CircuitBase):
     """三极管"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_B_pin"], Pin],
+        Tuple[Literal["_C_pin"], Pin],
+        Tuple[Literal["_E_pin"], Pin],
+    ]
+    _B_pin: Pin
+    _C_pin: Pin
+    _E_pin: Pin
 
     def __init__(
         self,
@@ -859,6 +988,13 @@ class Transistor(CircuitBase):
         self.is_PNP = is_PNP
         self.gain = gain
         self.max_power = max_power
+        self._all_pins = (
+            ("_B_pin", Pin(self, 0)),
+            ("_C_pin", Pin(self, 1)),
+            ("_E_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -929,19 +1065,28 @@ class Transistor(CircuitBase):
 
     @property
     def B(self) -> Pin:
-        return Pin(self, 0)
+        return self._B_pin
 
     @property
     def C(self) -> Pin:
-        return Pin(self, 1)
+        return self._C_pin
 
     @property
     def E(self) -> Pin:
-        return Pin(self, 2)
+        return self._E_pin
 
 
 class Comparator(CircuitBase):
     """比较器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_o_pin"], Pin],
+        Tuple[Literal["_i_up_pin"], Pin],
+        Tuple[Literal["_i_low_pin"], Pin],
+    ]
+    _o_pin: Pin
+    _i_up_pin: Pin
+    _i_low_pin: Pin
 
     def __init__(
         self,
@@ -967,6 +1112,13 @@ class Comparator(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_o_pin", Pin(self, 0)),
+            ("_i_up_pin", Pin(self, 1)),
+            ("_i_low_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -975,19 +1127,28 @@ class Comparator(CircuitBase):
 
     @property
     def o(self) -> Pin:
-        return Pin(self, 0)
+        return self._o_pin
 
     @property
     def i_up(self) -> Pin:
-        return Pin(self, 1)
+        return self._i_up_pin
 
     @property
     def i_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._i_low_pin
 
 
 class Operational_Amplifier(CircuitBase):
     """运算放大器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_i_neg_pin"], Pin],
+        Tuple[Literal["_i_pos_pin"], Pin],
+        Tuple[Literal["_o_pin"], Pin],
+    ]
+    _i_neg_pin: Pin
+    _i_pos_pin: Pin
+    _o_pin: Pin
 
     def __init__(
         self,
@@ -1034,6 +1195,13 @@ class Operational_Amplifier(CircuitBase):
         self.gain = gain
         self.max_voltage = max_voltage
         self.min_voltage = min_voltage
+        self._all_pins = (
+            ("_i_neg_pin", Pin(self, 0)),
+            ("_i_pos_pin", Pin(self, 1)),
+            ("_o_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @property
     def gain(self) -> num_type:
@@ -1105,19 +1273,32 @@ class Operational_Amplifier(CircuitBase):
 
     @property
     def i_neg(self) -> Pin:
-        return Pin(self, 0)
+        return self._i_neg_pin
 
     @property
     def i_pos(self) -> Pin:
-        return Pin(self, 1)
+        return self._i_pos_pin
 
     @property
     def o(self) -> Pin:
-        return Pin(self, 2)
+        return self._o_pin
 
 
 class Relay_Component(CircuitBase):
     """继电器"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_l_up_pin"], Pin],
+        Tuple[Literal["_l_low_pin"], Pin],
+        Tuple[Literal["_mid_pin"], Pin],
+        Tuple[Literal["_r_up_pin"], Pin],
+        Tuple[Literal["_r_low_pin"], Pin],
+    ]
+    _l_up_pin: Pin
+    _l_low_pin: Pin
+    _mid_pin: Pin
+    _r_up_pin: Pin
+    _r_low_pin: Pin
 
     def __init__(
         self,
@@ -1158,6 +1339,15 @@ class Relay_Component(CircuitBase):
         self.rated_current = rated_current
         self.coil_inductance = coil_inductance
         self.coil_resistance = coil_resistance
+        self._all_pins = (
+            ("_l_up_pin", Pin(self, 0)),
+            ("_l_low_pin", Pin(self, 2)),
+            ("_mid_pin", Pin(self, 1)),
+            ("_r_up_pin", Pin(self, 3)),
+            ("_r_low_pin", Pin(self, 4)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @property
     def pull_in_current(self) -> num_type:
@@ -1234,27 +1424,36 @@ class Relay_Component(CircuitBase):
 
     @property
     def l_up(self) -> Pin:
-        return Pin(self, 0)
+        return self._l_up_pin
 
     @property
     def l_low(self) -> Pin:
-        return Pin(self, 2)
+        return self._l_low_pin
 
     @property
     def mid(self) -> Pin:
-        return Pin(self, 1)
+        return self._mid_pin
 
     @property
     def r_up(self) -> Pin:
-        return Pin(self, 3)
+        return self._r_up_pin
 
     @property
     def r_low(self) -> Pin:
-        return Pin(self, 4)
+        return self._r_low_pin
 
 
 class N_MOSFET(CircuitBase):
     """N-MOSFET"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_D_pin"], Pin],
+        Tuple[Literal["_S_pin"], Pin],
+        Tuple[Literal["_G_pin"], Pin],
+    ]
+    _D_pin: Pin
+    _S_pin: Pin
+    _G_pin: Pin
 
     def __init__(
         self,
@@ -1298,6 +1497,13 @@ class N_MOSFET(CircuitBase):
         self.beta = beta
         self.threshold = threshold
         self.max_power = max_power
+        self._all_pins = (
+            ("_D_pin", Pin(self, 2)),
+            ("_S_pin", Pin(self, 1)),
+            ("_G_pin", Pin(self, 0)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @property
     def beta(self) -> num_type:
@@ -1357,19 +1563,28 @@ class N_MOSFET(CircuitBase):
 
     @property
     def D(self) -> Pin:
-        return Pin(self, 2)
+        return self._D_pin
 
     @property
     def S(self) -> Pin:
-        return Pin(self, 1)
+        return self._S_pin
 
     @property
     def G(self) -> Pin:
-        return Pin(self, 0)
+        return self._G_pin
 
 
 class P_MOSFET(CircuitBase):
     """P-MOSFET"""
+
+    _all_pins: Tuple[
+        Tuple[Literal["_G_pin"], Pin],
+        Tuple[Literal["_D_pin"], Pin],
+        Tuple[Literal["_S_pin"], Pin],
+    ]
+    _G_pin: Pin
+    _S_pin: Pin
+    _D_pin: Pin
 
     def __init__(
         self,
@@ -1407,6 +1622,13 @@ class P_MOSFET(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+        self._all_pins = (
+            ("_G_pin", Pin(self, 0)),
+            ("_D_pin", Pin(self, 1)),
+            ("_S_pin", Pin(self, 2)),
+        )
+        for name, pin in self._all_pins:
+            setattr(self, name, pin)
 
     @final
     @staticmethod
@@ -1415,21 +1637,21 @@ class P_MOSFET(CircuitBase):
 
     @property
     def G(self) -> Pin:
-        return Pin(self, 0)
+        return self._G_pin
 
     @property
     def S(self) -> Pin:
-        return Pin(self, 2)
+        return self._S_pin
 
     @property
     def D(self) -> Pin:
-        return Pin(self, 1)
+        return self._D_pin
 
 
 class Current_Source(CircuitBase):
     """电流源"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 

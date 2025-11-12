@@ -23,7 +23,7 @@ from physicsLab._typing import (
 class Buzzer(CircuitBase):
     """蜂鸣器"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -85,7 +85,7 @@ class Buzzer(CircuitBase):
 class Spark_Gap(CircuitBase):
     """火花隙"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -145,7 +145,7 @@ class Spark_Gap(CircuitBase):
 class Tesla_Coil(CircuitBase):
     """特斯拉线圈"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -299,7 +299,7 @@ class Color_Light_Emitting_Diode(CircuitBase):
 class Dual_Light_Emitting_Diode(CircuitBase):
     """演示发光二极管"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -370,7 +370,7 @@ class Dual_Light_Emitting_Diode(CircuitBase):
 class Electric_Bell(CircuitBase):
     """电铃"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -432,7 +432,7 @@ class Electric_Bell(CircuitBase):
 class Musical_Box(CircuitBase):
     """八音盒"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -721,7 +721,7 @@ class Solenoid(CircuitBase):
 class Electric_Fan(CircuitBase):
     """小电扇"""
 
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
+    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
