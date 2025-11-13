@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import abc
 import inspect
 
 from physicsLab import errors
@@ -63,9 +64,9 @@ class Pin(metaclass=_PinMeta):
         """获取该引脚在该元件中的名字
         @return: (e.g. i_up)
         """
-        for name, a_pin in self.element_self.get_all_pins_property():
-            if a_pin.fget(self.element_self) == self:
-                return name
+        for name, a_pin in self.element_self.all_pins():
+            if a_pin == self:
+                return name[1:-4]
         errors.unreachable()
 
     def get_wires(self) -> List["Wire"]:
@@ -381,12 +382,15 @@ class CircuitBase(ElementBase, metaclass=_CircuitMeta):
         assert not isinstance(self.data["ModelID"], type(Generate))
         return self.data["ModelID"]
 
+    @abc.abstractmethod
+    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
+        raise NotImplementedError
+
     @final
     @classmethod
     def get_all_pins_property(cls):
         """获取该元件的所有引脚对应的property"""
-        # TODO Deprecate this method
-        # i should manually write this function to all subclasses
+        # deprecated
         for name, obj in inspect.getmembers(cls):
             if isinstance(obj, property):
                 property_type = obj.fget.__annotations__.get("return")
