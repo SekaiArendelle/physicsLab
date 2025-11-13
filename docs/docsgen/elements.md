@@ -578,6 +578,11 @@ class Simple_Switch(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -643,6 +648,11 @@ class SPDT_Switch(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -718,6 +728,11 @@ class DPDT_Switch(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -791,6 +806,11 @@ class Push_Switch(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -844,6 +864,11 @@ class Air_Switch(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -913,6 +938,11 @@ class Incandescent_Lamp(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -966,6 +996,11 @@ class Battery_Source(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1023,6 +1058,11 @@ class Student_Source(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1076,6 +1116,11 @@ class Resistor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### fix_resistance
@@ -1139,6 +1184,11 @@ class Fuse_Component(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1192,6 +1242,11 @@ class Slide_Rheostat(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1249,6 +1304,11 @@ class Multimeter(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1302,6 +1362,11 @@ class Galvanometer(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1359,6 +1424,11 @@ class Microammeter(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1412,6 +1482,11 @@ class Electricity_Meter(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1469,6 +1544,11 @@ class Resistance_Box(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1522,6 +1602,11 @@ class Simple_Ammeter(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1579,6 +1664,11 @@ class Simple_Voltmeter(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1632,6 +1722,11 @@ class Logic_Input(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1689,6 +1784,11 @@ class Logic_Output(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1742,6 +1842,11 @@ class Yes_Gate(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1799,6 +1904,11 @@ class No_Gate(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1852,6 +1962,11 @@ class Or_Gate(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -1909,6 +2024,11 @@ class And_Gate(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -1962,6 +2082,11 @@ class Nor_Gate(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2019,6 +2144,11 @@ class Nand_Gate(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2072,6 +2202,11 @@ class Xor_Gate(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2129,6 +2264,11 @@ class Xnor_Gate(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2182,6 +2322,11 @@ class Imp_Gate(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2239,6 +2384,11 @@ class Nimp_Gate(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2292,6 +2442,11 @@ class Half_Adder(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2349,6 +2504,11 @@ class Full_Adder(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2402,6 +2562,11 @@ class Half_Subtractor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2459,6 +2624,11 @@ class Full_Subtractor(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2512,6 +2682,11 @@ class Multiplier(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2569,6 +2744,11 @@ class D_Flipflop(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2622,6 +2802,11 @@ class T_Flipflop(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2679,6 +2864,11 @@ class Real_T_Flipflop(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2732,6 +2922,11 @@ class JK_Flipflop(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2789,6 +2984,11 @@ class Counter(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2844,6 +3044,11 @@ class Random_Generator(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -2897,6 +3102,11 @@ class Eight_Bit_Input(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -2959,6 +3169,11 @@ class Eight_Bit_Display(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3012,6 +3227,11 @@ class Proximity_Sensor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3069,6 +3289,11 @@ class Schmitt_Trigger(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Union[physicsLab.circuit._circuit_core.InputPin, physicsLab.circuit._circuit_core.OutputPin]]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3122,6 +3347,11 @@ class NE555(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3183,6 +3413,11 @@ class Basic_Capacitor(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3240,6 +3475,11 @@ class Basic_Inductor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### fix_inductance
@@ -3303,6 +3543,11 @@ class Basic_Diode(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3356,6 +3601,11 @@ class Light_Emitting_Diode(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3413,6 +3663,11 @@ class Ground_Component(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3466,6 +3721,11 @@ class Transformer(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3523,6 +3783,11 @@ class Tapped_Transformer(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3576,6 +3841,11 @@ class Mutual_Inductor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3633,6 +3903,11 @@ class Rectifier(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3688,6 +3963,11 @@ class Transistor(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3741,6 +4021,11 @@ class Comparator(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3801,6 +4086,11 @@ class Operational_Amplifier(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3854,6 +4144,11 @@ class Relay_Component(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -3911,6 +4206,11 @@ class N_MOSFET(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -3964,6 +4264,11 @@ class P_MOSFET(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4021,6 +4326,11 @@ class Current_Source(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4074,6 +4384,11 @@ class Sinewave_Source(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4131,6 +4446,11 @@ class Square_Source(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4184,6 +4504,11 @@ class Triangle_Source(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4241,6 +4566,11 @@ class Sawtooth_Source(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4294,6 +4624,11 @@ class Pulse_Source(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4351,6 +4686,11 @@ class Accelerometer(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4404,6 +4744,11 @@ class Attitude_Sensor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4461,6 +4806,11 @@ class Gravity_Sensor(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4514,6 +4864,11 @@ class Gyroscope(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4571,6 +4926,11 @@ class Linear_Accelerometer(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4624,6 +4984,11 @@ class Magnetic_Field_Sensor(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4681,6 +5046,11 @@ class Analog_Joystick(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4734,6 +5104,11 @@ class Photodiode(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4791,6 +5166,11 @@ class Photoresistor(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4844,6 +5224,11 @@ class Buzzer(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -4901,6 +5286,11 @@ class Spark_Gap(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -4954,6 +5344,11 @@ class Tesla_Coil(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -5011,6 +5406,11 @@ class Color_Light_Emitting_Diode(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5064,6 +5464,11 @@ class Dual_Light_Emitting_Diode(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -5121,6 +5526,11 @@ class Electric_Bell(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5174,6 +5584,11 @@ class Musical_Box(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -5231,6 +5646,11 @@ class Resistance_Law(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5286,6 +5706,11 @@ class Solenoid(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
 ```
 
+### count_all_pins
+```Python
+    def count_all_pins() -> int
+```
+
 ### get_all_pins_property
 ```Python
     def get_all_pins_property()
@@ -5339,6 +5764,11 @@ class Electric_Fan(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
@@ -5401,6 +5831,11 @@ class Simple_Instrument(CircuitBase):
 ### all_pins
 ```Python
     def all_pins(self) -> Iterator[Tuple[str, physicsLab.circuit._circuit_core.Pin]]
+```
+
+### count_all_pins
+```Python
+    def count_all_pins() -> int
 ```
 
 ### get_all_pins_property
