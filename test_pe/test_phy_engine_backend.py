@@ -100,6 +100,45 @@ class TestPhyEngineBackend(unittest.TestCase):
             else:
                 os.environ["PHYSICSLAB_PHYENGINE_LIB"] = old
 
+    def test_two_vdc_series_one_resistor(self):
+        lib_path = _try_get_lib_path()
+        if lib_path is None:
+            self.skipTest("Phy-Engine dynamic library not available")
+
+        with Experiment(
+            OpenMode.crt,
+            "__test_phyengine_two_vdc_series__",
+            ExperimentType.Circuit,
+            force_crt=True,
+        ) as expe:
+            v1 = Battery_Source(0, 0, 0, voltage=5)
+            v2 = Battery_Source(1, 0, 0, voltage=2)
+            r = Resistor(2, 0, 0, resistance=1000)
+            g = Ground_Component(3, 0, 0)
+
+            # Series sources: GND --(v2 2V)--> mid --(v1 5V)--> top
+            crt_wire(v2.black, g.i)
+            crt_wire(v2.red, v1.black)
+            crt_wire(v1.red, r.red)
+            crt_wire(r.black, g.i)
+
+            sample = analyze_experiment_with_phy_engine(expe, analyze_type="DC", lib_path=lib_path)
+
+            self.assertAlmostEqual(sample.pin_voltage[v2][1], 0.0, places=6)  # v2 black
+            self.assertAlmostEqual(sample.pin_voltage[v2][0], 2.0, places=6)  # v2 red
+            self.assertAlmostEqual(sample.pin_voltage[v1][1], 2.0, places=6)  # v1 black (mid)
+            self.assertAlmostEqual(sample.pin_voltage[v1][0], 7.0, places=6)  # v1 red (top)
+            self.assertAlmostEqual(sample.pin_voltage[r][0], 7.0, places=6)
+            self.assertAlmostEqual(sample.pin_voltage[r][1], 0.0, places=6)
+
+            # Each VDC has 1 branch current (direction depends on implementation); check magnitude.
+            self.assertEqual(len(sample.branch_current[v1]), 1)
+            self.assertEqual(len(sample.branch_current[v2]), 1)
+            self.assertAlmostEqual(abs(sample.branch_current[v1][0]), 0.007, places=6)
+            self.assertAlmostEqual(abs(sample.branch_current[v2][0]), 0.007, places=6)
+
+            expe.close(delete=True)
+
     def test_unsupported_element_raises(self):
         lib_path = _try_get_lib_path()
         if lib_path is None:
