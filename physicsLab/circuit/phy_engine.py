@@ -178,6 +178,10 @@ class _PhyEngineCDLL:
         self.circuit_analyze.argtypes = [ctypes.c_void_p]
         self.circuit_analyze.restype = ctypes.c_int
 
+        self.circuit_digital_clk = self.cdll.circuit_digital_clk
+        self.circuit_digital_clk.argtypes = [ctypes.c_void_p]
+        self.circuit_digital_clk.restype = ctypes.c_int
+
         self.circuit_sample = self.cdll.circuit_sample
         self.circuit_sample.argtypes = [
             ctypes.c_void_p,
@@ -455,6 +459,7 @@ class PhyEngineCircuit:
         tr_step: float = 1e-6,
         tr_stop: float = 1e-6,
         ac_omega: Optional[float] = None,
+        digital_clk: bool = False,
     ) -> PhyEngineSample:
         if self._circuit_ptr is None:
             raise PhyEngineAnalyzeError("circuit is closed")
@@ -475,6 +480,10 @@ class PhyEngineCircuit:
 
         if self._lib.circuit_analyze(self._circuit_ptr) != 0:
             raise PhyEngineAnalyzeError("Phy-Engine circuit_analyze() failed")
+
+        if digital_clk:
+            if self._lib.circuit_digital_clk(self._circuit_ptr) != 0:
+                raise PhyEngineAnalyzeError("Phy-Engine circuit_digital_clk() failed")
 
         comp_size = int(self._comp_size.value)
         total_pins = 0
@@ -541,7 +550,14 @@ def analyze_experiment_with_phy_engine(
     tr_step: float = 1e-6,
     tr_stop: float = 1e-6,
     ac_omega: Optional[float] = None,
+    digital_clk: bool = False,
     lib_path: Optional[Union[str, os.PathLike]] = None,
 ) -> PhyEngineSample:
     with PhyEngineCircuit(experiment, lib_path=lib_path) as c:
-        return c.analyze(analyze_type=analyze_type, tr_step=tr_step, tr_stop=tr_stop, ac_omega=ac_omega)
+        return c.analyze(
+            analyze_type=analyze_type,
+            tr_step=tr_step,
+            tr_stop=tr_stop,
+            ac_omega=ac_omega,
+            digital_clk=digital_clk,
+        )

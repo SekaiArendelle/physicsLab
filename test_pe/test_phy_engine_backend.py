@@ -8,6 +8,12 @@ _IMPORT_ERROR: Optional[BaseException] = None
 try:
     from physicsLab import Experiment, ExperimentType, OpenMode
     from physicsLab.circuit import Battery_Source, Ground_Component, Resistor, crt_wire
+    from physicsLab.circuit.elements.logicCircuit import (
+        And_Gate,
+        Logic_Input,
+        Logic_Output,
+        Yes_Gate,
+    )
     from physicsLab.circuit.phy_engine import (
         PhyEngineNotAvailableError,
         PhyEngineUnsupportedElementError,
@@ -137,6 +143,78 @@ class TestPhyEngineBackend(unittest.TestCase):
             self.assertAlmostEqual(abs(sample.branch_current[v1][0]), 0.007, places=6)
             self.assertAlmostEqual(abs(sample.branch_current[v2][0]), 0.007, places=6)
 
+            expe.close(delete=True)
+
+    def test_digital_yes_gate(self):
+        lib_path = _try_get_lib_path()
+        if lib_path is None:
+            self.skipTest("Phy-Engine dynamic library not available")
+
+        with Experiment(
+            OpenMode.crt,
+            "__test_phyengine_digital_yes__",
+            ExperimentType.Circuit,
+            force_crt=True,
+        ) as expe:
+            inp = Logic_Input(0, 0, 0, output_status=True)
+            gate = Yes_Gate(1, 0, 0)
+            out = Logic_Output(2, 0, 0)
+
+            crt_wire(inp.o, gate.i)
+            crt_wire(gate.o, out.i)
+
+            sample = analyze_experiment_with_phy_engine(
+                expe,
+                analyze_type="DC",
+                lib_path=lib_path,
+                digital_clk=True,
+            )
+            self.assertEqual(sample.pin_digital[out], [True])
+            expe.close(delete=True)
+
+    def test_digital_and_gate_truth_table(self):
+        lib_path = _try_get_lib_path()
+        if lib_path is None:
+            self.skipTest("Phy-Engine dynamic library not available")
+
+        # Case 1: 1 AND 0 -> 0
+        with Experiment(
+            OpenMode.crt,
+            "__test_phyengine_digital_and_10__",
+            ExperimentType.Circuit,
+            force_crt=True,
+        ) as expe:
+            a = Logic_Input(0, 0, 0, output_status=True)
+            b = Logic_Input(0, 1, 0, output_status=False)
+            g = And_Gate(1, 0, 0)
+            o = Logic_Output(2, 0, 0)
+
+            crt_wire(a.o, g.i_up)
+            crt_wire(b.o, g.i_low)
+            crt_wire(g.o, o.i)
+
+            sample = analyze_experiment_with_phy_engine(expe, analyze_type="DC", lib_path=lib_path, digital_clk=True)
+            self.assertEqual(sample.pin_digital[o], [False])
+            expe.close(delete=True)
+
+        # Case 2: 1 AND 1 -> 1
+        with Experiment(
+            OpenMode.crt,
+            "__test_phyengine_digital_and_11__",
+            ExperimentType.Circuit,
+            force_crt=True,
+        ) as expe:
+            a = Logic_Input(0, 0, 0, output_status=True)
+            b = Logic_Input(0, 1, 0, output_status=True)
+            g = And_Gate(1, 0, 0)
+            o = Logic_Output(2, 0, 0)
+
+            crt_wire(a.o, g.i_up)
+            crt_wire(b.o, g.i_low)
+            crt_wire(g.o, o.i)
+
+            sample = analyze_experiment_with_phy_engine(expe, analyze_type="DC", lib_path=lib_path, digital_clk=True)
+            self.assertEqual(sample.pin_digital[o], [True])
             expe.close(delete=True)
 
     def test_unsupported_element_raises(self):
