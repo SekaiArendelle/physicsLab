@@ -877,36 +877,199 @@ class CircuitExperiment:
 
     wires: set
     _is_elementXYZ: bool
-    _elementXYZ_origin_position: Any
-    open_mode: Any
-    _position2elements: Dict
-    _id2element: Dict
     elements: List
-    SAV_PATH: str
     pl_sav: dict
     camera_save: dict
     vision_center: Any
     target_rotation: Any
 
+    # Core experiment attributes
+    experiment_info: ExperimentInfo
+    summary: Summary
+    settings: ExperimentSettings
+
+    def as_sav(self) -> str:
+        """Convert experiment to SAV format JSON string."""
+
+        # Create UserInfo instance
+        user_info = UserInfo()
+
+        # Create ExperimentInfo instance
+        experiment_info = ExperimentInfo(
+            experiment_id=None,
+            experiment_type=0,
+            components=len(self.elements),
+            subject=None,
+            status_save=(
+                json.dumps(self.pl_sav)
+                if hasattr(self, "pl_sav") and self.pl_sav
+                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
+            ),
+            camera_save=(
+                json.dumps(self.camera_save)
+                if hasattr(self, "camera_save") and self.camera_save
+                else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
+            ),
+            version=2404,
+            creation_date=(
+                int(self.pl_sav.get("CreationDate", 0))
+                if hasattr(self, "pl_sav")
+                and self.pl_sav
+                and "CreationDate" in self.pl_sav
+                else 0
+            ),
+            paused=False,
+            summary=None,
+            plots=None,
+        )
+
+        # Create Summary instance
+        summary = Summary(
+            summary_type=0,
+            parent_id=None,
+            parent_name=None,
+            parent_category=None,
+            content_id=None,
+            editor=None,
+            coauthors=[],
+            description=None,
+            localized_description=None,
+            tags=["Type-0"],
+            model_id=None,
+            model_name=None,
+            model_tags=[],
+            version=0,
+            language="Chinese",
+            visits=0,
+            stars=0,
+            supports=0,
+            remixes=0,
+            comments=0,
+            price=0,
+            popularity=0,
+            creation_date=experiment_info.creation_date,
+            update_date=0,
+            sorting_date=0,
+            summary_id=None,
+            category=None,
+            subject="",
+            localized_subject=None,
+            image=0,
+            image_region=0,
+            user=user_info,
+            visibility=0,
+            settings={},
+            anonymous=False,
+            multilingual=False,
+        )
+
+        # Create ExperimentSettings instance
+        settings = ExperimentSettings(
+            creation_date=0,
+            speed=1.0,
+            speed_minimum=0.0002,
+            speed_maximum=2.0,
+            speed_real=0.0,
+            paused=False,
+            version=0,
+            camera_snapshot=None,
+            plots=[],
+            widgets=[],
+            widget_groups=[],
+            bookmarks={},
+            interfaces={"Play-Expanded": False, "Chart-Expanded": False},
+        )
+
+        # Build experiment data using class attributes
+        experiment_data = {
+            "Type": 0,  # Circuit experiment type
+            "Experiment": {
+                "ID": self.experiment_info.id,
+                "Type": self.experiment_info.type,
+                "Components": self.experiment_info.components,
+                "Subject": self.experiment_info.subject,
+                "StatusSave": self.experiment_info.status_save,
+                "CameraSave": self.experiment_info.camera_save,
+                "Version": self.experiment_info.version,
+                "CreationDate": self.experiment_info.creation_date,
+                "Paused": self.experiment_info.paused,
+                "Summary": self.experiment_info.summary,
+                "Plots": self.experiment_info.plots,
+            },
+            "ID": None,  # Circuit experiments don't have IDs
+            "Summary": {
+                "Type": self.summary.type,
+                "ParentID": self.summary.parent_id,
+                "ParentName": self.summary.parent_name,
+                "ParentCategory": self.summary.parent_category,
+                "ContentID": self.summary.content_id,
+                "Editor": self.summary.editor,
+                "Coauthors": self.summary.coauthors,
+                "Description": self.summary.description,
+                "LocalizedDescription": self.summary.localized_description,
+                "Tags": self.summary.tags,
+                "ModelID": self.summary.model_id,
+                "ModelName": self.summary.model_name,
+                "ModelTags": self.summary.model_tags,
+                "Version": self.summary.version,
+                "Language": self.summary.language,
+                "Visits": self.summary.visits,
+                "Stars": self.summary.stars,
+                "Supports": self.summary.supports,
+                "Remixes": self.summary.remixes,
+                "Comments": self.summary.comments,
+                "Price": self.summary.price,
+                "Popularity": self.summary.popularity,
+                "CreationDate": self.summary.creation_date,
+                "UpdateDate": self.summary.update_date,
+                "SortingDate": self.summary.sorting_date,
+                "ID": self.summary.id,
+                "Category": self.summary.category,
+                "Subject": self.summary.subject,
+                "LocalizedSubject": self.summary.localized_subject,
+                "Image": self.summary.image,
+                "ImageRegion": self.summary.image_region,
+                "User": {
+                    "ID": self.summary.user.id,
+                    "Nickname": self.summary.user.nickname,
+                    "Signature": self.summary.user.signature,
+                    "Avatar": self.summary.user.avatar,
+                    "AvatarRegion": self.summary.user.avatar_region,
+                    "Decoration": self.summary.user.decoration,
+                    "Verification": self.summary.user.verification,
+                },
+                "Visibility": self.summary.visibility,
+                "Settings": self.summary.settings,
+                "Anonymous": self.summary.anonymous,
+                "Multilingual": self.summary.multilingual,
+            },
+            "CreationDate": self.settings.creation_date,
+            "Speed": self.settings.speed,
+            "SpeedMinimum": self.settings.speed_minimum,
+            "SpeedMaximum": self.settings.speed_maximum,
+            "SpeedReal": self.settings.speed_real,
+            "Paused": self.settings.paused,
+            "Version": self.settings.version,
+            "CameraSnapshot": self.settings.camera_snapshot,
+            "Plots": self.settings.plots,
+            "Widgets": self.settings.widgets,
+            "WidgetGroups": self.settings.widget_groups,
+            "Bookmarks": self.settings.bookmarks,
+            "Interfaces": self.settings.interfaces,
+        }
+
+        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+
     def __init__(
         self,
-        open_mode: Any,
-        _position2elements: Dict,
-        _id2element: Dict,
         Elements: List,
-        SAV_PATH: str,
         PlSav: dict,
         CameraSave: dict,
         VisionCenter: Any,
         TargetRotation: Any,
         wires: set,
         is_elementXYZ: bool,
-        elementXYZ_origin_position: Any,
     ) -> None:
-        if not isinstance(SAV_PATH, str):
-            raise TypeError(
-                f"Parameter `SAV_PATH` must be of type `str`, but got value `{SAV_PATH}` of type `{type(SAV_PATH).__name__}`"
-            )
         if not isinstance(wires, set):
             raise TypeError(
                 f"Parameter `wires` must be of type `set`, but got value `{wires}` of type `{type(wires).__name__}`"
@@ -916,55 +1079,305 @@ class CircuitExperiment:
                 f"Parameter `is_elementXYZ` must be of type `bool`, but got value `{is_elementXYZ}` of type `{type(is_elementXYZ).__name__}`"
             )
 
-        self.open_mode = open_mode
-        self._position2elements = _position2elements
-        self._id2element = _id2element
         self.elements = Elements
-        self.SAV_PATH = SAV_PATH
         self.pl_sav = PlSav
         self.camera_save = CameraSave
         self.vision_center = VisionCenter
         self.target_rotation = TargetRotation
         self.wires = wires
         self._is_elementXYZ = is_elementXYZ
-        self._elementXYZ_origin_position = elementXYZ_origin_position
+
+        # Initialize core experiment attributes
+        self._init_experiment_attributes()
+
+    def _init_experiment_attributes(self) -> None:
+        """Initialize experiment info, summary, and settings attributes."""
+
+        # Create UserInfo instance
+        user_info = UserInfo()
+
+        # Create ExperimentInfo instance
+        self.experiment_info = ExperimentInfo(
+            experiment_id=None,
+            experiment_type=0,
+            components=len(self.elements),
+            subject=None,
+            status_save=(
+                json.dumps(self.pl_sav)
+                if hasattr(self, "pl_sav") and self.pl_sav
+                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
+            ),
+            camera_save=(
+                json.dumps(self.camera_save)
+                if hasattr(self, "camera_save") and self.camera_save
+                else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
+            ),
+            version=2404,
+            creation_date=(
+                int(self.pl_sav.get("CreationDate", 0))
+                if hasattr(self, "pl_sav")
+                and self.pl_sav
+                and "CreationDate" in self.pl_sav
+                else 0
+            ),
+            paused=False,
+            summary=None,
+            plots=None,
+        )
+
+        # Create Summary instance
+        self.summary = Summary(
+            summary_type=0,
+            parent_id=None,
+            parent_name=None,
+            parent_category=None,
+            content_id=None,
+            editor=None,
+            coauthors=[],
+            description=None,
+            localized_description=None,
+            tags=["Type-0"],
+            model_id=None,
+            model_name=None,
+            model_tags=[],
+            version=0,
+            language="Chinese",
+            visits=0,
+            stars=0,
+            supports=0,
+            remixes=0,
+            comments=0,
+            price=0,
+            popularity=0,
+            creation_date=self.experiment_info.creation_date,
+            update_date=0,
+            sorting_date=0,
+            summary_id=None,
+            category=None,
+            subject="",
+            localized_subject=None,
+            image=0,
+            image_region=0,
+            user=user_info,
+            visibility=0,
+            settings={},
+            anonymous=False,
+            multilingual=False,
+        )
+
+        # Create ExperimentSettings instance
+        self.settings = ExperimentSettings(
+            creation_date=0,
+            speed=1.0,
+            speed_minimum=0.0002,
+            speed_maximum=2.0,
+            speed_real=0.0,
+            paused=False,
+            version=0,
+            camera_snapshot=None,
+            plots=[],
+            widgets=[],
+            widget_groups=[],
+            bookmarks={},
+            interfaces={"Play-Expanded": False, "Chart-Expanded": False},
+        )
 
 
 class CelestialExperiment:
     """Experimental support for celestial experiment."""
 
-    open_mode: Any
-    _position2elements: Dict
-    _id2element: Dict
     elements: List
-    SAV_PATH: str
     pl_sav: dict
     camera_save: dict
     vision_center: Any
     target_rotation: Any
 
+    # Core experiment attributes
+    experiment_info: ExperimentInfo
+    summary: Summary
+    settings: ExperimentSettings
+
+    def as_sav(self) -> str:
+        """Convert experiment to SAV format JSON string."""
+
+        # Create UserInfo instance
+        user_info = UserInfo()
+
+        # Create ExperimentInfo instance
+        experiment_info = ExperimentInfo(
+            experiment_id=None,
+            experiment_type=3,
+            components=len(self.elements),
+            subject=None,
+            status_save=(
+                json.dumps(self.pl_sav)
+                if hasattr(self, "pl_sav") and self.pl_sav
+                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
+            ),
+            camera_save=(
+                json.dumps(self.camera_save)
+                if hasattr(self, "camera_save") and self.camera_save
+                else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
+            ),
+            version=2407,
+            creation_date=(
+                int(self.pl_sav.get("CreationDate", 0))
+                if hasattr(self, "pl_sav")
+                and self.pl_sav
+                and "CreationDate" in self.pl_sav
+                else 0
+            ),
+            paused=False,
+            summary=None,
+            plots=None,
+        )
+
+        # Create Summary instance
+        summary = Summary(
+            summary_type=3,
+            parent_id=None,
+            parent_name=None,
+            parent_category=None,
+            content_id=None,
+            editor=None,
+            coauthors=[],
+            description=None,
+            localized_description=None,
+            tags=["Type-3"],
+            model_id=None,
+            model_name=None,
+            model_tags=[],
+            version=0,
+            language=None,
+            visits=0,
+            stars=0,
+            supports=0,
+            remixes=0,
+            comments=0,
+            price=0,
+            popularity=0,
+            creation_date=experiment_info.creation_date,
+            update_date=0,
+            sorting_date=0,
+            summary_id=None,
+            category=None,
+            subject=None,
+            localized_subject=None,
+            image=0,
+            image_region=0,
+            user=user_info,
+            visibility=0,
+            settings={},
+            anonymous=False,
+            multilingual=False,
+        )
+
+        # Create ExperimentSettings instance
+        settings = ExperimentSettings(
+            creation_date=0,
+            speed=1.0,
+            speed_minimum=0.1,
+            speed_maximum=10.0,
+            speed_real=0.0,
+            paused=False,
+            version=0,
+            camera_snapshot=None,
+            plots=[],
+            widgets=[],
+            widget_groups=[],
+            bookmarks={},
+            interfaces={"Play-Expanded": False, "Chart-Expanded": False},
+        )
+
+        # Build experiment data using class attributes
+        experiment_data = {
+            "Type": 3,  # Celestial experiment type
+            "Experiment": {
+                "ID": self.experiment_info.id,
+                "Type": self.experiment_info.type,
+                "Components": self.experiment_info.components,
+                "Subject": self.experiment_info.subject,
+                "StatusSave": self.experiment_info.status_save,
+                "CameraSave": self.experiment_info.camera_save,
+                "Version": self.experiment_info.version,
+                "CreationDate": self.experiment_info.creation_date,
+                "Paused": self.experiment_info.paused,
+                "Summary": self.experiment_info.summary,
+                "Plots": self.experiment_info.plots,
+            },
+            "ID": None,  # Celestial experiments don't have IDs
+            "Summary": {
+                "Type": self.summary.type,
+                "ParentID": self.summary.parent_id,
+                "ParentName": self.summary.parent_name,
+                "ParentCategory": self.summary.parent_category,
+                "ContentID": self.summary.content_id,
+                "Editor": self.summary.editor,
+                "Coauthors": self.summary.coauthors,
+                "Description": self.summary.description,
+                "LocalizedDescription": self.summary.localized_description,
+                "Tags": self.summary.tags,
+                "ModelID": self.summary.model_id,
+                "ModelName": self.summary.model_name,
+                "ModelTags": self.summary.model_tags,
+                "Version": self.summary.version,
+                "Language": self.summary.language,
+                "Visits": self.summary.visits,
+                "Stars": self.summary.stars,
+                "Supports": self.summary.supports,
+                "Remixes": self.summary.remixes,
+                "Comments": self.summary.comments,
+                "Price": self.summary.price,
+                "Popularity": self.summary.popularity,
+                "CreationDate": self.summary.creation_date,
+                "UpdateDate": self.summary.update_date,
+                "SortingDate": self.summary.sorting_date,
+                "ID": self.summary.id,
+                "Category": self.summary.category,
+                "Subject": self.summary.subject,
+                "LocalizedSubject": self.summary.localized_subject,
+                "Image": self.summary.image,
+                "ImageRegion": self.summary.image_region,
+                "User": {
+                    "ID": self.summary.user.id,
+                    "Nickname": self.summary.user.nickname,
+                    "Signature": self.summary.user.signature,
+                    "Avatar": self.summary.user.avatar,
+                    "AvatarRegion": self.summary.user.avatar_region,
+                    "Decoration": self.summary.user.decoration,
+                    "Verification": self.summary.user.verification,
+                },
+                "Visibility": self.summary.visibility,
+                "Settings": self.summary.settings,
+                "Anonymous": self.summary.anonymous,
+                "Multilingual": self.summary.multilingual,
+            },
+            "CreationDate": self.settings.creation_date,
+            "Speed": self.settings.speed,
+            "SpeedMinimum": self.settings.speed_minimum,
+            "SpeedMaximum": self.settings.speed_maximum,
+            "SpeedReal": self.settings.speed_real,
+            "Paused": self.settings.paused,
+            "Version": self.settings.version,
+            "CameraSnapshot": self.settings.camera_snapshot,
+            "Plots": self.settings.plots,
+            "Widgets": self.settings.widgets,
+            "WidgetGroups": self.settings.widget_groups,
+            "Bookmarks": self.settings.bookmarks,
+            "Interfaces": self.settings.interfaces,
+        }
+
+        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+
     def __init__(
         self,
-        open_mode: Any,
-        _position2elements: Dict,
-        _id2element: Dict,
         Elements: List,
-        SAV_PATH: str,
         PlSav: dict,
         CameraSave: dict,
         VisionCenter: Any,
         TargetRotation: Any,
     ) -> None:
-        if not isinstance(SAV_PATH, str):
-            raise TypeError(
-                f"Parameter `SAV_PATH` must be of type `str`, but got value `{SAV_PATH}` of type `{type(SAV_PATH).__name__}`"
-            )
-
-        self.open_mode = open_mode
-        self._position2elements = _position2elements
-        self._id2element = _id2element
         self.elements = Elements
-        self.SAV_PATH = SAV_PATH
         self.pl_sav = PlSav
         self.camera_save = CameraSave
         self.vision_center = VisionCenter
@@ -974,38 +1387,198 @@ class CelestialExperiment:
 class ElectromagnetismExperiment:
     """Experimental support for electromagnetism experiment."""
 
-    open_mode: Any
-    _position2elements: Dict
-    _id2element: Dict
     elements: List
-    SAV_PATH: str
     pl_sav: dict
     camera_save: dict
     vision_center: Any
     target_rotation: Any
 
+    # Core experiment attributes
+    experiment_info: ExperimentInfo
+    summary: Summary
+    settings: ExperimentSettings
+
+    def as_sav(self) -> str:
+        """Convert experiment to SAV format JSON string."""
+
+        # Create UserInfo instance
+        user_info = UserInfo()
+
+        # Create ExperimentInfo instance
+        experiment_info = ExperimentInfo(
+            experiment_id=None,
+            experiment_type=4,
+            components=len(self.elements),
+            subject=None,
+            status_save=(
+                json.dumps(self.pl_sav)
+                if hasattr(self, "pl_sav") and self.pl_sav
+                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
+            ),
+            camera_save=(
+                json.dumps(self.camera_save)
+                if hasattr(self, "camera_save") and self.camera_save
+                else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
+            ),
+            version=2405,
+            creation_date=(
+                int(self.pl_sav.get("CreationDate", 0))
+                if hasattr(self, "pl_sav")
+                and self.pl_sav
+                and "CreationDate" in self.pl_sav
+                else 0
+            ),
+            paused=False,
+            summary=None,
+            plots=None,
+        )
+
+        # Create Summary instance
+        summary = Summary(
+            summary_type=4,
+            parent_id=None,
+            parent_name=None,
+            parent_category=None,
+            content_id=None,
+            editor=None,
+            coauthors=[],
+            description=None,
+            localized_description=None,
+            tags=["Type-4"],
+            model_id=None,
+            model_name=None,
+            model_tags=[],
+            version=0,
+            language=None,
+            visits=0,
+            stars=0,
+            supports=0,
+            remixes=0,
+            comments=0,
+            price=0,
+            popularity=0,
+            creation_date=experiment_info.creation_date,
+            update_date=0,
+            sorting_date=0,
+            summary_id=None,
+            category=None,
+            subject=None,
+            localized_subject=None,
+            image=0,
+            image_region=0,
+            user=user_info,
+            visibility=0,
+            settings={},
+            anonymous=False,
+            multilingual=False,
+        )
+
+        # Create ExperimentSettings instance
+        settings = ExperimentSettings(
+            creation_date=0,
+            speed=1.0,
+            speed_minimum=0.1,
+            speed_maximum=2.0,
+            speed_real=0.0,
+            paused=False,
+            version=0,
+            camera_snapshot=None,
+            plots=[],
+            widgets=[],
+            widget_groups=[],
+            bookmarks={},
+            interfaces={"Play-Expanded": False, "Chart-Expanded": False},
+        )
+
+        # Build experiment data using class attributes
+        experiment_data = {
+            "Type": 4,  # Electromagnetism experiment type
+            "Experiment": {
+                "ID": self.experiment_info.id,
+                "Type": self.experiment_info.type,
+                "Components": self.experiment_info.components,
+                "Subject": self.experiment_info.subject,
+                "StatusSave": self.experiment_info.status_save,
+                "CameraSave": self.experiment_info.camera_save,
+                "Version": self.experiment_info.version,
+                "CreationDate": self.experiment_info.creation_date,
+                "Paused": self.experiment_info.paused,
+                "Summary": self.experiment_info.summary,
+                "Plots": self.experiment_info.plots,
+            },
+            "ID": None,
+            "Summary": {
+                "Type": self.summary.type,
+                "ParentID": self.summary.parent_id,
+                "ParentName": self.summary.parent_name,
+                "ParentCategory": self.summary.parent_category,
+                "ContentID": self.summary.content_id,
+                "Editor": self.summary.editor,
+                "Coauthors": self.summary.coauthors,
+                "Description": self.summary.description,
+                "LocalizedDescription": self.summary.localized_description,
+                "Tags": self.summary.tags,
+                "ModelID": self.summary.model_id,
+                "ModelName": self.summary.model_name,
+                "ModelTags": self.summary.model_tags,
+                "Version": self.summary.version,
+                "Language": self.summary.language,
+                "Visits": self.summary.visits,
+                "Stars": self.summary.stars,
+                "Supports": self.summary.supports,
+                "Remixes": self.summary.remixes,
+                "Comments": self.summary.comments,
+                "Price": self.summary.price,
+                "Popularity": self.summary.popularity,
+                "CreationDate": self.summary.creation_date,
+                "UpdateDate": self.summary.update_date,
+                "SortingDate": self.summary.sorting_date,
+                "ID": self.summary.id,
+                "Category": self.summary.category,
+                "Subject": self.summary.subject,
+                "LocalizedSubject": self.summary.localized_subject,
+                "Image": self.summary.image,
+                "ImageRegion": self.summary.image_region,
+                "User": {
+                    "ID": self.summary.user.id,
+                    "Nickname": self.summary.user.nickname,
+                    "Signature": self.summary.user.signature,
+                    "Avatar": self.summary.user.avatar,
+                    "AvatarRegion": self.summary.user.avatar_region,
+                    "Decoration": self.summary.user.decoration,
+                    "Verification": self.summary.user.verification,
+                },
+                "Visibility": self.summary.visibility,
+                "Settings": self.summary.settings,
+                "Anonymous": self.summary.anonymous,
+                "Multilingual": self.summary.multilingual,
+            },
+            "CreationDate": self.settings.creation_date,
+            "Speed": self.settings.speed,
+            "SpeedMinimum": self.settings.speed_minimum,
+            "SpeedMaximum": self.settings.speed_maximum,
+            "SpeedReal": self.settings.speed_real,
+            "Paused": self.settings.paused,
+            "Version": self.settings.version,
+            "CameraSnapshot": self.settings.camera_snapshot,
+            "Plots": self.settings.plots,
+            "Widgets": self.settings.widgets,
+            "WidgetGroups": self.settings.widget_groups,
+            "Bookmarks": self.settings.bookmarks,
+            "Interfaces": self.settings.interfaces,
+        }
+
+        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+
     def __init__(
         self,
-        open_mode: Any,
-        _position2elements: Dict,
-        _id2element: Dict,
         Elements: List,
-        SAV_PATH: str,
         PlSav: dict,
         CameraSave: dict,
         VisionCenter: Any,
         TargetRotation: Any,
     ) -> None:
-        if not isinstance(SAV_PATH, str):
-            raise TypeError(
-                f"Parameter `SAV_PATH` must be of type `str`, but got value `{SAV_PATH}` of type `{type(SAV_PATH).__name__}`"
-            )
-
-        self.open_mode = open_mode
-        self._position2elements = _position2elements
-        self._id2element = _id2element
         self.elements = Elements
-        self.SAV_PATH = SAV_PATH
         self.pl_sav = PlSav
         self.camera_save = CameraSave
         self.vision_center = VisionCenter
