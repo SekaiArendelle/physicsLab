@@ -170,12 +170,12 @@ async def async_get_avatar(
 class User:
     """该class仅提供阻塞的api"""
 
-    token: str
+    token: Optional[str]
     auth_code: str
     # True: 绑定了账号; False: 未绑定账号，是匿名登录
     is_binded: bool
     # 硬件指纹
-    device_token: str
+    device_token: Optional[str]
     # 账号id
     user_id: str
     # 昵称
@@ -195,34 +195,99 @@ class User:
 
     def __init__(
         self,
-        info: _api_result,
+        token: Optional[str],
+        auth_code: str,
+        is_binded: bool,
+        device_token: Optional[str],
+        user_id: str,
+        nickname: Optional[str],
+        signature: Optional[str],
+        gold: int,
+        level: int,
+        avatar: int,
+        avatar_region: int,
+        decoration: int,
+        verification,
+        statistic: dict,
     ) -> None:
         """仅提供数据的初始化"""
+        if not isinstance(token, (str, type(None))):
+            raise TypeError(
+                f"Parameter `token` must be of type `str`, but got value `{token}` of type `{type(token).__name__}`"
+            )
+        if not isinstance(auth_code, str):
+            raise TypeError(
+                f"Parameter `auth_code` must be of type `str`, but got value `{auth_code}` of type `{type(auth_code).__name__}`"
+            )
+        if not isinstance(is_binded, bool):
+            raise TypeError(
+                f"Parameter `is_binded` must be of type `bool`, but got value `{is_binded}` of type `{type(is_binded).__name__}`"
+            )
+        if not isinstance(device_token, (str, type(None))):
+            raise TypeError(
+                f"Parameter `device_token` must be of type `str`, but got value `{device_token}` of type `{type(device_token).__name__}`"
+            )
+        if not isinstance(user_id, str):
+            raise TypeError(
+                f"Parameter `user_id` must be of type `str`, but got value `{user_id}` of type `{type(user_id).__name__}`"
+            )
+        if not isinstance(nickname, (str, type(None))):
+            raise TypeError(
+                f"Parameter `nickname` must be of type `str` or None, but got value `{nickname}` of type `{type(nickname).__name__}`"
+            )
+        if not isinstance(signature, (str, type(None))):
+            raise TypeError(
+                f"Parameter `signature` must be of type `str` or None, but got value `{signature}` of type `{type(signature).__name__}`"
+            )
+        if not isinstance(gold, int):
+            raise TypeError(
+                f"Parameter `gold` must be of type `int`, but got value `{gold}` of type `{type(gold).__name__}`"
+            )
+        if not isinstance(level, int):
+            raise TypeError(
+                f"Parameter `level` must be of type `int`, but got value `{level}` of type `{type(level).__name__}`"
+            )
+        if not isinstance(avatar, int):
+            raise TypeError(
+                f"Parameter `avatar` must be of type `int`, but got value `{avatar}` of type `{type(avatar).__name__}`"
+            )
+        if not isinstance(avatar_region, int):
+            raise TypeError(
+                f"Parameter `avatar_region` must be of type `int`, but got value `{avatar_region}` of type `{type(avatar_region).__name__}`"
+            )
+        if not isinstance(decoration, int):
+            raise TypeError(
+                f"Parameter `decoration` must be of type `int`, but got value `{decoration}` of type `{type(decoration).__name__}`"
+            )
+        if not isinstance(statistic, dict):
+            raise TypeError(
+                f"Parameter `statistic` must be of type `dict`, but got value `{statistic}` of type `{type(statistic).__name__}`"
+            )
         # TODO 用assert_true检查类型
-        self.token: str = info["Token"]
-        assert info["AuthCode"] is not None, errors.BUG_REPORT
-        self.auth_code: str = info["AuthCode"]
+        assert auth_code is not None, errors.BUG_REPORT
+        self.token: Optional[str] = token
+        self.auth_code: str = auth_code
         # True: 绑定了账号; False: 未绑定账号，是匿名登录
-        self.is_binded: bool = info["Data"]["User"]["IsBinded"]
+        self.is_binded: bool = is_binded
         # 硬件指纹
-        self.device_token: str = info["Data"]["DeviceToken"]
+        self.device_token: Optional[str] = device_token
         # 账号id
-        self.user_id: str = info["Data"]["User"]["ID"]
+        self.user_id: str = user_id
         # 昵称
-        self.nickname: Optional[str] = info["Data"]["User"]["Nickname"]
+        self.nickname: Optional[str] = nickname
         # 签名
-        self.signature: Optional[str] = info["Data"]["User"]["Signature"]
+        self.signature: Optional[str] = signature
         # 金币数量
-        self.gold: int = info["Data"]["User"]["Gold"]
+        self.gold: int = gold
         # 用户等级
-        self.level: int = info["Data"]["User"]["Level"]
+        self.level: int = level
         # 头像的索引
-        self.avatar: int = info["Data"]["User"]["Avatar"]
-        self.avatar_region: int = info["Data"]["User"]["AvatarRegion"]
-        self.decoration: int = info["Data"]["User"]["Decoration"]
-        self.verification = info["Data"]["User"]["Verification"]
+        self.avatar: int = avatar
+        self.avatar_region: int = avatar_region
+        self.decoration: int = decoration
+        self.verification = verification
         # 存储了所有与每日活动有关的奖励信息 (比如ActivityID)
-        self.statistic: dict = info["Data"]["Statistic"]
+        self.statistic: dict = statistic
 
     def get_library(self) -> _api_result:
         """获取社区作品列表
@@ -1617,7 +1682,24 @@ def anonymous_login() -> User:
         },
     )
 
-    return User(_check_response(response))
+    api_result = _check_response(response)
+    assert api_result["AuthCode"] is not None, errors.BUG_REPORT
+    return User(
+        token=api_result["Token"],
+        auth_code=api_result["AuthCode"],
+        is_binded=api_result["Data"]["User"]["IsBinded"],
+        device_token=api_result["Data"]["DeviceToken"],
+        user_id=api_result["Data"]["User"]["ID"],
+        nickname=api_result["Data"]["User"]["Nickname"],
+        signature=api_result["Data"]["User"]["Signature"],
+        gold=api_result["Data"]["User"]["Gold"],
+        level=api_result["Data"]["User"]["Level"],
+        avatar=api_result["Data"]["User"]["Avatar"],
+        avatar_region=api_result["Data"]["User"]["AvatarRegion"],
+        decoration=api_result["Data"]["User"]["Decoration"],
+        verification=api_result["Data"]["User"]["Verification"],
+        statistic=api_result["Data"]["Statistic"],
+    )
 
 
 def email_login(email: str, password: str) -> User:
@@ -1653,7 +1735,24 @@ def email_login(email: str, password: str) -> User:
         },
     )
 
-    return User(_check_response(response))
+    api_result = _check_response(response)
+    assert api_result["AuthCode"] is not None, errors.BUG_REPORT
+    return User(
+        token=api_result["Token"],
+        auth_code=api_result["AuthCode"],
+        is_binded=api_result["Data"]["User"]["IsBinded"],
+        device_token=api_result["Data"]["DeviceToken"],
+        user_id=api_result["Data"]["User"]["ID"],
+        nickname=api_result["Data"]["User"]["Nickname"],
+        signature=api_result["Data"]["User"]["Signature"],
+        gold=api_result["Data"]["User"]["Gold"],
+        level=api_result["Data"]["User"]["Level"],
+        avatar=api_result["Data"]["User"]["Avatar"],
+        avatar_region=api_result["Data"]["User"]["AvatarRegion"],
+        decoration=api_result["Data"]["User"]["Decoration"],
+        verification=api_result["Data"]["User"]["Verification"],
+        statistic=api_result["Data"]["Statistic"],
+    )
 
 
 def token_login(token: str, auth_code: str) -> User:
@@ -1691,7 +1790,24 @@ def token_login(token: str, auth_code: str) -> User:
         },
     )
 
-    return User(_check_response(response))
+    api_result = _check_response(response)
+    assert api_result["AuthCode"] is not None, errors.BUG_REPORT
+    return User(
+        token=api_result["Token"],
+        auth_code=api_result["AuthCode"],
+        is_binded=api_result["Data"]["User"]["IsBinded"],
+        device_token=api_result["Data"]["DeviceToken"],
+        user_id=api_result["Data"]["User"]["ID"],
+        nickname=api_result["Data"]["User"]["Nickname"],
+        signature=api_result["Data"]["User"]["Signature"],
+        gold=api_result["Data"]["User"]["Gold"],
+        level=api_result["Data"]["User"]["Level"],
+        avatar=api_result["Data"]["User"]["Avatar"],
+        avatar_region=api_result["Data"]["User"]["AvatarRegion"],
+        decoration=api_result["Data"]["User"]["Decoration"],
+        verification=api_result["Data"]["User"]["Verification"],
+        statistic=api_result["Data"]["Statistic"],
+    )
 
 
 async def async_anonymous_login() -> Awaitable[User]:
