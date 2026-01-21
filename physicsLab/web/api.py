@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""对物实网络api的封装
-除了上传实验的api的封装在class Experiment的__upload
-该文件提供多线程风格的api的调用方式的支持
+"""Wrapper for Physics-Lab-AR web API
+Except for experiment upload API which is encapsulated in class Experiment's __upload
+This file provides support for multi-threaded style API calls
 """
 
 import os
@@ -30,12 +30,12 @@ async def _async_wrapper(func: Callable, *args, **kwargs):
 
 
 class _api_result(TypedDict):
-    """物实api返回体的结构
+    """Structure of Physics-Lab-AR API response
 
     Attributes:
-        Token: 令牌
-        AuthCode: 鉴权码
-        Data: 实际返回的数据
+        Token: Access token
+        AuthCode: Authorization code
+        Data: Actual returned data
     """
 
     Token: str
@@ -46,15 +46,15 @@ class _api_result(TypedDict):
 def _check_response(
     response: requests.Response, err_callback: Optional[Callable] = None
 ) -> _api_result:
-    """检查返回的response
+    """Check the returned response
 
     Args:
-        response: requests响应对象
-        err_callback: 自定义物实返回的status对应的报错信息,
-                      要求传入status_code(捕获物实返回体中的status_code), 无返回值
+        response: requests response object
+        err_callback: Custom error message for Physics-Lab-AR returned status,
+                      requires status_code (captures status_code from Physics-Lab-AR response body), no return value
 
     Returns:
-        _api_result: 物实api返回体结构
+        _api_result: Physics-Lab-AR API response structure
     """
     errors.assert_true(err_callback is None or callable(err_callback))
 
@@ -74,10 +74,10 @@ def _check_response(
 
 
 def get_start_page() -> _api_result:
-    """获取主页数据
+    """Get homepage data
 
     Returns:
-        _api_result: 物实api返回体结构
+        _api_result: Physics-Lab-AR API response structure
     """
     response = requests.get("https://physics-api-cn.turtlesim.com/Users")
 
@@ -95,17 +95,17 @@ def get_avatar(
     size_category: str,
     usehttps: bool = False,
 ) -> bytes:
-    """获取头像/实验封面
+    """Get avatar/experiment cover
 
     Args:
-        target_id: 用户id或实验id
-        index: 历史图片的索引
-        category: 只能为 "experiments" 或 "users"
-        size_category: 只能为 "small.round" 或 "thumbnail" 或 "full"
-        usehttps: 是否使用HTTPS协议，由于证书和域名不匹配，所以如果使用，则不会验证证书
+        target_id: User ID or experiment ID
+        index: Index of historical image
+        category: Must be "experiments" or "users"
+        size_category: Must be "small.round", "thumbnail", or "full"
+        usehttps: Whether to use HTTPS protocol, due to certificate and domain mismatch, certificate will not be verified if used
 
     Returns:
-        bytes: 图片数据
+        bytes: Image data
     """
     if not isinstance(target_id, str):
         raise TypeError(
@@ -129,11 +129,11 @@ def get_avatar(
         )
     if category not in ("experiments", "users"):
         raise ValueError(
-            f"Parameter `category` must be one of ['experiments', 'users'], but got value `{category} of type '{category}'"
+            f"Parameter `category` must be one of ['experiments', 'users'], but got value `{category} of type '{category}'`"
         )
     if size_category not in ("small.round", "thumbnail", "full"):
         raise ValueError(
-            f"Parameter `size_category` must be one of ['small.round', 'thumbnail', 'full'], but got value `{size_category} of type '{size_category}'"
+            f"Parameter `size_category` must be one of ['small.round', 'thumbnail', 'full'], but got value `{size_category} of type '{size_category}'`"
         )
 
     if category == "users":
@@ -168,29 +168,29 @@ async def async_get_avatar(
 
 
 class User:
-    """该class仅提供阻塞的api"""
+    """This class only provides blocking API"""
 
     token: Optional[str]
     auth_code: str
-    # True: 绑定了账号; False: 未绑定账号，是匿名登录
+    # True: Account bound; False: Account not bound, anonymous login
     is_binded: bool
-    # 硬件指纹
+    # Hardware fingerprint
     device_token: Optional[str]
-    # 账号id
+    # Account ID
     user_id: str
-    # 昵称
+    # Nickname
     nickname: Optional[str]
-    # 签名
+    # Signature
     signature: Optional[str]
-    # 金币数量
+    # Gold coin amount
     gold: int
-    # 用户等级
+    # User level
     level: int
-    # 头像的索引
+    # Avatar index
     avatar: int
     avatar_region: int
     decoration: int
-    # 存储了所有与每日活动有关的奖励信息 (比如ActivityID)
+    # Stores all reward information related to daily activities (such as ActivityID)
     statistic: dict
 
     def __init__(
@@ -210,7 +210,7 @@ class User:
         verification,
         statistic: dict,
     ) -> None:
-        """仅提供数据的初始化"""
+        """Data initialization only"""
         if not isinstance(token, (str, type(None))):
             raise TypeError(
                 f"Parameter `token` must be of type `str`, but got value `{token}` of type `{type(token).__name__}`"
@@ -263,37 +263,30 @@ class User:
             raise TypeError(
                 f"Parameter `statistic` must be of type `dict`, but got value `{statistic}` of type `{type(statistic).__name__}`"
             )
-        # TODO 用assert_true检查类型
+        # TODO Use assert_true to check types
         assert auth_code is not None, errors.BUG_REPORT
         self.token: Optional[str] = token
         self.auth_code: str = auth_code
-        # True: 绑定了账号; False: 未绑定账号，是匿名登录
+        # True: Account bound; False: Account not bound, anonymous login
         self.is_binded: bool = is_binded
-        # 硬件指纹
         self.device_token: Optional[str] = device_token
-        # 账号id
         self.user_id: str = user_id
-        # 昵称
         self.nickname: Optional[str] = nickname
-        # 签名
         self.signature: Optional[str] = signature
-        # 金币数量
         self.gold: int = gold
-        # 用户等级
         self.level: int = level
-        # 头像的索引
         self.avatar: int = avatar
         self.avatar_region: int = avatar_region
         self.decoration: int = decoration
         self.verification = verification
-        # 存储了所有与每日活动有关的奖励信息 (比如ActivityID)
+        # Stores all reward information related to daily activities (such as ActivityID)
         self.statistic: dict = statistic
 
     def get_library(self) -> _api_result:
-        """获取社区作品列表
+        """Get community works list
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         response = requests.post(
             "https://physics-api-cn.turtlesim.com/Contents/GetLibrary",
@@ -325,21 +318,21 @@ class User:
         skip: int = 0,
         from_skip: Optional[str] = None,
     ) -> _api_result:
-        """查询实验
+        """Query experiments
 
         Args:
-            category: 实验区还是黑洞区
-            tags: 根据列表内的物实实验的标签进行对应的搜索
-            exclude_tags: 除了列表内的标签的实验都会被搜索到
-            languages: 根据列表内的语言进行对应的搜索
-            exclude_languages: 除了列表内的语言的实验都会被搜索到
-            user_id: 指定搜索的作品的发布者
-            take: 搜索数量
-            skip: 跳过搜索数量
-            from_skip: 起始位置标识符
+            category: Experiment area or black hole area
+            tags: Search for experiments with corresponding Physics-Lab-AR experiment tags in the list
+            exclude_tags: All experiments except those with tags in the list will be searched
+            languages: Search for experiments with corresponding languages in the list
+            exclude_languages: All experiments except those with languages in the list will be searched
+            user_id: Specify the publisher of the works to search for
+            take: Number of searches
+            skip: Number of searches to skip
+            from_skip: Starting position identifier
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(category, Category):
             raise TypeError(
@@ -351,7 +344,7 @@ class User:
             )
         if tags is not None and not all(isinstance(tag, Tag) for tag in tags):
             raise TypeError(
-                f"Parameter `tags` must be a list of Tag enum instances, but got value `{tags} of type list containing non-Tag elements"
+                f"Parameter `tags` must be a list of Tag enum instances, but got value `{tags} of type list containing non-Tag elements`"
             )
         if not isinstance(exclude_tags, (list, type(None))):
             raise TypeError(
@@ -361,7 +354,7 @@ class User:
             isinstance(tag, Tag) for tag in exclude_tags
         ):
             raise TypeError(
-                f"Parameter `exclude_tags` must be a list of Tag enum instances, but got value `{exclude_tags} of type list containing non-Tag elements"
+                f"Parameter `exclude_tags` must be a list of Tag enum instances, but got value `{exclude_tags} of type list containing non-Tag elements`"
             )
         if not isinstance(languages, (list, type(None))):
             raise TypeError(
@@ -381,7 +374,7 @@ class User:
             isinstance(language, str) for language in exclude_languages
         ):
             raise TypeError(
-                f"Parameter `exclude_languages` must be a list of str, but got value `{exclude_languages} of type list containing non-str elements"
+                f"Parameter `exclude_languages` must be a list of str, but got value `{exclude_languages} of type list containing non-str elements`"
             )
         if not isinstance(user_id, (str, type(None))):
             raise TypeError(
@@ -476,15 +469,15 @@ class User:
         content_id: str,
         category: Optional[Category] = None,
     ) -> _api_result:
-        """获取实验
+        """Get experiment
 
         Args:
-            content_id: 当category不为None时, content_id为实验ID,
-                       否则会被识别为get_summary()["Data"]["ContentID"]的结果
-            category: 实验区还是黑洞区
+            content_id: When category is not None, content_id is experiment ID,
+                       otherwise it will be recognized as get_summary()["Data"]["ContentID"] result
+            category: Experiment area or black hole area
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -496,7 +489,7 @@ class User:
             )
 
         if category is not None:
-            # 如果传入的是实验ID, 先获取summary来得到ContentID
+            # If experiment ID is passed, first get summary to obtain ContentID
             content_id = self.get_summary(content_id, category)["Data"]["ContentID"]
 
         response = requests.post(
@@ -523,19 +516,19 @@ class User:
     def confirm_experiment(
         self, summary_id: str, category: Category, image_counter: int
     ) -> _api_result:
-        """确认发布实验
+        """Confirm experiment publication
 
         Args:
-            summary_id: 摘要ID
-            category: 实验区还是黑洞区
-            image_counter: 图片计数器
+            summary_id: Summary ID
+            category: Experiment area or black hole area
+            image_counter: Image counter
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
 
         Notes:
-            低级API, 请勿直接使用
-            使用Experiment.update()与Experiment.upload()方法来发布实验
+            Low-level API, do not use directly
+            Use Experiment.update() and Experiment.upload() methods to publish experiments
         """
         if not isinstance(summary_id, str):
             raise TypeError(
@@ -577,15 +570,15 @@ class User:
     def remove_experiment(
         self, summary_id: str, category: Category, reason: Optional[str] = None
     ) -> _api_result:
-        """隐藏实验
+        """Hide experiment
 
         Args:
-            summary_id: 实验ID
-            category: 实验区还是黑洞区
-            reason: 隐藏原因
+            summary_id: Experiment ID
+            category: Experiment area or black hole area
+            reason: Reason for hiding
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(summary_id, str):
             raise TypeError(
@@ -643,17 +636,17 @@ class User:
         reply_id: Optional[str] = None,
         special: Optional[str] = None,
     ) -> _api_result:
-        """发表评论
+        """Post comment
 
         Args:
-            target_id: 目标用户/实验的ID
+            target_id: Target user/experiment ID
             target_type: User, Discussion, Experiment
-            content: 评论内容
-            reply_id: 被回复的user的ID (可被自动推导)
-            special: 为 "Reminder" 的话则是发送警告, 为None则是普通的评论
+            content: Comment content
+            reply_id: ID of user being replied to (can be automatically derived)
+            special: "Reminder" for sending warning, None for normal comment
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -683,7 +676,7 @@ class User:
         if reply_id is None:
             reply_id = ""
 
-            # 物实支持多语: 中文、英文、法文、德文、西班牙文、日文、乌克兰文、波兰文
+            # Physics-Lab-AR supports multiple languages: Chinese, English, French, German, Spanish, Japanese, Ukrainian, Polish
             if (
                 content.startswith("回复@")
                 or content.startswith("Reply@")
@@ -747,18 +740,18 @@ class User:
         )
 
     def remove_comment(self, comment_id: str, target_type: str) -> _api_result:
-        """删除评论
+        """Delete comment
 
         Args:
-            comment_id: 评论ID, 可以通过`get_comments`获取
+            comment_id: Comment ID, can be obtained through `get_comments`
             target_type: User, Discussion, Experiment
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(comment_id, str):
             raise TypeError(
-                f"Parameter `comment_id` must be of type `str`, but got value `{commend_id}` of type `{type(comment_id).__name__}`"
+                f"Parameter `comment_id` must be of type `str`, but got value `{comment_id}` of type `{type(comment_id).__name__}`"
             )
         if not isinstance(target_type, str):
             raise TypeError(
@@ -865,14 +858,14 @@ class User:
         )
 
     def get_summary(self, content_id: str, category: Category) -> _api_result:
-        """获取实验介绍
+        """Get experiment introduction
 
         Args:
-            content_id: 实验ID
-            category: 实验区还是黑洞区
+            content_id: Experiment ID
+            category: Experiment area or black hole area
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -913,14 +906,14 @@ class User:
         return await _async_wrapper(self.get_summary, content_id, category)
 
     def get_derivatives(self, content_id: str, category: Category) -> _api_result:
-        """获取作品的详细信息, 物实第一次读取作品会使用此接口
+        """Get work details, Physics-Lab-AR uses this interface when reading works for the first time
 
         Args:
-            content_id: 实验ID
-            category: 实验区还是黑洞区
+            content_id: Experiment ID
+            category: Experiment area or black hole area
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -952,13 +945,13 @@ class User:
         return await _async_wrapper(self.get_derivatives, content_id, category)
 
     def get_user_by_name(self, name: str) -> _api_result:
-        """获取用户信息
+        """Get user information
 
         Args:
-            name: 用户名
+            name: Username
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(name, str):
             raise TypeError(
@@ -980,13 +973,13 @@ class User:
         return await _async_wrapper(self.get_user_by_name, name)
 
     def get_user_by_id(self, id: str) -> _api_result:
-        """获取用户信息
+        """Get user information
 
         Args:
-            id: 用户ID
+            id: User ID
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(id, str):
             raise TypeError(
@@ -1012,14 +1005,14 @@ class User:
         msg: str,
         get_user_mode: enums.GetUserMode,
     ) -> _api_result:
-        """获取用户信息
+        """Get user information
 
         Args:
-            msg: 用户ID/用户名
-            get_user_mode: 根据ID/用户名获取用户信息
+            msg: User ID/Username
+            get_user_mode: Get user information by ID/Username
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
 
         Notes:
             Only for compatibility, use `get_user_by_id` or `get_user_by_name` is recommended
@@ -1049,10 +1042,10 @@ class User:
         return await _async_wrapper(self.get_user, msg, get_user_mode)
 
     def get_profile(self) -> _api_result:
-        """获取用户主页信息
+        """Get user homepage information
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         response = requests.post(
             "https://physics-api-cn.turtlesim.com:443/Contents/GetProfile",
@@ -1074,16 +1067,16 @@ class User:
     def star_content(
         self, content_id: str, category: Category, star_type: int, status: bool = True
     ) -> _api_result:
-        """收藏/支持 某个实验
+        """Favorite/Support an experiment
 
         Args:
-            content_id: 实验ID
-            category: 实验区, 黑洞区
-            star_type: 0: 收藏, 1: 使用金币支持实验
-            status: True: 收藏, False: 取消收藏 (对支持无作用)
+            content_id: Experiment ID
+            category: Experiment area, Black hole area
+            star_type: 0: Favorite, 1: Support experiment with gold coins
+            status: True: Favorite, False: Unfavorite (no effect on support)
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -1103,7 +1096,7 @@ class User:
             )
         if star_type not in (0, 1):
             raise ValueError(
-                f"Parameter `star_type` must be one of [0, 1], but got value `{star_type} of type '{star_type}'"
+                f"Parameter `star_type` must be one of [0, 1], but got value `{star_type} of type '{star_type}'`"
             )
 
         response = requests.post(
@@ -1137,18 +1130,18 @@ class User:
     def upload_image(
         self, policy: str, authorization: str, image_path: str
     ) -> _api_result:
-        """上传实验图片
+        """Upload experiment image
 
         Args:
-            authorization: 可通过/Contents/SubmitExperiment["Data"]["Token"]["Policy"]获取
-            policy: 可通过/Contents/SubmitExperiment的["Data"]["Token"]["Policy"]获取
-            image_path: 待上传的图片在本地的路径
+            authorization: Can be obtained through /Contents/SubmitExperiment["Data"]["Token"]["Policy"]
+            policy: Can be obtained through /Contents/SubmitExperiment["Data"]["Token"]["Policy"]
+            image_path: Local path of image to be uploaded
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
 
         Notes:
-            该API为低级API, 上传图片推荐使用封装得更加完善的Experiment.upload()与Experiment.update()方法
+            This API is a low-level API, it is recommended to use the more complete Experiment.upload() and Experiment.update() methods for uploading images
         """
         if policy is None or authorization is None:
             raise RuntimeError("Sorry, Physics-Lab-AR can't upload this iamge")
@@ -1194,13 +1187,13 @@ class User:
         )
 
     def get_message(self, message_id: str) -> _api_result:
-        """读取系统邮件消息
+        """Read system email message
 
         Args:
-            message_id: 消息的id
+            message_id: Message ID
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(message_id, str):
             raise TypeError(
@@ -1231,17 +1224,17 @@ class User:
         take: int = 16,
         no_templates: bool = True,
     ) -> _api_result:
-        """获取用户收到的消息
+        """Get messages received by user
 
         Args:
-            category_id: 消息类型:
-                0: 全部, 1: 系统邮件, 2: 关注和粉丝, 3: 评论和回复, 4: 作品通知, 5: 管理记录
-            skip: 跳过skip条消息
-            take: 取take条消息
-            no_templates: 是否不返回消息种类的模板消息
+            category_id: Message type:
+                0: All, 1: System email, 2: Followers and fans, 3: Comments and replies, 4: Work notifications, 5: Management records
+            skip: Skip skip messages
+            take: Take take messages
+            no_templates: Whether to not return template messages for message types
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if category_id not in (0, 1, 2, 3, 4, 5):
             raise TypeError(
@@ -1295,16 +1288,16 @@ class User:
         skip: int = 0,
         take: int = 16,
     ) -> _api_result:
-        """获取支持列表
+        """Get support list
 
         Args:
-            content_id: 内容ID
-            category: .Experiment 或 .Discussion
-            skip: 传入一个时间戳, 跳过skip条消息
-            take: 取take条消息
+            content_id: Content ID
+            category: .Experiment or .Discussion
+            skip: Pass in a timestamp, skip skip messages
+            take: Take take messages
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -1359,17 +1352,17 @@ class User:
         take: int = 20,
         query: str = "",  # TODO 获取编辑，志愿者列表啊之类的貌似也是这个api
     ) -> _api_result:
-        """获取用户的关注/粉丝列表
+        """Get user's followers/following list
 
         Args:
-            user_id: 用户ID
-            display_type: 只能为 Follower: 粉丝, Following: 关注
-            skip: 跳过skip个用户
-            take: 取take个用户
-            query: 为用户id或昵称
+            user_id: User ID
+            display_type: Can only be Follower: followers, Following: following
+            skip: Skip skip users
+            take: Take take users
+            query: User ID or nickname
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if display_type not in ("Follower", "Following"):
             raise ValueError(
@@ -1426,14 +1419,14 @@ class User:
         )
 
     def follow(self, target_id: str, action: bool = True) -> _api_result:
-        """关注用户
+        """Follow user
 
         Args:
-            target_id: 被关注的用户的id
-            action: true为关注, false为取消关注
+            target_id: ID of user to be followed
+            action: true to follow, false to unfollow
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1465,13 +1458,13 @@ class User:
         return await _async_wrapper(self.follow, target_id, action)
 
     def rename(self, nickname: str) -> _api_result:
-        """修改用户昵称
+        """Change user nickname
 
         Args:
-            nickname: 新昵称
+            nickname: New nickname
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(nickname, str):
             raise TypeError(
@@ -1497,13 +1490,13 @@ class User:
         return await _async_wrapper(self.rename, nickname)
 
     def modify_information(self, target: str) -> _api_result:
-        """修改用户签名
+        """Modify user signature
 
         Args:
-            target: 新签名
+            target: New signature
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(target, str):
             raise TypeError(
@@ -1529,14 +1522,14 @@ class User:
         return await _async_wrapper(self.modify_information, target)
 
     def receive_bonus(self, activity_id: str, index: int) -> _api_result:
-        """领取每日签到奖励
+        """Claim daily check-in reward
 
         Args:
-            activity_id: 活动id
-            index: 该活动的第几次奖励
+            activity_id: Activity ID
+            index: Which reward of the activity
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(activity_id, str):
             raise TypeError(
@@ -1573,15 +1566,15 @@ class User:
         return await _async_wrapper(self.receive_bonus, activity_id, index)
 
     def ban(self, target_id: str, reason: str, length: int) -> _api_result:
-        """封禁用户
+        """Ban user
 
         Args:
-            target_id: 要封禁的用户的id
-            reason: 封禁理由
-            length: 封禁天数
+            target_id: ID of user to be banned
+            reason: Ban reason
+            length: Ban duration in days
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1596,7 +1589,7 @@ class User:
                 f"Parameter length must be of type `int`, but got value `{length}` of type `{type(length).__name__}`"
             )
 
-        if length <= 0:  # TODO 改天试试负数会发生什么
+        if length <= 0:  # TODO Try negative number someday
             raise ValueError
 
         response = requests.post(
@@ -1621,14 +1614,14 @@ class User:
         return await _async_wrapper(self.ban, target_id, reason, length)
 
     def unban(self, target_id: str, reason: str) -> _api_result:
-        """解除封禁
+        """Unban user
 
         Args:
-            target_id: 要解除封禁的用户的id
-            reason: 解封理由
+            target_id: ID of user to be unbanned
+            reason: Unban reason
 
         Returns:
-            _api_result: 物实api返回体结构
+            _api_result: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1659,7 +1652,7 @@ class User:
 
 
 def anonymous_login() -> User:
-    """匿名登录物实"""
+    """Anonymous login to Physics-Lab-AR"""
     plar_version = plAR.get_plAR_version()
     if plar_version is not None:
         plar_version = int(f"{plar_version[0]}{plar_version[1]}{plar_version[2]}")
@@ -1703,7 +1696,7 @@ def anonymous_login() -> User:
 
 
 def email_login(email: str, password: str) -> User:
-    """通过邮箱登录物实"""
+    """Login to Physics-Lab-AR via email"""
     if not isinstance(email, str):
         raise TypeError(
             f"Parameter email must be of type `str`, but got value {email} of type `{type(email).__name__}`"
@@ -1756,7 +1749,7 @@ def email_login(email: str, password: str) -> User:
 
 
 def token_login(token: str, auth_code: str) -> User:
-    """通过token登录物实"""
+    """Login to Physics-Lab-AR via token"""
     if not isinstance(token, str):
         raise TypeError(
             f"Parameter email must be of type `str`, but got value {token} of type `{type(token).__name__}`"
