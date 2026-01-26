@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
-from typing import Optional, List, Dict, Any, TypedDict
+from typing import Optional, List, Dict, Any
 
 
 # StatusSave JSON structure types
-class ElementProperties(TypedDict, total=False):
+class ElementProperties:
     high_level: float
     low_level: float
     max_current: float
@@ -18,7 +18,7 @@ class ElementProperties(TypedDict, total=False):
     switch: float
 
 
-class ElementStatistics(TypedDict, total=False):
+class ElementStatistics:
     current: float
     voltage: float
     power: float
@@ -33,13 +33,13 @@ class ElementStatistics(TypedDict, total=False):
     instantaneous_resistance: float
 
 
-class ElementPosition(TypedDict):
+class ElementPosition:
     x: float
     y: float
     magnitude: float
 
 
-class Wire(TypedDict):
+class Wire:
     source: str
     source_pin: int
     target: str
@@ -47,7 +47,7 @@ class Wire(TypedDict):
     color_name: str
 
 
-class CircuitElement(TypedDict):
+class CircuitElement:
     model_id: str
     identifier: str
     label: Optional[str]
@@ -62,13 +62,13 @@ class CircuitElement(TypedDict):
     diagram_rotation: float
 
 
-class StatusSaveData(TypedDict, total=False):
+class StatusSaveData:
     simulation_speed: float
     elements: List[CircuitElement]
     wires: List[Wire]
 
 
-class CameraPosition(TypedDict):
+class CameraPosition:
     mode: int
     distance: float
     vision_center: str  # Format: "x,y,z"
