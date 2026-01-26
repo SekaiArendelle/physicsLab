@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import json
 from typing import Optional, List, Dict, Any
 
@@ -33,7 +31,7 @@ class ElementStatistics:
     instantaneous_resistance: float
 
 
-class ElementPosition:
+class DiagramPosition:
     x: float
     y: float
     magnitude: float
@@ -58,7 +56,7 @@ class CircuitElement:
     position: str  # Format: "x,y,z"
     rotation: str  # Format: "x,y,z"
     diagram_cached: bool
-    diagram_position: ElementPosition
+    diagram_position: DiagramPosition
     diagram_rotation: float
 
 
