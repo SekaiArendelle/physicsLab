@@ -878,10 +878,8 @@ class CircuitExperiment:
     wires: set
     _is_elementXYZ: bool
     elements: List
-    pl_sav: dict
     camera_save: dict
-    vision_center: Any
-    target_rotation: Any
+    camera_position: CameraPosition
 
     # Core experiment attributes
     experiment_info: ExperimentInfo
@@ -900,24 +898,14 @@ class CircuitExperiment:
             experiment_type=0,
             components=len(self.elements),
             subject=None,
-            status_save=(
-                json.dumps(self.pl_sav)
-                if hasattr(self, "pl_sav") and self.pl_sav
-                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
-            ),
+            status_save='{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}',
             camera_save=(
                 json.dumps(self.camera_save)
                 if hasattr(self, "camera_save") and self.camera_save
                 else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
             ),
             version=2404,
-            creation_date=(
-                int(self.pl_sav.get("CreationDate", 0))
-                if hasattr(self, "pl_sav")
-                and self.pl_sav
-                and "CreationDate" in self.pl_sav
-                else 0
-            ),
+            creation_date=0,
             paused=False,
             summary=None,
             plots=None,
@@ -1063,10 +1051,8 @@ class CircuitExperiment:
     def __init__(
         self,
         Elements: List,
-        PlSav: dict,
         CameraSave: dict,
-        VisionCenter: Any,
-        TargetRotation: Any,
+        camera_position: CameraPosition,
         wires: set,
         is_elementXYZ: bool,
     ) -> None:
@@ -1080,10 +1066,8 @@ class CircuitExperiment:
             )
 
         self.elements = Elements
-        self.pl_sav = PlSav
         self.camera_save = CameraSave
-        self.vision_center = VisionCenter
-        self.target_rotation = TargetRotation
+        self.camera_position = camera_position
         self.wires = wires
         self._is_elementXYZ = is_elementXYZ
 
@@ -1102,24 +1086,14 @@ class CircuitExperiment:
             experiment_type=0,
             components=len(self.elements),
             subject=None,
-            status_save=(
-                json.dumps(self.pl_sav)
-                if hasattr(self, "pl_sav") and self.pl_sav
-                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
-            ),
+            status_save='{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}',
             camera_save=(
                 json.dumps(self.camera_save)
                 if hasattr(self, "camera_save") and self.camera_save
                 else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
             ),
             version=2404,
-            creation_date=(
-                int(self.pl_sav.get("CreationDate", 0))
-                if hasattr(self, "pl_sav")
-                and self.pl_sav
-                and "CreationDate" in self.pl_sav
-                else 0
-            ),
+            creation_date=0,
             paused=False,
             summary=None,
             plots=None,
@@ -1187,10 +1161,8 @@ class CelestialExperiment:
     """Experimental support for celestial experiment."""
 
     elements: List
-    pl_sav: dict
     camera_save: dict
-    vision_center: Any
-    target_rotation: Any
+    camera_position: CameraPosition
 
     # Core experiment attributes
     experiment_info: ExperimentInfo
@@ -1209,24 +1181,14 @@ class CelestialExperiment:
             experiment_type=3,
             components=len(self.elements),
             subject=None,
-            status_save=(
-                json.dumps(self.pl_sav)
-                if hasattr(self, "pl_sav") and self.pl_sav
-                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
-            ),
+            status_save='{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}',
             camera_save=(
                 json.dumps(self.camera_save)
                 if hasattr(self, "camera_save") and self.camera_save
                 else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
             ),
             version=2407,
-            creation_date=(
-                int(self.pl_sav.get("CreationDate", 0))
-                if hasattr(self, "pl_sav")
-                and self.pl_sav
-                and "CreationDate" in self.pl_sav
-                else 0
-            ),
+            creation_date=0,
             paused=False,
             summary=None,
             plots=None,
@@ -1372,26 +1334,20 @@ class CelestialExperiment:
     def __init__(
         self,
         Elements: List,
-        PlSav: dict,
         CameraSave: dict,
-        VisionCenter: Any,
-        TargetRotation: Any,
+        camera_position: CameraPosition,
     ) -> None:
         self.elements = Elements
-        self.pl_sav = PlSav
         self.camera_save = CameraSave
-        self.vision_center = VisionCenter
-        self.target_rotation = TargetRotation
+        self.camera_position = camera_position
 
 
 class ElectromagnetismExperiment:
     """Experimental support for electromagnetism experiment."""
 
     elements: List
-    pl_sav: dict
     camera_save: dict
-    vision_center: Any
-    target_rotation: Any
+    camera_position: CameraPosition
 
     # Core experiment attributes
     experiment_info: ExperimentInfo
@@ -1410,24 +1366,14 @@ class ElectromagnetismExperiment:
             experiment_type=4,
             components=len(self.elements),
             subject=None,
-            status_save=(
-                json.dumps(self.pl_sav)
-                if hasattr(self, "pl_sav") and self.pl_sav
-                else '{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}'
-            ),
+            status_save='{"SimulationSpeed":1.0,"Elements":[],"Wires":[]}',
             camera_save=(
                 json.dumps(self.camera_save)
                 if hasattr(self, "camera_save") and self.camera_save
                 else '{"Mode":0,"Distance":1.4,"VisionCenter":"0,1.08,-0.45","TargetRotation":"50,0,0"}'
             ),
             version=2405,
-            creation_date=(
-                int(self.pl_sav.get("CreationDate", 0))
-                if hasattr(self, "pl_sav")
-                and self.pl_sav
-                and "CreationDate" in self.pl_sav
-                else 0
-            ),
+            creation_date=0,
             paused=False,
             summary=None,
             plots=None,
@@ -1573,13 +1519,9 @@ class ElectromagnetismExperiment:
     def __init__(
         self,
         Elements: List,
-        PlSav: dict,
         CameraSave: dict,
-        VisionCenter: Any,
-        TargetRotation: Any,
+        camera_position: CameraPosition,
     ) -> None:
         self.elements = Elements
-        self.pl_sav = PlSav
         self.camera_save = CameraSave
-        self.vision_center = VisionCenter
-        self.target_rotation = TargetRotation
+        self.camera_position = camera_position
