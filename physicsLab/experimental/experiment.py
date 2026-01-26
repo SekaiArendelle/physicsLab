@@ -888,8 +888,8 @@ class CircuitExperiment:
     summary: Summary
     settings: ExperimentSettings
 
-    def as_sav(self) -> str:
-        """Convert experiment to SAV format JSON string."""
+    def as_sav(self) -> dict:
+        """Convert experiment to SAV format dictionary."""
 
         # Create UserInfo instance
         user_info = UserInfo()
@@ -1058,7 +1058,7 @@ class CircuitExperiment:
             "Interfaces": self.settings.interfaces,
         }
 
-        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+        return experiment_data
 
     def __init__(
         self,
@@ -1197,8 +1197,8 @@ class CelestialExperiment:
     summary: Summary
     settings: ExperimentSettings
 
-    def as_sav(self) -> str:
-        """Convert experiment to SAV format JSON string."""
+    def as_sav(self) -> dict:
+        """Convert experiment to SAV format dictionary."""
 
         # Create UserInfo instance
         user_info = UserInfo()
@@ -1367,7 +1367,7 @@ class CelestialExperiment:
             "Interfaces": self.settings.interfaces,
         }
 
-        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+        return experiment_data
 
     def __init__(
         self,
@@ -1398,8 +1398,8 @@ class ElectromagnetismExperiment:
     summary: Summary
     settings: ExperimentSettings
 
-    def as_sav(self) -> str:
-        """Convert experiment to SAV format JSON string."""
+    def as_sav(self) -> dict:
+        """Convert experiment to SAV format dictionary."""
 
         # Create UserInfo instance
         user_info = UserInfo()
@@ -1568,7 +1568,7 @@ class ElectromagnetismExperiment:
             "Interfaces": self.settings.interfaces,
         }
 
-        return json.dumps(experiment_data, indent=2, ensure_ascii=False)
+        return experiment_data
 
     def __init__(
         self,
