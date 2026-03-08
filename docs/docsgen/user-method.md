@@ -1,467 +1,467 @@
 
-## 封禁用户
+## Ban user
 ```Python
-def ban(self, target_id: str, reason: str, length: int) -> physicsLab.web.api._api_result
+def ban(self, target_id: str, reason: str, length: int) -> dict
 ```
 
 Args:
-*  target_id: 要封禁的用户的id
-*  reason: 封禁理由
-*  length: 封禁天数
+*  target_id: ID of user to be banned
+*  reason: Ban reason
+*  length: Ban duration in days
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_ban(self, target_id: str, reason: str, length: int) -> Awaitable[physicsLab.web.api._api_result]
+async def async_ban(self, target_id: str, reason: str, length: int) -> Awaitable[dict]
 ```
 
-## 确认发布实验
+## Confirm experiment publication
 ```Python
-def confirm_experiment(self, summary_id: str, category: physicsLab.enums.Category, image_counter: int) -> physicsLab.web.api._api_result
+def confirm_experiment(self, summary_id: str, category: physicsLab.enums.Category, image_counter: int) -> dict
 ```
 
 Args:
-*  summary_id: 摘要ID
-*  category: 实验区还是黑洞区
-*  image_counter: 图片计数器
+*  summary_id: Summary ID
+*  category: Experiment area or black hole area
+*  image_counter: Image counter
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
 Notes:
-*  低级API, 请勿直接使用
-*  使用Experiment.update()与Experiment.upload()方法来发布实验
+*  Low-level API, do not use directly
+*  Use Experiment.update() and Experiment.upload() methods to publish experiments
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_confirm_experiment(self, summary_id: str, category: physicsLab.enums.Category, image_counter: int) -> Awaitable[physicsLab.web.api._api_result]
+async def async_confirm_experiment(self, summary_id: str, category: physicsLab.enums.Category, image_counter: int) -> Awaitable[dict]
 ```
 
-## 关注用户
+## Follow user
 ```Python
-def follow(self, target_id: str, action: bool = True) -> physicsLab.web.api._api_result
+def follow(self, target_id: str, action: bool = True) -> dict
 ```
 
 Args:
-*  target_id: 被关注的用户的id
-*  action: true为关注, false为取消关注
+*  target_id: ID of user to be followed
+*  action: true to follow, false to unfollow
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_follow(self, target_id: str, action: bool = True) -> Awaitable[physicsLab.web.api._api_result]
+async def async_follow(self, target_id: str, action: bool = True) -> Awaitable[dict]
 ```
 
-## 获取评论板信息
+## Get comment board information
 ```Python
-def get_comments(self, target_id: str, target_type: str, take: int = 16, skip: int = 0, comment_id: Optional[str] = None) -> physicsLab.web.api._api_result
+def get_comments(self, target_id: str, target_type: str, take: int = 16, skip: int = 0, comment_id: str | None = None) -> dict
 ```
 
 Args:
-*  target_id: 物实用户的ID/实验的id
+*  target_id: ID of Wushi user / ID of the experiment
 *  target_type: User, Discussion, Experiment
-*  take: 获取留言的数量
-*  skip: 跳过的留言数量, 为(unix时间戳 * 1000)
-*  comment_id: 从comment_id开始获取take条消息 (另一种skip的规则)
+*  take: Number of comments to retrieve
+*  skip: Number of comments to skip (value is unix timestamp * 1000)
+*  comment_id: Retrieve `take` number of messages starting from this comment_id (an alternative skip rule)
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Structure of the response body returned by Wushi API
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_comments(self, target_id: str, target_type: str, take: int = 16, skip: int = 0, comment_id: Optional[str] = None) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_comments(self, target_id: str, target_type: str, take: int = 16, skip: int = 0, comment_id: str | None = None) -> Awaitable[dict]
 ```
 
-## 获取作品的详细信息, 物实第一次读取作品会使用此接口
+## Get work details, Physics-Lab-AR uses this interface when reading works for the first time
 ```Python
-def get_derivatives(self, content_id: str, category: physicsLab.enums.Category) -> physicsLab.web.api._api_result
+def get_derivatives(self, content_id: str, category: physicsLab.enums.Category) -> dict
 ```
 
 Args:
-*  content_id: 实验ID
-*  category: 实验区还是黑洞区
+*  content_id: Experiment ID
+*  category: Experiment area or black hole area
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_derivatives(self, content_id: str, category: physicsLab.enums.Category) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_derivatives(self, content_id: str, category: physicsLab.enums.Category) -> Awaitable[dict]
 ```
 
-## 获取实验
+## Get experiment
 ```Python
-def get_experiment(self, content_id: str, category: Optional[physicsLab.enums.Category] = None) -> physicsLab.web.api._api_result
+def get_experiment(self, content_id: str, category: physicsLab.enums.Category | None = None) -> dict
 ```
 
 Args:
-*  content_id: 当category不为None时, content_id为实验ID,
-*  否则会被识别为get_summary()["Data"]["ContentID"]的结果
-*  category: 实验区还是黑洞区
+*  content_id: When category is not None, content_id is experiment ID,
+*  otherwise it will be recognized as get_summary()["Data"]["ContentID"] result
+*  category: Experiment area or black hole area
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_experiment(self, content_id: str, category: Optional[physicsLab.enums.Category] = None) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_experiment(self, content_id: str, category: physicsLab.enums.Category | None = None) -> Awaitable[dict]
 ```
 
-## 获取社区作品列表
+## Get community works list
 ```Python
-def get_library(self) -> physicsLab.web.api._api_result
+def get_library(self) -> dict
 ```
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_library(self) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_library(self) -> Awaitable[dict]
 ```
 
-## 读取系统邮件消息
+## Read system email message
 ```Python
-def get_message(self, message_id: str) -> physicsLab.web.api._api_result
+def get_message(self, message_id: str) -> dict
 ```
 
 Args:
-*  message_id: 消息的id
+*  message_id: Message ID
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_message(self, message_id: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_message(self, message_id: str) -> Awaitable[dict]
 ```
 
-## 获取用户收到的消息
+## Get messages received by user
 ```Python
-def get_messages(self, category_id: int, skip: int = 0, take: int = 16, no_templates: bool = True) -> physicsLab.web.api._api_result
+def get_messages(self, category_id: int, skip: int = 0, take: int = 16, no_templates: bool = True) -> dict
 ```
 
 Args:
-*  category_id: 消息类型:
-*  0: 全部, 1: 系统邮件, 2: 关注和粉丝, 3: 评论和回复, 4: 作品通知, 5: 管理记录
-*  skip: 跳过skip条消息
-*  take: 取take条消息
-*  no_templates: 是否不返回消息种类的模板消息
+*  category_id: Message type:
+*  0: All, 1: System email, 2: Followers and fans, 3: Comments and replies, 4: Work notifications, 5: Management records
+*  skip: Skip skip messages
+*  take: Take take messages
+*  no_templates: Whether to not return template messages for message types
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_messages(self, category_id: int, skip: int = 0, take: int = 16, no_templates: bool = True) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_messages(self, category_id: int, skip: int = 0, take: int = 16, no_templates: bool = True) -> Awaitable[dict]
 ```
 
-## 获取用户主页信息
+## Get user homepage information
 ```Python
-def get_profile(self) -> physicsLab.web.api._api_result
+def get_profile(self) -> dict
 ```
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_profile(self) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_profile(self) -> Awaitable[dict]
 ```
 
-## 获取用户的关注/粉丝列表
+## Get user's followers/following list
 ```Python
-def get_relations(self, user_id: str, display_type: str = 'Follower', skip: int = 0, take: int = 20, query: str = '') -> physicsLab.web.api._api_result
+def get_relations(self, user_id: str, display_type: str = 'Follower', skip: int = 0, take: int = 20, query: str = '') -> dict
 ```
 
 Args:
-*  user_id: 用户ID
-*  display_type: 只能为 Follower: 粉丝, Following: 关注
-*  skip: 跳过skip个用户
-*  take: 取take个用户
-*  query: 为用户id或昵称
+*  user_id: User ID
+*  display_type: Can only be Follower: followers, Following: following
+*  skip: Skip skip users
+*  take: Take take users
+*  query: User ID or nickname
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_relations(self, user_id: str, display_type: str = 'Follower', skip: int = 0, take: int = 20, query: str = '') -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_relations(self, user_id: str, display_type: str = 'Follower', skip: int = 0, take: int = 20, query: str = '') -> Awaitable[dict]
 ```
 
-## 获取实验介绍
+## Get experiment introduction
 ```Python
-def get_summary(self, content_id: str, category: physicsLab.enums.Category) -> physicsLab.web.api._api_result
+def get_summary(self, content_id: str, category: physicsLab.enums.Category) -> dict
 ```
 
 Args:
-*  content_id: 实验ID
-*  category: 实验区还是黑洞区
+*  content_id: Experiment ID
+*  category: Experiment area or black hole area
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_summary(self, content_id: str, category: physicsLab.enums.Category) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_summary(self, content_id: str, category: physicsLab.enums.Category) -> Awaitable[dict]
 ```
 
-## 获取支持列表
+## Get support list
 ```Python
-def get_supporters(self, content_id: str, category: physicsLab.enums.Category, skip: int = 0, take: int = 16) -> physicsLab.web.api._api_result
+def get_supporters(self, content_id: str, category: physicsLab.enums.Category, skip: int = 0, take: int = 16) -> dict
 ```
 
 Args:
-*  content_id: 内容ID
-*  category: .Experiment 或 .Discussion
-*  skip: 传入一个时间戳, 跳过skip条消息
-*  take: 取take条消息
+*  content_id: Content ID
+*  category: .Experiment or .Discussion
+*  skip: Pass in a timestamp, skip skip messages
+*  take: Take take messages
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_supporters(self, content_id: str, category: physicsLab.enums.Category, skip: int = 0, take: int = 16) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_supporters(self, content_id: str, category: physicsLab.enums.Category, skip: int = 0, take: int = 16) -> Awaitable[dict]
 ```
 
-## 获取用户信息
+## Get user information
 ```Python
-def get_user(self, msg: str, get_user_mode: physicsLab.enums.GetUserMode) -> physicsLab.web.api._api_result
+def get_user(self, msg: str, get_user_mode: physicsLab.enums.GetUserMode) -> dict
 ```
 
 Args:
-*  msg: 用户ID/用户名
-*  get_user_mode: 根据ID/用户名获取用户信息
+*  msg: User ID/Username
+*  get_user_mode: Get user information by ID/Username
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
 Notes:
 *  Only for compatibility, use `get_user_by_id` or `get_user_by_name` is recommended
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_user(self, msg: str, get_user_mode: physicsLab.enums.GetUserMode) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_user(self, msg: str, get_user_mode: physicsLab.enums.GetUserMode) -> Awaitable[dict]
 ```
 
-## 获取用户信息
+## Get user information
 ```Python
-def get_user_by_id(self, id: str) -> physicsLab.web.api._api_result
+def get_user_by_id(self, id: str) -> dict
 ```
 
 Args:
-*  id: 用户ID
+*  id: User ID
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_user_by_id(self, id: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_user_by_id(self, id: str) -> Awaitable[dict]
 ```
 
-## 获取用户信息
+## Get user information
 ```Python
-def get_user_by_name(self, name: str) -> physicsLab.web.api._api_result
+def get_user_by_name(self, name: str) -> dict
 ```
 
 Args:
-*  name: 用户名
+*  name: Username
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_get_user_by_name(self, name: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_get_user_by_name(self, name: str) -> Awaitable[dict]
 ```
 
-## 修改用户签名
+## Modify user signature
 ```Python
-def modify_information(self, target: str) -> physicsLab.web.api._api_result
+def modify_information(self, target: str) -> dict
 ```
 
 Args:
-*  target: 新签名
+*  target: New signature
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_modify_information(self, target: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_modify_information(self, target: str) -> Awaitable[dict]
 ```
 
-## 发表评论
+## Post comment
 ```Python
-def post_comment(self, target_id: str, target_type: str, content: str, reply_id: Optional[str] = None, special: Optional[str] = None) -> physicsLab.web.api._api_result
+def post_comment(self, target_id: str, target_type: str, content: str, reply_id: str | None = None, special: str | None = None) -> dict
 ```
 
 Args:
-*  target_id: 目标用户/实验的ID
+*  target_id: Target user/experiment ID
 *  target_type: User, Discussion, Experiment
-*  content: 评论内容
-*  reply_id: 被回复的user的ID (可被自动推导)
-*  special: 为 "Reminder" 的话则是发送警告, 为None则是普通的评论
+*  content: Comment content
+*  reply_id: ID of user being replied to (can be automatically derived)
+*  special: "Reminder" for sending warning, None for normal comment
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_post_comment(self, target_id: str, target_type: str, content: str, reply_id: Optional[str] = None, special: Optional[str] = None) -> Awaitable[physicsLab.web.api._api_result]
+async def async_post_comment(self, target_id: str, target_type: str, content: str, reply_id: str | None = None, special: str | None = None) -> Awaitable[dict]
 ```
 
-## 查询实验
+## Query experiments
 ```Python
-def query_experiments(self, category: physicsLab.enums.Category, tags: Optional[List[physicsLab.enums.Tag]] = None, exclude_tags: Optional[List[physicsLab.enums.Tag]] = None, languages: Optional[List[str]] = None, exclude_languages: Optional[List[str]] = None, user_id: Optional[str] = None, take: int = 20, skip: int = 0, from_skip: Optional[str] = None) -> physicsLab.web.api._api_result
+def query_experiments(self, category: physicsLab.enums.Category, tags: List[physicsLab.enums.Tag] | None = None, exclude_tags: List[physicsLab.enums.Tag] | None = None, languages: List[str] | None = None, exclude_languages: List[str] | None = None, user_id: str | None = None, take: int = 20, skip: int = 0, from_skip: str | None = None) -> dict
 ```
 
 Args:
-*  category: 实验区还是黑洞区
-*  tags: 根据列表内的物实实验的标签进行对应的搜索
-*  exclude_tags: 除了列表内的标签的实验都会被搜索到
-*  languages: 根据列表内的语言进行对应的搜索
-*  exclude_languages: 除了列表内的语言的实验都会被搜索到
-*  user_id: 指定搜索的作品的发布者
-*  take: 搜索数量
-*  skip: 跳过搜索数量
-*  from_skip: 起始位置标识符
+*  category: Experiment area or black hole area
+*  tags: Search for experiments with corresponding Physics-Lab-AR experiment tags in the list
+*  exclude_tags: All experiments except those with tags in the list will be searched
+*  languages: Search for experiments with corresponding languages in the list
+*  exclude_languages: All experiments except those with languages in the list will be searched
+*  user_id: Specify the publisher of the works to search for
+*  take: Number of searches
+*  skip: Number of searches to skip
+*  from_skip: Starting position identifier
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_query_experiments(self, category: physicsLab.enums.Category, tags: Optional[List[physicsLab.enums.Tag]] = None, exclude_tags: Optional[List[physicsLab.enums.Tag]] = None, languages: Optional[List[str]] = None, exclude_languages: Optional[List[str]] = None, user_id: Optional[str] = None, take: int = 20, skip: int = 0, from_skip: Optional[str] = None) -> Awaitable[physicsLab.web.api._api_result]
+async def async_query_experiments(self, category: physicsLab.enums.Category, tags: List[physicsLab.enums.Tag] | None = None, exclude_tags: List[physicsLab.enums.Tag] | None = None, languages: List[str] | None = None, exclude_languages: List[str] | None = None, user_id: str | None = None, take: int = 20, skip: int = 0, from_skip: str | None = None) -> Awaitable[dict]
 ```
 
-## 领取每日签到奖励
+## Claim daily check-in reward
 ```Python
-def receive_bonus(self, activity_id: str, index: int) -> physicsLab.web.api._api_result
+def receive_bonus(self, activity_id: str, index: int) -> dict
 ```
 
 Args:
-*  activity_id: 活动id
-*  index: 该活动的第几次奖励
+*  activity_id: Activity ID
+*  index: Which reward of the activity
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_receive_bonus(self, activity_id: str, index: int) -> Awaitable[physicsLab.web.api._api_result]
+async def async_receive_bonus(self, activity_id: str, index: int) -> Awaitable[dict]
 ```
 
-## 删除评论
+## Delete comment
 ```Python
-def remove_comment(self, comment_id: str, target_type: str) -> physicsLab.web.api._api_result
+def remove_comment(self, comment_id: str, target_type: str) -> dict
 ```
 
 Args:
-*  comment_id: 评论ID, 可以通过`get_comments`获取
+*  comment_id: Comment ID, can be obtained through `get_comments`
 *  target_type: User, Discussion, Experiment
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_remove_comment(self, comment_id: str, target_type: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_remove_comment(self, comment_id: str, target_type: str) -> Awaitable[dict]
 ```
 
-## 隐藏实验
+## Hide experiment
 ```Python
-def remove_experiment(self, summary_id: str, category: physicsLab.enums.Category, reason: Optional[str] = None) -> physicsLab.web.api._api_result
-```
-
-Args:
-*  summary_id: 实验ID
-*  category: 实验区还是黑洞区
-*  reason: 隐藏原因
-
-Returns:
-*  _api_result: 物实api返回体结构
-
-对应的协程风格的api:
-```Python
-async def async_remove_experiment(self, summary_id: str, category: physicsLab.enums.Category, reason: Optional[str] = None) -> Awaitable[physicsLab.web.api._api_result]
-```
-
-## 修改用户昵称
-```Python
-def rename(self, nickname: str) -> physicsLab.web.api._api_result
+def remove_experiment(self, summary_id: str, category: physicsLab.enums.Category, reason: str | None = None) -> dict
 ```
 
 Args:
-*  nickname: 新昵称
+*  summary_id: Experiment ID
+*  category: Experiment area or black hole area
+*  reason: Reason for hiding
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_rename(self, nickname: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_remove_experiment(self, summary_id: str, category: physicsLab.enums.Category, reason: str | None = None) -> Awaitable[dict]
 ```
 
-## 收藏/支持 某个实验
+## Change user nickname
 ```Python
-def star_content(self, content_id: str, category: physicsLab.enums.Category, star_type: int, status: bool = True) -> physicsLab.web.api._api_result
+def rename(self, nickname: str) -> dict
 ```
 
 Args:
-*  content_id: 实验ID
-*  category: 实验区, 黑洞区
-*  star_type: 0: 收藏, 1: 使用金币支持实验
-*  status: True: 收藏, False: 取消收藏 (对支持无作用)
+*  nickname: New nickname
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_star_content(self, content_id: str, category: physicsLab.enums.Category, star_type: int, status: bool = True) -> Awaitable[physicsLab.web.api._api_result]
+async def async_rename(self, nickname: str) -> Awaitable[dict]
 ```
 
-## 解除封禁
+## Favorite/Support an experiment
 ```Python
-def unban(self, target_id: str, reason: str) -> physicsLab.web.api._api_result
+def star_content(self, content_id: str, category: physicsLab.enums.Category, star_type: int, status: bool = True) -> dict
 ```
 
 Args:
-*  target_id: 要解除封禁的用户的id
-*  reason: 解封理由
+*  content_id: Experiment ID
+*  category: Experiment area, Black hole area
+*  star_type: 0: Favorite, 1: Support experiment with gold coins
+*  status: True: Favorite, False: Unfavorite (no effect on support)
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_unban(self, target_id: str, reason: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_star_content(self, content_id: str, category: physicsLab.enums.Category, star_type: int, status: bool = True) -> Awaitable[dict]
 ```
 
-## 上传实验图片
+## Unban user
 ```Python
-def upload_image(self, policy: str, authorization: str, image_path: str) -> physicsLab.web.api._api_result
+def unban(self, target_id: str, reason: str) -> dict
 ```
 
 Args:
-*  authorization: 可通过/Contents/SubmitExperiment["Data"]["Token"]["Policy"]获取
-*  policy: 可通过/Contents/SubmitExperiment的["Data"]["Token"]["Policy"]获取
-*  image_path: 待上传的图片在本地的路径
+*  target_id: ID of user to be unbanned
+*  reason: Unban reason
 
 Returns:
-*  _api_result: 物实api返回体结构
+*  dict: Physics-Lab-AR API response structure
+
+async version api:
+```Python
+async def async_unban(self, target_id: str, reason: str) -> Awaitable[dict]
+```
+
+## Upload experiment image
+```Python
+def upload_image(self, policy: str, authorization: str, image_path: str) -> dict
+```
+
+Args:
+*  authorization: Can be obtained through /Contents/SubmitExperiment["Data"]["Token"]["Policy"]
+*  policy: Can be obtained through /Contents/SubmitExperiment["Data"]["Token"]["Policy"]
+*  image_path: Local path of image to be uploaded
+
+Returns:
+*  dict: Physics-Lab-AR API response structure
 
 Notes:
-*  该API为低级API, 上传图片推荐使用封装得更加完善的Experiment.upload()与Experiment.update()方法
+*  This API is a low-level API, it is recommended to use the more complete Experiment.upload() and Experiment.update() methods for uploading images
 
-对应的协程风格的api:
+async version api:
 ```Python
-async def async_upload_image(self, policy: str, authorization: str, image_path: str) -> Awaitable[physicsLab.web.api._api_result]
+async def async_upload_image(self, policy: str, authorization: str, image_path: str) -> Awaitable[dict]
 ```
