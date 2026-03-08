@@ -40,23 +40,9 @@ async def _async_wrapper(func: Callable, *args, **kwargs):
         return await asyncio.to_thread(func, *args, **kwargs)
 
 
-class _api_result(TypedDict):
-    """Structure of Physics-Lab-AR API response
-
-    Attributes:
-        Token: Access token
-        AuthCode: Authorization code
-        Data: Actual returned data
-    """
-
-    Token: str
-    AuthCode: Optional[str]
-    Data: dict
-
-
 def _check_response(
     response: requests.Response, err_callback: Optional[Callable] = None
-) -> _api_result:
+) -> dict:
     """Check the returned response
 
     Args:
@@ -65,7 +51,7 @@ def _check_response(
                       requires status_code (captures status_code from Physics-Lab-AR response body), no return value
 
     Returns:
-        _api_result: Physics-Lab-AR API response structure
+        dict: Physics-Lab-AR API response structure
     """
     errors.assert_true(err_callback is None or callable(err_callback))
 
@@ -84,7 +70,7 @@ def _check_response(
     )
 
 
-def _check_response_json(response: dict) -> _api_result:
+def _check_response_json(response: dict) -> dict:
     status_code = response["Status"]
 
     if status_code == 200:
@@ -95,18 +81,18 @@ def _check_response_json(response: dict) -> _api_result:
     )
 
 
-def get_start_page() -> _api_result:
+def get_start_page() -> dict:
     """Get homepage data
 
     Returns:
-        _api_result: Physics-Lab-AR API response structure
+        dict: Physics-Lab-AR API response structure
     """
     response = requests.get("https://physics-api-cn.turtlesim.com/Users")
 
     return _check_response(response)
 
 
-async def async_get_start_page() -> Awaitable[_api_result]:
+async def async_get_start_page() -> Awaitable[dict]:
     return await _async_wrapper(get_start_page)
 
 
@@ -185,7 +171,7 @@ def get_avatar(
 
 async def async_get_avatar(
     target_id: str, index: int, category: str, size_category: str
-) -> Awaitable[_api_result]:
+) -> Awaitable[dict]:
     return await _async_wrapper(get_avatar, target_id, index, category, size_category)
 
 
@@ -311,11 +297,11 @@ class User:
         self.statistic: dict = statistic
         self.domain: str = domain
 
-    def get_library(self) -> _api_result:
+    def get_library(self) -> dict:
         """Get community works list
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         response = _request.post_https(
             domain=self.domain,
@@ -334,7 +320,7 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_get_library(self) -> Awaitable[_api_result]:
+    async def async_get_library(self) -> Awaitable[dict]:
         return await _async_wrapper(self.get_library)
 
     def query_experiments(
@@ -348,7 +334,7 @@ class User:
         take: int = 20,
         skip: int = 0,
         from_skip: Optional[str] = None,
-    ) -> _api_result:
+    ) -> dict:
         """Query experiments
 
         Args:
@@ -363,7 +349,7 @@ class User:
             from_skip: Starting position identifier
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(category, Category):
             raise TypeError(
@@ -483,7 +469,7 @@ class User:
         take: int = 20,
         skip: int = 0,
         from_skip: Optional[str] = None,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.query_experiments,
             category,
@@ -501,7 +487,7 @@ class User:
         self,
         content_id: str,
         category: Optional[Category] = None,
-    ) -> _api_result:
+    ) -> dict:
         """Get experiment
 
         Args:
@@ -510,7 +496,7 @@ class User:
             category: Experiment area or black hole area
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -545,12 +531,12 @@ class User:
         self,
         content_id: str,
         category: Optional[enums.Category] = None,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.get_experiment, content_id, category)
 
     def confirm_experiment(
         self, summary_id: str, category: Category, image_counter: int
-    ) -> _api_result:
+    ) -> dict:
         """Confirm experiment publication
 
         Args:
@@ -559,7 +545,7 @@ class User:
             image_counter: Image counter
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
 
         Notes:
             Low-level API, do not use directly
@@ -599,14 +585,14 @@ class User:
 
     async def async_confirm_experiment(
         self, summary_id: str, category: enums.Category, image_counter: int
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.confirm_experiment, summary_id, category, image_counter
         )
 
     def remove_experiment(
         self, summary_id: str, category: Category, reason: Optional[str] = None
-    ) -> _api_result:
+    ) -> dict:
         """Hide experiment
 
         Args:
@@ -615,7 +601,7 @@ class User:
             reason: Reason for hiding
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(summary_id, str):
             raise TypeError(
@@ -662,7 +648,7 @@ class User:
         summary_id: str,
         category: enums.Category,
         reason: Optional[str] = None,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.remove_experiment, summary_id, category, reason
         )
@@ -674,7 +660,7 @@ class User:
         content: str,
         reply_id: Optional[str] = None,
         special: Optional[str] = None,
-    ) -> _api_result:
+    ) -> dict:
         """Post comment
 
         Args:
@@ -685,7 +671,7 @@ class User:
             special: "Reminder" for sending warning, None for normal comment
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -775,12 +761,12 @@ class User:
         content: str,
         reply_id: Optional[str] = None,
         special: Optional[str] = None,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.post_comment, target_id, target_type, content, reply_id, special
         )
 
-    def remove_comment(self, comment_id: str, target_type: str) -> _api_result:
+    def remove_comment(self, comment_id: str, target_type: str) -> dict:
         """Delete comment
 
         Args:
@@ -788,7 +774,7 @@ class User:
             target_type: User, Discussion, Experiment
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(comment_id, str):
             raise TypeError(
@@ -822,7 +808,7 @@ class User:
 
     async def async_remove_comment(
         self, comment_id: str, target_type: str
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.remove_comment, comment_id, target_type)
 
     def get_comments(
@@ -832,7 +818,7 @@ class User:
         take: int = 16,
         skip: int = 0,
         comment_id: Optional[str] = None,
-    ) -> _api_result:
+    ) -> dict:
         """获取评论板信息
 
         Args:
@@ -843,7 +829,7 @@ class User:
             comment_id: 从comment_id开始获取take条消息 (另一种skip的规则)
 
         Returns:
-            _api_result: 物实api返回体结构
+            dict: 物实api返回体结构
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -897,12 +883,12 @@ class User:
         take: int = 16,
         skip: int = 0,
         comment_id: Optional[str] = None,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.get_comments, target_id, target_type, take, skip, comment_id
         )
 
-    def get_summary(self, content_id: str, category: Category) -> _api_result:
+    def get_summary(self, content_id: str, category: Category) -> dict:
         """Get experiment introduction
 
         Args:
@@ -910,7 +896,7 @@ class User:
             category: Experiment area or black hole area
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -949,10 +935,10 @@ class User:
 
     async def async_get_summary(
         self, content_id: str, category: enums.Category
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.get_summary, content_id, category)
 
-    def get_derivatives(self, content_id: str, category: Category) -> _api_result:
+    def get_derivatives(self, content_id: str, category: Category) -> dict:
         """Get work details, Physics-Lab-AR uses this interface when reading works for the first time
 
         Args:
@@ -960,7 +946,7 @@ class User:
             category: Experiment area or black hole area
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -990,17 +976,17 @@ class User:
 
     async def async_get_derivatives(
         self, content_id: str, category: enums.Category
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.get_derivatives, content_id, category)
 
-    def get_user_by_name(self, name: str) -> _api_result:
+    def get_user_by_name(self, name: str) -> dict:
         """Get user information
 
         Args:
             name: Username
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(name, str):
             raise TypeError(
@@ -1020,17 +1006,17 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_get_user_by_name(self, name: str) -> Awaitable[_api_result]:
+    async def async_get_user_by_name(self, name: str) -> Awaitable[dict]:
         return await _async_wrapper(self.get_user_by_name, name)
 
-    def get_user_by_id(self, id: str) -> _api_result:
+    def get_user_by_id(self, id: str) -> dict:
         """Get user information
 
         Args:
             id: User ID
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(id, str):
             raise TypeError(
@@ -1050,14 +1036,14 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_get_user_by_id(self, id: str) -> Awaitable[_api_result]:
+    async def async_get_user_by_id(self, id: str) -> Awaitable[dict]:
         return await _async_wrapper(self.get_user_by_id, id)
 
     def get_user(
         self,
         msg: str,
         get_user_mode: enums.GetUserMode,
-    ) -> _api_result:
+    ) -> dict:
         """Get user information
 
         Args:
@@ -1065,7 +1051,7 @@ class User:
             get_user_mode: Get user information by ID/Username
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
 
         Notes:
             Only for compatibility, use `get_user_by_id` or `get_user_by_name` is recommended
@@ -1091,14 +1077,14 @@ class User:
         self,
         msg: str,
         get_user_mode: enums.GetUserMode,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.get_user, msg, get_user_mode)
 
-    def get_profile(self) -> _api_result:
+    def get_profile(self) -> dict:
         """Get user homepage information
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         response = _request.post_https(
             domain=self.domain,
@@ -1116,12 +1102,12 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_get_profile(self) -> Awaitable[_api_result]:
+    async def async_get_profile(self) -> Awaitable[dict]:
         return await _async_wrapper(self.get_profile)
 
     def star_content(
         self, content_id: str, category: Category, star_type: int, status: bool = True
-    ) -> _api_result:
+    ) -> dict:
         """Favorite/Support an experiment
 
         Args:
@@ -1131,7 +1117,7 @@ class User:
             status: True: Favorite, False: Unfavorite (no effect on support)
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -1179,14 +1165,12 @@ class User:
         category: enums.Category,
         star_type: int,
         status: bool = True,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.star_content, content_id, category, star_type, status
         )
 
-    def upload_image(
-        self, policy: str, authorization: str, image_path: str
-    ) -> _api_result:
+    def upload_image(self, policy: str, authorization: str, image_path: str) -> dict:
         """Upload experiment image
 
         Args:
@@ -1195,7 +1179,7 @@ class User:
             image_path: Local path of image to be uploaded
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
 
         Notes:
             This API is a low-level API, it is recommended to use the more complete Experiment.upload() and Experiment.update() methods for uploading images
@@ -1238,19 +1222,19 @@ class User:
 
     async def async_upload_image(
         self, policy: str, authorization: str, image_path: str
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.upload_image, policy, authorization, image_path
         )
 
-    def get_message(self, message_id: str) -> _api_result:
+    def get_message(self, message_id: str) -> dict:
         """Read system email message
 
         Args:
             message_id: Message ID
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(message_id, str):
             raise TypeError(
@@ -1273,7 +1257,7 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_get_message(self, message_id: str) -> Awaitable[_api_result]:
+    async def async_get_message(self, message_id: str) -> Awaitable[dict]:
         return await _async_wrapper(self.get_message, message_id)
 
     def get_messages(
@@ -1282,7 +1266,7 @@ class User:
         skip: int = 0,
         take: int = 16,
         no_templates: bool = True,
-    ) -> _api_result:
+    ) -> dict:
         """Get messages received by user
 
         Args:
@@ -1293,7 +1277,7 @@ class User:
             no_templates: Whether to not return template messages for message types
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if category_id not in (0, 1, 2, 3, 4, 5):
             raise TypeError(
@@ -1337,7 +1321,7 @@ class User:
         skip: int = 0,
         take: int = 16,
         no_templates: bool = True,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.get_messages, category_id, skip, take, no_templates
         )
@@ -1348,7 +1332,7 @@ class User:
         category: Category,
         skip: int = 0,
         take: int = 16,
-    ) -> _api_result:
+    ) -> dict:
         """Get support list
 
         Args:
@@ -1358,7 +1342,7 @@ class User:
             take: Take take messages
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(content_id, str):
             raise TypeError(
@@ -1402,7 +1386,7 @@ class User:
         category: enums.Category,
         skip: int = 0,
         take: int = 16,
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.get_supporters, content_id, category, skip, take
         )
@@ -1414,7 +1398,7 @@ class User:
         skip: int = 0,
         take: int = 20,
         query: str = "",  # TODO 获取编辑，志愿者列表啊之类的貌似也是这个api
-    ) -> _api_result:
+    ) -> dict:
         """Get user's followers/following list
 
         Args:
@@ -1425,7 +1409,7 @@ class User:
             query: User ID or nickname
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if display_type not in ("Follower", "Following"):
             raise ValueError(
@@ -1478,12 +1462,12 @@ class User:
         skip: int = 0,
         take: int = 20,
         query: str = "",
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(
             self.get_relations, user_id, display_type, skip, take, query
         )
 
-    def follow(self, target_id: str, action: bool = True) -> _api_result:
+    def follow(self, target_id: str, action: bool = True) -> dict:
         """Follow user
 
         Args:
@@ -1491,7 +1475,7 @@ class User:
             action: true to follow, false to unfollow
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1521,17 +1505,17 @@ class User:
 
     async def async_follow(
         self, target_id: str, action: bool = True
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.follow, target_id, action)
 
-    def rename(self, nickname: str) -> _api_result:
+    def rename(self, nickname: str) -> dict:
         """Change user nickname
 
         Args:
             nickname: New nickname
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(nickname, str):
             raise TypeError(
@@ -1555,17 +1539,17 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_rename(self, nickname: str) -> Awaitable[_api_result]:
+    async def async_rename(self, nickname: str) -> Awaitable[dict]:
         return await _async_wrapper(self.rename, nickname)
 
-    def modify_information(self, target: str) -> _api_result:
+    def modify_information(self, target: str) -> dict:
         """Modify user signature
 
         Args:
             target: New signature
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(target, str):
             raise TypeError(
@@ -1589,10 +1573,10 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_modify_information(self, target: str) -> Awaitable[_api_result]:
+    async def async_modify_information(self, target: str) -> Awaitable[dict]:
         return await _async_wrapper(self.modify_information, target)
 
-    def receive_bonus(self, activity_id: str, index: int) -> _api_result:
+    def receive_bonus(self, activity_id: str, index: int) -> dict:
         """Claim daily check-in reward
 
         Args:
@@ -1600,7 +1584,7 @@ class User:
             index: Which reward of the activity
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(activity_id, str):
             raise TypeError(
@@ -1635,10 +1619,10 @@ class User:
 
     async def async_receive_bonus(
         self, activity_id: str, index: int
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.receive_bonus, activity_id, index)
 
-    def ban(self, target_id: str, reason: str, length: int) -> _api_result:
+    def ban(self, target_id: str, reason: str, length: int) -> dict:
         """Ban user
 
         Args:
@@ -1647,7 +1631,7 @@ class User:
             length: Ban duration in days
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1685,10 +1669,10 @@ class User:
 
     async def async_ban(
         self, target_id: str, reason: str, length: int
-    ) -> Awaitable[_api_result]:
+    ) -> Awaitable[dict]:
         return await _async_wrapper(self.ban, target_id, reason, length)
 
-    def unban(self, target_id: str, reason: str) -> _api_result:
+    def unban(self, target_id: str, reason: str) -> dict:
         """Unban user
 
         Args:
@@ -1696,7 +1680,7 @@ class User:
             reason: Unban reason
 
         Returns:
-            _api_result: Physics-Lab-AR API response structure
+            dict: Physics-Lab-AR API response structure
         """
         if not isinstance(target_id, str):
             raise TypeError(
@@ -1724,7 +1708,7 @@ class User:
 
         return _check_response_json(response)
 
-    async def async_unban(self, target_id: str, reason: str) -> Awaitable[_api_result]:
+    async def async_unban(self, target_id: str, reason: str) -> Awaitable[dict]:
         return await _async_wrapper(self.unban, target_id, reason)
 
 
