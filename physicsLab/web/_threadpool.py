@@ -35,9 +35,9 @@ class _Status(Enum):
     cancelled = 3
 
 
-
 class _StatusEvent:
-    if platform.system() == "Windows": # and sys.version_info < (3, 14):
+    if platform.system() == "Windows":  # and sys.version_info < (3, 14):
+
         def __init__(self) -> None:
             self._status: _Status = _Status.wait
 
@@ -47,7 +47,9 @@ class _StatusEvent:
 
         def set_as_done(self) -> None:
             self._status = _Status.done
+
     else:
+
         def __init__(self) -> None:
             self._condition = Condition()
             self._status: _Status = _Status.wait
@@ -168,8 +170,11 @@ class ThreadPool:
     def wait(self) -> None:
         """blocking until all tasks are done"""
         for thread in self.threads:
-            while thread.is_alive():
-                thread.join(timeout=2)
+            if platform.system() == "Windows":  # and sys.version_info < (3, 14):
+                while thread.is_alive():
+                    thread.join(timeout=2)
+            else:
+                thread.join()
 
     def __enter__(self) -> Self:
         return self
