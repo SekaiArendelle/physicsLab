@@ -4,8 +4,10 @@
 
 因此, 我无法直接使用ThreadPoolExecutor, 我就自己写了一个线程池
 """
+
 import queue
-from threading import Thread
+import platform
+from threading import Thread, Condition
 from enum import Enum, unique
 from physicsLab import errors
 from physicsLab._typing import List, Callable, Self, Any, Optional
@@ -33,6 +35,43 @@ class _Status(Enum):
     cancelled = 3
 
 
+
+class _StatusEvent:
+    if platform.system() == "Windows": # and sys.version_info < (3, 14):
+        def __init__(self) -> None:
+            self._status: _Status = _Status.wait
+
+        def wait(self) -> None:
+            while self._status != _Status.done:
+                pass
+
+        def set_as_done(self) -> None:
+            self._status = _Status.done
+    else:
+        def __init__(self) -> None:
+            self._condition = Condition()
+            self._status: _Status = _Status.wait
+
+        def wait(self) -> None:
+            with self._condition:
+                if self._status != _Status.done:
+                    self._condition.wait()
+
+        def set_as_done(self) -> None:
+            with self._condition:
+                self._status = _Status.done
+                self._condition.notify_all()
+
+    def set_as_running(self) -> None:
+        self._status = _Status.running
+
+    def set_as_cancelled(self) -> None:
+        self._status = _Status.cancelled
+
+    def get_status(self) -> _Status:
+        return self._status
+
+
 class _Task:
     def __init__(self, func: Callable, args: tuple, kwargs: dict) -> None:
         self.func = func
@@ -40,16 +79,15 @@ class _Task:
         self.kwargs = kwargs
         self.res: Any = None
         self.exception: Optional[Exception] = None
-        self.status: _Status = _Status.wait
+        self.status_event: _StatusEvent = _StatusEvent()
 
     def has_result(self) -> bool:
-        return self.status == _Status.done
+        return self.status_event.get_status() == _Status.done
 
     def result(self):
-        if self.status == _Status.cancelled:
+        if self.status_event.get_status() == _Status.cancelled:
             raise CanceledError
-        while not self.has_result():
-            pass
+        self.status_event.wait()
 
         if self.exception is not None:
             raise self.exception
@@ -82,13 +120,13 @@ class ThreadPool:
                 self.task_queue.put_nowait(_EndOfQueue)
                 return
             assert isinstance(_task, _Task)
-            _task.status = _Status.running
+            _task.status_event.set_as_running()
             try:
                 _task.res = _task.func(*_task.args, **_task.kwargs)
             except Exception as e:
                 _task.exception = e
             finally:
-                _task.status = _Status.done
+                _task.status_event.set_as_done()
 
     def submit(self, func, *args, **kwargs) -> _Task:
         """submit a task
