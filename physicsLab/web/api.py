@@ -6,6 +6,7 @@ This file provides support for multi-threaded style API calls
 
 import os
 import sys
+import json
 import asyncio
 import functools
 import contextvars
@@ -87,9 +88,11 @@ def get_start_page() -> dict:
     Returns:
         dict: Physics-Lab-AR API response structure
     """
-    response = requests.get("https://physics-api-cn.turtlesim.com/Users")
+    response = _request.get_https(
+        domain="physics-api-cn.turtlesim.com", port=443, path="Users"
+    )
 
-    return _check_response(response)
+    return _check_response_json(json.loads(response.decode("utf-8")))
 
 
 async def async_get_start_page() -> Awaitable[dict]:
