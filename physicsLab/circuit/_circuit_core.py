@@ -262,7 +262,7 @@ class _CircuitMeta(type):
         return self
 
 
-class CircuitBase(ElementBase, metaclass=_CircuitMeta):
+class _CircuitBase(ElementBase):
     """所有电学元件的父类"""
 
     experiment: _Experiment  # 元件所属的实验
@@ -411,3 +411,6 @@ class CircuitBase(ElementBase, metaclass=_CircuitMeta):
 
         self.data["Label"] = name
         return self
+
+class CircuitBase(_CircuitBase, metaclass=_CircuitMeta):
+    """[[deprecate]]"""

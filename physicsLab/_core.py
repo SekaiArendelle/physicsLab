@@ -594,7 +594,6 @@ class _Experiment:
         if image_path is not None:
             image_size = os.path.getsize(image_path)
             if image_size >= 1048576:
-                _warn.warning("image size is bigger than 1MB")
                 image_size = -image_size  # 利用物实bug发布大图片
             submit_data["Request"] = {
                 "FileSize": image_size,

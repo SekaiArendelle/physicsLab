@@ -40,8 +40,6 @@ import os
 import platform
 
 if not os.path.exists(Experiment.SAV_PATH_DIR):
-    if platform.system() == "Windows":
-        _warn.warning("Have you installed Physics-Lab-AR?")
     os.makedirs(Experiment.SAV_PATH_DIR)
 
 del os
