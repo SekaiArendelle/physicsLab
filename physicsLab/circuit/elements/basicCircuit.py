@@ -111,6 +111,7 @@ class Simple_Switch(_SimpleSwitch):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -141,6 +142,7 @@ class _SPDTSwitch(_SwitchBase):
         y: num_type,
         z: num_type,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -210,6 +212,7 @@ class SPDT_Switch(_SPDTSwitch):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -246,6 +249,7 @@ class _DPDTSwitch(_SwitchBase):
         y: num_type,
         z: num_type,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
@@ -331,6 +335,7 @@ class DPDT_Switch(_DPDTSwitch):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -410,6 +415,7 @@ class Push_Switch(_PushSwitch):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -510,6 +516,7 @@ class Air_Switch(_AirSwitch):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -598,6 +605,7 @@ class Incandescent_Lamp(_IncandescentLamp):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -721,6 +729,7 @@ class Battery_Source(_BatterySource):
         voltage: num_type = 1.5,
         internal_resistance: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             voltage=voltage, internal_resistance=internal_resistance
@@ -841,6 +850,7 @@ class Student_Source(_StudentSource):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -963,6 +973,7 @@ class Resistor(_Resistor):
         experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             resistance=resistance
@@ -1052,6 +1063,7 @@ class Fuse_Component(_FuseComponent):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1167,6 +1179,7 @@ class Slide_Rheostat(_SlideRheostat):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1253,6 +1266,7 @@ class Multimeter(_Multimeter):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1342,6 +1356,7 @@ class Galvanometer(_Galvanometer):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1431,6 +1446,7 @@ class Microammeter(_Microammeter):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1527,6 +1543,7 @@ class Electricity_Meter(_ElectricityMeter):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1639,6 +1656,7 @@ class Resistance_Box(_ResistanceBox):
         experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             resistance=resistance
@@ -1731,6 +1749,7 @@ class Simple_Ammeter(_SimpleAmmeter):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1820,6 +1839,7 @@ class Simple_Voltmeter(_SimpleVoltmeter):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,

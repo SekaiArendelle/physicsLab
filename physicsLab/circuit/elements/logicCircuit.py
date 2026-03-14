@@ -165,6 +165,7 @@ class Logic_Input(_LogicInput):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             output_status=output_status, high_level=high_level, low_level=low_level
@@ -251,6 +252,7 @@ class Logic_Output(_LogicOutput):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -340,6 +342,7 @@ class _YesGate(_2PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Yes Gate"
 
@@ -367,6 +370,7 @@ class Yes_Gate(_YesGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -393,6 +397,7 @@ class _NoGate(_2PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "No Gate"
 
@@ -420,6 +425,7 @@ class No_Gate(_NoGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -517,6 +523,7 @@ class _OrGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Or Gate"
 
@@ -544,6 +551,7 @@ class Or_Gate(_OrGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -570,6 +578,7 @@ class _AndGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "And Gate"
 
@@ -597,6 +606,7 @@ class And_Gate(_AndGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -623,6 +633,7 @@ class _NorGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Nor Gate"
 
@@ -650,6 +661,7 @@ class Nor_Gate(_NorGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -676,6 +688,7 @@ class _NandGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Nand Gate"
 
@@ -703,6 +716,7 @@ class Nand_Gate(_NandGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -729,6 +743,7 @@ class _XorGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Xor Gate"
 
@@ -756,6 +771,7 @@ class Xor_Gate(_XorGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -782,6 +798,7 @@ class _XnorGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Xnor Gate"
 
@@ -809,6 +826,7 @@ class Xnor_Gate(_XnorGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -835,6 +853,7 @@ class _ImpGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Imp Gate"
 
@@ -862,6 +881,7 @@ class Imp_Gate(_ImpGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -888,6 +908,7 @@ class _NimpGate(_3PinGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self.data["ModelID"] = "Nimp Gate"
 
@@ -915,6 +936,7 @@ class Nimp_Gate(_NimpGate):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -987,6 +1009,7 @@ class _HalfAdder(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1043,6 +1066,7 @@ class Half_Adder(_HalfAdder):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1082,6 +1106,7 @@ class _FullAdder(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1143,6 +1168,7 @@ class Full_Adder(_FullAdder):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1184,6 +1210,7 @@ class _HalfSubtractor(_BigElement):
         if plAR_version is not None and plAR_version < (2, 5, 0):
             _warn.warning("Physics-Lab-AR's version less than 2.5.0")
 
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1240,6 +1267,7 @@ class Half_Subtractor(_HalfSubtractor):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1283,6 +1311,7 @@ class _FullSubtractor(_BigElement):
         if plAR_version is not None and plAR_version < (2, 5, 0):
             _warn.warning("Physics-Lab-AR's version less than 2.5.0")
 
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1344,6 +1373,7 @@ class Full_Subtractor(_FullSubtractor):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1389,6 +1419,7 @@ class _Multiplier(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1465,6 +1496,7 @@ class Multiplier(_Multiplier):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1502,6 +1534,7 @@ class _DFlipflop(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1558,6 +1591,7 @@ class D_Flipflop(_DFlipflop):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1595,6 +1629,7 @@ class _TFlipflop(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1651,6 +1686,7 @@ class T_Flipflop(_TFlipflop):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1688,6 +1724,7 @@ class _RealTFlipflop(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1744,6 +1781,7 @@ class Real_T_Flipflop(_RealTFlipflop):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1783,6 +1821,7 @@ class _JKFlipflop(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1844,6 +1883,7 @@ class JK_Flipflop(_JKFlipflop):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1885,6 +1925,7 @@ class _Counter(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1951,6 +1992,7 @@ class Counter(_Counter):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -1992,6 +2034,7 @@ class _RandomGenerator(_BigElement):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z, high_level, low_level)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -2058,6 +2101,7 @@ class Random_Generator(_RandomGenerator):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -2216,6 +2260,7 @@ class Eight_Bit_Input(_EightBitInput):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -2367,6 +2412,7 @@ class Eight_Bit_Display(_EightBitDisplay):
         high_level: num_type = 3,
         low_level: num_type = 0,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level
@@ -2549,6 +2595,7 @@ class Schmitt_Trigger(_SchmittTrigger):
         low_level: Optional[num_type] = None,
         inverted: bool = False,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             high_level=high_level, low_level=low_level, inverted=inverted

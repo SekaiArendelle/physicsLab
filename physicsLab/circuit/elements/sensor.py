@@ -143,6 +143,7 @@ class _Accelerometer(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Accelerometer"
         self.ranges = ranges
@@ -170,6 +171,7 @@ class Accelerometer(_Accelerometer):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -282,6 +284,7 @@ class Analog_Joystick(_AnalogJoystick):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -306,6 +309,7 @@ class _AttitudeSensor(_MemsBase):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Attitude Sensor"
         self.ranges = ranges
@@ -333,6 +337,7 @@ class Attitude_Sensor(_AttitudeSensor):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -360,6 +365,7 @@ class _GravitySensor(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Gravity Sensor"
         self.ranges = ranges
@@ -387,6 +393,7 @@ class Gravity_Sensor(_GravitySensor):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -414,6 +421,7 @@ class _Gyroscope(_MemsBase):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Gyroscope"
         self.ranges = ranges
@@ -441,6 +449,7 @@ class Gyroscope(_Gyroscope):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -468,6 +477,7 @@ class _LinearAccelerometer(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Linear Accelerometer"
         self.ranges = ranges
@@ -495,6 +505,7 @@ class Linear_Accelerometer(_LinearAccelerometer):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -522,6 +533,7 @@ class _MagneticFieldSensor(_MemsBase):
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Magnetic Field Sensor"
         self.ranges = ranges
@@ -549,6 +561,7 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z,
             ranges=ranges, shifting=shifting, response_factor=response_factor
@@ -637,6 +650,7 @@ class Photodiode(_Photodiode):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -722,6 +736,7 @@ class Photoresistor(_Photoresistor):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -792,6 +807,7 @@ class Proximity_Sensor(_ProximitySensor):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,

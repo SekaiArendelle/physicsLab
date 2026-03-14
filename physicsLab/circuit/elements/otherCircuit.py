@@ -93,6 +93,7 @@ class Buzzer(_Buzzer):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -176,6 +177,7 @@ class Spark_Gap(_SparkGap):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -261,6 +263,7 @@ class Tesla_Coil(_TeslaCoil):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -376,6 +379,7 @@ class Color_Light_Emitting_Diode(_ColorLightEmittingDiode):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -470,6 +474,7 @@ class Dual_Light_Emitting_Diode(_DualLightEmittingDiode):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -555,6 +560,7 @@ class Electric_Bell(_ElectricBell):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -640,6 +646,7 @@ class Musical_Box(_MusicalBox):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -802,6 +809,7 @@ class Resistance_Law(_ResistanceLaw):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -913,6 +921,7 @@ class Solenoid(_Solenoid):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1014,6 +1023,7 @@ class Electric_Fan(_ElectricFan):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         _deprecated_register_element_in_stack(
             self,
@@ -1281,6 +1291,7 @@ class Simple_Instrument(_SimpleInstrument):
         is_ideal: bool = False,
         is_pulse: bool = True,
     ) -> None:
+        # this class is deprecated
         super().__init__(
             x, y, z, pitches=pitches, elementXYZ=elementXYZ, identifier=identifier,
             experiment=experiment, rated_oltage=rated_oltage, volume=volume, bpm=bpm,
