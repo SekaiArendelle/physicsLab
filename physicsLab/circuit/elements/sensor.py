@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from physicsLab import errors
-from .._circuit_core import CircuitBase, Pin
+from .._circuit_core import CircuitBase, Pin, _deprecated_register_element_in_stack
 from physicsLab._core import _Experiment
-from .logicCircuit import _LogicBase
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -132,9 +131,32 @@ class _MemsBase(CircuitBase):
         return value
 
 
-class Accelerometer(_MemsBase):
+class _Accelerometer(_MemsBase):
     """加速度计"""
 
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.2290000021457672,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        self.data["ModelID"] = "Accelerometer"
+        self.ranges = ranges
+        self.shifting = shifting
+        self.response_factor = response_factor
+
+    @final
+    @staticmethod
+    def zh_name() -> str:
+        return "加速度计"
+
+
+class Accelerometer(_Accelerometer):
     def __init__(
         self,
         x: num_type,
@@ -149,19 +171,23 @@ class Accelerometer(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
     ) -> None:
-        super().__init__(x, y, z)
-        self.data["ModelID"] = "Accelerometer"
-        self.ranges = ranges
-        self.shifting = shifting
-        self.response_factor = response_factor
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
-    @final
-    @staticmethod
-    def zh_name() -> str:
-        return "加速度计"
 
-
-class Analog_Joystick(CircuitBase):
+class _AnalogJoystick(CircuitBase):
     """模拟摇杆"""
 
     _all_pins: Tuple[
@@ -184,11 +210,6 @@ class Analog_Joystick(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Analog Joystick",
@@ -251,9 +272,57 @@ class Analog_Joystick(CircuitBase):
         return self._y3_pin
 
 
-class Attitude_Sensor(_MemsBase):
+class Analog_Joystick(_AnalogJoystick):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _AttitudeSensor(_MemsBase):
     """姿态传感器"""
 
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 180,
+        shifting: num_type = 2.5,
+        response_factor: num_type = 0.0125,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        self.data["ModelID"] = "Attitude Sensor"
+        self.ranges = ranges
+        self.shifting = shifting
+        self.response_factor = response_factor
+
+    @final
+    @staticmethod
+    def zh_name() -> str:
+        return "姿态传感器"
+
+
+class Attitude_Sensor(_AttitudeSensor):
     def __init__(
         self,
         x: num_type,
@@ -268,8 +337,37 @@ class Attitude_Sensor(_MemsBase):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _GravitySensor(_MemsBase):
+    """重力加速计"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.229,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
-        self.data["ModelID"] = "Attitude Sensor"
+        self.data["ModelID"] = "Gravity Sensor"
         self.ranges = ranges
         self.shifting = shifting
         self.response_factor = response_factor
@@ -277,12 +375,10 @@ class Attitude_Sensor(_MemsBase):
     @final
     @staticmethod
     def zh_name() -> str:
-        return "姿态传感器"
+        return "重力加速计"
 
 
-class Gravity_Sensor(_MemsBase):
-    """重力加速计"""
-
+class Gravity_Sensor(_GravitySensor):
     def __init__(
         self,
         x: num_type,
@@ -297,8 +393,37 @@ class Gravity_Sensor(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Gyroscope(_MemsBase):
+    """陀螺仪传感器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 150,
+        shifting: num_type = 2.5,
+        response_factor: num_type = 0.0125,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
-        self.data["ModelID"] = "Gravity Sensor"
+        self.data["ModelID"] = "Gyroscope"
         self.ranges = ranges
         self.shifting = shifting
         self.response_factor = response_factor
@@ -306,12 +431,10 @@ class Gravity_Sensor(_MemsBase):
     @final
     @staticmethod
     def zh_name() -> str:
-        return "重力加速计"
+        return "陀螺仪传感器"
 
 
-class Gyroscope(_MemsBase):
-    """陀螺仪传感器"""
-
+class Gyroscope(_Gyroscope):
     def __init__(
         self,
         x: num_type,
@@ -326,8 +449,37 @@ class Gyroscope(_MemsBase):
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
     ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _LinearAccelerometer(_MemsBase):
+    """线性加速度计"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.229,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
-        self.data["ModelID"] = "Gyroscope"
+        self.data["ModelID"] = "Linear Accelerometer"
         self.ranges = ranges
         self.shifting = shifting
         self.response_factor = response_factor
@@ -335,12 +487,10 @@ class Gyroscope(_MemsBase):
     @final
     @staticmethod
     def zh_name() -> str:
-        return "陀螺仪传感器"
+        return "线性加速度计"
 
 
-class Linear_Accelerometer(_MemsBase):
-    """线性加速度计"""
-
+class Linear_Accelerometer(_LinearAccelerometer):
     def __init__(
         self,
         x: num_type,
@@ -355,8 +505,37 @@ class Linear_Accelerometer(_MemsBase):
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
     ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _MagneticFieldSensor(_MemsBase):
+    """磁场传感器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        ranges: num_type = 0.04,
+        shifting: num_type = 3.2,
+        response_factor: num_type = 80,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
-        self.data["ModelID"] = "Linear Accelerometer"
+        self.data["ModelID"] = "Magnetic Field Sensor"
         self.ranges = ranges
         self.shifting = shifting
         self.response_factor = response_factor
@@ -364,12 +543,10 @@ class Linear_Accelerometer(_MemsBase):
     @final
     @staticmethod
     def zh_name() -> str:
-        return "线性加速度计"
+        return "磁场传感器"
 
 
-class Magnetic_Field_Sensor(_MemsBase):
-    """磁场传感器"""
-
+class Magnetic_Field_Sensor(_MagneticFieldSensor):
     def __init__(
         self,
         x: num_type,
@@ -384,19 +561,23 @@ class Magnetic_Field_Sensor(_MemsBase):
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
     ) -> None:
-        super().__init__(x, y, z)
-        self.data["ModelID"] = "Magnetic Field Sensor"
-        self.ranges = ranges
-        self.shifting = shifting
-        self.response_factor = response_factor
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
-    @final
-    @staticmethod
-    def zh_name() -> str:
-        return "磁场传感器"
 
-
-class Photodiode(CircuitBase):
+class _Photodiode(CircuitBase):
     """光电二极管"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -408,11 +589,6 @@ class Photodiode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -462,7 +638,32 @@ class Photodiode(CircuitBase):
         return "光电二极管"
 
 
-class Photoresistor(CircuitBase):
+class Photodiode(_Photodiode):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Photoresistor(CircuitBase):
     """光敏电阻"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -474,11 +675,6 @@ class Photoresistor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -528,12 +724,7 @@ class Photoresistor(CircuitBase):
         return "光敏电阻"
 
 
-class Proximity_Sensor(_LogicBase):
-    """临近传感器"""
-
-    _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
-    _o_pin: Pin
-
+class Photoresistor(_Photoresistor):
     def __init__(
         self,
         x: num_type,
@@ -544,6 +735,31 @@ class Proximity_Sensor(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _ProximitySensor(CircuitBase):
+    """临近传感器"""
+
+    _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
+    _o_pin: Pin
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
     ) -> None:
         self._all_pins = (("_o_pin", Pin(self, 0)),)
         for name, pin in self._all_pins:
@@ -577,3 +793,28 @@ class Proximity_Sensor(_LogicBase):
     @property
     def o(self) -> Pin:
         return self._o_pin
+
+
+class Proximity_Sensor(_ProximitySensor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )

@@ -2,7 +2,7 @@
 from physicsLab import errors
 from physicsLab._tools import round_data
 from physicsLab._core import _Experiment
-from .._circuit_core import CircuitBase, Pin
+from .._circuit_core import CircuitBase, Pin, _deprecated_register_element_in_stack
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -41,7 +41,7 @@ class _SwitchBase(CircuitBase):
         return self
 
 
-class Simple_Switch(_SwitchBase):
+class _SimpleSwitch(_SwitchBase):
     """简单开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -53,11 +53,6 @@ class Simple_Switch(_SwitchBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         _SwitchBase.__init__(self, x, y, z)
         self._all_pins = (
@@ -104,7 +99,32 @@ class Simple_Switch(_SwitchBase):
         return self
 
 
-class SPDT_Switch(_SwitchBase):
+class Simple_Switch(_SimpleSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SPDTSwitch(_SwitchBase):
     """单刀双掷开关"""
 
     _all_pins: Tuple[
@@ -121,12 +141,8 @@ class SPDT_Switch(_SwitchBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -184,7 +200,32 @@ class SPDT_Switch(_SwitchBase):
         return 3
 
 
-class DPDT_Switch(_SwitchBase):
+class SPDT_Switch(_SPDTSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _DPDTSwitch(_SwitchBase):
     """双刀双掷开关"""
 
     _all_pins: Tuple[
@@ -207,12 +248,8 @@ class DPDT_Switch(_SwitchBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
@@ -286,7 +323,32 @@ class DPDT_Switch(_SwitchBase):
         return 6
 
 
-class Push_Switch(CircuitBase):
+class DPDT_Switch(_DPDTSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _PushSwitch(CircuitBase):
     """按钮开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -298,11 +360,6 @@ class Push_Switch(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -346,7 +403,32 @@ class Push_Switch(CircuitBase):
         return 2
 
 
-class Air_Switch(CircuitBase):
+class Push_Switch(_PushSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _AirSwitch(CircuitBase):
     """空气开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -358,11 +440,6 @@ class Air_Switch(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -427,7 +504,32 @@ class Air_Switch(CircuitBase):
         return self
 
 
-class Incandescent_Lamp(CircuitBase):
+class Air_Switch(_AirSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _IncandescentLamp(CircuitBase):
     """白炽灯泡"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -439,11 +541,6 @@ class Incandescent_Lamp(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -496,7 +593,32 @@ class Incandescent_Lamp(CircuitBase):
         return 2
 
 
-class Battery_Source(CircuitBase):
+class Incandescent_Lamp(_IncandescentLamp):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _BatterySource(CircuitBase):
     """一节电池"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -508,11 +630,6 @@ class Battery_Source(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         voltage: num_type = 1.5,
         internal_resistance: num_type = 0,
     ) -> None:
@@ -598,7 +715,37 @@ class Battery_Source(CircuitBase):
         return 2
 
 
-class Student_Source(CircuitBase):
+class Battery_Source(_BatterySource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        voltage: num_type = 1.5,
+        internal_resistance: num_type = 0,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            voltage=voltage, internal_resistance=internal_resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _StudentSource(CircuitBase):
     """学生电源"""
 
     _all_pins: Tuple[
@@ -617,11 +764,6 @@ class Student_Source(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -696,7 +838,32 @@ class Student_Source(CircuitBase):
         return self._r_pin
 
 
-class Resistor(CircuitBase):
+class Student_Source(_StudentSource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Resistor(CircuitBase):
     """电阻"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -708,11 +875,6 @@ class Resistor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
         self._all_pins = (
@@ -798,7 +960,36 @@ class Resistor(CircuitBase):
         )
 
 
-class Fuse_Component(CircuitBase):
+class Resistor(_Resistor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        resistance: num_type = 10,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            resistance=resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _FuseComponent(CircuitBase):
     """保险丝"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -810,11 +1001,6 @@ class Fuse_Component(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -865,7 +1051,32 @@ class Fuse_Component(CircuitBase):
         return 2
 
 
-class Slide_Rheostat(CircuitBase):
+class Fuse_Component(_FuseComponent):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SlideRheostat(CircuitBase):
     """滑动变阻器"""
 
     _all_pins: Tuple[
@@ -884,11 +1095,6 @@ class Slide_Rheostat(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
@@ -961,7 +1167,32 @@ class Slide_Rheostat(CircuitBase):
         return self._r_up_pin
 
 
-class Multimeter(CircuitBase):
+class Slide_Rheostat(_SlideRheostat):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Multimeter(CircuitBase):
     """多用电表"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -973,11 +1204,6 @@ class Multimeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -1028,7 +1254,32 @@ class Multimeter(CircuitBase):
         return 2
 
 
-class Galvanometer(CircuitBase):
+class Multimeter(_Multimeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Galvanometer(CircuitBase):
     """灵敏电流计"""
 
     _all_pins: Tuple[
@@ -1045,11 +1296,6 @@ class Galvanometer(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -1098,7 +1344,32 @@ class Galvanometer(CircuitBase):
         return self._r_pin
 
 
-class Microammeter(CircuitBase):
+class Galvanometer(_Galvanometer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Microammeter(CircuitBase):
     """微安表"""
 
     _all_pins: Tuple[
@@ -1115,11 +1386,6 @@ class Microammeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -1168,7 +1434,32 @@ class Microammeter(CircuitBase):
         return self._r_pin
 
 
-class Electricity_Meter(CircuitBase):
+class Microammeter(_Microammeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _ElectricityMeter(CircuitBase):
     """电能表"""
 
     _all_pins: Tuple[
@@ -1187,11 +1478,6 @@ class Electricity_Meter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -1245,7 +1531,32 @@ class Electricity_Meter(CircuitBase):
         return self._r_pin
 
 
-class Resistance_Box(CircuitBase):
+class Electricity_Meter(_ElectricityMeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _ResistanceBox(CircuitBase):
     """电阻箱"""
 
     _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
@@ -1257,11 +1568,6 @@ class Resistance_Box(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         resistance: num_type = 10,
     ) -> None:
         self._all_pins = (
@@ -1337,7 +1643,36 @@ class Resistance_Box(CircuitBase):
         return value
 
 
-class Simple_Ammeter(CircuitBase):
+class Resistance_Box(_ResistanceBox):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        resistance: num_type = 10,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            resistance=resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SimpleAmmeter(CircuitBase):
     """直流安培表"""
 
     _all_pins: Tuple[
@@ -1354,11 +1689,6 @@ class Simple_Ammeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -1407,7 +1737,32 @@ class Simple_Ammeter(CircuitBase):
         return self._r_pin
 
 
-class Simple_Voltmeter(CircuitBase):
+class Simple_Ammeter(_SimpleAmmeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SimpleVoltmeter(CircuitBase):
     """直流电压表"""
 
     _all_pins: Tuple[
@@ -1424,11 +1779,6 @@ class Simple_Voltmeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
@@ -1475,3 +1825,28 @@ class Simple_Voltmeter(CircuitBase):
     @property
     def r(self) -> Pin:
         return self._r_pin
+
+
+class Simple_Voltmeter(_SimpleVoltmeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )

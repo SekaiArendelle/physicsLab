@@ -2,7 +2,7 @@
 from physicsLab import errors
 from physicsLab._core import _Experiment
 from physicsLab._tools import round_data
-from .._circuit_core import CircuitBase, Pin
+from .._circuit_core import CircuitBase, Pin, _deprecated_register_element_in_stack
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -17,7 +17,7 @@ from physicsLab._typing import (
 )
 
 
-class NE555(CircuitBase):
+class _NE555(CircuitBase):
     """555定时器"""
 
     is_bigElement = True
@@ -46,11 +46,6 @@ class NE555(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "555 Timer",
@@ -132,7 +127,32 @@ class NE555(CircuitBase):
         return self._ground_pin
 
 
-class Basic_Capacitor(CircuitBase):
+class NE555(_NE555):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _BasicCapacitor(CircuitBase):
     """电容"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -144,11 +164,6 @@ class Basic_Capacitor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         peak_voltage: num_type = 16,
         capacitance: num_type = 1e-06,
         internal_resistance: num_type = 5,
@@ -299,7 +314,40 @@ class Basic_Capacitor(CircuitBase):
         )
 
 
-class Basic_Inductor(CircuitBase):
+class Basic_Capacitor(_BasicCapacitor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        peak_voltage: num_type = 16,
+        capacitance: num_type = 1e-06,
+        internal_resistance: num_type = 5,
+        is_ideal: bool = False,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            peak_voltage=peak_voltage, capacitance=capacitance,
+            internal_resistance=internal_resistance, is_ideal=is_ideal
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _BasicInductor(CircuitBase):
     """电感"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -311,11 +359,6 @@ class Basic_Inductor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         rated_current: num_type = 1,
         inductance: num_type = 0.05,
         internal_resistance: num_type = 1,
@@ -471,7 +514,40 @@ class Basic_Inductor(CircuitBase):
         )
 
 
-class Basic_Diode(CircuitBase):
+class Basic_Inductor(_BasicInductor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        rated_current: num_type = 1,
+        inductance: num_type = 0.05,
+        internal_resistance: num_type = 1,
+        is_ideal: bool = False,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            rated_current=rated_current, inductance=inductance,
+            internal_resistance=internal_resistance, is_ideal=is_ideal
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _BasicDiode(CircuitBase):
     """二极管"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -483,11 +559,6 @@ class Basic_Diode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Basic Diode",
@@ -536,7 +607,32 @@ class Basic_Diode(CircuitBase):
         return 2
 
 
-class Light_Emitting_Diode(CircuitBase):
+class Basic_Diode(_BasicDiode):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _LightEmittingDiode(CircuitBase):
     """发光二极管"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -548,11 +644,6 @@ class Light_Emitting_Diode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Light-Emitting Diode",
@@ -602,12 +693,7 @@ class Light_Emitting_Diode(CircuitBase):
         return 2
 
 
-class Ground_Component(CircuitBase):
-    """接地元件"""
-
-    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
-    _i_pin: Pin
-
+class Light_Emitting_Diode(_LightEmittingDiode):
     def __init__(
         self,
         x: num_type,
@@ -618,6 +704,31 @@ class Ground_Component(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _GroundComponent(CircuitBase):
+    """接地元件"""
+
+    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
+    _i_pin: Pin
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Ground Component",
@@ -653,7 +764,32 @@ class Ground_Component(CircuitBase):
         return self._i_pin
 
 
-class Transformer(CircuitBase):
+class Ground_Component(_GroundComponent):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Transformer(CircuitBase):
     """理想变压器"""
 
     _all_pins: Tuple[
@@ -672,11 +808,6 @@ class Transformer(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Transformer",
@@ -742,7 +873,32 @@ class Transformer(CircuitBase):
         return self._r_low_pin
 
 
-class Tapped_Transformer(CircuitBase):
+class Transformer(_Transformer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _TappedTransformer(CircuitBase):
     """中心抽头变压器"""
 
     _all_pins: Tuple[
@@ -763,11 +919,6 @@ class Tapped_Transformer(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Tapped Transformer",
@@ -837,7 +988,32 @@ class Tapped_Transformer(CircuitBase):
         return self._mid_pin
 
 
-class Mutual_Inductor(CircuitBase):
+class Tapped_Transformer(_TappedTransformer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _MutualInductor(CircuitBase):
     """理想互感"""
 
     _all_pins: Tuple[
@@ -856,11 +1032,6 @@ class Mutual_Inductor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Mutual Inductor",
@@ -920,7 +1091,32 @@ class Mutual_Inductor(CircuitBase):
         return self._r_low_pin
 
 
-class Rectifier(CircuitBase):
+class Mutual_Inductor(_MutualInductor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Rectifier(CircuitBase):
     """全波整流器"""
 
     _all_pins: Tuple[
@@ -939,11 +1135,6 @@ class Rectifier(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Rectifier",
@@ -996,7 +1187,32 @@ class Rectifier(CircuitBase):
         return self._r_low_pin
 
 
-class Transistor(CircuitBase):
+class Rectifier(_Rectifier):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Transistor(CircuitBase):
     """三极管"""
 
     _all_pins: Tuple[
@@ -1013,11 +1229,6 @@ class Transistor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         is_PNP: bool = True,
         gain: num_type = 100,
         max_power: num_type = 1000,
@@ -1138,7 +1349,38 @@ class Transistor(CircuitBase):
         return self._E_pin
 
 
-class Comparator(CircuitBase):
+class Transistor(_Transistor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        is_PNP: bool = True,
+        gain: num_type = 100,
+        max_power: num_type = 1000,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            is_PNP=is_PNP, gain=gain, max_power=max_power
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _Comparator(CircuitBase):
     """比较器"""
 
     _all_pins: Tuple[
@@ -1155,11 +1397,6 @@ class Comparator(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Comparator",
@@ -1207,7 +1444,32 @@ class Comparator(CircuitBase):
         return self._i_low_pin
 
 
-class Operational_Amplifier(CircuitBase):
+class Comparator(_Comparator):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _OperationalAmplifier(CircuitBase):
     """运算放大器"""
 
     _all_pins: Tuple[
@@ -1224,11 +1486,6 @@ class Operational_Amplifier(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         gain: num_type = 10_000_000,
         max_voltage: num_type = 1000,
         min_voltage: num_type = -1000,
@@ -1360,7 +1617,38 @@ class Operational_Amplifier(CircuitBase):
         return self._o_pin
 
 
-class Relay_Component(CircuitBase):
+class Operational_Amplifier(_OperationalAmplifier):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        gain: num_type = 10_000_000,
+        max_voltage: num_type = 1000,
+        min_voltage: num_type = -1000,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            gain=gain, max_voltage=max_voltage, min_voltage=min_voltage
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _RelayComponent(CircuitBase):
     """继电器"""
 
     _all_pins: Tuple[
@@ -1381,11 +1669,6 @@ class Relay_Component(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         pull_in_current: num_type = 0.02,
         rated_current: num_type = 10,
         coil_inductance: num_type = 0.2,
@@ -1526,7 +1809,40 @@ class Relay_Component(CircuitBase):
         return self._r_low_pin
 
 
-class N_MOSFET(CircuitBase):
+class Relay_Component(_RelayComponent):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        pull_in_current: num_type = 0.02,
+        rated_current: num_type = 10,
+        coil_inductance: num_type = 0.2,
+        coil_resistance: num_type = 20,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            pull_in_current=pull_in_current, rated_current=rated_current,
+            coil_inductance=coil_inductance, coil_resistance=coil_resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _N_MOSFET(CircuitBase):
     """N-MOSFET"""
 
     _all_pins: Tuple[
@@ -1543,11 +1859,6 @@ class N_MOSFET(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
         beta: num_type = 0.027,
         threshold: num_type = 1.5,
         max_power: num_type = 1000,
@@ -1664,7 +1975,38 @@ class N_MOSFET(CircuitBase):
         return self._G_pin
 
 
-class P_MOSFET(CircuitBase):
+class N_MOSFET(_N_MOSFET):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        beta: num_type = 0.027,
+        threshold: num_type = 1.5,
+        max_power: num_type = 1000,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(
+            x, y, z,
+            beta=beta, threshold=threshold, max_power=max_power
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _P_MOSFET(CircuitBase):
     """P-MOSFET"""
 
     _all_pins: Tuple[
@@ -1681,11 +2023,6 @@ class P_MOSFET(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "P-MOSFET",
@@ -1745,7 +2082,32 @@ class P_MOSFET(CircuitBase):
         return self._D_pin
 
 
-class Current_Source(CircuitBase):
+class P_MOSFET(_P_MOSFET):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _CurrentSource(CircuitBase):
     """电流源"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -1757,11 +2119,6 @@ class Current_Source(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
         self.data: CircuitElementData = {
             "ModelID": "Current Source",
@@ -1806,6 +2163,31 @@ class Current_Source(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
+
+class Current_Source(_CurrentSource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SourceElectricity(CircuitBase):
@@ -1859,7 +2241,7 @@ class _SourceElectricity(CircuitBase):
         return 2
 
 
-class Sinewave_Source(_SourceElectricity):
+class _SinewaveSource(_SourceElectricity):
     """正弦波发生器"""
 
     def __init__(
@@ -1867,12 +2249,8 @@ class Sinewave_Source(_SourceElectricity):
         x: num_type,
         y: num_type,
         z: num_type,
-        /,
-        *,
-        elementXYZ: Optional[bool] = None,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Sinewave Source"
 
@@ -1882,9 +2260,7 @@ class Sinewave_Source(_SourceElectricity):
         return "正弦波发生器"
 
 
-class Square_Source(_SourceElectricity):
-    """方波发生器"""
-
+class Sinewave_Source(_SinewaveSource):
     def __init__(
         self,
         x: num_type,
@@ -1896,6 +2272,29 @@ class Square_Source(_SourceElectricity):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SquareSource(_SourceElectricity):
+    """方波发生器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Square Source"
 
@@ -1905,9 +2304,7 @@ class Square_Source(_SourceElectricity):
         return "方波发生器"
 
 
-class Triangle_Source(_SourceElectricity):
-    """三角波发生器"""
-
+class Square_Source(_SquareSource):
     def __init__(
         self,
         x: num_type,
@@ -1919,6 +2316,29 @@ class Triangle_Source(_SourceElectricity):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _TriangleSource(_SourceElectricity):
+    """三角波发生器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Triangle Source"
 
@@ -1928,9 +2348,7 @@ class Triangle_Source(_SourceElectricity):
         return "三角波发生器"
 
 
-class Sawtooth_Source(_SourceElectricity):
-    """锯齿波发生器"""
-
+class Triangle_Source(_TriangleSource):
     def __init__(
         self,
         x: num_type,
@@ -1942,6 +2360,29 @@ class Sawtooth_Source(_SourceElectricity):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _SawtoothSource(_SourceElectricity):
+    """锯齿波发生器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Sawtooth Source"
 
@@ -1951,9 +2392,7 @@ class Sawtooth_Source(_SourceElectricity):
         return "锯齿波发生器"
 
 
-class Pulse_Source(_SourceElectricity):
-    """尖峰波发生器"""
-
+class Sawtooth_Source(_SawtoothSource):
     def __init__(
         self,
         x: num_type,
@@ -1965,6 +2404,29 @@ class Pulse_Source(_SourceElectricity):
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
     ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
+
+
+class _PulseSource(_SourceElectricity):
+    """尖峰波发生器"""
+
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+    ) -> None:
+        # this class is deprecated
         super().__init__(x, y, z)
         self.data["ModelID"] = "Pulse Source"
 
@@ -1972,3 +2434,28 @@ class Pulse_Source(_SourceElectricity):
     @staticmethod
     def zh_name() -> str:
         return "尖峰波发生器"
+
+
+class Pulse_Source(_PulseSource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        # this class is deprecated
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
