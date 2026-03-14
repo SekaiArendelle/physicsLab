@@ -99,30 +99,28 @@ class _SimpleSwitch(_SwitchBase):
         return self
 
 
-def Simple_Switch(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SimpleSwitch:
-    result = _SimpleSwitch(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Simple_Switch(_SimpleSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SPDTSwitch(_SwitchBase):
@@ -200,30 +198,28 @@ class _SPDTSwitch(_SwitchBase):
         return 3
 
 
-def SPDT_Switch(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SPDTSwitch:
-    result = _SPDTSwitch(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class SPDT_Switch(_SPDTSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _DPDTSwitch(_SwitchBase):
@@ -323,30 +319,28 @@ class _DPDTSwitch(_SwitchBase):
         return 6
 
 
-def DPDT_Switch(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _DPDTSwitch:
-    result = _DPDTSwitch(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class DPDT_Switch(_DPDTSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _PushSwitch(CircuitBase):
@@ -404,30 +398,28 @@ class _PushSwitch(CircuitBase):
         return 2
 
 
-def Push_Switch(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _PushSwitch:
-    result = _PushSwitch(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Push_Switch(_PushSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _AirSwitch(CircuitBase):
@@ -506,30 +498,28 @@ class _AirSwitch(CircuitBase):
         return self
 
 
-def Air_Switch(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _AirSwitch:
-    result = _AirSwitch(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Air_Switch(_AirSwitch):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _IncandescentLamp(CircuitBase):
@@ -596,30 +586,28 @@ class _IncandescentLamp(CircuitBase):
         return 2
 
 
-def Incandescent_Lamp(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _IncandescentLamp:
-    result = _IncandescentLamp(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Incandescent_Lamp(_IncandescentLamp):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _BatterySource(CircuitBase):
@@ -719,33 +707,33 @@ class _BatterySource(CircuitBase):
         return 2
 
 
-def Battery_Source(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    voltage: num_type = 1.5,
-    internal_resistance: num_type = 0,
-) -> _BatterySource:
-    result = _BatterySource(
-        x, y, z,
-        voltage=voltage, internal_resistance=internal_resistance
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Battery_Source(_BatterySource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        voltage: num_type = 1.5,
+        internal_resistance: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            voltage=voltage, internal_resistance=internal_resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _StudentSource(CircuitBase):
@@ -841,30 +829,28 @@ class _StudentSource(CircuitBase):
         return self._r_pin
 
 
-def Student_Source(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _StudentSource:
-    result = _StudentSource(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Student_Source(_StudentSource):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Resistor(CircuitBase):
@@ -964,32 +950,32 @@ class _Resistor(CircuitBase):
         )
 
 
-def Resistor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    resistance: num_type = 10,
-) -> _Resistor:
-    result = _Resistor(
-        x, y, z,
-        resistance=resistance
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Resistor(_Resistor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        resistance: num_type = 10,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            resistance=resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _FuseComponent(CircuitBase):
@@ -1054,30 +1040,28 @@ class _FuseComponent(CircuitBase):
         return 2
 
 
-def Fuse_Component(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _FuseComponent:
-    result = _FuseComponent(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Fuse_Component(_FuseComponent):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SlideRheostat(CircuitBase):
@@ -1171,30 +1155,28 @@ class _SlideRheostat(CircuitBase):
         return self._r_up_pin
 
 
-def Slide_Rheostat(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SlideRheostat:
-    result = _SlideRheostat(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Slide_Rheostat(_SlideRheostat):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Multimeter(CircuitBase):
@@ -1259,30 +1241,28 @@ class _Multimeter(CircuitBase):
         return 2
 
 
-def Multimeter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Multimeter:
-    result = _Multimeter(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Multimeter(_Multimeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Galvanometer(CircuitBase):
@@ -1350,30 +1330,28 @@ class _Galvanometer(CircuitBase):
         return self._r_pin
 
 
-def Galvanometer(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Galvanometer:
-    result = _Galvanometer(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Galvanometer(_Galvanometer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Microammeter(CircuitBase):
@@ -1441,30 +1419,28 @@ class _Microammeter(CircuitBase):
         return self._r_pin
 
 
-def Microammeter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Microammeter:
-    result = _Microammeter(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Microammeter(_Microammeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ElectricityMeter(CircuitBase):
@@ -1539,30 +1515,28 @@ class _ElectricityMeter(CircuitBase):
         return self._r_pin
 
 
-def Electricity_Meter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ElectricityMeter:
-    result = _ElectricityMeter(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Electricity_Meter(_ElectricityMeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ResistanceBox(CircuitBase):
@@ -1652,32 +1626,32 @@ class _ResistanceBox(CircuitBase):
         return value
 
 
-def Resistance_Box(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    resistance: num_type = 10,
-) -> _ResistanceBox:
-    result = _ResistanceBox(
-        x, y, z,
-        resistance=resistance
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Resistance_Box(_ResistanceBox):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        resistance: num_type = 10,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            resistance=resistance
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SimpleAmmeter(CircuitBase):
@@ -1745,30 +1719,28 @@ class _SimpleAmmeter(CircuitBase):
         return self._r_pin
 
 
-def Simple_Ammeter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SimpleAmmeter:
-    result = _SimpleAmmeter(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Simple_Ammeter(_SimpleAmmeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SimpleVoltmeter(CircuitBase):
@@ -1836,27 +1808,25 @@ class _SimpleVoltmeter(CircuitBase):
         return self._r_pin
 
 
-def Simple_Voltmeter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SimpleVoltmeter:
-    result = _SimpleVoltmeter(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Simple_Voltmeter(_SimpleVoltmeter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )

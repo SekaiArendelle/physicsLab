@@ -81,30 +81,28 @@ class _Buzzer(CircuitBase):
         return 2
 
 
-def Buzzer(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Buzzer:
-    result = _Buzzer(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Buzzer(_Buzzer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SparkGap(CircuitBase):
@@ -166,30 +164,28 @@ class _SparkGap(CircuitBase):
         return 2
 
 
-def Spark_Gap(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _SparkGap:
-    result = _SparkGap(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Spark_Gap(_SparkGap):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _TeslaCoil(CircuitBase):
@@ -253,30 +249,28 @@ class _TeslaCoil(CircuitBase):
         return 2
 
 
-def Tesla_Coil(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _TeslaCoil:
-    result = _TeslaCoil(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Tesla_Coil(_TeslaCoil):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ColorLightEmittingDiode(CircuitBase):
@@ -370,30 +364,28 @@ class _ColorLightEmittingDiode(CircuitBase):
         return 4
 
 
-def Color_Light_Emitting_Diode(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ColorLightEmittingDiode:
-    result = _ColorLightEmittingDiode(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Color_Light_Emitting_Diode(_ColorLightEmittingDiode):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _DualLightEmittingDiode(CircuitBase):
@@ -466,30 +458,28 @@ class _DualLightEmittingDiode(CircuitBase):
         return 2
 
 
-def Dual_Light_Emitting_Diode(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _DualLightEmittingDiode:
-    result = _DualLightEmittingDiode(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Dual_Light_Emitting_Diode(_DualLightEmittingDiode):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ElectricBell(CircuitBase):
@@ -553,30 +543,28 @@ class _ElectricBell(CircuitBase):
         return 2
 
 
-def Electric_Bell(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ElectricBell:
-    result = _ElectricBell(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Electric_Bell(_ElectricBell):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _MusicalBox(CircuitBase):
@@ -640,30 +628,28 @@ class _MusicalBox(CircuitBase):
         return 2
 
 
-def Musical_Box(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _MusicalBox:
-    result = _MusicalBox(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Musical_Box(_MusicalBox):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ResistanceLaw(CircuitBase):
@@ -804,30 +790,28 @@ class _ResistanceLaw(CircuitBase):
         return 8
 
 
-def Resistance_Law(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ResistanceLaw:
-    result = _ResistanceLaw(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Resistance_Law(_ResistanceLaw):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Solenoid(CircuitBase):
@@ -917,30 +901,28 @@ class _Solenoid(CircuitBase):
         return 4
 
 
-def Solenoid(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Solenoid:
-    result = _Solenoid(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Solenoid(_Solenoid):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ElectricFan(CircuitBase):
@@ -1020,30 +1002,28 @@ class _ElectricFan(CircuitBase):
         return 2
 
 
-def Electric_Fan(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ElectricFan:
-    result = _ElectricFan(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Electric_Fan(_ElectricFan):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SimpleInstrument(CircuitBase):
@@ -1282,36 +1262,36 @@ class _SimpleInstrument(CircuitBase):
         return 2
 
 
-def Simple_Instrument(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    pitches: Union[List[int], Tuple[int]],
-    elementXYZ: Optional[bool] = None,
-    experiment: Optional[_Experiment] = None,
-    identifier: Optional[str] = None,
-    rated_oltage: num_type = 3.0,
-    volume: num_type = 1,
-    bpm: int = 100,
-    instrument: int = 0,
-    is_ideal: bool = False,
-    is_pulse: bool = True,
-) -> _SimpleInstrument:
-    result = _SimpleInstrument(
-        x, y, z, pitches=pitches, elementXYZ=elementXYZ, identifier=identifier, 
-        experiment=experiment, rated_oltage=rated_oltage, volume=volume, bpm=bpm,
-        instrument=instrument, is_ideal=is_ideal, is_pulse=is_pulse
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Simple_Instrument(_SimpleInstrument):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        pitches: Union[List[int], Tuple[int]],
+        elementXYZ: Optional[bool] = None,
+        experiment: Optional[_Experiment] = None,
+        identifier: Optional[str] = None,
+        rated_oltage: num_type = 3.0,
+        volume: num_type = 1,
+        bpm: int = 100,
+        instrument: int = 0,
+        is_ideal: bool = False,
+        is_pulse: bool = True,
+    ) -> None:
+        super().__init__(
+            x, y, z, pitches=pitches, elementXYZ=elementXYZ, identifier=identifier,
+            experiment=experiment, rated_oltage=rated_oltage, volume=volume, bpm=bpm,
+            instrument=instrument, is_ideal=is_ideal, is_pulse=is_pulse
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )

@@ -155,34 +155,34 @@ class _Accelerometer(_MemsBase):
         return "加速度计"
 
 
-def Accelerometer(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 2,
-    shifting: num_type = 0.75,
-    response_factor: num_type = 0.2290000021457672,
-) -> _Accelerometer:
-    result = _Accelerometer(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Accelerometer(_Accelerometer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.2290000021457672,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _AnalogJoystick(CircuitBase):
@@ -270,30 +270,28 @@ class _AnalogJoystick(CircuitBase):
         return self._y3_pin
 
 
-def Analog_Joystick(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _AnalogJoystick:
-    result = _AnalogJoystick(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Analog_Joystick(_AnalogJoystick):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _AttitudeSensor(_MemsBase):
@@ -320,34 +318,34 @@ class _AttitudeSensor(_MemsBase):
         return "姿态传感器"
 
 
-def Attitude_Sensor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 180,
-    shifting: num_type = 2.5,
-    response_factor: num_type = 0.0125,
-) -> _AttitudeSensor:
-    result = _AttitudeSensor(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Attitude_Sensor(_AttitudeSensor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 180,
+        shifting: num_type = 2.5,
+        response_factor: num_type = 0.0125,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _GravitySensor(_MemsBase):
@@ -374,34 +372,34 @@ class _GravitySensor(_MemsBase):
         return "重力加速计"
 
 
-def Gravity_Sensor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 2,
-    shifting: num_type = 0.75,
-    response_factor: num_type = 0.229,
-) -> _GravitySensor:
-    result = _GravitySensor(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Gravity_Sensor(_GravitySensor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.229,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Gyroscope(_MemsBase):
@@ -428,34 +426,34 @@ class _Gyroscope(_MemsBase):
         return "陀螺仪传感器"
 
 
-def Gyroscope(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 150,
-    shifting: num_type = 2.5,
-    response_factor: num_type = 0.0125,
-) -> _Gyroscope:
-    result = _Gyroscope(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Gyroscope(_Gyroscope):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 150,
+        shifting: num_type = 2.5,
+        response_factor: num_type = 0.0125,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _LinearAccelerometer(_MemsBase):
@@ -482,34 +480,34 @@ class _LinearAccelerometer(_MemsBase):
         return "线性加速度计"
 
 
-def Linear_Accelerometer(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 2,
-    shifting: num_type = 0.75,
-    response_factor: num_type = 0.229,
-) -> _LinearAccelerometer:
-    result = _LinearAccelerometer(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Linear_Accelerometer(_LinearAccelerometer):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 2,
+        shifting: num_type = 0.75,
+        response_factor: num_type = 0.229,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _MagneticFieldSensor(_MemsBase):
@@ -536,34 +534,34 @@ class _MagneticFieldSensor(_MemsBase):
         return "磁场传感器"
 
 
-def Magnetic_Field_Sensor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    ranges: num_type = 0.04,
-    shifting: num_type = 3.2,
-    response_factor: num_type = 80,
-) -> _MagneticFieldSensor:
-    result = _MagneticFieldSensor(
-        x, y, z,
-        ranges=ranges, shifting=shifting, response_factor=response_factor
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Magnetic_Field_Sensor(_MagneticFieldSensor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        ranges: num_type = 0.04,
+        shifting: num_type = 3.2,
+        response_factor: num_type = 80,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            ranges=ranges, shifting=shifting, response_factor=response_factor
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Photodiode(CircuitBase):
@@ -627,30 +625,28 @@ class _Photodiode(CircuitBase):
         return "光电二极管"
 
 
-def Photodiode(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Photodiode:
-    result = _Photodiode(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Photodiode(_Photodiode):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Photoresistor(CircuitBase):
@@ -714,30 +710,28 @@ class _Photoresistor(CircuitBase):
         return "光敏电阻"
 
 
-def Photoresistor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _Photoresistor:
-    result = _Photoresistor(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Photoresistor(_Photoresistor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ProximitySensor(CircuitBase):
@@ -786,27 +780,25 @@ class _ProximitySensor(CircuitBase):
         return self._o_pin
 
 
-def Proximity_Sensor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-) -> _ProximitySensor:
-    result = _ProximitySensor(
-        x, y, z
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Proximity_Sensor(_ProximitySensor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+    ) -> None:
+        super().__init__(x, y, z)
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )

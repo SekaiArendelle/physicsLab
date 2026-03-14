@@ -150,34 +150,34 @@ class _LogicInput(_LogicBase):
         return 1
 
 
-def Logic_Input(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    output_status: bool = False,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _LogicInput:
-    result = _LogicInput(
-        x, y, z,
-        output_status=output_status, high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Logic_Input(_LogicInput):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        output_status: bool = False,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            output_status=output_status, high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _LogicOutput(_LogicBase):
@@ -237,33 +237,33 @@ class _LogicOutput(_LogicBase):
         return 1
 
 
-def Logic_Output(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _LogicOutput:
-    result = _LogicOutput(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Logic_Output(_LogicOutput):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _2PinGate(_LogicBase):
@@ -353,33 +353,33 @@ class _YesGate(_2PinGate):
         return 2
 
 
-def Yes_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _YesGate:
-    result = _YesGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Yes_Gate(_YesGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _NoGate(_2PinGate):
@@ -406,33 +406,33 @@ class _NoGate(_2PinGate):
         return 2
 
 
-def No_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _NoGate:
-    result = _NoGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class No_Gate(_NoGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _3PinGate(_LogicBase):
@@ -530,33 +530,33 @@ class _OrGate(_3PinGate):
         return 3
 
 
-def Or_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _OrGate:
-    result = _OrGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Or_Gate(_OrGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _AndGate(_3PinGate):
@@ -583,33 +583,33 @@ class _AndGate(_3PinGate):
         return 3
 
 
-def And_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _AndGate:
-    result = _AndGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class And_Gate(_AndGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _NorGate(_3PinGate):
@@ -636,33 +636,33 @@ class _NorGate(_3PinGate):
         return 3
 
 
-def Nor_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _NorGate:
-    result = _NorGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Nor_Gate(_NorGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _NandGate(_3PinGate):
@@ -689,33 +689,33 @@ class _NandGate(_3PinGate):
         return 3
 
 
-def Nand_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _NandGate:
-    result = _NandGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Nand_Gate(_NandGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _XorGate(_3PinGate):
@@ -742,33 +742,33 @@ class _XorGate(_3PinGate):
         return 3
 
 
-def Xor_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _XorGate:
-    result = _XorGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Xor_Gate(_XorGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _XnorGate(_3PinGate):
@@ -795,33 +795,33 @@ class _XnorGate(_3PinGate):
         return 3
 
 
-def Xnor_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _XnorGate:
-    result = _XnorGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Xnor_Gate(_XnorGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _ImpGate(_3PinGate):
@@ -848,33 +848,33 @@ class _ImpGate(_3PinGate):
         return 3
 
 
-def Imp_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _ImpGate:
-    result = _ImpGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Imp_Gate(_ImpGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _NimpGate(_3PinGate):
@@ -901,33 +901,33 @@ class _NimpGate(_3PinGate):
         return 3
 
 
-def Nimp_Gate(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _NimpGate:
-    result = _NimpGate(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Nimp_Gate(_NimpGate):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _BigElement(_LogicBase):
@@ -1029,33 +1029,33 @@ class _HalfAdder(_BigElement):
         return 4
 
 
-def Half_Adder(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _HalfAdder:
-    result = _HalfAdder(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Half_Adder(_HalfAdder):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _FullAdder(_BigElement):
@@ -1129,33 +1129,33 @@ class _FullAdder(_BigElement):
         return 5
 
 
-def Full_Adder(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _FullAdder:
-    result = _FullAdder(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Full_Adder(_FullAdder):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _HalfSubtractor(_BigElement):
@@ -1226,33 +1226,33 @@ class _HalfSubtractor(_BigElement):
         return 4
 
 
-def Half_Subtractor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _HalfSubtractor:
-    result = _HalfSubtractor(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Half_Subtractor(_HalfSubtractor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _FullSubtractor(_BigElement):
@@ -1330,33 +1330,33 @@ class _FullSubtractor(_BigElement):
         return 5
 
 
-def Full_Subtractor(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _FullSubtractor:
-    result = _FullSubtractor(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Full_Subtractor(_FullSubtractor):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Multiplier(_BigElement):
@@ -1451,33 +1451,33 @@ class _Multiplier(_BigElement):
         return 8
 
 
-def Multiplier(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _Multiplier:
-    result = _Multiplier(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Multiplier(_Multiplier):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _DFlipflop(_BigElement):
@@ -1544,33 +1544,33 @@ class _DFlipflop(_BigElement):
         return 4
 
 
-def D_Flipflop(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _DFlipflop:
-    result = _DFlipflop(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class D_Flipflop(_DFlipflop):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _TFlipflop(_BigElement):
@@ -1637,33 +1637,33 @@ class _TFlipflop(_BigElement):
         return 4
 
 
-def T_Flipflop(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _TFlipflop:
-    result = _TFlipflop(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class T_Flipflop(_TFlipflop):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _RealTFlipflop(_BigElement):
@@ -1730,33 +1730,33 @@ class _RealTFlipflop(_BigElement):
         return 4
 
 
-def Real_T_Flipflop(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _RealTFlipflop:
-    result = _RealTFlipflop(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Real_T_Flipflop(_RealTFlipflop):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _JKFlipflop(_BigElement):
@@ -1830,33 +1830,33 @@ class _JKFlipflop(_BigElement):
         return 5
 
 
-def JK_Flipflop(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _JKFlipflop:
-    result = _JKFlipflop(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class JK_Flipflop(_JKFlipflop):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _Counter(_BigElement):
@@ -1937,33 +1937,33 @@ class _Counter(_BigElement):
         return 6
 
 
-def Counter(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _Counter:
-    result = _Counter(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Counter(_Counter):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _RandomGenerator(_BigElement):
@@ -2044,33 +2044,33 @@ class _RandomGenerator(_BigElement):
         return 6
 
 
-def Random_Generator(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _RandomGenerator:
-    result = _RandomGenerator(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Random_Generator(_RandomGenerator):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _EightBitInput(_LogicBase):
@@ -2202,33 +2202,33 @@ class _EightBitInput(_LogicBase):
         return 8
 
 
-def Eight_Bit_Input(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _EightBitInput:
-    result = _EightBitInput(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Eight_Bit_Input(_EightBitInput):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _EightBitDisplay(_LogicBase):
@@ -2353,33 +2353,33 @@ class _EightBitDisplay(_LogicBase):
         return 8
 
 
-def Eight_Bit_Display(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 3,
-    low_level: num_type = 0,
-) -> _EightBitDisplay:
-    result = _EightBitDisplay(
-        x, y, z,
-        high_level=high_level, low_level=low_level
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Eight_Bit_Display(_EightBitDisplay):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 3,
+        low_level: num_type = 0,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
 
 
 class _SchmittTrigger(CircuitBase):
@@ -2534,31 +2534,31 @@ class _SchmittTrigger(CircuitBase):
         return self._o_pin
 
 
-def Schmitt_Trigger(
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
-    *,
-    elementXYZ: Optional[bool] = None,
-    identifier: Optional[str] = None,
-    experiment: Optional[_Experiment] = None,
-    high_level: num_type = 5.0,
-    low_level: Optional[num_type] = None,
-    inverted: bool = False,
-) -> _SchmittTrigger:
-    result = _SchmittTrigger(
-        x, y, z,
-        high_level=high_level, low_level=low_level, inverted=inverted
-    )
-    # deprecate
-    _deprecated_register_element_in_stack(
-        result,
-        x,
-        y,
-        z,
-        elementXYZ=elementXYZ,
-        identifier=identifier,
-        experiment=experiment,
-    )
-    return result
+class Schmitt_Trigger(_SchmittTrigger):
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        *,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+        experiment: Optional[_Experiment] = None,
+        high_level: num_type = 5.0,
+        low_level: Optional[num_type] = None,
+        inverted: bool = False,
+    ) -> None:
+        super().__init__(
+            x, y, z,
+            high_level=high_level, low_level=low_level, inverted=inverted
+        )
+        _deprecated_register_element_in_stack(
+            self,
+            x,
+            y,
+            z,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+        )
