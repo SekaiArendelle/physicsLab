@@ -20,7 +20,8 @@ from physicsLab._typing import (
 class _SwitchBase(CircuitBase):
     """开关基类"""
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
+    def __init__(self, x: num_type, y: num_type, z: num_type, /, elementXYZ: Optional[bool] = None) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,
@@ -112,16 +113,8 @@ class Simple_Switch(_SimpleSwitch):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _SPDTSwitch(_SwitchBase):
@@ -141,9 +134,10 @@ class _SPDTSwitch(_SwitchBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -213,16 +207,8 @@ class SPDT_Switch(_SPDTSwitch):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _DPDTSwitch(_SwitchBase):
@@ -248,9 +234,10 @@ class _DPDTSwitch(_SwitchBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
             ("_mid_low_pin", Pin(self, 1)),
@@ -336,16 +323,8 @@ class DPDT_Switch(_DPDTSwitch):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _PushSwitch(CircuitBase):
@@ -360,7 +339,9 @@ class _PushSwitch(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -416,16 +397,8 @@ class Push_Switch(_PushSwitch):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _AirSwitch(CircuitBase):
@@ -440,7 +413,9 @@ class _AirSwitch(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -517,16 +492,8 @@ class Air_Switch(_AirSwitch):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _IncandescentLamp(CircuitBase):
@@ -541,7 +508,9 @@ class _IncandescentLamp(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -606,16 +575,8 @@ class Incandescent_Lamp(_IncandescentLamp):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _BatterySource(CircuitBase):
@@ -632,7 +593,9 @@ class _BatterySource(CircuitBase):
         z: num_type,
         voltage: num_type = 1.5,
         internal_resistance: num_type = 0,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -732,17 +695,10 @@ class Battery_Source(_BatterySource):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            voltage=voltage, internal_resistance=internal_resistance
+            voltage=voltage, internal_resistance=internal_resistance,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _StudentSource(CircuitBase):
@@ -764,7 +720,9 @@ class _StudentSource(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_l_mid_pin", Pin(self, 1)),
@@ -851,16 +809,8 @@ class Student_Source(_StudentSource):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Resistor(CircuitBase):
@@ -876,7 +826,9 @@ class _Resistor(CircuitBase):
         y: num_type,
         z: num_type,
         resistance: num_type = 10,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -976,17 +928,10 @@ class Resistor(_Resistor):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            resistance=resistance
+            resistance=resistance,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _FuseComponent(CircuitBase):
@@ -1001,7 +946,9 @@ class _FuseComponent(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -1064,16 +1011,8 @@ class Fuse_Component(_FuseComponent):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _SlideRheostat(CircuitBase):
@@ -1095,7 +1034,9 @@ class _SlideRheostat(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
             ("_r_low_pin", Pin(self, 1)),
@@ -1180,16 +1121,8 @@ class Slide_Rheostat(_SlideRheostat):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Multimeter(CircuitBase):
@@ -1204,7 +1137,9 @@ class _Multimeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -1267,16 +1202,8 @@ class Multimeter(_Multimeter):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Galvanometer(CircuitBase):
@@ -1296,7 +1223,9 @@ class _Galvanometer(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -1357,16 +1286,8 @@ class Galvanometer(_Galvanometer):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Microammeter(CircuitBase):
@@ -1386,7 +1307,9 @@ class _Microammeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -1447,16 +1370,8 @@ class Microammeter(_Microammeter):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _ElectricityMeter(CircuitBase):
@@ -1478,7 +1393,9 @@ class _ElectricityMeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_l_mid_pin", Pin(self, 2)),
@@ -1544,16 +1461,8 @@ class Electricity_Meter(_ElectricityMeter):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _ResistanceBox(CircuitBase):
@@ -1569,7 +1478,9 @@ class _ResistanceBox(CircuitBase):
         y: num_type,
         z: num_type,
         resistance: num_type = 10,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_r_pin", Pin(self, 1)),
@@ -1659,17 +1570,10 @@ class Resistance_Box(_ResistanceBox):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            resistance=resistance
+            resistance=resistance,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _SimpleAmmeter(CircuitBase):
@@ -1689,7 +1593,9 @@ class _SimpleAmmeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -1750,16 +1656,8 @@ class Simple_Ammeter(_SimpleAmmeter):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _SimpleVoltmeter(CircuitBase):
@@ -1779,7 +1677,9 @@ class _SimpleVoltmeter(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -1840,13 +1740,5 @@ class Simple_Voltmeter(_SimpleVoltmeter):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)

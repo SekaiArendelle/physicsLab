@@ -26,7 +26,9 @@ class _MemsBase(CircuitBase):
     _y_pin: Pin
     _z_pin: Pin
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, /) -> None:
+    def __init__(self, x: num_type, y: num_type, z: num_type, /, elementXYZ: Optional[bool] = None) -> None:
+        # ensure CircuitBase initialization and propagate elementXYZ
+        super().__init__(x, y, z, elementXYZ)
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,
@@ -142,9 +144,10 @@ class _Accelerometer(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Accelerometer"
         self.ranges = ranges
         self.shifting = shifting
@@ -172,19 +175,12 @@ class Accelerometer(_Accelerometer):
         response_factor: num_type = 0.2290000021457672,
     ) -> None:
         # this class is deprecated
+        # pass elementXYZ down to the base and then register
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _AnalogJoystick(CircuitBase):
@@ -210,7 +206,9 @@ class _AnalogJoystick(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self.data: CircuitElementData = {
             "ModelID": "Analog Joystick",
             "Identifier": Generate,
@@ -285,16 +283,8 @@ class Analog_Joystick(_AnalogJoystick):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _AttitudeSensor(_MemsBase):
@@ -308,9 +298,10 @@ class _AttitudeSensor(_MemsBase):
         ranges: num_type = 180,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Attitude Sensor"
         self.ranges = ranges
         self.shifting = shifting
@@ -340,17 +331,10 @@ class Attitude_Sensor(_AttitudeSensor):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _GravitySensor(_MemsBase):
@@ -364,9 +348,10 @@ class _GravitySensor(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Gravity Sensor"
         self.ranges = ranges
         self.shifting = shifting
@@ -396,17 +381,10 @@ class Gravity_Sensor(_GravitySensor):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Gyroscope(_MemsBase):
@@ -420,9 +398,10 @@ class _Gyroscope(_MemsBase):
         ranges: num_type = 150,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Gyroscope"
         self.ranges = ranges
         self.shifting = shifting
@@ -452,17 +431,10 @@ class Gyroscope(_Gyroscope):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _LinearAccelerometer(_MemsBase):
@@ -476,9 +448,10 @@ class _LinearAccelerometer(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Linear Accelerometer"
         self.ranges = ranges
         self.shifting = shifting
@@ -508,17 +481,10 @@ class Linear_Accelerometer(_LinearAccelerometer):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _MagneticFieldSensor(_MemsBase):
@@ -532,9 +498,10 @@ class _MagneticFieldSensor(_MemsBase):
         ranges: num_type = 0.04,
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         self.data["ModelID"] = "Magnetic Field Sensor"
         self.ranges = ranges
         self.shifting = shifting
@@ -564,17 +531,10 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
         # this class is deprecated
         super().__init__(
             x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor
+            ranges=ranges, shifting=shifting, response_factor=response_factor,
+            elementXYZ=elementXYZ
         )
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Photodiode(CircuitBase):
@@ -589,7 +549,9 @@ class _Photodiode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -651,16 +613,8 @@ class Photodiode(_Photodiode):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _Photoresistor(CircuitBase):
@@ -675,7 +629,9 @@ class _Photoresistor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -737,16 +693,8 @@ class Photoresistor(_Photoresistor):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)
 
 
 class _ProximitySensor(CircuitBase):
@@ -760,7 +708,9 @@ class _ProximitySensor(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (("_o_pin", Pin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -808,13 +758,5 @@ class Proximity_Sensor(_ProximitySensor):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
-        _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
-        )
+        super().__init__(x, y, z, elementXYZ)
+        _deprecated_register_element_in_stack(self, identifier=identifier, experiment=experiment)

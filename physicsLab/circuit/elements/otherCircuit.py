@@ -32,7 +32,9 @@ class _Buzzer(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -94,15 +96,9 @@ class Buzzer(_Buzzer):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -118,7 +114,9 @@ class _SparkGap(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -178,15 +176,9 @@ class Spark_Gap(_SparkGap):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -202,7 +194,9 @@ class _TeslaCoil(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -264,15 +258,9 @@ class Tesla_Coil(_TeslaCoil):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -295,7 +283,9 @@ class _ColorLightEmittingDiode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_up_pin", Pin(self, 0)),
             ("_l_mid_pin", Pin(self, 1)),
@@ -380,15 +370,9 @@ class Color_Light_Emitting_Diode(_ColorLightEmittingDiode):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -404,7 +388,9 @@ class _DualLightEmittingDiode(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -475,15 +461,9 @@ class Dual_Light_Emitting_Diode(_DualLightEmittingDiode):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -499,7 +479,9 @@ class _ElectricBell(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -561,15 +543,9 @@ class Electric_Bell(_ElectricBell):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -585,7 +561,9 @@ class _MusicalBox(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -647,15 +625,9 @@ class Musical_Box(_MusicalBox):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -686,7 +658,9 @@ class _ResistanceLaw(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
             ("_l_lowmid_pin", Pin(self, 1)),
@@ -810,15 +784,9 @@ class Resistance_Law(_ResistanceLaw):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -841,7 +809,9 @@ class _Solenoid(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_subred_pin", Pin(self, 0)),
             ("_subblack_pin", Pin(self, 1)),
@@ -922,15 +892,9 @@ class Solenoid(_Solenoid):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -946,7 +910,9 @@ class _ElectricFan(CircuitBase):
         x: num_type,
         y: num_type,
         z: num_type,
+        elementXYZ: Optional[bool] = None,
     ) -> None:
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
@@ -1024,15 +990,9 @@ class Electric_Fan(_ElectricFan):
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z)
+        super().__init__(x, y, z, elementXYZ)
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )
 
 
@@ -1069,6 +1029,7 @@ class _SimpleInstrument(CircuitBase):
         @param is_ideal: 是否为理想模式
         @param is_pulse: 简单乐器是否只响一次
         """
+        super().__init__(x, y, z, elementXYZ)
         self._all_pins = (
             ("_i_pin", Pin(self, 0)),
             ("_o_pin", Pin(self, 1)),
@@ -1298,11 +1259,5 @@ class Simple_Instrument(_SimpleInstrument):
             instrument=instrument, is_ideal=is_ideal, is_pulse=is_pulse
         )
         _deprecated_register_element_in_stack(
-            self,
-            x,
-            y,
-            z,
-            elementXYZ=elementXYZ,
-            identifier=identifier,
-            experiment=experiment,
+            self, identifier=identifier, experiment=experiment
         )

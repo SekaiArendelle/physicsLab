@@ -199,31 +199,10 @@ def del_wire(source_pin: Pin, target_pin: Pin) -> None:
 
 def _deprecated_register_element_in_stack(
     self: "CircuitBase",
-    x: num_type,
-    y: num_type,
-    z: num_type,
-    /,
     *,
-    elementXYZ: Optional[bool] = None,
     identifier: Optional[str] = None,
     experiment: Optional[_Experiment] = None,
 ):
-    if not isinstance(x, (float, int)):
-        raise TypeError(
-            f"Parameter x must be of type `int | float`, but got value {x} of type {type(x).__name__}"
-        )
-    if not isinstance(y, (float, int)):
-        raise TypeError(
-            f"Parameter y must be of type `int | float`, but got value {y} of type {type(y).__name__}"
-        )
-    if not isinstance(z, (float, int)):
-        raise TypeError(
-            f"Parameter z must be of type `int | float`, but got value {z} of type {type(z).__name__}"
-        )
-    if not isinstance(elementXYZ, (bool, type(None))):
-        raise TypeError(
-            f"Parameter elementXYZ must be of type `Optional[bool]`, but got value {elementXYZ} of type {type(elementXYZ).__name__}"
-        )
     if not isinstance(identifier, (str, type(None))):
         raise TypeError(
             f"Parameter identifier must be of type `Optional[str]`, but got value {identifier} of type {type(identifier).__name__}"
@@ -247,7 +226,6 @@ def _deprecated_register_element_in_stack(
     assert hasattr(self, "data") and isinstance(self.data, dict)
 
     self._set_identifier(identifier)
-    self.set_position(x, y, z, elementXYZ)
     self.set_rotation()
 
     self.experiment.Elements.append(self)
@@ -260,11 +238,12 @@ class CircuitBase(ElementBase):
     """所有电学元件的父类"""
 
     experiment: _Experiment  # 元件所属的实验
+    _position: _tools.position
     is_elementXYZ: bool
     is_bigElement = False  # 该元件是否是逻辑电路的两体积元件
 
-    def __init__(*args, **kwargs) -> NoReturn:
-        raise NotImplementedError
+    def __init__(self, x: num_type, y: num_type, z: num_type, elementXYZ: Optional[bool]) -> None:
+        self.set_position(x, y, z, elementXYZ)
 
     def __repr__(self) -> str:
         return (
