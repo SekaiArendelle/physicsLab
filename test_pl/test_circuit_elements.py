@@ -1,6 +1,5 @@
 import unittest
-from physicsLab import Experiment, OpenMode, ExperimentType
-from physicsLab.coordinate_system import Position
+from physicsLab import Experiment, OpenMode, ExperimentType, Position
 from physicsLab.circuit.elements import *
 
 

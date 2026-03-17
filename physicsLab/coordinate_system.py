@@ -1,6 +1,5 @@
 from ._typing import num_type
 
-# TODO export this class
 class Position:
     x: num_type
     y: num_type
