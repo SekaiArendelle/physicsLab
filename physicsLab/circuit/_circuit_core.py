@@ -219,10 +219,10 @@ def _deprecated_init_attr_experiment(
 
     return self
 
+
 def _deprecated_assign_element_to_experiment(self: "CircuitBase") -> None:
     self.experiment.Elements.append(self)
     self.experiment._id2element[self.data["Identifier"]] = self
-
 
 
 class CircuitBase(ElementBase):
@@ -233,7 +233,14 @@ class CircuitBase(ElementBase):
     is_elementXYZ: bool
     is_bigElement = False  # 该元件是否是逻辑电路的两体积元件
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, elementXYZ: Optional[bool], identifier: Optional[str]) -> None:
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        elementXYZ: Optional[bool],
+        identifier: Optional[str],
+    ) -> None:
         self.set_position(x, y, z, elementXYZ)
         self._set_identifier(identifier)
         self.set_rotation()

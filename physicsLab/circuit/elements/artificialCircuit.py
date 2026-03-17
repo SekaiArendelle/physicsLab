@@ -2,7 +2,12 @@
 from physicsLab import errors
 from physicsLab._core import _Experiment
 from physicsLab._tools import round_data
-from .._circuit_core import CircuitBase, Pin, _deprecated_init_attr_experiment, _deprecated_assign_element_to_experiment
+from .._circuit_core import (
+    CircuitBase,
+    Pin,
+    _deprecated_init_attr_experiment,
+    _deprecated_assign_element_to_experiment,
+)
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -332,10 +337,15 @@ class Basic_Capacitor(_BasicCapacitor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            peak_voltage=peak_voltage, capacitance=capacitance,
-            internal_resistance=internal_resistance, is_ideal=is_ideal,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            peak_voltage=peak_voltage,
+            capacitance=capacitance,
+            internal_resistance=internal_resistance,
+            is_ideal=is_ideal,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -529,10 +539,15 @@ class Basic_Inductor(_BasicInductor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            rated_current=rated_current, inductance=inductance,
-            internal_resistance=internal_resistance, is_ideal=is_ideal,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            rated_current=rated_current,
+            inductance=inductance,
+            internal_resistance=internal_resistance,
+            is_ideal=is_ideal,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1332,9 +1347,14 @@ class Transistor(_Transistor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            is_PNP=is_PNP, gain=gain, max_power=max_power,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            is_PNP=is_PNP,
+            gain=gain,
+            max_power=max_power,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1593,9 +1613,14 @@ class Operational_Amplifier(_OperationalAmplifier):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            gain=gain, max_voltage=max_voltage, min_voltage=min_voltage,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            gain=gain,
+            max_voltage=max_voltage,
+            min_voltage=min_voltage,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1783,10 +1808,15 @@ class Relay_Component(_RelayComponent):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            pull_in_current=pull_in_current, rated_current=rated_current,
-            coil_inductance=coil_inductance, coil_resistance=coil_resistance,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            pull_in_current=pull_in_current,
+            rated_current=rated_current,
+            coil_inductance=coil_inductance,
+            coil_resistance=coil_resistance,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1945,9 +1975,14 @@ class N_MOSFET(_N_MOSFET):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            beta=beta, threshold=threshold, max_power=max_power,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            beta=beta,
+            threshold=threshold,
+            max_power=max_power,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -2135,7 +2170,15 @@ class _SourceElectricity(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, /, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+    ) -> None:
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,

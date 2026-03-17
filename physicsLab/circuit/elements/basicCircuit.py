@@ -2,7 +2,12 @@
 from physicsLab import errors
 from physicsLab._tools import round_data
 from physicsLab._core import _Experiment
-from .._circuit_core import CircuitBase, Pin, _deprecated_init_attr_experiment, _deprecated_assign_element_to_experiment
+from .._circuit_core import (
+    CircuitBase,
+    Pin,
+    _deprecated_init_attr_experiment,
+    _deprecated_assign_element_to_experiment,
+)
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -20,7 +25,15 @@ from physicsLab._typing import (
 class _SwitchBase(CircuitBase):
     """开关基类"""
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, /, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+    ) -> None:
         self.data: CircuitElementData = {
             "ModelID": Generate,
             "Identifier": Generate,
@@ -706,9 +719,13 @@ class Battery_Source(_BatterySource):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            voltage=voltage, internal_resistance=internal_resistance,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            voltage=voltage,
+            internal_resistance=internal_resistance,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -720,8 +737,11 @@ class _StudentSource(CircuitBase):
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_l_mid_pin"], Pin],
         Tuple[Literal["_r_mid_pin"], Pin],
-        Tuple[Literal["_r_pin"], Pin,
-    ]]
+        Tuple[
+            Literal["_r_pin"],
+            Pin,
+        ],
+    ]
     _l_pin: Pin
     _l_mid_pin: Pin
     _r_mid_pin: Pin
@@ -943,9 +963,7 @@ class Resistor(_Resistor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            resistance=resistance,
-            elementXYZ=elementXYZ, identifier=identifier
+            x, y, z, resistance=resistance, elementXYZ=elementXYZ, identifier=identifier
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1598,12 +1616,7 @@ class Resistance_Box(_ResistanceBox):
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            x, y, z,
-            resistance,
-            elementXYZ,
-            identifier
-        )
+        super().__init__(x, y, z, resistance, elementXYZ, identifier)
         _deprecated_assign_element_to_experiment(self)
 
 

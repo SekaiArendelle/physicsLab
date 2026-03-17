@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from physicsLab import errors
-from .._circuit_core import CircuitBase, Pin, _deprecated_init_attr_experiment, _deprecated_assign_element_to_experiment
+from .._circuit_core import (
+    CircuitBase,
+    Pin,
+    _deprecated_init_attr_experiment,
+    _deprecated_assign_element_to_experiment,
+)
 from physicsLab._core import _Experiment
 from physicsLab._typing import (
     Optional,
@@ -26,7 +31,15 @@ class _MemsBase(CircuitBase):
     _y_pin: Pin
     _z_pin: Pin
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, /, elementXYZ: Optional[bool] = None, identifier: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        x: num_type,
+        y: num_type,
+        z: num_type,
+        /,
+        elementXYZ: Optional[bool] = None,
+        identifier: Optional[str] = None,
+    ) -> None:
         # setup data & pins first, call CircuitBase initializer at end
         self.data: CircuitElementData = {
             "ModelID": Generate,
@@ -178,8 +191,14 @@ class Accelerometer(_Accelerometer):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -336,9 +355,14 @@ class Attitude_Sensor(_AttitudeSensor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -388,9 +412,14 @@ class Gravity_Sensor(_GravitySensor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -440,9 +469,14 @@ class Gyroscope(_Gyroscope):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -492,9 +526,14 @@ class Linear_Accelerometer(_LinearAccelerometer):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -544,9 +583,14 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z,
-            ranges=ranges, shifting=shifting, response_factor=response_factor,
-            elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 

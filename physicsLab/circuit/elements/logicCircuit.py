@@ -3,7 +3,13 @@ from physicsLab import plAR
 from physicsLab import _warn
 from physicsLab import errors
 from physicsLab._core import _Experiment
-from .._circuit_core import CircuitBase, InputPin, OutputPin, _deprecated_init_attr_experiment, _deprecated_assign_element_to_experiment
+from .._circuit_core import (
+    CircuitBase,
+    InputPin,
+    OutputPin,
+    _deprecated_init_attr_experiment,
+    _deprecated_assign_element_to_experiment,
+)
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -171,7 +177,14 @@ class Logic_Input(_LogicInput):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, output_status=output_status, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            output_status=output_status,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -253,7 +266,13 @@ class Logic_Output(_LogicOutput):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -366,7 +385,13 @@ class Yes_Gate(_YesGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -414,7 +439,13 @@ class No_Gate(_NoGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -535,7 +566,13 @@ class Or_Gate(_OrGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -583,7 +620,13 @@ class And_Gate(_AndGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -631,7 +674,13 @@ class Nor_Gate(_NorGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -679,7 +728,13 @@ class Nand_Gate(_NandGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -727,7 +782,13 @@ class Xor_Gate(_XorGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -775,7 +836,13 @@ class Xnor_Gate(_XnorGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -823,7 +890,13 @@ class Imp_Gate(_ImpGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -871,7 +944,13 @@ class Nimp_Gate(_NimpGate):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -996,7 +1075,13 @@ class Half_Adder(_HalfAdder):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1091,7 +1176,13 @@ class Full_Adder(_FullAdder):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1183,7 +1274,13 @@ class Half_Subtractor(_HalfSubtractor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1282,7 +1379,13 @@ class Full_Subtractor(_FullSubtractor):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1398,7 +1501,13 @@ class Multiplier(_Multiplier):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1486,7 +1595,13 @@ class D_Flipflop(_DFlipflop):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1574,7 +1689,13 @@ class T_Flipflop(_TFlipflop):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1662,7 +1783,13 @@ class Real_T_Flipflop(_RealTFlipflop):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1757,7 +1884,13 @@ class JK_Flipflop(_JKFlipflop):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1859,7 +1992,13 @@ class Counter(_Counter):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1961,7 +2100,13 @@ class Random_Generator(_RandomGenerator):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -2115,7 +2260,13 @@ class Eight_Bit_Input(_EightBitInput):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -2262,7 +2413,13 @@ class Eight_Bit_Display(_EightBitDisplay):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -2440,6 +2597,13 @@ class Schmitt_Trigger(_SchmittTrigger):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, high_level=high_level, low_level=low_level, inverted=inverted, elementXYZ=elementXYZ, identifier=identifier
+            x,
+            y,
+            z,
+            high_level=high_level,
+            low_level=low_level,
+            inverted=inverted,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
         )
         _deprecated_assign_element_to_experiment(self)

@@ -3,7 +3,12 @@ import physicsLab.plAR as plar
 from physicsLab import _warn
 
 from physicsLab._core import _Experiment
-from .._circuit_core import CircuitBase, Pin, _deprecated_init_attr_experiment, _deprecated_assign_element_to_experiment
+from .._circuit_core import (
+    CircuitBase,
+    Pin,
+    _deprecated_init_attr_experiment,
+    _deprecated_assign_element_to_experiment,
+)
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -1255,8 +1260,18 @@ class Simple_Instrument(_SimpleInstrument):
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(
-            x, y, z, pitches=pitches, elementXYZ=elementXYZ, identifier=identifier,
-            experiment=experiment, rated_oltage=rated_oltage, volume=volume, bpm=bpm,
-            instrument=instrument, is_ideal=is_ideal, is_pulse=is_pulse
+            x,
+            y,
+            z,
+            pitches=pitches,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+            experiment=experiment,
+            rated_oltage=rated_oltage,
+            volume=volume,
+            bpm=bpm,
+            instrument=instrument,
+            is_ideal=is_ideal,
+            is_pulse=is_pulse,
         )
         _deprecated_assign_element_to_experiment(self)
