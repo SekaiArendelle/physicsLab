@@ -231,6 +231,7 @@ class CircuitBase(ElementBase):
     experiment: _Experiment  # 元件所属的实验
     _position: coordinate_system.Position
     is_elementXYZ: bool
+    identifier: str
     is_bigElement = False  # 该元件是否是逻辑电路的两体积元件
 
     def __init__(
@@ -242,7 +243,10 @@ class CircuitBase(ElementBase):
         identifier: Optional[str],
     ) -> None:
         self.set_position(x, y, z, elementXYZ)
-        self._set_identifier(identifier)
+        if identifier is None:
+            self.identifier = _tools.randString(33)
+        else:
+            self.identifier = identifier
         self.set_rotation(0, 0, 180)
 
     def __repr__(self) -> str:
