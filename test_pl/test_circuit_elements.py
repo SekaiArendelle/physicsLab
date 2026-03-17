@@ -1,6 +1,6 @@
 import unittest
 from physicsLab import Experiment, OpenMode, ExperimentType
-from physicsLab._tools import position
+from physicsLab._tools import Position
 from physicsLab.circuit.elements import *
 
 
@@ -15,7 +15,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_analog_joystick(self):
@@ -27,7 +27,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_attitude_sensor(self):
@@ -39,7 +39,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_gravity_sensor(self):
@@ -51,7 +51,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_gyroscope(self):
@@ -63,7 +63,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_linear_accelerometer(self):
@@ -75,7 +75,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_magnetic_field_sensor(self):
@@ -87,7 +87,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_photodiode(self):
@@ -99,7 +99,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_photoresistor(self):
@@ -111,7 +111,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_proximity_sensor(self):
@@ -123,7 +123,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     # other elements
@@ -136,7 +136,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_spark_gap(self):
@@ -148,7 +148,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_tesla_coil(self):
@@ -160,7 +160,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_color_light_emitting_diode(self):
@@ -172,7 +172,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_dual_light_emitting_diode(self):
@@ -184,7 +184,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_electric_bell(self):
@@ -196,7 +196,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_musical_box(self):
@@ -208,7 +208,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_resistance_law(self):
@@ -220,7 +220,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_solenoid(self):
@@ -232,7 +232,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_electric_fan(self):
@@ -244,7 +244,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_simple_instrument(self):
@@ -256,7 +256,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     # logic circuit
@@ -269,7 +269,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_logic_output(self):
@@ -281,7 +281,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_yes_gate(self):
@@ -293,7 +293,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_no_gate(self):
@@ -305,7 +305,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_or_gate(self):
@@ -317,7 +317,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_and_gate(self):
@@ -329,7 +329,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_nor_gate(self):
@@ -341,7 +341,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_nand_gate(self):
@@ -353,7 +353,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_xor_gate(self):
@@ -365,7 +365,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_xnor_gate(self):
@@ -377,7 +377,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_imp_gate(self):
@@ -389,7 +389,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_nimp_gate(self):
@@ -401,7 +401,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_half_adder(self):
@@ -413,7 +413,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_full_adder(self):
@@ -425,7 +425,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_half_subtractor(self):
@@ -437,7 +437,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_full_subtractor(self):
@@ -449,7 +449,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_multiplier(self):
@@ -461,7 +461,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_d_flipflop(self):
@@ -473,7 +473,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_t_flipflop(self):
@@ -485,7 +485,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_real_t_flipflop(self):
@@ -497,7 +497,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_jk_flipflop(self):
@@ -509,7 +509,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_counter(self):
@@ -521,7 +521,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_random_generator(self):
@@ -533,7 +533,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_eight_bit_input(self):
@@ -545,7 +545,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_eight_bit_display(self):
@@ -557,7 +557,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_schmitt_trigger(self):
@@ -569,7 +569,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     # artificial circuit
@@ -582,7 +582,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_basic_capacitor(self):
@@ -594,7 +594,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_basic_inductor(self):
@@ -606,7 +606,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_basic_diode(self):
@@ -618,7 +618,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_light_emitting_diode(self):
@@ -630,7 +630,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_ground_component(self):
@@ -642,7 +642,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_transformer(self):
@@ -654,7 +654,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_tapped_transformer(self):
@@ -666,7 +666,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_mutual_inductor(self):
@@ -678,7 +678,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_rectifier(self):
@@ -690,7 +690,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_transistor(self):
@@ -702,7 +702,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_comparator(self):
@@ -714,7 +714,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_operational_amplifier(self):
@@ -726,7 +726,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_relay_component(self):
@@ -738,7 +738,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_n_mosfet(self):
@@ -750,7 +750,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_p_mosfet(self):
@@ -762,7 +762,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_current_source(self):
@@ -774,7 +774,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_sinewave_source(self):
@@ -786,7 +786,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_square_source(self):
@@ -798,7 +798,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_triangle_source(self):
@@ -810,7 +810,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_sawtooth_source(self):
@@ -822,7 +822,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_pulse_source(self):
@@ -834,7 +834,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     # basic circuit
@@ -847,7 +847,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_spdt_switch(self):
@@ -859,7 +859,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_dpdt_switch(self):
@@ -871,7 +871,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_push_switch(self):
@@ -883,7 +883,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_air_switch(self):
@@ -895,7 +895,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_incandescent_lamp(self):
@@ -907,7 +907,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_battery_source(self):
@@ -919,7 +919,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_student_source(self):
@@ -931,7 +931,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_resistor(self):
@@ -943,7 +943,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_fuse_component(self):
@@ -955,7 +955,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_slide_rheostat(self):
@@ -967,7 +967,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_multimeter(self):
@@ -979,7 +979,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_galvanometer(self):
@@ -991,7 +991,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_microammeter(self):
@@ -1003,7 +1003,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_electricity_meter(self):
@@ -1015,7 +1015,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_resistance_box(self):
@@ -1027,7 +1027,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_simple_ammeter(self):
@@ -1039,7 +1039,7 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)
 
     def test_simple_voltmeter(self):
@@ -1051,5 +1051,5 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertEqual(chip.count_all_pins(), len(list(chip.all_pins())))
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
-            self.assertEqual(chip.get_position(), position(1, 1, 1))
+            self.assertEqual(chip.get_position(), Position(1, 1, 1))
             expe.close(delete=True)

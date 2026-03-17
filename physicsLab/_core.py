@@ -108,8 +108,8 @@ class _Experiment:
     SAV_PATH: str
     PlSav: dict
     CameraSave: dict
-    VisionCenter: _tools.position
-    TargetRotation: _tools.position
+    VisionCenter: _tools.Position
+    TargetRotation: _tools.Position
     # Only for compaatibility
     experiment_type: ExperimentType
 
@@ -124,8 +124,8 @@ class _Experiment:
         SAV_PATH: str,
         PlSav: dict,
         CameraSave: dict,
-        VisionCenter: _tools.position,
-        TargetRotation: _tools.position,
+        VisionCenter: _tools.Position,
+        TargetRotation: _tools.Position,
         experiment_type: ExperimentType,
     ) -> None:
         """Protected constructor"""
@@ -157,11 +157,11 @@ class _Experiment:
             raise TypeError(
                 f"Parameter CameraSave must be of type `dict`, but got `{CameraSave}` of type `{type(CameraSave).__name__}`"
             )
-        if not isinstance(VisionCenter, _tools.position):
+        if not isinstance(VisionCenter, _tools.Position):
             raise TypeError(
                 f"Parameter VisionCenter must be of type `_tools.position`, but got `{VisionCenter}` of type `{type(VisionCenter).__name__}`"
             )
-        if not isinstance(TargetRotation, _tools.position):
+        if not isinstance(TargetRotation, _tools.Position):
             raise TypeError(
                 f"Parameter TargetRotation must be of type `_tools.position`, but got `{TargetRotation}` of type `{type(TargetRotation).__name__}`"
             )
@@ -756,9 +756,9 @@ class _Experiment:
         ):
             raise TypeError()
 
-        self.VisionCenter = _tools.position(x, y, z)
+        self.VisionCenter = _tools.Position(x, y, z)
         self.CameraSave["Distance"] = distance
-        self.TargetRotation = _tools.position(rotation_x, rotation_y, rotation_z)
+        self.TargetRotation = _tools.Position(rotation_x, rotation_y, rotation_z)
 
         return self
 
@@ -880,7 +880,7 @@ class ElementBase:
 
     data: dict
     experiment: _Experiment
-    _position: _tools.position
+    _position: _tools.Position
 
     def __init__(self) -> None:
         raise NotImplementedError
@@ -943,7 +943,7 @@ class ElementBase:
             self.data["Identifier"] = identifier
 
     @final
-    def get_position(self) -> _tools.position:
+    def get_position(self) -> _tools.Position:
         """获取元件的坐标"""
         errors.assert_true(hasattr(self, "_position"))
         return copy.deepcopy(self._position)
@@ -972,7 +972,7 @@ class ElementXYZ:
         """
         self._expe = get_current_experiment()
         self.origin_status: bool = self._expe.is_elementXYZ
-        self._expe._elementXYZ_origin_position = _tools.position(x, y, z)
+        self._expe._elementXYZ_origin_position = _tools.Position(x, y, z)
 
     def __enter__(self) -> None:
         if self._expe.experiment_type != ExperimentType.Circuit:
@@ -989,7 +989,7 @@ def elementXYZ_to_native(
     x: num_type,
     y: num_type,
     z: num_type,
-    elementXYZ_origin_position: _tools.position,
+    elementXYZ_origin_position: _tools.Position,
     /,
     is_bigElement: bool = False,
 ) -> Tuple[num_type, num_type, num_type]:
@@ -1010,7 +1010,7 @@ def native_to_elementXYZ(
     x: num_type,
     y: num_type,
     z: num_type,
-    elementXYZ_origin_position: _tools.position,
+    elementXYZ_origin_position: _tools.Position,
     /,
     is_bigElement: bool = False,
 ) -> Tuple[num_type, num_type, num_type]:

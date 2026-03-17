@@ -349,8 +349,8 @@ class Experiment(_Experiment):
                     "VisionCenter": Generate,
                     "TargetRotation": Generate,
                 }
-                self.VisionCenter: _tools.position = _tools.position(0, -0.45, 1.08)
-                self.TargetRotation: _tools.position = _tools.position(50, 0, 0)
+                self.VisionCenter: _tools.Position = _tools.Position(0, -0.45, 1.08)
+                self.TargetRotation: _tools.Position = _tools.Position(50, 0, 0)
             elif self.experiment_type == ExperimentType.Celestial:
                 self.PlSav: dict = copy.deepcopy(savTemplate.Celestial)
                 self.CameraSave: dict = {
@@ -359,8 +359,8 @@ class Experiment(_Experiment):
                     "VisionCenter": Generate,
                     "TargetRotation": Generate,
                 }
-                self.VisionCenter: _tools.position = _tools.position(0, 0, 1.08)
-                self.TargetRotation: _tools.position = _tools.position(90, 0, 0)
+                self.VisionCenter: _tools.Position = _tools.Position(0, 0, 1.08)
+                self.TargetRotation: _tools.Position = _tools.Position(90, 0, 0)
             elif self.experiment_type == ExperimentType.Electromagnetism:
                 self.PlSav: dict = copy.deepcopy(savTemplate.Electromagnetism)
                 self.CameraSave: dict = {
@@ -369,8 +369,8 @@ class Experiment(_Experiment):
                     "VisionCenter": Generate,
                     "TargetRotation": Generate,
                 }
-                self.VisionCenter: _tools.position = _tools.position(0, 0, 0.88)
-                self.TargetRotation: _tools.position = _tools.position(90, 0, 0)
+                self.VisionCenter: _tools.Position = _tools.Position(0, 0, 0.88)
+                self.TargetRotation: _tools.Position = _tools.Position(90, 0, 0)
             else:
                 errors.unreachable()
 
@@ -379,7 +379,7 @@ class Experiment(_Experiment):
             errors.unreachable()
 
         if self.experiment_type == ExperimentType.Circuit:
-            self._elementXYZ_origin_position = _tools.position(0, 0, 0)
+            self._elementXYZ_origin_position = _tools.Position(0, 0, 0)
 
         assert isinstance(self.open_mode, OpenMode)
         assert isinstance(self._position2elements, dict)
@@ -388,13 +388,13 @@ class Experiment(_Experiment):
         assert isinstance(self.SAV_PATH, str)
         assert isinstance(self.PlSav, dict)
         assert isinstance(self.CameraSave, dict)
-        assert isinstance(self.VisionCenter, _tools.position)
-        assert isinstance(self.TargetRotation, _tools.position)
+        assert isinstance(self.VisionCenter, _tools.Position)
+        assert isinstance(self.TargetRotation, _tools.Position)
         assert isinstance(self.experiment_type, ExperimentType)
         if self.experiment_type == ExperimentType.Circuit:
             assert isinstance(self.Wires, set)
             assert isinstance(self._is_elementXYZ, bool)
-            assert isinstance(self._elementXYZ_origin_position, _tools.position)
+            assert isinstance(self._elementXYZ_origin_position, _tools.Position)
 
         _ExperimentStack.push(self)
 
@@ -419,11 +419,11 @@ class Experiment(_Experiment):
         assert isinstance(self.PlSav["Experiment"]["CameraSave"], str)
         self.CameraSave = json.loads(self.PlSav["Experiment"]["CameraSave"])
         temp = eval(f"({self.CameraSave['VisionCenter']})")
-        self.VisionCenter: _tools.position = _tools.position(
+        self.VisionCenter: _tools.Position = _tools.Position(
             temp[0], temp[2], temp[1]
         )  # x, z, y
         temp = eval(f"({self.CameraSave['TargetRotation']})")
-        self.TargetRotation: _tools.position = _tools.position(
+        self.TargetRotation: _tools.Position = _tools.Position(
             temp[0], temp[2], temp[1]
         )  # x, z, y
 

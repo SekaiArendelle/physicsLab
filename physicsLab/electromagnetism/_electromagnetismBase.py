@@ -83,7 +83,7 @@ class ElectromagnetismBase(ElementBase, metaclass=_ElectromagnetismMeta):
             raise TypeError
 
         x, y, z = _tools.round_data(x), _tools.round_data(y), _tools.round_data(z)
-        self._position = _tools.position(x, y, z)
+        self._position = _tools.Position(x, y, z)
         return super().set_position(x, y, z)
 
     def set_rotation(
