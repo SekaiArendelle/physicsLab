@@ -220,7 +220,7 @@ class User:
         decoration: int,
         verification,
         statistic: dict,
-        domain: str = "physics-api-cn.turtlesim.com",
+        domain: str,
     ) -> None:
         """Data initialization only"""
         if not isinstance(token, (str, type(None))):
@@ -1715,7 +1715,9 @@ class User:
         return await _async_wrapper(self.unban, target_id, reason)
 
 
-def anonymous_login() -> User:
+def anonymous_login(
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> User:
     """Anonymous login to Physics-Lab-AR"""
     plar_version = plAR.get_plAR_version()
     if plar_version is not None:
@@ -1724,7 +1726,7 @@ def anonymous_login() -> User:
         plar_version = 2411
 
     response = _request.post_https(
-        domain="physics-api-cn.turtlesim.com",
+        domain=domain,
         port=443,
         path="Users/Authenticate",
         header={
@@ -1758,10 +1760,15 @@ def anonymous_login() -> User:
         decoration=api_result["Data"]["User"]["Decoration"],
         verification=api_result["Data"]["User"]["Verification"],
         statistic=api_result["Data"]["Statistic"],
+        domain=domain,
     )
 
 
-def email_login(email: str, password: str) -> User:
+def email_login(
+    email: str,
+    password: str,
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> User:
     """Login to Physics-Lab-AR via email"""
     if not isinstance(email, str):
         raise TypeError(
@@ -1779,7 +1786,7 @@ def email_login(email: str, password: str) -> User:
         plar_version = 2411
 
     response = _request.post_https(
-        domain="physics-api-cn.turtlesim.com",
+        domain=domain,
         port=443,
         path="Users/Authenticate",
         header={
@@ -1813,10 +1820,15 @@ def email_login(email: str, password: str) -> User:
         decoration=api_result["Data"]["User"]["Decoration"],
         verification=api_result["Data"]["User"]["Verification"],
         statistic=api_result["Data"]["Statistic"],
+        domain=domain,
     )
 
 
-def token_login(token: str, auth_code: str) -> User:
+def token_login(
+    token: str,
+    auth_code: str,
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> User:
     """Login to Physics-Lab-AR via token"""
     if not isinstance(token, str):
         raise TypeError(
@@ -1834,7 +1846,7 @@ def token_login(token: str, auth_code: str) -> User:
         plar_version = 2411
 
     response = _request.post_https(
-        domain="physics-api-cn.turtlesim.com",
+        domain=domain,
         port=443,
         path="Users/Authenticate",
         header={
@@ -1870,16 +1882,27 @@ def token_login(token: str, auth_code: str) -> User:
         decoration=api_result["Data"]["User"]["Decoration"],
         verification=api_result["Data"]["User"]["Verification"],
         statistic=api_result["Data"]["Statistic"],
+        domain=domain,
     )
 
 
-async def async_anonymous_login() -> Awaitable[User]:
-    return await _async_wrapper(anonymous_login)
+async def async_anonymous_login(
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> Awaitable[User]:
+    return await _async_wrapper(anonymous_login, domain)
 
 
-async def async_email_login(email: str, password: str) -> Awaitable[User]:
-    return await _async_wrapper(email_login, email, password)
+async def async_email_login(
+    email: str,
+    password: str,
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> Awaitable[User]:
+    return await _async_wrapper(email_login, email, password, domain)
 
 
-async def async_token_login(token: str) -> Awaitable[User]:
-    return await _async_wrapper(token_login, token)
+async def async_token_login(
+    token: str,
+    auth_code: str,
+    domain: str = "physics-api-cn.turtlesim.com",
+) -> Awaitable[User]:
+    return await _async_wrapper(token_login, token, auth_code, domain)
