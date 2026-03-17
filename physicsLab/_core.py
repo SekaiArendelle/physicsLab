@@ -926,6 +926,10 @@ class ElementBase:
 
     @final
     def _set_identifier(self, identifier: Optional[str] = None) -> None:
+        if not isinstance(identifier, (str, type(None))):
+            raise TypeError(
+                f"Parameter identifier must be of type `Optional[str]`, but got `{identifier}` of type `{type(identifier).__name__}`"
+            )
         if identifier is None:
             self.data["Identifier"] = _tools.randString(33)
         else:

@@ -200,13 +200,8 @@ def del_wire(source_pin: Pin, target_pin: Pin) -> None:
 def _deprecated_register_element_in_stack(
     self: "CircuitBase",
     *,
-    identifier: Optional[str] = None,
     experiment: Optional[_Experiment] = None,
 ):
-    if not isinstance(identifier, (str, type(None))):
-        raise TypeError(
-            f"Parameter identifier must be of type `Optional[str]`, but got value {identifier} of type {type(identifier).__name__}"
-        )
     if not isinstance(experiment, (_Experiment, type(None))):
         raise TypeError(
             f"Parameter experiment must be of type `Optional[Experiment]`, but got value {experiment} of type {type(experiment).__name__}"
@@ -225,7 +220,6 @@ def _deprecated_register_element_in_stack(
 
     assert hasattr(self, "data") and isinstance(self.data, dict)
 
-    self._set_identifier(identifier)
     self.set_rotation()
 
     self.experiment.Elements.append(self)
@@ -242,8 +236,9 @@ class CircuitBase(ElementBase):
     is_elementXYZ: bool
     is_bigElement = False  # 该元件是否是逻辑电路的两体积元件
 
-    def __init__(self, x: num_type, y: num_type, z: num_type, elementXYZ: Optional[bool]) -> None:
+    def __init__(self, x: num_type, y: num_type, z: num_type, elementXYZ: Optional[bool], identifier: Optional[str]) -> None:
         self.set_position(x, y, z, elementXYZ)
+        self._set_identifier(identifier)
 
     def __repr__(self) -> str:
         return (
