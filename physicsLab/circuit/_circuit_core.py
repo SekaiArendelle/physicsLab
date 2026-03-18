@@ -6,7 +6,7 @@ from physicsLab import errors
 from physicsLab import coordinate_system
 
 from physicsLab.enums import ExperimentType, WireColor
-from physicsLab._tools import round_data
+from physicsLab._tools import round_data, randString
 from physicsLab._core import (
     _Experiment,
     get_current_experiment,
@@ -244,7 +244,7 @@ class CircuitBase(ElementBase):
     ) -> None:
         self.set_position(x, y, z, elementXYZ)
         if identifier is None:
-            self.identifier = _tools.randString(33)
+            self.identifier = randString(33)
         else:
             self.identifier = identifier
         self.set_rotation(0, 0, 180)
