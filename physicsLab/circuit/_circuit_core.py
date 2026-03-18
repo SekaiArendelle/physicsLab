@@ -243,7 +243,7 @@ class CircuitBase(ElementBase):
     ) -> None:
         self.set_position(x, y, z, elementXYZ)
         self._set_identifier(identifier)
-        self.set_rotation()
+        self.set_rotation(0, 0, 180)
 
     def __repr__(self) -> str:
         return (
@@ -260,7 +260,7 @@ class CircuitBase(ElementBase):
 
     @final
     def set_rotation(
-        self, x_r: num_type = 0, y_r: num_type = 0, z_r: num_type = 180
+        self, x_r: num_type, y_r: num_type, z_r: num_type
     ) -> Self:
         """设置元件的角度"""
         if not isinstance(x_r, (int, float)):

@@ -477,6 +477,7 @@ class Experiment(_Experiment):
 
         for element in _elements:
             # Unity 采用左手坐标系
+            # TODO 逆天, 使用了eval处理外部传进来的字符串
             x, z, y = eval(f"({element['Position']})")
 
             # 实例化对象
