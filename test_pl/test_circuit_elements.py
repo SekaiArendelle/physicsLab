@@ -1,5 +1,5 @@
 import unittest
-from physicsLab import Experiment, OpenMode, ExperimentType, Position
+from physicsLab import Experiment, OpenMode, ExperimentType, Position, SwitchState , PDTSwitchState
 from physicsLab.circuit.elements import *
 
 
@@ -847,6 +847,11 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
             self.assertEqual(chip.get_position(), Position(1, 1, 1))
+            self.assertEqual(chip.switch_state, SwitchState.OFF)
+            self.assertEqual(chip.data["Properties"]["开关"], SwitchState.OFF.value)
+            chip.switch_state = SwitchState.ON
+            self.assertEqual(chip.switch_state, SwitchState.ON)
+            self.assertEqual(chip.data["Properties"]["开关"], SwitchState.ON.value)
             expe.close(delete=True)
 
     def test_spdt_switch(self):
@@ -859,6 +864,11 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
             self.assertEqual(chip.get_position(), Position(1, 1, 1))
+            self.assertEqual(chip.switch_state, PDTSwitchState.OFF)
+            self.assertEqual(chip.data["Properties"]["开关"], PDTSwitchState.OFF.value)
+            chip.switch_state = PDTSwitchState.LEFT
+            self.assertEqual(chip.switch_state, PDTSwitchState.LEFT)
+            self.assertEqual(chip.data["Properties"]["开关"], PDTSwitchState.LEFT.value)
             expe.close(delete=True)
 
     def test_dpdt_switch(self):
@@ -871,6 +881,11 @@ class TestAllCircuitElements(unittest.TestCase):
             self.assertTrue(hasattr(chip, 'data'))
             self.assertIsInstance(chip.data, dict)
             self.assertEqual(chip.get_position(), Position(1, 1, 1))
+            self.assertEqual(chip.switch_state, PDTSwitchState.OFF)
+            self.assertEqual(chip.data["Properties"]["开关"], PDTSwitchState.OFF.value)
+            chip.switch_state = PDTSwitchState.LEFT
+            self.assertEqual(chip.switch_state, PDTSwitchState.LEFT)
+            self.assertEqual(chip.data["Properties"]["开关"], PDTSwitchState.LEFT.value)
             expe.close(delete=True)
 
     def test_push_switch(self):

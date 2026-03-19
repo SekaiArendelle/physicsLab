@@ -8,6 +8,7 @@ from .._circuit_core import (
     _deprecated_init_attr_experiment,
     _deprecated_assign_element_to_experiment,
 )
+from physicsLab.enums import SwitchState, PDTSwitchState
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -35,11 +36,6 @@ class _SwitchBase(CircuitBase):
     ) -> None:
         super().__init__(x, y, z, elementXYZ, identifier)
 
-    def turn_off_switch(self) -> Self:
-        """断开开关"""
-        self.data["Properties"]["开关"] = 0
-        return self
-
 
 class _SimpleSwitch(_SwitchBase):
     """简单开关"""
@@ -54,14 +50,28 @@ class _SimpleSwitch(_SwitchBase):
         y: num_type,
         z: num_type,
         identifier: Optional[str] = None,
+        switch_state: SwitchState = SwitchState.OFF,
     ) -> None:
         _SwitchBase.__init__(self, x, y, z, identifier=identifier)
+        self.switch_state = switch_state
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+
+    @property
+    def switch_state(self) -> SwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: SwitchState) -> None:
+        if not isinstance(value, SwitchState):
+            raise TypeError(
+                f"switch_state must be of type `SwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -90,7 +100,7 @@ class _SimpleSwitch(_SwitchBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"开关": 0, "锁定": 1.0},
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -102,17 +112,11 @@ class _SimpleSwitch(_SwitchBase):
     def __repr__(self) -> str:
         res = (
             f"Simple_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".turn_on_switch()"
         return res
-
-    def turn_on_switch(self) -> Self:
-        """闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
 
 
 class Simple_Switch(_SimpleSwitch):
@@ -126,10 +130,11 @@ class Simple_Switch(_SimpleSwitch):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        switch_state: SwitchState = SwitchState.OFF,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, identifier=identifier)
+        super().__init__(x, y, z, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -152,8 +157,10 @@ class _SPDTSwitch(_SwitchBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
     ) -> None:
         super().__init__(x, y, z, elementXYZ, identifier)
+        self.switch_state = switch_state
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -161,6 +168,18 @@ class _SPDTSwitch(_SwitchBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+
+    @property
+    def switch_state(self) -> PDTSwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: PDTSwitchState) -> None:
+        if not isinstance(value, PDTSwitchState):
+            raise TypeError(
+                f"switch_state must be of type `SPDTSwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -177,7 +196,7 @@ class _SPDTSwitch(_SwitchBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"开关": 0, "锁定": 1.0},
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -189,24 +208,11 @@ class _SPDTSwitch(_SwitchBase):
     def __repr__(self) -> str:
         res = (
             f"SPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".left_turn_on_switch()"
-        elif self.data["Properties"]["开关"] == 2:
-            res += ".right_turn_on_switch()"
         return res
-
-    def left_turn_on_switch(self) -> Self:
-        """向左闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
-
-    def right_turn_on_switch(self) -> Self:
-        """向右闭合开关"""
-        self.data["Properties"]["开关"] = 2
-        return self
 
     @property
     def l(self) -> Pin:
@@ -235,11 +241,12 @@ class SPDT_Switch(_SPDTSwitch):
         *,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -268,6 +275,7 @@ class _DPDTSwitch(_SwitchBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
     ) -> None:
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
@@ -278,8 +286,21 @@ class _DPDTSwitch(_SwitchBase):
             ("_r_up_pin", Pin(self, 5)),
         )
         super().__init__(x, y, z, elementXYZ, identifier)
+        self.switch_state = switch_state
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+
+    @property
+    def switch_state(self) -> PDTSwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: PDTSwitchState) -> None:
+        if not isinstance(value, PDTSwitchState):
+            raise TypeError(
+                f"switch_state must be of type `SPDTSwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -296,7 +317,7 @@ class _DPDTSwitch(_SwitchBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"开关": 0, "锁定": 1.0},
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -308,25 +329,11 @@ class _DPDTSwitch(_SwitchBase):
     def __repr__(self) -> str:
         res = (
             f"DPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".left_turn_on_switch()"
-        elif self.data["Properties"]["开关"] == 2:
-            res += ".right_turn_on_switch()"
         return res
-
-    # TODO 改为enum是否会更好
-    def left_turn_on_switch(self) -> Self:
-        """向左闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
-
-    def right_turn_on_switch(self) -> Self:
-        """向右闭合开关"""
-        self.data["Properties"]["开关"] = 2
-        return self
 
     @property
     def l_up(self) -> Pin:
@@ -367,11 +374,12 @@ class DPDT_Switch(_DPDTSwitch):
         *,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 

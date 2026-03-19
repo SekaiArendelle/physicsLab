@@ -29,6 +29,9 @@ class _MemsBase(CircuitBase):
     _x_pin: Pin
     _y_pin: Pin
     _z_pin: Pin
+    _ranges: num_type
+    _shifting: num_type
+    _response_factor: num_type
 
     def __init__(
         self,
@@ -41,7 +44,6 @@ class _MemsBase(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
-        # setup data & pins first, call CircuitBase initializer at end
         self.set_ranges(ranges)
         self.set_shifting(shifting)
         self.set_response_factor(response_factor)
@@ -73,6 +75,9 @@ class _MemsBase(CircuitBase):
     def z(self) -> Pin:
         return self._z_pin
 
+    def get_ranges(self) -> num_type:
+        return self._ranges
+
     def set_ranges(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
@@ -80,12 +85,18 @@ class _MemsBase(CircuitBase):
             )
         self._ranges = value
 
+    def get_shifting(self) -> num_type:
+        return self._shifting
+
     def set_shifting(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"shifting must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
         self._shifting = value
+
+    def get_response_factor(self) -> num_type:
+        return self._response_factor
 
     def set_response_factor(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
