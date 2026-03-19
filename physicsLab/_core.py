@@ -878,7 +878,6 @@ class _Experiment:
 class ElementBase:
     """三大类型实验的元件的基类"""
 
-    data: dict
     experiment: _Experiment
     _position: coordinate_system.Position
 
@@ -892,6 +891,7 @@ class ElementBase:
 
     def set_position(self, x: num_type, y: num_type, z: num_type) -> Self:
         """设置元件的位置"""
+        # TODO remove this method
         if not isinstance(x, (int, float)):
             raise TypeError(
                 f"Parameter x must be of type `int` or `float`, but got `{x}` of type `{type(x).__name__}`"
@@ -913,15 +913,7 @@ class ElementBase:
             if self in self_list:
                 self_list.remove(self)
 
-        if hasattr(self, "data"):
-            _data = self.data
-        elif hasattr(self, "_data"):
-            # Simple Instrument
-            # TODO remove this shit
-            _data = self._data
-        else:
-            errors.unreachable()
-        _data["Position"] = f"{x},{z},{y}"
+        self.data["Position"] = f"{x},{z},{y}"
 
         errors.assert_true(hasattr(self, "_position"))
         if self._position in _Expe._position2elements.keys():

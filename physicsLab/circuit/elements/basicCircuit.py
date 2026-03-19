@@ -8,12 +8,12 @@ from .._circuit_core import (
     _deprecated_init_attr_experiment,
     _deprecated_assign_element_to_experiment,
 )
+from physicsLab.enums import SwitchState, PDTSwitchState
 from physicsLab._typing import (
     Optional,
     num_type,
     CircuitElementData,
     Self,
-    Generate,
     override,
     final,
     Iterator,
@@ -34,25 +34,7 @@ class _SwitchBase(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
-        self.data: CircuitElementData = {
-            "ModelID": Generate,
-            "Identifier": Generate,
-            "IsBroken": False,
-            "IsLocked": False,
-            "Properties": {"开关": 0, "锁定": 1.0},
-            "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
-            "DiagramCached": False,
-            "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
-            "DiagramRotation": 0,
-        }
         super().__init__(x, y, z, elementXYZ, identifier)
-
-    def turn_off_switch(self) -> Self:
-        """断开开关"""
-        self.data["Properties"]["开关"] = 0
-        return self
 
 
 class _SimpleSwitch(_SwitchBase):
@@ -68,15 +50,28 @@ class _SimpleSwitch(_SwitchBase):
         y: num_type,
         z: num_type,
         identifier: Optional[str] = None,
+        switch_state: SwitchState = SwitchState.OFF,
     ) -> None:
         _SwitchBase.__init__(self, x, y, z, identifier=identifier)
+        self.switch_state = switch_state
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Simple Switch"
+
+    @property
+    def switch_state(self) -> SwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: SwitchState) -> None:
+        if not isinstance(value, SwitchState):
+            raise TypeError(
+                f"switch_state must be of type `SwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -98,20 +93,30 @@ class _SimpleSwitch(_SwitchBase):
     def zh_name() -> str:
         return "简单开关"
 
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Simple Switch",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
+            "DiagramRotation": 0,
+        }
+
     def __repr__(self) -> str:
         res = (
             f"Simple_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".turn_on_switch()"
         return res
-
-    def turn_on_switch(self) -> Self:
-        """闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
 
 
 class Simple_Switch(_SimpleSwitch):
@@ -125,10 +130,11 @@ class Simple_Switch(_SimpleSwitch):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        switch_state: SwitchState = SwitchState.OFF,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, identifier=identifier)
+        super().__init__(x, y, z, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -151,8 +157,10 @@ class _SPDTSwitch(_SwitchBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
     ) -> None:
         super().__init__(x, y, z, elementXYZ, identifier)
+        self.switch_state = switch_state
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_mid_pin", Pin(self, 1)),
@@ -160,7 +168,18 @@ class _SPDTSwitch(_SwitchBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "SPDT Switch"
+
+    @property
+    def switch_state(self) -> PDTSwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: PDTSwitchState) -> None:
+        if not isinstance(value, PDTSwitchState):
+            raise TypeError(
+                f"switch_state must be of type `PDTSwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -170,27 +189,30 @@ class _SPDTSwitch(_SwitchBase):
     def zh_name() -> str:
         return "单刀双掷开关"
 
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "SPDT Switch",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
+            "DiagramRotation": 0,
+        }
+
     def __repr__(self) -> str:
         res = (
             f"SPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".left_turn_on_switch()"
-        elif self.data["Properties"]["开关"] == 2:
-            res += ".right_turn_on_switch()"
         return res
-
-    def left_turn_on_switch(self) -> Self:
-        """向左闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
-
-    def right_turn_on_switch(self) -> Self:
-        """向右闭合开关"""
-        self.data["Properties"]["开关"] = 2
-        return self
 
     @property
     def l(self) -> Pin:
@@ -219,11 +241,12 @@ class SPDT_Switch(_SPDTSwitch):
         *,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -252,6 +275,7 @@ class _DPDTSwitch(_SwitchBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
     ) -> None:
         self._all_pins = (
             ("_l_low_pin", Pin(self, 0)),
@@ -262,9 +286,21 @@ class _DPDTSwitch(_SwitchBase):
             ("_r_up_pin", Pin(self, 5)),
         )
         super().__init__(x, y, z, elementXYZ, identifier)
+        self.switch_state = switch_state
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "DPDT Switch"
+
+    @property
+    def switch_state(self) -> PDTSwitchState:
+        return self._switch_state
+
+    @switch_state.setter
+    def switch_state(self, value: PDTSwitchState) -> None:
+        if not isinstance(value, PDTSwitchState):
+            raise TypeError(
+                f"switch_state must be of type `PDTSwitchState`, but got value `{value}` of type `{type(value).__name__}`"
+            )
+        self._switch_state = value
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -274,28 +310,30 @@ class _DPDTSwitch(_SwitchBase):
     def zh_name() -> str:
         return "双刀双掷开关"
 
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "DPDT Switch",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"开关": self.switch_state.value, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
+            "DiagramRotation": 0,
+        }
+
     def __repr__(self) -> str:
         res = (
             f"DPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ})"
+            f"elementXYZ={self.is_elementXYZ},"
+            f"switch_state={self.switch_state})"
         )
 
-        if self.data["Properties"]["开关"] == 1:
-            res += ".left_turn_on_switch()"
-        elif self.data["Properties"]["开关"] == 2:
-            res += ".right_turn_on_switch()"
         return res
-
-    # TODO 改为enum是否会更好
-    def left_turn_on_switch(self) -> Self:
-        """向左闭合开关"""
-        self.data["Properties"]["开关"] = 1
-        return self
-
-    def right_turn_on_switch(self) -> Self:
-        """向右闭合开关"""
-        self.data["Properties"]["开关"] = 2
-        return self
 
     @property
     def l_up(self) -> Pin:
@@ -336,11 +374,12 @@ class DPDT_Switch(_DPDTSwitch):
         *,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        switch_state: PDTSwitchState = PDTSwitchState.OFF,
         experiment: Optional[_Experiment] = None,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, switch_state)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -365,20 +404,23 @@ class _PushSwitch(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Push Switch",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"开关": 0.0, "默认开关": 0.0, "锁定": 1.0},
             "Statistics": {"电流": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -441,20 +483,23 @@ class _AirSwitch(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Air Switch",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"开关": 0.0, "额定电流": 10.0, "锁定": 1.0},
             "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -538,9 +583,13 @@ class _IncandescentLamp(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Incandescent Lamp",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"额定电压": 3.0, "额定功率": 0.85, "锁定": 1.0},
@@ -554,13 +603,12 @@ class _IncandescentLamp(CircuitBase):
                 "灯泡温度": 300.0,
                 "电阻": 0.5,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -608,6 +656,8 @@ class _BatterySource(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
+    voltage: num_type
+    internal_resistance: num_type
 
     def __init__(
         self,
@@ -619,34 +669,46 @@ class _BatterySource(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(voltage, (int, float)):
+            raise TypeError(
+                f"voltage must be of type `int | float`, but got value `{voltage}` of type `{type(voltage).__name__}`"
+            )
+        if not isinstance(internal_resistance, (int, float)):
+            raise TypeError(
+                f"internal_resistance must be of type `int | float`, but got value `{internal_resistance}` of type `{type(internal_resistance).__name__}`"
+            )
+
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
-            "ModelID": "Battery Source",
-            "Identifier": Generate,
-            "IsBroken": False,
-            "IsLocked": False,
-            "Properties": {
-                "最大功率": 16.2,
-                "电压": Generate,
-                "内阻": Generate,
-                "锁定": 1.0,
-            },
-            "Statistics": {"电流": 0, "功率": 0, "电压": 0},
-            "Position": Generate,
-            "Rotation": Generate,
-            "DiagramCached": False,
-            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
-            "DiagramRotation": 0,
-        }
 
         self.voltage = voltage
         self.internal_resistance = internal_resistance
         super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Battery Source",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "最大功率": 16.2,
+                "电压": self.voltage,
+                "内阻": self.internal_resistance,
+                "锁定": 1.0,
+            },
+            "Statistics": {"电流": 0, "功率": 0, "电压": 0},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -658,38 +720,6 @@ class _BatterySource(CircuitBase):
     @property
     def black(self) -> Pin:
         return self._black_pin
-
-    @property
-    def voltage(self) -> num_type:
-        result = self.properties["电压"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @voltage.setter
-    def voltage(self, value: num_type) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"voltage must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        self.properties["电压"] = value
-        return value
-
-    @property
-    def internal_resistance(self) -> num_type:
-        result = self.properties["内阻"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @internal_resistance.setter
-    def internal_resistance(self, value: num_type) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"internal_resistance must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        self.properties["内阻"] = value
-        return value
 
     @final
     @staticmethod
@@ -763,9 +793,13 @@ class _StudentSource(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Student Source",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
@@ -791,13 +825,12 @@ class _StudentSource(CircuitBase):
                 "电阻1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -853,6 +886,7 @@ class _Resistor(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
+    resistance: num_type
 
     def __init__(
         self,
@@ -863,21 +897,31 @@ class _Resistor(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(resistance, (int, float)):
+            raise TypeError(
+                f"resistance must be of type `int | float`, but got value `{resistance}` of type `{type(resistance).__name__}`"
+            )
+
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
             ("_black_pin", Pin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        self.resistance = resistance
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Resistor",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
                 "最大电阻": 10_000_000.0,
                 "最小电阻": 0.1,
-                "电阻": Generate,
+                "电阻": self.resistance,
                 "锁定": 1.0,
             },
             "Statistics": {
@@ -888,14 +932,12 @@ class _Resistor(CircuitBase):
                 "电压": 0,
                 "电流": 0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.resistance = resistance
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -918,25 +960,9 @@ class _Resistor(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    @property
-    def resistance(self) -> num_type:
-        result = self.properties["电阻"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @resistance.setter
-    def resistance(self, value: num_type) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"resistance must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        self.properties["电阻"] = value
-        return value
-
     def fix_resistance(self) -> Self:
         """修正电阻值的浮点误差"""
-        self.properties["电阻"] = round_data(self.properties["电阻"])
+        self.resistance = round_data(self.resistance)
         return self
 
     def __repr__(self) -> str:
@@ -989,9 +1015,13 @@ class _FuseComponent(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Fuse Component",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"开关": 1.0, "额定电流": 0.3, "熔断电流": 0.5, "锁定": 1.0},
@@ -1003,13 +1033,12 @@ class _FuseComponent(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1081,9 +1110,13 @@ class _SlideRheostat(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Slide Rheostat",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
@@ -1107,13 +1140,12 @@ class _SlideRheostat(CircuitBase):
                 "电压1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1184,9 +1216,13 @@ class _Multimeter(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Multimeter",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"状态": 0.0, "锁定": 1.0},
@@ -1198,13 +1234,12 @@ class _Multimeter(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1273,20 +1308,23 @@ class _Galvanometer(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Galvanometer",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"量程": 3.0, "锁定": 1.0},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1359,20 +1397,23 @@ class _Microammeter(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Microammeter",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"量程": 0.1, "锁定": 1.0},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1448,20 +1489,23 @@ class _ElectricityMeter(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Electricity Meter",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"示数": 0.0, "额定电流": 6.0, "锁定": 1.0},
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1517,6 +1561,7 @@ class _ResistanceBox(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
     _l_pin: Pin
     _r_pin: Pin
+    resistance: num_type
 
     def __init__(
         self,
@@ -1527,21 +1572,31 @@ class _ResistanceBox(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(resistance, (int, float)):
+            raise TypeError(
+                f"resistance must be of type `int | float`, but got value {resistance} of type {type(resistance).__name__}"
+            )
+
         self._all_pins = (
             ("_l_pin", Pin(self, 0)),
             ("_r_pin", Pin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        self.resistance = resistance
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Resistance Box",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
                 "最大电阻": 10000.0,
                 "最小电阻": 0.1,
-                "电阻": Generate,
+                "电阻": self.resistance,
                 "锁定": 1.0,
             },
             "Statistics": {
@@ -1552,15 +1607,12 @@ class _ResistanceBox(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
-
-        self.resistance = resistance
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1582,23 +1634,6 @@ class _ResistanceBox(CircuitBase):
     @property
     def r(self) -> Pin:
         return self._r_pin
-
-    @property
-    def resistance(self) -> num_type:
-        """电阻"""
-        result = self.properties["电阻"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @resistance.setter
-    def resistance(self, value: num_type) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"resistance must be of type `int | float`, but got {type(value).__name__}"
-            )
-
-        self.properties["电阻"] = value
-        return value
 
 
 class Resistance_Box(_ResistanceBox):
@@ -1647,20 +1682,23 @@ class _SimpleAmmeter(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Simple Ammeter",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"量程": 0.007, "内阻": 0.007, "名义量程": 3.0, "锁定": 1.0},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -1733,20 +1771,23 @@ class _SimpleVoltmeter(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Simple Voltmeter",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {"量程": 0.001, "名义量程": 15.0, "锁定": 1.0},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
