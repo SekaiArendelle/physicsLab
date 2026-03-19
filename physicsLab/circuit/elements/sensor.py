@@ -43,6 +43,7 @@ class _MemsBase(CircuitBase):
         response_factor: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self.set_ranges(ranges)
         self.set_shifting(shifting)
@@ -54,7 +55,7 @@ class _MemsBase(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -119,6 +120,7 @@ class _Accelerometer(_MemsBase):
         response_factor: num_type = 0.2290000021457672,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -130,6 +132,7 @@ class _Accelerometer(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -148,7 +151,7 @@ class _Accelerometer(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -178,6 +181,7 @@ class Accelerometer(_Accelerometer):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -190,6 +194,7 @@ class Accelerometer(_Accelerometer):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -219,6 +224,7 @@ class _AnalogJoystick(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # build fields first, then call base init
         self._all_pins = (
@@ -231,7 +237,7 @@ class _AnalogJoystick(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -244,7 +250,7 @@ class _AnalogJoystick(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"额定电阻": 10000, "锁定": 1.0},
+            "Properties": {"额定电阻": 10000, "锁定": int(self.lock_status)},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -301,10 +307,11 @@ class Analog_Joystick(_AnalogJoystick):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -321,6 +328,7 @@ class _AttitudeSensor(_MemsBase):
         response_factor: num_type = 0.0125,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -332,6 +340,7 @@ class _AttitudeSensor(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -350,7 +359,7 @@ class _AttitudeSensor(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -380,6 +389,7 @@ class Attitude_Sensor(_AttitudeSensor):
         ranges: num_type = 180,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -392,6 +402,7 @@ class Attitude_Sensor(_AttitudeSensor):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -409,6 +420,7 @@ class _GravitySensor(_MemsBase):
         response_factor: num_type = 0.229,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -420,6 +432,7 @@ class _GravitySensor(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -438,7 +451,7 @@ class _GravitySensor(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -468,6 +481,7 @@ class Gravity_Sensor(_GravitySensor):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -480,6 +494,7 @@ class Gravity_Sensor(_GravitySensor):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -497,6 +512,7 @@ class _Gyroscope(_MemsBase):
         response_factor: num_type = 0.0125,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -508,6 +524,7 @@ class _Gyroscope(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -526,7 +543,7 @@ class _Gyroscope(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -556,6 +573,7 @@ class Gyroscope(_Gyroscope):
         ranges: num_type = 150,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -568,6 +586,7 @@ class Gyroscope(_Gyroscope):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -585,6 +604,7 @@ class _LinearAccelerometer(_MemsBase):
         response_factor: num_type = 0.229,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -596,6 +616,7 @@ class _LinearAccelerometer(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -614,7 +635,7 @@ class _LinearAccelerometer(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -644,6 +665,7 @@ class Linear_Accelerometer(_LinearAccelerometer):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -656,6 +678,7 @@ class Linear_Accelerometer(_LinearAccelerometer):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -673,6 +696,7 @@ class _MagneticFieldSensor(_MemsBase):
         response_factor: num_type = 80,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -684,6 +708,7 @@ class _MagneticFieldSensor(_MemsBase):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
 
     @property
@@ -702,7 +727,7 @@ class _MagneticFieldSensor(_MemsBase):
                 "输出阻抗": 10000,
                 "偏移": self._shifting,
                 "响应系数": self._response_factor,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -732,6 +757,7 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
         ranges: num_type = 0.04,
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -744,6 +770,7 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
             response_factor=response_factor,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -762,6 +789,7 @@ class _Photodiode(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -769,7 +797,7 @@ class _Photodiode(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -788,7 +816,7 @@ class _Photodiode(CircuitBase):
                 "额定电流": 1,
                 "响应系数": 0.1,
                 "响应时间": 0.03,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -830,10 +858,11 @@ class Photodiode(_Photodiode):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -851,6 +880,7 @@ class _Photoresistor(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -858,7 +888,7 @@ class _Photoresistor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -877,7 +907,7 @@ class _Photoresistor(CircuitBase):
                 "响应时间": 0.03,
                 "最大电压": 150,
                 "响应系数": 0.6,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -919,10 +949,11 @@ class Photoresistor(_Photoresistor):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -939,11 +970,12 @@ class _ProximitySensor(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (("_o_pin", Pin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -956,7 +988,7 @@ class _ProximitySensor(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": 3, "低电平": 0, "输出阻抗": 10000, "锁定": 1.0},
+            "Properties": {"高电平": 3, "低电平": 0, "输出阻抗": 10000, "锁定": int(self.lock_status)},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -993,8 +1025,9 @@ class Proximity_Sensor(_ProximitySensor):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)

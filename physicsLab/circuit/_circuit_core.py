@@ -234,6 +234,7 @@ class CircuitBase(ElementBase):
     is_elementXYZ: bool
     identifier: str
     is_bigElement = False  # 该元件是否是逻辑电路的两体积元件
+    _lock_status: bool
 
     def __init__(
         self,
@@ -242,6 +243,7 @@ class CircuitBase(ElementBase):
         z: num_type,
         elementXYZ: Optional[bool],
         identifier: Optional[str],
+        lock_status: bool,
     ) -> None:
         self.set_position(x, y, z, elementXYZ)
         if identifier is None:
@@ -249,6 +251,7 @@ class CircuitBase(ElementBase):
         else:
             self.identifier = identifier
         self.set_rotation(0, 0, 180)
+        self.lock_status = lock_status
 
     def __repr__(self) -> str:
         return (
@@ -339,23 +342,23 @@ class CircuitBase(ElementBase):
 
     @property
     @final
-    def lock(self) -> bool:
-        return bool(self.properties["锁定"])
+    def lock_status(self) -> bool:
+        return self._lock_status
 
-    @lock.setter
+    @lock_status.setter
     @final
-    def lock(self, status: bool):
+    def lock_status(self, value: bool) -> None:
         """是否锁定元件 (位置不会受元件间碰撞的影响)
 
         Args:
             status: 是否锁定元件
         """
-        if not isinstance(status, bool):
+        if not isinstance(value, bool):
             raise TypeError(
-                f"lock must be of type `bool`, but got value {status} of type {type(status).__name__}"
+                f"lock_status must be of type `bool`, but got value {value} of type {type(value).__name__}"
             )
 
-        self.properties["锁定"] = int(status)
+        self._lock_status = value
 
     @property
     @final

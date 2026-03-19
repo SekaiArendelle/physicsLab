@@ -52,6 +52,7 @@ class _NE555(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_vcc_pin", Pin(self, 0)),
@@ -65,7 +66,7 @@ class _NE555(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -78,7 +79,7 @@ class _NE555(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": 1.0},
+            "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {
                 "供电": 10,
                 "放电": 0.0,
@@ -152,10 +153,11 @@ class NE555(_NE555):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -181,6 +183,7 @@ class _BasicCapacitor(CircuitBase):
         is_ideal: bool = False,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         """@param capacitance: 电容, 单位为F
         @param is_ideal: 是否为理想模式
@@ -215,7 +218,7 @@ class _BasicCapacitor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -233,7 +236,7 @@ class _BasicCapacitor(CircuitBase):
                 "电容": self.capacitance,
                 "内阻": self.internal_resistance,
                 "理想模式": int(self.is_ideal),
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -290,6 +293,7 @@ class Basic_Capacitor(_BasicCapacitor):
         capacitance: num_type = 1e-06,
         internal_resistance: num_type = 5,
         is_ideal: bool = False,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -303,6 +307,7 @@ class Basic_Capacitor(_BasicCapacitor):
             is_ideal=is_ideal,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -329,6 +334,7 @@ class _BasicInductor(CircuitBase):
         is_ideal: bool = False,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         """@param rated_current: 电感额定电流，单位为 A
         @param inductance: 电感，单位为 Henry
@@ -362,7 +368,7 @@ class _BasicInductor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -379,7 +385,7 @@ class _BasicInductor(CircuitBase):
                 "额定电流": self.rated_current,
                 "电感": self.inductance,
                 "内阻": self.internal_resistance,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
                 "理想模式": int(self.is_ideal),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0},
@@ -442,6 +448,7 @@ class Basic_Inductor(_BasicInductor):
         inductance: num_type = 0.05,
         internal_resistance: num_type = 1,
         is_ideal: bool = False,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -455,6 +462,7 @@ class Basic_Inductor(_BasicInductor):
             is_ideal=is_ideal,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -473,6 +481,7 @@ class _BasicDiode(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -480,7 +489,7 @@ class _BasicDiode(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -498,7 +507,7 @@ class _BasicDiode(CircuitBase):
                 "前向压降": 0.6,
                 "额定电流": 1.0,
                 "工作电压": 3.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -540,10 +549,11 @@ class Basic_Diode(_BasicDiode):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -561,6 +571,7 @@ class _LightEmittingDiode(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -568,7 +579,7 @@ class _LightEmittingDiode(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -587,7 +598,7 @@ class _LightEmittingDiode(CircuitBase):
                 "前向压降": 2.1024259,
                 "工作电流": 0.01,
                 "工作电压": 3.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流1": 0.0, "电压1": 0.0, "功率1": 0.0, "亮度1": 0.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -629,10 +640,11 @@ class Light_Emitting_Diode(_LightEmittingDiode):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -649,11 +661,12 @@ class _GroundComponent(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (("_i_pin", Pin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -666,7 +679,7 @@ class _GroundComponent(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"锁定": 1.0},
+            "Properties": {"锁定": int(self.lock_status)},
             "Statistics": {"电流": 0},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -703,10 +716,11 @@ class Ground_Component(_GroundComponent):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -731,6 +745,7 @@ class _Transformer(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_l_up_pin", Pin(self, 0)),
@@ -740,7 +755,7 @@ class _Transformer(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -758,7 +773,7 @@ class _Transformer(CircuitBase):
                 "输出电压": 36.0,
                 "额定功率": 20.0,
                 "耦合系数": 1.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {
                 "电流1": 0.0,
@@ -815,10 +830,11 @@ class Transformer(_Transformer):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -845,6 +861,7 @@ class _TappedTransformer(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_l_up_pin", Pin(self, 0)),
@@ -855,7 +872,7 @@ class _TappedTransformer(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -873,7 +890,7 @@ class _TappedTransformer(CircuitBase):
                 "输出电压": 36.0,
                 "额定功率": 20.0,
                 "耦合系数": 1.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {
                 "电流1": 0.0,
@@ -933,10 +950,11 @@ class Tapped_Transformer(_TappedTransformer):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -961,6 +979,7 @@ class _MutualInductor(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_l_up_pin", Pin(self, 0)),
@@ -970,7 +989,7 @@ class _MutualInductor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -983,7 +1002,7 @@ class _MutualInductor(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"电感1": 4.0, "电感2": 1.0, "耦合系数": 1.0, "锁定": 1.0},
+            "Properties": {"电感1": 4.0, "电感2": 1.0, "耦合系数": 1.0, "锁定": int(self.lock_status)},
             "Statistics": {
                 "电流1": 0.0,
                 "电压1": 0.0,
@@ -1039,10 +1058,11 @@ class Mutual_Inductor(_MutualInductor):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -1067,6 +1087,7 @@ class _Rectifier(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_l_up_pin", Pin(self, 0)),
@@ -1076,7 +1097,7 @@ class _Rectifier(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1089,7 +1110,7 @@ class _Rectifier(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"前向压降": 0.8, "额定电流": 1.0, "锁定": 1.0},
+            "Properties": {"前向压降": 0.8, "额定电流": 1.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1138,10 +1159,11 @@ class Rectifier(_Rectifier):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -1170,6 +1192,7 @@ class _Transistor(CircuitBase):
         max_power: num_type = 1000,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         if not isinstance(is_PNP, bool):
             raise TypeError(
@@ -1195,7 +1218,7 @@ class _Transistor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1212,7 +1235,7 @@ class _Transistor(CircuitBase):
                 "PNP": int(self.is_PNP),
                 "放大系数": self.gain,
                 "最大功率": self.max_power,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电压BC": 0.0, "电压BE": 0.0, "电压CE": 0.0, "功率": 0.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -1274,6 +1297,7 @@ class Transistor(_Transistor):
         is_PNP: bool = True,
         gain: num_type = 100,
         max_power: num_type = 1000,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -1286,6 +1310,7 @@ class Transistor(_Transistor):
             max_power=max_power,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1309,6 +1334,7 @@ class _Comparator(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_o_pin", Pin(self, 0)),
@@ -1317,7 +1343,7 @@ class _Comparator(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1330,7 +1356,7 @@ class _Comparator(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": 1.0},
+            "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1375,10 +1401,11 @@ class Comparator(_Comparator):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -1407,6 +1434,7 @@ class _OperationalAmplifier(CircuitBase):
         min_voltage: num_type = -1000,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         """@param gain: 增益系数
         @param max_voltage: 最大电压
@@ -1438,7 +1466,7 @@ class _OperationalAmplifier(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1455,7 +1483,7 @@ class _OperationalAmplifier(CircuitBase):
                 "增益系数": self.gain,
                 "最大电压": self.max_voltage,
                 "最小电压": self.min_voltage,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {
                 "电压-": 0,
@@ -1520,6 +1548,7 @@ class Operational_Amplifier(_OperationalAmplifier):
         gain: num_type = 10_000_000,
         max_voltage: num_type = 1000,
         min_voltage: num_type = -1000,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -1532,6 +1561,7 @@ class Operational_Amplifier(_OperationalAmplifier):
             min_voltage=min_voltage,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1563,6 +1593,7 @@ class _RelayComponent(CircuitBase):
         coil_resistance: num_type = 20,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         if not isinstance(pull_in_current, (int, float)):
             raise TypeError(
@@ -1595,7 +1626,7 @@ class _RelayComponent(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1614,7 +1645,7 @@ class _RelayComponent(CircuitBase):
                 "线圈电阻": self.coil_resistance,
                 "接通电流": self.pull_in_current,
                 "额定电流": self.rated_current,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -1672,6 +1703,7 @@ class Relay_Component(_RelayComponent):
         rated_current: num_type = 10,
         coil_inductance: num_type = 0.2,
         coil_resistance: num_type = 20,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -1685,6 +1717,7 @@ class Relay_Component(_RelayComponent):
             coil_resistance=coil_resistance,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1711,6 +1744,7 @@ class _N_MOSFET(CircuitBase):
         max_power: num_type = 1000,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         if not isinstance(beta, (int, float)):
             raise TypeError(
@@ -1736,7 +1770,7 @@ class _N_MOSFET(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1754,7 +1788,7 @@ class _N_MOSFET(CircuitBase):
                 "放大系数": self.beta,
                 "阈值电压": self.threshold,
                 "最大功率": self.max_power,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {
                 "电压GS": 0.0,
@@ -1809,6 +1843,7 @@ class N_MOSFET(_N_MOSFET):
         beta: num_type = 0.027,
         threshold: num_type = 1.5,
         max_power: num_type = 1000,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
@@ -1821,6 +1856,7 @@ class N_MOSFET(_N_MOSFET):
             max_power=max_power,
             elementXYZ=elementXYZ,
             identifier=identifier,
+            lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
 
@@ -1844,6 +1880,7 @@ class _P_MOSFET(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_G_pin", Pin(self, 0)),
@@ -1852,7 +1889,7 @@ class _P_MOSFET(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1870,7 +1907,7 @@ class _P_MOSFET(CircuitBase):
                 "放大系数": 0.027,
                 "阈值电压": 1.5,
                 "最大功率": 100.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {
                 "电压GS": 0.0,
@@ -1922,10 +1959,11 @@ class P_MOSFET(_P_MOSFET):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -1943,6 +1981,7 @@ class _CurrentSource(CircuitBase):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -1950,7 +1989,7 @@ class _CurrentSource(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -1966,7 +2005,7 @@ class _CurrentSource(CircuitBase):
             "Properties": {
                 "电流": 0.0099999997764825821,
                 "内阻": 1000000000.0,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2008,10 +2047,11 @@ class Current_Source(_CurrentSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -2030,6 +2070,7 @@ class _SourceElectricity(CircuitBase):
         /,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -2037,7 +2078,7 @@ class _SourceElectricity(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -2065,9 +2106,10 @@ class _SinewaveSource(_SourceElectricity):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -2086,7 +2128,7 @@ class _SinewaveSource(_SourceElectricity):
                 "频率": 20000.0,
                 "偏移": 0.0,
                 "占空比": 0.5,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2113,10 +2155,11 @@ class Sinewave_Source(_SinewaveSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -2130,9 +2173,10 @@ class _SquareSource(_SourceElectricity):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -2151,7 +2195,7 @@ class _SquareSource(_SourceElectricity):
                 "频率": 20000.0,
                 "偏移": 0.0,
                 "占空比": 0.5,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2178,10 +2222,11 @@ class Square_Source(_SquareSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -2195,9 +2240,10 @@ class _TriangleSource(_SourceElectricity):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -2216,7 +2262,7 @@ class _TriangleSource(_SourceElectricity):
                 "频率": 20000.0,
                 "偏移": 0.0,
                 "占空比": 0.5,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2243,10 +2289,11 @@ class Triangle_Source(_TriangleSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -2260,9 +2307,10 @@ class _SawtoothSource(_SourceElectricity):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -2281,7 +2329,7 @@ class _SawtoothSource(_SourceElectricity):
                 "频率": 20000.0,
                 "偏移": 0.0,
                 "占空比": 0.5,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2308,10 +2356,11 @@ class Sawtooth_Source(_SawtoothSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
 
@@ -2325,9 +2374,10 @@ class _PulseSource(_SourceElectricity):
         z: num_type,
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
 
     @property
     def data(self) -> CircuitElementData:
@@ -2346,7 +2396,7 @@ class _PulseSource(_SourceElectricity):
                 "频率": 20000.0,
                 "偏移": 0.0,
                 "占空比": 0.5,
-                "锁定": 1.0,
+                "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
             "Position": self._position.as_postion_str_in_plsav(),
@@ -2373,8 +2423,9 @@ class Pulse_Source(_PulseSource):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
         experiment: Optional[_Experiment] = None,
+        lock_status: bool = True,
     ) -> None:
         # this class is deprecated
         _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(x, y, z, elementXYZ, identifier)
+        super().__init__(x, y, z, elementXYZ, identifier, lock_status)
         _deprecated_assign_element_to_experiment(self)
