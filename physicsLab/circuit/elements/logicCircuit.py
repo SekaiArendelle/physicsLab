@@ -14,7 +14,6 @@ from physicsLab._typing import (
     Optional,
     num_type,
     CircuitElementData,
-    Generate,
     final,
     Tuple,
     Iterator,
@@ -23,55 +22,12 @@ from physicsLab._typing import (
 )
 
 
-class _LogicBase(CircuitBase):
-    @property
-    @final
-    def high_level(self) -> num_type:
-        """高电平的值"""
-        result = self.properties["高电平"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @high_level.setter
-    @final
-    def high_level(self, value) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"high_level must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-        if self.properties["低电平"] is not Generate and self.low_level > value:
-            raise ValueError(f"high_level is smaller than low_level")
-
-        self.properties["高电平"] = value
-        return value
-
-    @property
-    @final
-    def low_level(self) -> num_type:
-        """低电平的值"""
-        result = self.properties["低电平"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @low_level.setter
-    @final
-    def low_level(self, value) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"low_level must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-        if self.properties["高电平"] is not Generate and value > self.high_level:
-            raise ValueError(f"high_level is smaller than low_level")
-
-        self.properties["低电平"] = value
-        return value
-
-
-class _LogicInput(_LogicBase):
+class _LogicInput(CircuitBase):
     """逻辑输入"""
 
     _all_pins: Tuple[Tuple[Literal["_o_pin"], OutputPin]]
     _o_pin: OutputPin
+    output_status: bool
 
     def __init__(
         self,
@@ -84,57 +40,51 @@ class _LogicInput(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        if not isinstance(output_status, bool):
+            raise TypeError(
+                f"output_status must be of type `bool`, but got value `{output_status}` of type {type(output_status).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
+        self.output_status: bool = output_status
         self._all_pins = (("_o_pin", OutputPin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Logic Input",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "高电平": Generate,
-                "低电平": Generate,
+                "高电平": self.high_level,
+                "低电平": self.low_level,
                 "锁定": 1.0,
-                "开关": Generate,
+                "开关": int(self.output_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.output_status = output_status
-        self.high_level = high_level
-        self.low_level = low_level
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
         self,
     ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
         return iter(self._all_pins)
-
-    @property
-    @final
-    def output_status(self) -> bool:
-        """设置开关的状态"""
-        if "开关" not in self.properties:
-            self.properties["开关"] = 0
-
-        result = self.properties["开关"]
-        errors.assert_true(result is not Generate)
-        return bool(result)
-
-    @output_status.setter
-    @final
-    def output_status(self, value: bool) -> bool:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"output_status must be of type `bool`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-        self.properties["开关"] = int(value)
-        return value
 
     def __repr__(self) -> str:
         res = (
@@ -142,7 +92,6 @@ class _LogicInput(_LogicBase):
             f"elementXYZ={self.is_elementXYZ}, "
             f"output_status={self.output_status})"
         )
-
         return res
 
     @final
@@ -189,7 +138,7 @@ class Logic_Input(_LogicInput):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _LogicOutput(_LogicBase):
+class _LogicOutput(CircuitBase):
     """逻辑输出"""
 
     _all_pins: Tuple[Tuple[Literal["_i_pin"], InputPin]]
@@ -205,30 +154,41 @@ class _LogicOutput(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         self._all_pins = (("_i_pin", InputPin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Logic Output",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
                 "状态": 0.0,
-                "高电平": Generate,
-                "低电平": Generate,
+                "高电平": self.high_level,
+                "低电平": self.low_level,
                 "锁定": 1.0,
             },
             "Statistics": {},
-            "Position": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": "0,180,0",
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.high_level = high_level
-        self.low_level = low_level
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
         self,
@@ -277,7 +237,7 @@ class Logic_Output(_LogicOutput):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _2PinGate(_LogicBase):
+class _2PinGate(CircuitBase):
     """2引脚门电路基类"""
 
     _all_pins: Tuple[
@@ -296,33 +256,44 @@ class _2PinGate(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         self._all_pins = (
             ("_i_pin", InputPin(self, 0)),
             ("_o_pin", OutputPin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
-            "ModelID": Generate,
-            "Identifier": Generate,
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "",
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "高电平": Generate,
-                "低电平": Generate,
+                "高电平": self.high_level,
+                "低电平": self.low_level,
                 "最大电流": 0.1,
                 "锁定": 1.0,
             },
             "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.high_level = high_level
-        self.low_level = low_level
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
         self,
@@ -356,7 +327,6 @@ class _YesGate(_2PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Yes Gate"
 
     @final
     @staticmethod
@@ -410,7 +380,27 @@ class _NoGate(_2PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "No Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "No Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -450,7 +440,7 @@ class No_Gate(_NoGate):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _3PinGate(_LogicBase):
+class _3PinGate(CircuitBase):
     """3引脚门电路基类"""
 
     _all_pins: Tuple[
@@ -472,6 +462,16 @@ class _3PinGate(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         self._all_pins = (
             ("_i_up_pin", InputPin(self, 0)),
             ("_i_low_pin", InputPin(self, 1)),
@@ -479,26 +479,6 @@ class _3PinGate(_LogicBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
-            "ModelID": "",
-            "Identifier": Generate,
-            "IsBroken": False,
-            "IsLocked": False,
-            "Properties": {
-                "高电平": Generate,
-                "低电平": Generate,
-                "最大电流": 0.1,
-                "锁定": 1.0,
-            },
-            "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
-            "DiagramCached": False,
-            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
-            "DiagramRotation": 0,
-        }
-        self.high_level = high_level
-        self.low_level = low_level
         super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
@@ -537,7 +517,27 @@ class _OrGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Or Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Or Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -591,7 +591,27 @@ class _AndGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "And Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "And Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -645,7 +665,27 @@ class _NorGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Nor Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Nor Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -699,7 +739,27 @@ class _NandGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Nand Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Nand Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -753,7 +813,27 @@ class _XorGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Xor Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Xor Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -807,7 +887,27 @@ class _XnorGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Xnor Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Xnor Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -861,7 +961,27 @@ class _ImpGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Imp Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Imp Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -915,7 +1035,27 @@ class _NimpGate(_3PinGate):
         identifier: Optional[str] = None,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
-        self.data["ModelID"] = "Nimp Gate"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Nimp Gate",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "最大电流": 0.1,
+                "锁定": 1.0,
+            },
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     @final
     @staticmethod
@@ -955,7 +1095,7 @@ class Nimp_Gate(_NimpGate):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _BigElement(_LogicBase):
+class _BigElement(CircuitBase):
     """2体积元件父类"""
 
     is_bigElement = True
@@ -970,26 +1110,21 @@ class _BigElement(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
-        self.data: CircuitElementData = {
-            "ModelID": "",
-            "Identifier": Generate,
-            "IsBroken": False,
-            "IsLocked": False,
-            "Properties": {"高电平": Generate, "低电平": Generate, "锁定": 1.0},
-            "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
-            "DiagramCached": False,
-            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
-            "DiagramRotation": 0,
-        }
-        self.high_level = high_level
-        self.low_level = low_level
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         super().__init__(x, y, z, elementXYZ, identifier)
 
     @staticmethod
     def count_all_pins() -> int:
-        return 4
+        return 0
 
 
 class _HalfAdder(_BigElement):
@@ -1025,7 +1160,22 @@ class _HalfAdder(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Half Adder"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Half Adder",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1122,7 +1272,22 @@ class _FullAdder(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Full Adder"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Full Adder",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1214,8 +1379,7 @@ class _HalfSubtractor(_BigElement):
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         plAR_version = plAR.get_plAR_version()
         if plAR_version is not None and plAR_version < (2, 5, 0):
-            _warn.warning("Physics-Lab-AR's version less than 2.5.0")
-
+            _warn.warning("Half Subtractor is not supported in this version of plAR")
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_low_pin", OutputPin(self, 1)),
@@ -1224,7 +1388,22 @@ class _HalfSubtractor(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Half Subtractor"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Half Subtractor",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1313,8 +1492,7 @@ class _FullSubtractor(_BigElement):
     ) -> None:
         plAR_version = plAR.get_plAR_version()
         if plAR_version is not None and plAR_version < (2, 5, 0):
-            _warn.warning("Physics-Lab-AR's version less than 2.5.0")
-
+            _warn.warning("Full Subtractor is not supported in this version of plAR")
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
@@ -1325,7 +1503,22 @@ class _FullSubtractor(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Full Subtractor"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Full Subtractor",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1422,6 +1615,7 @@ class _Multiplier(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_upmid_pin", OutputPin(self, 1)),
@@ -1432,10 +1626,24 @@ class _Multiplier(_BigElement):
             ("_i_lowmid_pin", InputPin(self, 6)),
             ("_i_low_pin", InputPin(self, 7)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Multiplier"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Multiplier",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1536,16 +1744,31 @@ class _DFlipflop(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_low_pin", OutputPin(self, 1)),
             ("_i_up_pin", InputPin(self, 2)),
             ("_i_low_pin", InputPin(self, 3)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "D Flipflop"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "D Flipflop",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1630,16 +1853,31 @@ class _TFlipflop(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_low_pin", OutputPin(self, 1)),
             ("_i_up_pin", InputPin(self, 2)),
             ("_i_low_pin", InputPin(self, 3)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "T Flipflop"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "T Flipflop",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1724,16 +1962,31 @@ class _RealTFlipflop(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_low_pin", OutputPin(self, 1)),
             ("_i_up_pin", InputPin(self, 2)),
             ("_i_low_pin", InputPin(self, 3)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Real-T Flipflop"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Real-T Flipflop",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1820,6 +2073,7 @@ class _JKFlipflop(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_low_pin", OutputPin(self, 1)),
@@ -1827,10 +2081,24 @@ class _JKFlipflop(_BigElement):
             ("_i_mid_pin", InputPin(self, 3)),
             ("_i_low_pin", InputPin(self, 4)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "JK Flipflop"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "JK Flipflop",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -1934,7 +2202,22 @@ class _Counter(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Counter"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Counter",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -2031,6 +2314,7 @@ class _RandomGenerator(_BigElement):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         self._all_pins = (
             ("_o_up_pin", OutputPin(self, 0)),
             ("_o_upmid_pin", OutputPin(self, 1)),
@@ -2039,10 +2323,24 @@ class _RandomGenerator(_BigElement):
             ("_i_up_pin", InputPin(self, 4)),
             ("_i_low_pin", InputPin(self, 5)),
         )
-        super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data["ModelID"] = "Random Generator"
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Random Generator",
+            "Identifier": self.identifier,
+            "IsBroken": False,
+            "IsLocked": False,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "DiagramCached": False,
+            "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
+            "DiagramRotation": 0,
+        }
 
     def all_pins(
         self,
@@ -2111,7 +2409,7 @@ class Random_Generator(_RandomGenerator):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _EightBitInput(_LogicBase):
+class _EightBitInput(CircuitBase):
     """八位输入器"""
 
     is_bigElement: bool = True
@@ -2145,6 +2443,16 @@ class _EightBitInput(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         self._all_pins = (
             ("_i_up_pin", InputPin(self, 0)),
             ("_i_upmid_pin", InputPin(self, 1)),
@@ -2157,44 +2465,33 @@ class _EightBitInput(_LogicBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
-            "ModelID": "8bit Input",
-            "Identifier": Generate,
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Eight Bit Input",
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {
-                "高电平": Generate,
-                "低电平": Generate,
-                "十进制": 0.0,
-                "锁定": 1.0,
-            },
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
             "Statistics": {},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.high_level = high_level
-        self.low_level = low_level
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def __repr__(self) -> str:
-        res = (
+        return (
             f"Eight_Bit_Input({self._position.x}, {self._position.y}, {self._position.z}, "
             f"elementXYZ={self.is_elementXYZ})"
         )
 
-        if self.data["Properties"]["十进制"] != 0:
-            res += f".set_num({self.data['Properties']['十进制']})"
-        return res
-
     # TODO 改为@property
     def set_num(self, num: int):
-        if 0 <= num <= 255:
-            self.data["Properties"]["十进制"] = num
-        else:
-            raise RuntimeError("The number range entered is incorrect")
+        pass
 
     def all_pins(
         self,
@@ -2271,7 +2568,7 @@ class Eight_Bit_Input(_EightBitInput):
         _deprecated_assign_element_to_experiment(self)
 
 
-class _EightBitDisplay(_LogicBase):
+class _EightBitDisplay(CircuitBase):
     """八位显示器"""
 
     is_bigElement = True
@@ -2305,6 +2602,16 @@ class _EightBitDisplay(_LogicBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level
         self._all_pins = (
             ("_i_up_pin", InputPin(self, 0)),
             ("_i_upmid_pin", InputPin(self, 1)),
@@ -2317,37 +2624,23 @@ class _EightBitDisplay(_LogicBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
-            "ModelID": "8bit Display",
-            "Identifier": Generate,
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
+            "ModelID": "Eight Bit Display",
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {
-                "高电平": Generate,
-                "低电平": Generate,
-                "状态": 0.0,
-                "锁定": 1.0,
-            },
-            "Statistics": {
-                "7": 0.0,
-                "6": 0.0,
-                "5": 0.0,
-                "4": 0.0,
-                "3": 0.0,
-                "2": 0.0,
-                "1": 0.0,
-                "0": 0.0,
-                "十进制": 0.0,
-            },
-            "Position": Generate,
-            "Rotation": Generate,
+            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.high_level = high_level
-        self.low_level = low_level
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
         self,
@@ -2433,6 +2726,9 @@ class _SchmittTrigger(CircuitBase):
     ]
     _i_pin: InputPin
     _o_pin: OutputPin
+    high_level: num_type
+    low_level: num_type
+    inverted: bool
 
     def __init__(
         self,
@@ -2445,110 +2741,54 @@ class _SchmittTrigger(CircuitBase):
         elementXYZ: Optional[bool] = None,
         identifier: Optional[str] = None,
     ) -> None:
+        if not isinstance(high_level, (int, float)):
+            raise TypeError(
+                f"high_level must be of type `int | float`, but got value `{high_level}` of type {type(high_level).__name__}"
+            )
+        if low_level is not None and not isinstance(low_level, (int, float)):
+            raise TypeError(
+                f"low_level must be of type `int | float`, but got value `{low_level}` of type {type(low_level).__name__}"
+            )
+        if not isinstance(inverted, bool):
+            raise TypeError(
+                f"inverted must be of type `bool`, but got value `{inverted}` of type {type(inverted).__name__}"
+            )
+        self.high_level: num_type = high_level
+        self.low_level: num_type = low_level if low_level is not None else high_level * 0.3
+        self.inverted: bool = inverted
         self._all_pins = (
             ("_i_pin", InputPin(self, 0)),
             ("_o_pin", OutputPin(self, 1)),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.data: CircuitElementData = {
+        super().__init__(x, y, z, elementXYZ, identifier)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return {
             "ModelID": "Schmitt Trigger",
-            "Identifier": Generate,
+            "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "工作模式": Generate,
-                "切变速率": 0.5,
-                "高电准位": Generate,
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "反相": int(self.inverted),
                 "锁定": 1.0,
-                "正向阈值": 3.3333332538604736,
-                "低电准位": Generate,
-                "负向阈值": 1.6666666269302368,
             },
-            "Statistics": {"输入电压": 0.0, "输出电压": 0.0, "1": 0.0},
-            "Position": Generate,
-            "Rotation": Generate,
+            "Statistics": {},
+            "Position": self._position.as_postion_str_in_plsav(),
+            "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
-        self.high_level = high_level
-        self.low_level = low_level
-        self.inverted = inverted
-        super().__init__(x, y, z, elementXYZ, identifier)
 
     def all_pins(
         self,
     ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
         return iter(self._all_pins)
-
-    @staticmethod
-    def count_all_pins() -> int:
-        return 2
-
-    @property
-    def high_level(self) -> num_type:
-        """高电准位"""
-        result = self.properties["高电准位"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @high_level.setter
-    def high_level(self, value: num_type) -> num_type:
-        if not isinstance(value, (int, float)):
-            raise TypeError(
-                f"high_level must be of type `int | float`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        if self.properties["低电准位"] is not Generate and self.low_level >= value:
-            raise ValueError("The high level must be greater than the low level")
-
-        self.properties["高电准位"] = value
-        return value
-
-    @property
-    def low_level(self) -> num_type:
-        """低电准位"""
-        result = self.properties["低电准位"]
-        errors.assert_true(result is not Generate)
-        return result
-
-    @low_level.setter
-    def low_level(self, value: Optional[num_type]) -> num_type:
-        # None means auto derivation
-        # TODO maybe we should use physicsLab.auto instead of None
-        if not isinstance(value, (int, float, type(None))):
-            raise TypeError(
-                f"low_level must be of type `Optional[int | float]`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        if value is None:
-            self.properties["低电准位"] = min(self.high_level, 0)
-        else:
-            self.properties["低电准位"] = value
-
-        if (
-            self.properties["高电准位"] is not Generate
-            and self.properties["高电准位"] < self.properties["低电准位"]
-        ):
-            raise ValueError("The high level must be greater than the low level")
-        return value
-
-    @property
-    def inverted(self) -> bool:
-        """是否翻转"""
-        errors.assert_true(self.properties["工作模式"] is not Generate)
-        return bool(self.properties["工作模式"])
-
-    @inverted.setter
-    def inverted(self, value: bool) -> bool:
-        if not isinstance(value, bool):
-            raise TypeError(
-                f"inverted must be of type `bool`, but got value `{value}` of type `{type(value).__name__}`"
-            )
-
-        self.properties["工作模式"] = int(value)
-        return value
 
     @final
     @staticmethod
@@ -2556,19 +2796,13 @@ class _SchmittTrigger(CircuitBase):
         return "施密特触发器"
 
     def __repr__(self) -> str:
-        res = (
+        return (
             f"Schmitt_Trigger({self._position.x}, {self._position.y}, {self._position.z}, "
-            f"elementXYZ={self.is_elementXYZ}"
+            f"elementXYZ={self.is_elementXYZ}, "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"inverted={self.inverted})"
         )
-
-        # TODO 显示指明而非使用默认值
-        if self.properties["高电准位"] != 5.0:
-            res += f", high_level={self.properties['高电准位']}"
-        if self.properties["低电准位"] != 0.0:
-            res += f", low_level={self.properties['低电准位']}"
-        if self.properties["工作模式"] != 0.0:
-            res += f", inverted=True"
-        return res + ")"
 
     @property
     def i(self) -> InputPin:
