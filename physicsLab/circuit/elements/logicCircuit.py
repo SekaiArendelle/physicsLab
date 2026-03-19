@@ -1168,7 +1168,11 @@ class _HalfAdder(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1280,7 +1284,11 @@ class _FullAdder(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1396,7 +1404,11 @@ class _HalfSubtractor(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1511,7 +1523,11 @@ class _FullSubtractor(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1636,7 +1652,11 @@ class _Multiplier(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1761,7 +1781,11 @@ class _DFlipflop(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1870,7 +1894,11 @@ class _TFlipflop(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -1979,7 +2007,11 @@ class _RealTFlipflop(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2091,7 +2123,11 @@ class _JKFlipflop(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2210,7 +2246,11 @@ class _Counter(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2333,7 +2373,11 @@ class _RandomGenerator(_BigElement):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2474,7 +2518,11 @@ class _EightBitInput(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2633,7 +2681,11 @@ class _EightBitDisplay(CircuitBase):
             "Identifier": self.identifier,
             "IsBroken": False,
             "IsLocked": False,
-            "Properties": {"高电平": self.high_level, "低电平": self.low_level, "锁定": 1.0},
+            "Properties": {
+                "高电平": self.high_level,
+                "低电平": self.low_level,
+                "锁定": 1.0,
+            },
             "Statistics": {},
             "Position": self._position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
@@ -2754,7 +2806,9 @@ class _SchmittTrigger(CircuitBase):
                 f"inverted must be of type `bool`, but got value `{inverted}` of type {type(inverted).__name__}"
             )
         self.high_level: num_type = high_level
-        self.low_level: num_type = low_level if low_level is not None else high_level * 0.3
+        self.low_level: num_type = (
+            low_level if low_level is not None else high_level * 0.3
+        )
         self.inverted: bool = inverted
         self._all_pins = (
             ("_i_pin", InputPin(self, 0)),

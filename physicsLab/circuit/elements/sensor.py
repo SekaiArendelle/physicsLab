@@ -110,7 +110,16 @@ class _Accelerometer(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
@@ -295,7 +304,16 @@ class _AttitudeSensor(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
@@ -370,7 +388,16 @@ class _GravitySensor(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
@@ -445,7 +472,16 @@ class _Gyroscope(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
@@ -520,7 +556,16 @@ class _LinearAccelerometer(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
@@ -595,7 +640,16 @@ class _MagneticFieldSensor(_MemsBase):
         identifier: Optional[str] = None,
     ) -> None:
         # this class is deprecated
-        super().__init__(x, y, z, ranges=ranges, shifting=shifting, response_factor=response_factor, elementXYZ=elementXYZ, identifier=identifier)
+        super().__init__(
+            x,
+            y,
+            z,
+            ranges=ranges,
+            shifting=shifting,
+            response_factor=response_factor,
+            elementXYZ=elementXYZ,
+            identifier=identifier,
+        )
 
     @property
     def data(self) -> CircuitElementData:
