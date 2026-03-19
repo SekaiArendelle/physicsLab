@@ -1133,15 +1133,15 @@ class _Transistor(CircuitBase):
     ) -> None:
         if not isinstance(is_PNP, bool):
             raise TypeError(
-                f"is_PNP must be of type `bool`, but got value `{self.is_PNP}` of type `{type(self.is_PNP).__name__}`"
+                f"is_PNP must be of type `bool`, but got value `{is_PNP}` of type `{type(is_PNP).__name__}`"
             )
         if not isinstance(gain, (int, float)):
             raise TypeError(
-                f"gain must be of type `int | float`, but got value `{self.gain}` of type `{type(self.gain).__name__}`"
+                f"gain must be of type `int | float`, but got value `{gain}` of type `{type(gain).__name__}`"
             )
         if not isinstance(max_power, (int, float)):
             raise TypeError(
-                f"max_power must be of type `int | float`, but got value `{self.max_power}` of type `{type(self.max_power).__name__}`"
+                f"max_power must be of type `int | float`, but got value `{max_power}` of type `{type(max_power).__name__}`"
             )
 
         self.is_PNP: bool = is_PNP
