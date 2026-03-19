@@ -329,19 +329,19 @@ class _BasicInductor(CircuitBase):
         """
         if not isinstance(rated_current, (int, float)):
             raise TypeError(
-                f"rated_current must be of type `int | float`, but got value `{self.rated_current}` of type {type(self.rated_current).__name__}"
+                f"rated_current must be of type `int | float`, but got value `{rated_current}` of type {type(rated_current).__name__}"
             )
         if not isinstance(inductance, (int, float)):
             raise TypeError(
-                f"inductance must be of type `int | float`, but got value `{self.inductance}` of type {type(self.inductance).__name__}"
+                f"inductance must be of type `int | float`, but got value `{inductance}` of type {type(inductance).__name__}"
             )
         if not isinstance(internal_resistance, (int, float)):
             raise TypeError(
-                f"internal_resistance must be of type `int | float`, but got value `{self.internal_resistance}` of type {type(self.internal_resistance).__name__}"
+                f"internal_resistance must be of type `int | float`, but got value `{internal_resistance}` of type {type(internal_resistance).__name__}"
             )
         if not isinstance(is_ideal, bool):
             raise TypeError(
-                f"is_ideal must be of type `bool`, but got value `{self.is_ideal}` of type {type(self.is_ideal).__name__}"
+                f"is_ideal must be of type `bool`, but got value `{is_ideal}` of type {type(is_ideal).__name__}"
             )
 
         self.rated_current: num_type = rated_current
