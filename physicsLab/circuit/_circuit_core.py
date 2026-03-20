@@ -17,7 +17,6 @@ from physicsLab._typing import (
     Optional,
     Self,
     num_type,
-    Generate,
     override,
     final,
     List,
