@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import abc
 from physicsLab import coordinate_system
 
 
@@ -57,3 +57,7 @@ class ElectromagnetismBase:
             )
 
         self.__rotation = rotation
+
+    @abc.abstractmethod
+    def as_dict(self) -> dict:
+        raise NotImplementedError("The method `as_dict` must be implemented in the subclass")
