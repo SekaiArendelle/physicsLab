@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from physicsLab import coordinate_system
-from physicsLab._typing import num_type
 
 
 class ElectromagnetismBase:
-    """所有电与磁元件的父类"""
+    """Base class for electromagnetism elements"""
 
     __position: coordinate_system.Position
     __rotation: coordinate_system.Rotation
