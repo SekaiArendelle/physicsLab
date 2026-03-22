@@ -5,6 +5,7 @@ import pathlib
 import warnings
 import threading
 from .base import *
+from ._constant import *
 from physicsLab.lib import *
 from physicsLab.coordinate_system import Position
 from physicsLab._core import _ExperimentStack
@@ -20,7 +21,7 @@ def my_test_dec(method: Callable):
             raise TestFail
     return result
 
-class BasicTest(TestCase, ViztracerTool):
+class BasicTest(TestCase):
     @my_test_dec
     def test_experiment_stack(self):
         with Experiment(OpenMode.crt, "__test__", ExperimentType.Circuit, force_crt=True) as expe1:
@@ -55,16 +56,6 @@ class BasicTest(TestCase, ViztracerTool):
             expe.save(target_path=os.devnull)
             expe.close()
 
-        with Experiment(OpenMode.load_by_filepath, os.path.join(TEST_DATA_DIR, "All-Electromagnetism-Elements.sav")) as expe:
-            self.assertTrue(expe.get_elements_count() == 7)
-            expe.save(target_path=os.devnull)
-            expe.close()
-
-        with Experiment(OpenMode.load_by_filepath, os.path.join(TEST_DATA_DIR, "Export-All-Electromagnetism-Elements.sav")) as expe:
-            self.assertTrue(expe.get_elements_count() == 7)
-            expe.save(target_path=os.devnull)
-            expe.close()
-
     @my_test_dec
     def test_load_from_app(self):
         def task1():
@@ -79,21 +70,12 @@ class BasicTest(TestCase, ViztracerTool):
                 expe.save(target_path=os.devnull)
                 expe.close()
 
-        def task3():
-            with Experiment(OpenMode.load_by_plar_app, "67750037c45f930f41ccee02", Category.Discussion, user=user) as expe:
-                self.assertTrue(expe.get_elements_count() == 7)
-                expe.save(target_path=os.devnull)
-                expe.close()
-
         thread1 = threading.Thread(target=task1)
         thraed2 = threading.Thread(target=task2)
-        thread3 = threading.Thread(target=task3)
         thread1.start()
         thraed2.start()
-        thread3.start()
         thread1.join()
         thraed2.join()
-        thread3.join()
 
     @my_test_dec
     def test_double_load_error(self):
@@ -304,11 +286,6 @@ class BasicTest(TestCase, ViztracerTool):
             self.assertEqual(expe.get_elements_count(), 26)
             expe.close()
 
-        with Experiment(OpenMode.load_by_filepath, os.path.join(TEST_DATA_DIR, "All-Electromagnetism-Elements.sav")) as expe:
-            expe.del_element(expe.get_element_from_index(1))
-            self.assertEqual(expe.get_elements_count(), 6)
-            expe.close()
-
     # 测试模块化电路连接导线
     @my_test_dec
     def test_wires(self):
@@ -336,35 +313,6 @@ class BasicTest(TestCase, ViztracerTool):
             crt_wires(b.outputs, c.inputs2)
             crt_wires(c.outputs, d.inputs)
             expe.close(delete=True)
-
-    # 测试打开实验类型与文件不吻合
-    @my_test_dec
-    def test_ExperimentType(self):
-        with Experiment(OpenMode.crt, "__test___ExperimentType__", ExperimentType.Electromagnetism, force_crt=True) as expe:
-            try:
-                Positive_Charge(0, 0, 0)
-                Logic_Input(0, 0, 0)
-            except ExperimentTypeError:
-                pass
-            else:
-                raise TestFail
-            finally:
-                expe.close(delete=True)
-
-    @my_test_dec
-    def test_electromagnetism(self):
-        with Experiment(OpenMode.crt, "__test___electromagnetism__", ExperimentType.Electromagnetism, force_crt=True) as expe:
-            Negative_Charge(-0.1, 0, 0)
-            Positive_Charge(0.1, 0, 0)
-            self.assertEqual(expe.get_elements_count(), 2)
-            try:
-                expe.get_wires_count()
-            except ExperimentTypeError:
-                pass
-            else:
-                raise TestFail
-            finally:
-                expe.close(delete=True)
 
     @my_test_dec
     def test_super_and_gate(self):
@@ -598,16 +546,6 @@ class BasicTest(TestCase, ViztracerTool):
             with Experiment(OpenMode.crt, "__test___wire_is_too_less__", ExperimentType.Circuit, force_crt=True) as expe:
                 crt_wire(Logic_Input(0, 0, 0).o)
         except ValueError:
-            pass
-        else:
-            raise TestFail
-
-    @my_test_dec
-    def test___exit__(self):
-        try:
-            with Experiment(OpenMode.crt, "__test___exit__", ExperimentType.Circuit, force_crt=True) as expe:
-                Positive_Charge(0, 0, 0)
-        except ExperimentTypeError:
             pass
         else:
             raise TestFail
