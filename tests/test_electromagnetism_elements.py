@@ -9,7 +9,8 @@ sys.path.append(LIBRARY_DIR)
 import pathlib
 import unittest
 import _constant
-from physicsLab import Position
+import base
+from physicsLab import Position, Category
 from physicsLab.electromagnetism import elements
 from physicsLab.electromagnetism import experiment
 
@@ -41,6 +42,10 @@ class TestElectromagnetismExperiment(unittest.TestCase):
             experiment.crt_electromagnetism_experiment("__test_load_electromagnetism_experiment_by_sav_name__").save_to(experiment.generate_a_new_sav_path())
         expe, filepath = experiment.load_electromagnetism_experiment_by_sav_name("__test_load_electromagnetism_experiment_by_sav_name__")
         filepath.unlink()
+
+    def test_load_electromagnetism_experiment_from_app(self):
+        with experiment.load_electromagnetism_experiment_from_app("67750037c45f930f41ccee02", Category.Discussion, base.user) as expe:
+            self.assertEqual(expe.get_elements_count(), 7)
 
 if __name__ == "__main__":
     unittest.main()

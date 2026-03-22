@@ -5,6 +5,8 @@ import pathlib
 from physicsLab import constant
 from physicsLab import errors
 from physicsLab import coordinate_system
+from physicsLab.enums import Category
+from physicsLab.web import User, anonymous_login
 from . import elements
 from ._camera_save import CameraSave
 from ._status_save import ElectromagnetismStatusSave
@@ -334,3 +336,36 @@ def load_electromagnetism_experiment_by_sav_name(
         )
 
     return load_electromagnetism_experiment_by_file_path(file), file
+
+def load_electromagnetism_experiment_from_app(content_id: str,
+        category: Category,
+        user: User = anonymous_login()) -> ElectromagnetismExperiment:
+    if not isinstance(content_id, str):
+        raise TypeError(
+            f"content_id must be of type `str`, but got value {content_id} of type {type(content_id).__name__}`"
+        )
+    if not isinstance(category, Category):
+        raise TypeError(
+            f"category must be of type `Category`, but got value {category} of type {type(category).__name__}`"
+        )
+    if not isinstance(user, User):
+        raise TypeError(
+            f"user must be of type `User`, but got value {user} of type {type(user).__name__}`"
+        )
+
+    _summary = user.get_summary(content_id, category)["Data"]
+    _experiment = user.get_experiment(_summary["ContentID"])["Data"]
+
+    if _experiment["Type"] != 4:
+        raise errors.ExperimentTypeError(
+            f'Content ID "{content_id}" does not correspond to an electromagnetism experiment'
+        )
+
+    result = ElectromagnetismExperiment(_summary["Subject"])
+
+    status_save_dict = json.loads(_experiment["StatusSave"])
+    elements_list = status_save_dict["Elements"]
+    for element_dict in elements_list:
+        result.crt_a_element(_dict_to_element(element_dict))
+
+    return result

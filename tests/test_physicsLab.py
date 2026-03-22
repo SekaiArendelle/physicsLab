@@ -70,21 +70,12 @@ class BasicTest(TestCase):
                 expe.save(target_path=os.devnull)
                 expe.close()
 
-        def task3():
-            with Experiment(OpenMode.load_by_plar_app, "67750037c45f930f41ccee02", Category.Discussion, user=user) as expe:
-                self.assertTrue(expe.get_elements_count() == 7)
-                expe.save(target_path=os.devnull)
-                expe.close()
-
         thread1 = threading.Thread(target=task1)
         thraed2 = threading.Thread(target=task2)
-        thread3 = threading.Thread(target=task3)
         thread1.start()
         thraed2.start()
-        thread3.start()
         thread1.join()
         thraed2.join()
-        thread3.join()
 
     @my_test_dec
     def test_double_load_error(self):
