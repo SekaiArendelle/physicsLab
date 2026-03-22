@@ -1,20 +1,25 @@
+import uuid
 import json
 import time
 import pathlib
+from physicsLab import constant
 from physicsLab import errors
 from physicsLab import coordinate_system
 from . import elements
 from ._camera_save import CameraSave
 from ._status_save import ElectromagnetismStatusSave
 from ._base import ElectromagnetismBase
-from physicsLab._typing import Self, Optional
+from physicsLab._typing import Self, Optional, Tuple
+
 
 class ElectromagnetismExperiment:
     __name: Optional[str]
     __status_save: ElectromagnetismStatusSave
     __camera_save: CameraSave
 
-    def __init__(self, name: Optional[str], camera_save: CameraSave = CameraSave()) -> None:
+    def __init__(
+        self, name: Optional[str], camera_save: CameraSave = CameraSave()
+    ) -> None:
         self.name = name
         self.status_save = ElectromagnetismStatusSave()
         self.camera_save = camera_save
@@ -64,17 +69,21 @@ class ElectromagnetismExperiment:
 
         self.__camera_save = camera_save
 
-    def _crt_a_element(self, element: ElectromagnetismBase) -> None:
+    def crt_a_element(self, element: ElectromagnetismBase) -> Self:
         self.status_save.append_element(element)
-
-    def crt_elements(self, *elements: ElectromagnetismBase) -> Self:
-        for element in elements:
-            self._crt_a_element(element)
 
         return self
 
-    def del_a_element(self, element: ElectromagnetismBase) -> None:
+    def crt_elements(self, *elements: ElectromagnetismBase) -> Self:
+        for element in elements:
+            self.crt_a_element(element)
+
+        return self
+
+    def del_a_element(self, element: ElectromagnetismBase) -> Self:
         self.status_save.remove_element(element)
+
+        return self
 
     def get_elements_count(self) -> int:
         return len(self.status_save.elements)
@@ -165,58 +174,94 @@ class ElectromagnetismExperiment:
 
         path.write_text(json.dumps(self.as_plsav_dict()), encoding="utf-8")
 
+
 def _dict_to_element(element_dict: dict) -> ElectromagnetismBase:
     model_id = element_dict["ModelID"]
 
     if model_id == "Negative Charge":
         return elements.NegativeCharge(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Positive Charge":
         return elements.PositiveCharge(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Negative Test Charge":
         return elements.NegativeTestCharge(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Positive Test Charge":
         return elements.PositiveTestCharge(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Bar Magnet":
         return elements.BarMagnet(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Compass":
         return elements.Compass(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     elif model_id == "Uniform Magnetic Field":
         return elements.UniformMagneticField(
-            position=coordinate_system.construct_position_from_plsav_str(element_dict["Position"]),
-            rotation=coordinate_system.construct_rotation_from_plsav_str(element_dict["Rotation"]),
+            position=coordinate_system.construct_position_from_plsav_str(
+                element_dict["Position"]
+            ),
+            rotation=coordinate_system.construct_rotation_from_plsav_str(
+                element_dict["Rotation"]
+            ),
             identifier=element_dict["Identifier"],
         )
     else:
         errors.unreachable()
 
+
+def generate_a_new_sav_path() -> pathlib.Path:
+    return pathlib.Path(constant.QUANTAM_PHYSICS_EXPERIMENT_DIR / str(uuid.uuid4())).with_suffix(".sav")
+
 def crt_electromagnetism_experiment(name: Optional[str]) -> ElectromagnetismExperiment:
     return ElectromagnetismExperiment(name)
 
-def load_electromagnetism_experiment_by_file_path(path: pathlib.Path) -> ElectromagnetismExperiment:
+
+def load_electromagnetism_experiment_by_file_path(
+    path: pathlib.Path,
+) -> ElectromagnetismExperiment:
     if not isinstance(path, pathlib.Path):
         raise TypeError(
             f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
@@ -224,7 +269,9 @@ def load_electromagnetism_experiment_by_file_path(path: pathlib.Path) -> Electro
 
     plasv_dict = json.loads(path.read_text(encoding="utf-8"))
     if plasv_dict["Type"] != 4:
-        raise errors.ExperimentTypeError(f"\"{path}\" does not contain an electromagnetism experiment")
+        raise errors.ExperimentTypeError(
+            f'"{path}" does not contain an electromagnetism experiment'
+        )
 
     summary_dict = plasv_dict["Summary"]
     if summary_dict is None:
@@ -235,15 +282,55 @@ def load_electromagnetism_experiment_by_file_path(path: pathlib.Path) -> Electro
 
     if "Experiment" in plasv_dict.keys():
         # tests/data/All-Electromagnetism-Elements.sav
-        status_save_list = json.loads(plasv_dict["Experiment"]["StatusSave"])["Elements"]
+        status_save_list = json.loads(plasv_dict["Experiment"]["StatusSave"])[
+            "Elements"
+        ]
         for element_dict in status_save_list:
-            result._crt_a_element(_dict_to_element(element_dict))
+            result.crt_a_element(_dict_to_element(element_dict))
 
         return result
     else:
         # tests/data/Export-All-Electromagnetism-Elements.sav
         status_save_list = json.loads(plasv_dict["StatusSave"])["Elements"]
         for element_dict in status_save_list:
-            result._crt_a_element(_dict_to_element(element_dict))
+            result.crt_a_element(_dict_to_element(element_dict))
 
         return result
+
+
+def find_path_of_sav_name(sav_name: str) -> Optional[pathlib.Path]:
+    if not isinstance(sav_name, str):
+        raise TypeError(
+            f"sav_name must be of type `str`, but got value {sav_name} of type {type(sav_name).__name__}"
+        )
+
+    for file in constant.QUANTAM_PHYSICS_EXPERIMENT_DIR.glob("*.sav"):
+        if not file.is_file():
+            continue
+
+        plsav_dict: dict = json.loads(file.read_text(encoding="utf-8"))
+        if "Summary" not in plsav_dict.keys():
+            continue
+        summary_dict: Optional[dict] = plsav_dict["Summary"]
+        if summary_dict is None:
+            continue
+        if "Subject" in summary_dict.keys():
+            if summary_dict["Subject"] == sav_name:
+                return file
+        elif "Subject" in plsav_dict.keys():
+            if plsav_dict["Subject"] == sav_name:
+                return file
+
+    return None
+
+
+def load_electromagnetism_experiment_by_sav_name(
+    sav_name: str,
+) -> Tuple[ElectromagnetismExperiment, pathlib.Path]:
+    file = find_path_of_sav_name(sav_name)
+    if file is None:
+        raise errors.ExperimentNotExistError(
+            f'Experiment with name "{sav_name}" does not exist'
+        )
+
+    return load_electromagnetism_experiment_by_file_path(file), file

@@ -60,4 +60,6 @@ class ElectromagnetismBase:
 
     @abc.abstractmethod
     def as_dict(self) -> dict:
-        raise NotImplementedError("The method `as_dict` must be implemented in the subclass")
+        raise NotImplementedError(
+            "The method `as_dict` must be implemented in the subclass"
+        )

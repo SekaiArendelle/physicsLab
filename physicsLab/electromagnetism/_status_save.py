@@ -3,6 +3,7 @@ from physicsLab import coordinate_system
 from physicsLab._typing import List, Dict
 from . import _base
 
+
 class ElectromagnetismStatusSave:
     __elements: List[_base.ElectromagnetismBase]
     __id2element: Dict[str, _base.ElectromagnetismBase]
@@ -22,7 +23,9 @@ class ElectromagnetismStatusSave:
         return self.__id2element
 
     @property
-    def position2element(self) -> Dict[coordinate_system.Position, _base.ElectromagnetismBase]:
+    def position2element(
+        self,
+    ) -> Dict[coordinate_system.Position, _base.ElectromagnetismBase]:
         return self.__position2element
 
     def append_element(self, element: _base.ElectromagnetismBase) -> None:
@@ -51,7 +54,9 @@ class ElectromagnetismStatusSave:
 
         return self.__id2element[identifier]
 
-    def get_element_by_position(self, position: coordinate_system.Position) -> _base.ElectromagnetismBase:
+    def get_element_by_position(
+        self, position: coordinate_system.Position
+    ) -> _base.ElectromagnetismBase:
         if not isinstance(position, coordinate_system.Position):
             raise TypeError(
                 f"parameter position must be of type `Position`, but got value {position} of type {type(position).__name__}"

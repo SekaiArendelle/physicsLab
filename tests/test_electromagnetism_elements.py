@@ -35,5 +35,12 @@ class TestElectromagnetismExperiment(unittest.TestCase):
             expe.del_a_element(negative_charge)
             self.assertTrue(expe.get_elements_count() == 1)
 
+    def test_load_electromagnetism_experiment_by_sav_name(self):
+        path = experiment.find_path_of_sav_name("__test_load_electromagnetism_experiment_by_sav_name__")
+        if path is None:
+            experiment.crt_electromagnetism_experiment("__test_load_electromagnetism_experiment_by_sav_name__").save_to(experiment.generate_a_new_sav_path())
+        expe, filepath = experiment.load_electromagnetism_experiment_by_sav_name("__test_load_electromagnetism_experiment_by_sav_name__")
+        filepath.unlink()
+
 if __name__ == "__main__":
     unittest.main()
