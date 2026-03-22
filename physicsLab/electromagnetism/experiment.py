@@ -1,13 +1,22 @@
 import time
 from ._camera_save import CameraSave
-from ._status_save import StatusSave
+from ._status_save import ElectromagnetismStatusSave
+from ._base import ElectromagnetismBase
+from physicsLab._typing import Self
 
 class ElectromagnetismExperiment:
-    __status_save: StatusSave
+    __status_save: ElectromagnetismStatusSave
     __camera_save: CameraSave
 
     def __init__(self, camera_save: CameraSave = CameraSave()) -> None:
+        self.status_save = ElectromagnetismStatusSave()
         self.camera_save = camera_save
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        pass
 
     @property
     def camera_save(self) -> CameraSave:
@@ -23,17 +32,26 @@ class ElectromagnetismExperiment:
         self.__camera_save = camera_save
 
     @property
-    def status_save(self) -> StatusSave:
+    def status_save(self) -> ElectromagnetismStatusSave:
         return self.__status_save
 
     @status_save.setter
-    def status_save(self, status_save: StatusSave) -> None:
-        if not isinstance(status_save, StatusSave):
+    def status_save(self, status_save: ElectromagnetismStatusSave) -> None:
+        if not isinstance(status_save, ElectromagnetismStatusSave):
             raise TypeError(
                 f"status_save must be of type `StatusSave`, but got value {status_save} of type {type(status_save).__name__}"
             )
 
         self.__status_save = status_save
+
+    def _crt_a_element(self, element: ElectromagnetismBase) -> None:
+        self.status_save.append_element(element)
+
+    def crt_elements(self, *elements: ElectromagnetismBase) -> Self:
+        for element in elements:
+            self._crt_a_element(element)
+
+        return self
 
     def as_plsav_dict(self) -> dict:
         return {
@@ -41,7 +59,7 @@ class ElectromagnetismExperiment:
             "Experiment": {
                 "ID": None,
                 "Type": 4,
-                "Components": 1,
+                "Components": len(self.status_save.elements),
                 "Subject": None,
                 "StatusSave": self.status_save.as_str_in_plsav(),
                 "CameraSave": self.camera_save.as_str_in_plsav(),
