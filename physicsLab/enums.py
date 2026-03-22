@@ -8,12 +8,8 @@ class ExperimentType(Enum):
 
     # 电学实验
     Circuit = 0
-    # 电路图模式 1
-    # 天体彩蛋模式 2
     # 天体物理实验
     Celestial = 3
-    # 电与磁实验
-    Electromagnetism = 4
 
 
 @unique
