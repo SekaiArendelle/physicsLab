@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from physicsLab import _tools
+import uuid
 from physicsLab import coordinate_system
 from ._base import ElectromagnetismBase
 
@@ -9,7 +8,7 @@ class NegativeCharge(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -34,7 +33,7 @@ class PositiveCharge(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -59,7 +58,7 @@ class NegativeTestCharge(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -84,7 +83,7 @@ class PositiveTestCharge(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -109,7 +108,7 @@ class BarMagnet(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -134,7 +133,7 @@ class Compass(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
@@ -159,7 +158,7 @@ class UniformMagneticField(ElectromagnetismBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, rotation, identifier)
 
