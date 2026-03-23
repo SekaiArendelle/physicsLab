@@ -1,13 +1,8 @@
-from physicsLab._core import _Experiment
-from physicsLab.savTemplate import Generate
+import uuid
 from ._base import CelestialBase
-from physicsLab import _tools
 from physicsLab import coordinate_system
 from . import triple_vector
-from physicsLab._typing import (
-    num_type,
-    final,
-)
+from physicsLab._typing import final
 
 
 class Mercury(CelestialBase):
@@ -16,7 +11,7 @@ class Mercury(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -73,7 +68,7 @@ class Venus(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -130,7 +125,7 @@ class Earth(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -187,7 +182,7 @@ class Mars(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -244,7 +239,7 @@ class Jupiter(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -301,7 +296,7 @@ class Saturn(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -358,7 +353,7 @@ class Uranus(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -415,7 +410,7 @@ class Neptune(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -472,7 +467,7 @@ class Pluto(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -529,7 +524,7 @@ class Sun(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -586,7 +581,7 @@ class Blue_Giant(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -643,7 +638,7 @@ class Red_Giant(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -700,7 +695,7 @@ class Red_Dwarf(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -757,7 +752,7 @@ class White_Dwarf(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -814,7 +809,7 @@ class Blackhole(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -871,7 +866,7 @@ class Fantasy_Star(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -928,7 +923,7 @@ class Moon(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -985,7 +980,7 @@ class Chocolate_Ball(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1042,7 +1037,7 @@ class Continential(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1099,7 +1094,7 @@ class Arctic(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1156,7 +1151,7 @@ class Arid(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1213,7 +1208,7 @@ class Barren(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1270,7 +1265,7 @@ class Desert(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1327,7 +1322,7 @@ class Jungle(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1384,7 +1379,7 @@ class Toxic(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1441,7 +1436,7 @@ class Lava(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
@@ -1498,7 +1493,7 @@ class Ocean(CelestialBase):
         position: coordinate_system.Position,
         velocity: triple_vector.Velocity = triple_vector.Velocity(0, 0, 0),
         acceleration: triple_vector.Acceleration = triple_vector.Acceleration(0, 0, 0),
-        identifier: str = _tools.randString(33),
+        identifier: str = str(uuid.uuid4()),
     ) -> None:
         super().__init__(position, velocity, acceleration, identifier)
 
