@@ -1,10 +1,15 @@
 import time
 import json
 import pathlib
+from physicsLab import constant
+from physicsLab import errors
 from physicsLab import coordinate_system
+from physicsLab.enums import Category
+from physicsLab.web import User, anonymous_login
+from . import planets
 from ._status_save import CelestialStatusSave
 from ._base import CelestialBase
-from physicsLab._typing import Self, Optional
+from physicsLab._typing import Self, Optional, Tuple
 from physicsLab._camera_save import CameraMode, CameraSave
 
 
@@ -193,3 +198,181 @@ class CelestialExperiment:
         self.status_save.append_range(other.status_save)
 
         return self
+
+
+def _dict_to_element(element_dict: dict) -> CelestialBase:
+    model_id = element_dict["Model"]
+    identifier = element_dict["Identifier"]
+    position = coordinate_system.construct_position_from_plsav_str(element_dict["Position"])
+    velocity = coordinate_system.construct_velocity_from_plsav_str(element_dict["Velocity"])
+    acceleration = coordinate_system.construct_acceleration_from_plsav_str(element_dict["Acceleration"])
+
+    if model_id == "Mercury":
+        return planets.Mercury(position, velocity, acceleration, identifier)
+    elif model_id == "Venus":
+        return planets.Venus(position, velocity, acceleration, identifier)
+    elif model_id == "Earth":
+        return planets.Earth(position, velocity, acceleration, identifier)
+    elif model_id == "Mars":
+        return planets.Mars(position, velocity, acceleration, identifier)
+    elif model_id == "Jupiter":
+        return planets.Jupiter(position, velocity, acceleration, identifier)
+    elif model_id == "Saturn":
+        return planets.Saturn(position, velocity, acceleration, identifier)
+    elif model_id == "Uranus":
+        return planets.Uranus(position, velocity, acceleration, identifier)
+    elif model_id == "Neptune":
+        return planets.Neptune(position, velocity, acceleration, identifier)
+    elif model_id == "Pluto":
+        return planets.Pluto(position, velocity, acceleration, identifier)
+    elif model_id == "Sun":
+        return planets.Sun(position, velocity, acceleration, identifier)
+    elif model_id == "Blue Giant":
+        return planets.BlueGiant(position, velocity, acceleration, identifier)
+    elif model_id == "Red Giant":
+        return planets.RedGiant(position, velocity, acceleration, identifier)
+    elif model_id == "Red Dwarf":
+        return planets.RedDwarf(position, velocity, acceleration, identifier)
+    elif model_id == "White Dwarf":
+        return planets.WhiteDwarf(position, velocity, acceleration, identifier)
+    elif model_id == "Blackhole":
+        return planets.Blackhole(position, velocity, acceleration, identifier)
+    elif model_id == "Fantasy Star":
+        return planets.FantasyStar(position, velocity, acceleration, identifier)
+    elif model_id == "Moon":
+        return planets.Moon(position, velocity, acceleration, identifier)
+    elif model_id == "Chocolate Ball":
+        return planets.ChocolateBall(position, velocity, acceleration, identifier)
+    elif model_id == "Continential":
+        return planets.Continential(position, velocity, acceleration, identifier)
+    elif model_id == "Arctic":
+        return planets.Arctic(position, velocity, acceleration, identifier)
+    elif model_id == "Arid":
+        return planets.Arid(position, velocity, acceleration, identifier)
+    elif model_id == "Barren":
+        return planets.Barren(position, velocity, acceleration, identifier)
+    elif model_id == "Desert":
+        return planets.Desert(position, velocity, acceleration, identifier)
+    elif model_id == "Jungle":
+        return planets.Jungle(position, velocity, acceleration, identifier)
+    elif model_id == "Toxic":
+        return planets.Toxic(position, velocity, acceleration, identifier)
+    elif model_id == "Lava":
+        return planets.Lava(position, velocity, acceleration, identifier)
+    elif model_id == "Ocean":
+        return planets.Ocean(position, velocity, acceleration, identifier)
+    else:
+        errors.unreachable()
+
+
+def crt_celestial_experiment(name: Optional[str]) -> CelestialExperiment:
+    return CelestialExperiment(name)
+
+
+def load_celestial_experiment_by_file_path(
+    path: pathlib.Path,
+) -> CelestialExperiment:
+    if not isinstance(path, pathlib.Path):
+        raise TypeError(
+            f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
+        )
+
+    plasv_dict = json.loads(path.read_text(encoding="utf-8"))
+    if plasv_dict["Type"] != 3:
+        raise errors.ExperimentTypeError(
+            f'"{path}" does not contain a celestial experiment'
+        )
+
+    summary_dict = plasv_dict["Summary"]
+    if summary_dict is None:
+        subject = None
+    else:
+        subject = summary_dict["Subject"]
+    result = CelestialExperiment(subject)
+
+    if "Experiment" in plasv_dict.keys():
+        status_save_list = json.loads(plasv_dict["Experiment"]["StatusSave"])[
+            "Elements"
+        ]
+        for element_dict in status_save_list.values():
+            result.crt_a_element(_dict_to_element(element_dict))
+
+        return result
+    else:
+        status_save_list = json.loads(plasv_dict["StatusSave"])["Elements"]
+        for element_dict in status_save_list.values():
+            result.crt_a_element(_dict_to_element(element_dict))
+
+        return result
+
+
+def find_path_of_sav_name(sav_name: str) -> Optional[pathlib.Path]:
+    if not isinstance(sav_name, str):
+        raise TypeError(
+            f"sav_name must be of type `str`, but got value {sav_name} of type {type(sav_name).__name__}"
+        )
+
+    for file in constant.QUANTAM_PHYSICS_EXPERIMENT_DIR.glob("*.sav"):
+        if not file.is_file():
+            continue
+
+        plsav_dict: dict = json.loads(file.read_text(encoding="utf-8"))
+        if "Summary" not in plsav_dict.keys():
+            continue
+        summary_dict: Optional[dict] = plsav_dict["Summary"]
+        if summary_dict is None:
+            continue
+        if "Subject" in summary_dict.keys():
+            if summary_dict["Subject"] == sav_name:
+                return file
+        elif "Subject" in plsav_dict.keys():
+            if plsav_dict["Subject"] == sav_name:
+                return file
+
+    return None
+
+
+def load_celestial_experiment_by_sav_name(
+    sav_name: str,
+) -> Tuple[CelestialExperiment, pathlib.Path]:
+    file = find_path_of_sav_name(sav_name)
+    if file is None:
+        raise errors.ExperimentNotExistError(
+            f'Experiment with name "{sav_name}" does not exist'
+        )
+
+    return load_celestial_experiment_by_file_path(file), file
+
+
+def load_celestial_experiment_from_app(
+    content_id: str, category: Category, user: User = anonymous_login()
+) -> CelestialExperiment:
+    if not isinstance(content_id, str):
+        raise TypeError(
+            f"content_id must be of type `str`, but got value {content_id} of type {type(content_id).__name__}`"
+        )
+    if not isinstance(category, Category):
+        raise TypeError(
+            f"category must be of type `Category`, but got value {category} of type {type(category).__name__}`"
+        )
+    if not isinstance(user, User):
+        raise TypeError(
+            f"user must be of type `User`, but got value {user} of type {type(user).__name__}`"
+        )
+
+    _summary = user.get_summary(content_id, category)["Data"]
+    _experiment = user.get_experiment(_summary["ContentID"])["Data"]
+
+    if _experiment["Type"] != 3:
+        raise errors.ExperimentTypeError(
+            f'Content ID "{content_id}" does not correspond to a celestial experiment'
+        )
+
+    result = CelestialExperiment(_summary["Subject"])
+
+    status_save_dict = json.loads(_experiment["StatusSave"])
+    elements_list = status_save_dict["Elements"]
+    for element_dict in elements_list.values():
+        result.crt_a_element(_dict_to_element(element_dict))
+
+    return result

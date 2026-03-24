@@ -169,7 +169,7 @@ class CelestialStatusSave:
     def as_dict(self) -> dict:
         return {
             "MainIdentifier": self.main_identifier,
-            "Elements": self.id2element,
+            "Elements": {element.identifier: element.as_dict() for element in self.elements},
             "WorldTime": self.world_time,
             "ScalingName": self.scaling_name,
             "LengthScale": self.length_scale,
