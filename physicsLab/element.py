@@ -8,7 +8,6 @@ from . import _tools
 from . import errors
 from . import savTemplate
 from physicsLab import circuit
-from physicsLab import celestial
 from physicsLab import coordinate_system
 from .web.api import User
 from .web.api import anonymous_login

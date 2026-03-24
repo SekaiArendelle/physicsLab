@@ -66,10 +66,6 @@ class _LogicInput(CircuitBase):
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -152,6 +148,10 @@ class Logic_Input(_LogicInput):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _LogicOutput(CircuitBase):
     """逻辑输出"""
@@ -185,11 +185,6 @@ class _LogicOutput(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -261,6 +256,10 @@ class Logic_Output(_LogicOutput):
             lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
 
 
 class _2PinGate(CircuitBase):
@@ -346,11 +345,6 @@ class _YesGate(_2PinGate):
     def count_all_pins() -> int:
         return 2
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
     def as_dict(self) -> CircuitElementData:
         return {
             "ModelID": "Yes Gate",
@@ -404,6 +398,10 @@ class Yes_Gate(_YesGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _NoGate(_2PinGate):
     """非门"""
@@ -421,11 +419,6 @@ class _NoGate(_2PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -488,6 +481,10 @@ class No_Gate(_NoGate):
             lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
 
 
 class _3PinGate(CircuitBase):
@@ -572,11 +569,6 @@ class _OrGate(_3PinGate):
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
     def as_dict(self) -> CircuitElementData:
         return {
             "ModelID": "Or Gate",
@@ -639,6 +631,10 @@ class Or_Gate(_OrGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _AndGate(_3PinGate):
     """与门"""
@@ -656,11 +652,6 @@ class _AndGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -724,6 +715,10 @@ class And_Gate(_AndGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _NorGate(_3PinGate):
     """或非门"""
@@ -741,11 +736,6 @@ class _NorGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -809,6 +799,10 @@ class Nor_Gate(_NorGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _NandGate(_3PinGate):
     """与非门"""
@@ -826,11 +820,6 @@ class _NandGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -894,6 +883,10 @@ class Nand_Gate(_NandGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _XorGate(_3PinGate):
     """异或门"""
@@ -911,11 +904,6 @@ class _XorGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -979,6 +967,10 @@ class Xor_Gate(_XorGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _XnorGate(_3PinGate):
     """同或门"""
@@ -996,11 +988,6 @@ class _XnorGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1064,6 +1051,10 @@ class Xnor_Gate(_XnorGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ImpGate(_3PinGate):
     """蕴含门"""
@@ -1081,11 +1072,6 @@ class _ImpGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1149,6 +1135,10 @@ class Imp_Gate(_ImpGate):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _NimpGate(_3PinGate):
     """蕴含非门"""
@@ -1166,11 +1156,6 @@ class _NimpGate(_3PinGate):
         lock_status: bool = True,
     ) -> None:
         super().__init__(x, y, z, high_level, low_level, elementXYZ, identifier, label, lock_status)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1233,6 +1218,10 @@ class Nimp_Gate(_NimpGate):
             lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
 
 
 class _BigElement(CircuitBase):
@@ -1304,11 +1293,6 @@ class _HalfAdder(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1392,6 +1376,10 @@ class Half_Adder(_HalfAdder):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _FullAdder(_BigElement):
     """全加器"""
@@ -1431,11 +1419,6 @@ class _FullAdder(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1523,6 +1506,10 @@ class Full_Adder(_FullAdder):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _HalfSubtractor(_BigElement):
     """半减器"""
@@ -1562,11 +1549,6 @@ class _HalfSubtractor(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1650,6 +1632,10 @@ class Half_Subtractor(_HalfSubtractor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _FullSubtractor(_BigElement):
     """全减器"""
@@ -1692,11 +1678,6 @@ class _FullSubtractor(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1784,6 +1765,10 @@ class Full_Subtractor(_FullSubtractor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Multiplier(_BigElement):
     """二位乘法器"""
@@ -1832,11 +1817,6 @@ class _Multiplier(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1936,6 +1916,10 @@ class Multiplier(_Multiplier):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _DFlipflop(_BigElement):
     """D触发器"""
@@ -1972,11 +1956,6 @@ class _DFlipflop(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2060,6 +2039,10 @@ class D_Flipflop(_DFlipflop):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _TFlipflop(_BigElement):
     """T'触发器"""
@@ -2096,11 +2079,6 @@ class _TFlipflop(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2184,6 +2162,10 @@ class T_Flipflop(_TFlipflop):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _RealTFlipflop(_BigElement):
     """T触发器"""
@@ -2220,11 +2202,6 @@ class _RealTFlipflop(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2308,6 +2285,10 @@ class Real_T_Flipflop(_RealTFlipflop):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _JKFlipflop(_BigElement):
     """JK触发器"""
@@ -2347,11 +2328,6 @@ class _JKFlipflop(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2439,6 +2415,10 @@ class JK_Flipflop(_JKFlipflop):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Counter(_BigElement):
     """计数器"""
@@ -2481,11 +2461,6 @@ class _Counter(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2577,6 +2552,10 @@ class Counter(_Counter):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _RandomGenerator(_BigElement):
     """随机数发生器"""
@@ -2619,11 +2598,6 @@ class _RandomGenerator(_BigElement):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2715,6 +2689,10 @@ class Random_Generator(_RandomGenerator):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _EightBitInput(CircuitBase):
     """八位输入器"""
@@ -2785,11 +2763,6 @@ class _EightBitInput(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2915,6 +2888,10 @@ class Eight_Bit_Input(_EightBitInput):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _EightBitDisplay(CircuitBase):
     """八位显示器"""
@@ -2975,11 +2952,6 @@ class _EightBitDisplay(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -3079,6 +3051,10 @@ class Eight_Bit_Display(_EightBitDisplay):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SchmittTrigger(CircuitBase):
     """施密特触发器"""
@@ -3130,11 +3106,6 @@ class _SchmittTrigger(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -3221,3 +3192,7 @@ class Schmitt_Trigger(_SchmittTrigger):
             lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()

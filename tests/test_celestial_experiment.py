@@ -70,7 +70,7 @@ class TestCelestialExperiment(unittest.TestCase):
             expe.save_to(pathlib.Path(os.devnull))
 
 
-class TestCelestialElement(unittest.TestCase):
+class TestCelestialElements(unittest.TestCase):
     def test_mercury(self):
         expe = experiment.crt_celestial_experiment(None)
         _instance = planets.Mercury(Position(1, 2, 3))

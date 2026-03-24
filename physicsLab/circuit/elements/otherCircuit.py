@@ -49,11 +49,6 @@ class _Buzzer(CircuitBase):
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
     def as_dict(self) -> CircuitElementData:
         return {
             "ModelID": "Buzzer",
@@ -117,6 +112,10 @@ class Buzzer(_Buzzer):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SparkGap(CircuitBase):
     """火花隙"""
@@ -142,11 +141,6 @@ class _SparkGap(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -209,6 +203,10 @@ class Spark_Gap(_SparkGap):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _TeslaCoil(CircuitBase):
     """特斯拉线圈"""
@@ -234,11 +232,6 @@ class _TeslaCoil(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -303,6 +296,10 @@ class Tesla_Coil(_TeslaCoil):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ColorLightEmittingDiode(CircuitBase):
     """彩色发光二极管"""
@@ -337,11 +334,6 @@ class _ColorLightEmittingDiode(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -427,6 +419,10 @@ class Color_Light_Emitting_Diode(_ColorLightEmittingDiode):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _DualLightEmittingDiode(CircuitBase):
     """演示发光二极管"""
@@ -452,11 +448,6 @@ class _DualLightEmittingDiode(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -530,6 +521,10 @@ class Dual_Light_Emitting_Diode(_DualLightEmittingDiode):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ElectricBell(CircuitBase):
     """电铃"""
@@ -555,11 +550,6 @@ class _ElectricBell(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -624,6 +614,10 @@ class Electric_Bell(_ElectricBell):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _MusicalBox(CircuitBase):
     """八音盒"""
@@ -649,11 +643,6 @@ class _MusicalBox(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -718,6 +707,10 @@ class Musical_Box(_MusicalBox):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ResistanceLaw(CircuitBase):
     """电阻定律实验"""
@@ -764,11 +757,6 @@ class _ResistanceLaw(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -889,6 +877,10 @@ class Resistance_Law(_ResistanceLaw):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Solenoid(CircuitBase):
     """通电螺线管"""
@@ -923,11 +915,6 @@ class _Solenoid(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1009,6 +996,10 @@ class Solenoid(_Solenoid):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ElectricFan(CircuitBase):
     """小电扇"""
@@ -1034,11 +1025,6 @@ class _ElectricFan(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1119,6 +1105,10 @@ class Electric_Fan(_ElectricFan):
         super().__init__(x, y, z, elementXYZ, identifier, label, lock_status)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SimpleInstrument(CircuitBase):
     """简单乐器"""
@@ -1174,11 +1164,6 @@ class _SimpleInstrument(CircuitBase):
     @staticmethod
     def zh_name() -> str:
         return "简单乐器"
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         if not all(isinstance(a_pitch, int) for a_pitch in self.pitches):
@@ -1389,3 +1374,7 @@ class Simple_Instrument(_SimpleInstrument):
             lock_status=lock_status,
         )
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()

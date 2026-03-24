@@ -138,11 +138,6 @@ class _Accelerometer(_MemsBase):
             label=label,
         )
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
     def as_dict(self) -> CircuitElementData:
         return {
             "ModelID": "Accelerometer",
@@ -204,6 +199,10 @@ class Accelerometer(_Accelerometer):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _AnalogJoystick(CircuitBase):
     """模拟摇杆"""
@@ -245,11 +244,6 @@ class _AnalogJoystick(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -323,6 +317,10 @@ class Analog_Joystick(_AnalogJoystick):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label=label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _AttitudeSensor(_MemsBase):
     """姿态传感器"""
@@ -353,11 +351,6 @@ class _AttitudeSensor(_MemsBase):
             lock_status=lock_status,
             label=label,
         )
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -420,6 +413,10 @@ class Attitude_Sensor(_AttitudeSensor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _GravitySensor(_MemsBase):
     """重力加速计"""
@@ -450,11 +447,6 @@ class _GravitySensor(_MemsBase):
             lock_status=lock_status,
             label=label,
         )
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -517,6 +509,10 @@ class Gravity_Sensor(_GravitySensor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Gyroscope(_MemsBase):
     """陀螺仪传感器"""
@@ -547,11 +543,6 @@ class _Gyroscope(_MemsBase):
             lock_status=lock_status,
             label=label,
         )
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -614,6 +605,10 @@ class Gyroscope(_Gyroscope):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _LinearAccelerometer(_MemsBase):
     """线性加速度计"""
@@ -644,11 +639,6 @@ class _LinearAccelerometer(_MemsBase):
             lock_status=lock_status,
             label=label,
         )
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -711,6 +701,10 @@ class Linear_Accelerometer(_LinearAccelerometer):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _MagneticFieldSensor(_MemsBase):
     """磁场传感器"""
@@ -741,11 +735,6 @@ class _MagneticFieldSensor(_MemsBase):
             lock_status=lock_status,
             label=label,
         )
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -808,6 +797,10 @@ class Magnetic_Field_Sensor(_MagneticFieldSensor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Photodiode(CircuitBase):
     """光电二极管"""
@@ -833,11 +826,6 @@ class _Photodiode(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -902,6 +890,10 @@ class Photodiode(_Photodiode):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label=label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Photoresistor(CircuitBase):
     """光敏电阻"""
@@ -927,11 +919,6 @@ class _Photoresistor(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -996,6 +983,10 @@ class Photoresistor(_Photoresistor):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label=label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ProximitySensor(CircuitBase):
     """临近传感器"""
@@ -1017,11 +1008,6 @@ class _ProximitySensor(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1074,3 +1060,7 @@ class Proximity_Sensor(_ProximitySensor):
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label=label)
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()

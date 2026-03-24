@@ -76,7 +76,7 @@ class TestElectromagnetismExperiment(unittest.TestCase):
                 self.assertEqual(expe.get_elements_count(), 4)
 
 
-class TestElectromagnetismElement(unittest.TestCase):
+class TestElectromagnetismElements(unittest.TestCase):
     def test_negative_charge(self):
         with experiment.crt_electromagnetism_experiment(None) as expe:
             _instance = elements.NegativeCharge(

@@ -97,11 +97,6 @@ class _SimpleSwitch(_SwitchBase):
     def zh_name() -> str:
         return "简单开关"
 
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
     def as_dict(self) -> CircuitElementData:
         return {
             "ModelID": "Simple Switch",
@@ -147,6 +142,10 @@ class Simple_Switch(_SimpleSwitch):
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(x, y, z, identifier=identifier, switch_state=switch_state, label=label, lock_status=lock_status)
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
 
 
 class _SPDTSwitch(_SwitchBase):
@@ -201,11 +200,6 @@ class _SPDTSwitch(_SwitchBase):
     @staticmethod
     def zh_name() -> str:
         return "单刀双掷开关"
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -269,6 +263,10 @@ class SPDT_Switch(_SPDTSwitch):
         super().__init__(x, y, z, elementXYZ, identifier, switch_state, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _DPDTSwitch(_SwitchBase):
     """双刀双掷开关"""
@@ -331,11 +329,6 @@ class _DPDTSwitch(_SwitchBase):
     @staticmethod
     def zh_name() -> str:
         return "双刀双掷开关"
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -411,6 +404,10 @@ class DPDT_Switch(_DPDTSwitch):
         super().__init__(x, y, z, elementXYZ, identifier, switch_state, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _PushSwitch(CircuitBase):
     """按钮开关"""
@@ -436,11 +433,6 @@ class _PushSwitch(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -499,6 +491,10 @@ class Push_Switch(_PushSwitch):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _AirSwitch(CircuitBase):
     """空气开关"""
@@ -524,11 +520,6 @@ class _AirSwitch(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -608,6 +599,10 @@ class Air_Switch(_AirSwitch):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _IncandescentLamp(CircuitBase):
     """白炽灯泡"""
@@ -633,11 +628,6 @@ class _IncandescentLamp(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -705,6 +695,10 @@ class Incandescent_Lamp(_IncandescentLamp):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _BatterySource(CircuitBase):
     """一节电池"""
@@ -746,11 +740,6 @@ class _BatterySource(CircuitBase):
         self.voltage = voltage
         self.internal_resistance = internal_resistance
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -826,6 +815,10 @@ class Battery_Source(_BatterySource):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _StudentSource(CircuitBase):
     """学生电源"""
@@ -863,11 +856,6 @@ class _StudentSource(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -955,6 +943,10 @@ class Student_Source(_StudentSource):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Resistor(CircuitBase):
     """电阻"""
@@ -988,11 +980,6 @@ class _Resistor(CircuitBase):
             setattr(self, name, pin)
         self.resistance = resistance
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1078,6 +1065,10 @@ class Resistor(_Resistor):
         )
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _FuseComponent(CircuitBase):
     """保险丝"""
@@ -1103,11 +1094,6 @@ class _FuseComponent(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1173,6 +1159,10 @@ class Fuse_Component(_FuseComponent):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SlideRheostat(CircuitBase):
     """滑动变阻器"""
@@ -1207,11 +1197,6 @@ class _SlideRheostat(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1297,6 +1282,10 @@ class Slide_Rheostat(_SlideRheostat):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Multimeter(CircuitBase):
     """多用电表"""
@@ -1322,11 +1311,6 @@ class _Multimeter(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1392,6 +1376,10 @@ class Multimeter(_Multimeter):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Galvanometer(CircuitBase):
     """灵敏电流计"""
@@ -1423,11 +1411,6 @@ class _Galvanometer(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1490,6 +1473,10 @@ class Galvanometer(_Galvanometer):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _Microammeter(CircuitBase):
     """微安表"""
@@ -1521,11 +1508,6 @@ class _Microammeter(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1588,6 +1570,10 @@ class Microammeter(_Microammeter):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ElectricityMeter(CircuitBase):
     """电能表"""
@@ -1622,11 +1608,6 @@ class _ElectricityMeter(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1693,6 +1674,10 @@ class Electricity_Meter(_ElectricityMeter):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _ResistanceBox(CircuitBase):
     """电阻箱"""
@@ -1726,11 +1711,6 @@ class _ResistanceBox(CircuitBase):
             setattr(self, name, pin)
         self.resistance = resistance
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1802,6 +1782,10 @@ class Resistance_Box(_ResistanceBox):
         super().__init__(x, y, z, resistance, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SimpleAmmeter(CircuitBase):
     """直流安培表"""
@@ -1833,11 +1817,6 @@ class _SimpleAmmeter(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1900,6 +1879,10 @@ class Simple_Ammeter(_SimpleAmmeter):
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
 
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
+
 
 class _SimpleVoltmeter(CircuitBase):
     """直流电压表"""
@@ -1931,11 +1914,6 @@ class _SimpleVoltmeter(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1997,3 +1975,7 @@ class Simple_Voltmeter(_SimpleVoltmeter):
         _deprecated_init_attr_experiment(self, experiment=experiment)
         super().__init__(x, y, z, elementXYZ, identifier, lock_status, label)
         _deprecated_assign_element_to_experiment(self)
+
+    @property
+    def data(self) -> CircuitElementData:
+        return self.as_dict()
