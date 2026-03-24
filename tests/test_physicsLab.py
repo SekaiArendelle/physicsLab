@@ -110,7 +110,7 @@ class BasicTest(TestCase):
         with Experiment(OpenMode.crt, "__test__", ExperimentType.Circuit, force_crt=True) as expe:
             a = Yes_Gate(0, 0, 0)
             self.assertEqual(expe.get_elements_count(), 1)
-            self.assertEqual(a.get_position(), (0, 0, 0))
+            self.assertEqual(a.get_position(), Position(0, 0, 0))
             crt_wire(a.o, a.i)
             self.assertEqual(expe.get_wires_count(), 1)
             expe.clear_wires()

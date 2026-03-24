@@ -9,7 +9,6 @@ from . import errors
 from . import savTemplate
 from physicsLab import circuit
 from physicsLab import celestial
-from physicsLab import electromagnetism
 from physicsLab import coordinate_system
 from .web.api import User
 from .web.api import anonymous_login
@@ -198,8 +197,6 @@ class Experiment(_Experiment):
                     self.PlSav = copy.deepcopy(savTemplate.Circuit)
                 elif _temp["Type"] == ExperimentType.Celestial.value:
                     self.PlSav = copy.deepcopy(savTemplate.Celestial)
-                elif _temp["Type"] == ExperimentType.Electromagnetism.value:
-                    self.PlSav = copy.deepcopy(savTemplate.Electromagnetism)
                 else:
                     errors.unreachable()
 
@@ -270,8 +267,6 @@ class Experiment(_Experiment):
                 self.PlSav = copy.deepcopy(savTemplate.Circuit)
             elif _experiment["Type"] == ExperimentType.Celestial.value:
                 self.PlSav = copy.deepcopy(savTemplate.Celestial)
-            elif _experiment["Type"] == ExperimentType.Electromagnetism.value:
-                self.PlSav = copy.deepcopy(savTemplate.Electromagnetism)
             else:
                 errors.unreachable()
 
@@ -362,16 +357,6 @@ class Experiment(_Experiment):
                 }
                 self.VisionCenter: coordinate_system.Position = coordinate_system.Position(0, 0, 1.08)
                 self.TargetRotation: coordinate_system.Position = coordinate_system.Position(90, 0, 0)
-            elif self.experiment_type == ExperimentType.Electromagnetism:
-                self.PlSav: dict = copy.deepcopy(savTemplate.Electromagnetism)
-                self.CameraSave: dict = {
-                    "Mode": 0,
-                    "Distance": 3.25,
-                    "VisionCenter": Generate,
-                    "TargetRotation": Generate,
-                }
-                self.VisionCenter: coordinate_system.Position = coordinate_system.Position(0, 0, 0.88)
-                self.TargetRotation: coordinate_system.Position = coordinate_system.Position(90, 0, 0)
             else:
                 errors.unreachable()
 
@@ -411,8 +396,6 @@ class Experiment(_Experiment):
                 self.__load_wires(status_sav["Wires"])
             elif self.experiment_type == ExperimentType.Celestial:
                 self.__load_elements(list(status_sav["Elements"].values()))
-            elif self.experiment_type == ExperimentType.Electromagnetism:
-                self.__load_elements(status_sav["Elements"])
             else:
                 errors.unreachable()
 
@@ -438,8 +421,6 @@ class Experiment(_Experiment):
             self.Wires: set = set()  # Set[Wire] # 存档对应的导线
         elif self.PlSav["Experiment"]["Type"] == ExperimentType.Celestial.value:
             self.experiment_type = ExperimentType.Celestial
-        elif self.PlSav["Experiment"]["Type"] == ExperimentType.Electromagnetism.value:
-            self.experiment_type = ExperimentType.Electromagnetism
         else:
             errors.unreachable()
 
@@ -523,11 +504,6 @@ class Experiment(_Experiment):
                     element["Model"], x, y, z, identifier=element["Identifier"]
                 )
                 obj.data = element
-            elif self.experiment_type == ExperimentType.Electromagnetism:
-                obj = self.crt_element(
-                    element["ModelID"], x, y, z, identifier=element["Identifier"]
-                )
-                obj.data = element
             else:
                 errors.unreachable()
 
@@ -573,7 +549,5 @@ class Experiment(_Experiment):
                 return eval(f"circuit.{name}({x}, {y}, {z}, **{kwargs})")
         elif self.experiment_type == ExperimentType.Celestial:
             return eval(f"celestial.{name}({x}, {y}, {z}, **{kwargs})")
-        elif self.experiment_type == ExperimentType.Electromagnetism:
-            return eval(f"electromagnetism.{name}({x}, {y}, {z}, **{kwargs})")
         else:
             errors.unreachable()

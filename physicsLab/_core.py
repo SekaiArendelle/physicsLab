@@ -102,7 +102,7 @@ class _Experiment:
             SAV_PATH_DIR = os.path.abspath("physicsLabSav")
 
     open_mode: OpenMode
-    _position2elements: Dict[Tuple[num_type, num_type, num_type], List["ElementBase"]]
+    _position2elements: Dict[coordinate_system.Position, List["ElementBase"]]
     _id2element: Dict[str, "ElementBase"]
     Elements: List["ElementBase"]
     SAV_PATH: str
@@ -117,7 +117,7 @@ class _Experiment:
         self,
         open_mode: OpenMode,
         _position2elements: Dict[
-            Tuple[num_type, num_type, num_type], List["ElementBase"]
+            coordinate_system.Position, List["ElementBase"]
         ],
         _id2element: Dict[str, "ElementBase"],
         Elements: List["ElementBase"],
@@ -295,7 +295,7 @@ class _Experiment:
         ):
             raise TypeError()
 
-        position = (_tools.round_data(x), _tools.round_data(y), _tools.round_data(z))
+        position = coordinate_system.Position(_tools.round_data(x), _tools.round_data(y), _tools.round_data(z))
         if position not in self._position2elements.keys():
             raise errors.ElementNotFound(f"{position} do not exist")
 
@@ -358,11 +358,6 @@ class _Experiment:
                 "SizeNonlinear": 0.5,
                 "StarPresent": False,
                 "Setting": None,
-            }
-        elif self.experiment_type == ExperimentType.Electromagnetism:
-            status_save: dict = {
-                "SimulationSpeed": 1.0,
-                "Elements": [a_element.data for a_element in self.Elements],
             }
         else:
             errors.unreachable()
@@ -436,10 +431,7 @@ class _Experiment:
                         f"{self.get_elements_count()} elements, {self.get_wires_count()} wires."
                     )
                 )
-            elif (
-                self.experiment_type == ExperimentType.Celestial
-                or self.experiment_type == ExperimentType.Electromagnetism
-            ):
+            elif self.experiment_type == ExperimentType.Celestial:
                 _colorUtils.cprint(
                     _colorUtils.Green(f"{self.get_elements_count()} elements.")
                 )

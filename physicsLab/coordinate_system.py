@@ -33,12 +33,10 @@ class Position:
         return hash((self.x, self.y, self.z))
 
     def __eq__(self, value: object) -> bool:
-        if isinstance(value, Position):
-            return self.x == value.x and self.y == value.y and self.z == value.z
-        elif isinstance(value, tuple) and len(value) == 3:
-            return self.x == value[0] and self.y == value[1] and self.z == value[2]
-        else:
+        if not isinstance(value, Position):
             return False
+
+        return self.x == value.x and self.y == value.y and self.z == value.z
 
     def as_postion_str_in_plsav(self) -> str:
         return f"{self.x},{self.z},{self.y}"
@@ -89,12 +87,10 @@ class Rotation:
         return hash((self.x, self.y, self.z))
 
     def __eq__(self, value: object) -> bool:
-        if isinstance(value, Rotation):
-            return self.x == value.x and self.y == value.y and self.z == value.z
-        elif isinstance(value, tuple) and len(value) == 3:
-            return self.x == value[0] and self.y == value[1] and self.z == value[2]
-        else:
+        if not isinstance(value, Rotation):
             return False
+
+        return self.x == value.x and self.y == value.y and self.z == value.z
 
     def as_rotation_str_in_plsav(self) -> str:
         return f"{self.x},{self.z},{self.y}"
@@ -145,12 +141,10 @@ class Velocity:
         return hash((self.x, self.y, self.z))
 
     def __eq__(self, value: object) -> bool:
-        if isinstance(value, Velocity):
-            return self.x == value.x and self.y == value.y and self.z == value.z
-        elif isinstance(value, tuple) and len(value) == 3:
-            return self.x == value[0] and self.y == value[1] and self.z == value[2]
-        else:
+        if not isinstance(value, Velocity):
             return False
+
+        return self.x == value.x and self.y == value.y and self.z == value.z
 
     def as_velocity_str_in_plsav(self) -> str:
         return f"{self.x},{self.z},{self.y}"
@@ -201,12 +195,10 @@ class AngularVelocity:
         return hash((self.x, self.y, self.z))
 
     def __eq__(self, value: object) -> bool:
-        if isinstance(value, AngularVelocity):
-            return self.x == value.x and self.y == value.y and self.z == value.z
-        elif isinstance(value, tuple) and len(value) == 3:
-            return self.x == value[0] and self.y == value[1] and self.z == value[2]
-        else:
+        if not isinstance(value, AngularVelocity):
             return False
+
+        return self.x == value.x and self.y == value.y and self.z == value.z
 
     def as_angular_velocity_str_in_plsav(self) -> str:
         return f"{self.x},{self.z},{self.y}"
@@ -257,12 +249,10 @@ class Acceleration:
         return hash((self.x, self.y, self.z))
 
     def __eq__(self, value: object) -> bool:
-        if isinstance(value, Acceleration):
-            return self.x == value.x and self.y == value.y and self.z == value.z
-        elif isinstance(value, tuple) and len(value) == 3:
-            return self.x == value[0] and self.y == value[1] and self.z == value[2]
-        else:
+        if not isinstance(value, Acceleration):
             return False
+
+        return self.x == value.x and self.y == value.y and self.z == value.z
 
     def as_acceleration_str_in_plsav(self) -> str:
         return f"{self.x},{self.z},{self.y}"
