@@ -240,6 +240,11 @@ class CircuitBase(ElementBase):
         lock_status: bool,
         label: Optional[str],
     ) -> None:
+        if not isinstance(position, coordinate_system.Position):
+            raise TypeError(
+                f"position must be an instance of coordinate_system.Position, "
+                f"got {type(position).__name__}"
+            )
         self.set_position(position.x, position.y, position.z, elementXYZ)
         if identifier is None:
             self.identifier = randString(33)
