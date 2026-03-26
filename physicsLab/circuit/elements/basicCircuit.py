@@ -109,7 +109,7 @@ class _SimpleSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
@@ -118,7 +118,7 @@ class _SimpleSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Simple_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Simple_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ},"
             f"switch_state={self.switch_state})"
         )
@@ -220,7 +220,7 @@ class _SPDTSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
@@ -229,7 +229,7 @@ class _SPDTSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"SPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"SPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ},"
             f"switch_state={self.switch_state})"
         )
@@ -357,7 +357,7 @@ class _DPDTSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -366,7 +366,7 @@ class _DPDTSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"DPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"DPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ},"
             f"switch_state={self.switch_state})"
         )
@@ -466,7 +466,7 @@ class _PushSwitch(CircuitBase):
             "IsLocked": False,
             "Properties": {"开关": 0.0, "默认开关": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -564,7 +564,7 @@ class _AirSwitch(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -608,7 +608,7 @@ class _AirSwitch(CircuitBase):
     @override
     def __repr__(self) -> str:
         res = (
-            f"Air_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Air_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"switch_state={self.switch_state})"
         )
@@ -693,7 +693,7 @@ class _IncandescentLamp(CircuitBase):
                 "灯泡温度": 300.0,
                 "电阻": 0.5,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -805,7 +805,7 @@ class _BatterySource(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0, "功率": 0, "电压": 0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -933,7 +933,7 @@ class _StudentSource(CircuitBase):
                 "电阻1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1052,7 +1052,7 @@ class _Resistor(CircuitBase):
                 "电压": 0,
                 "电流": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1087,7 +1087,7 @@ class _Resistor(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Resistor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Resistor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"resistance={self.resistance})"
         )
@@ -1169,7 +1169,7 @@ class _FuseComponent(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1288,7 +1288,7 @@ class _SlideRheostat(CircuitBase):
                 "电压1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1394,7 +1394,7 @@ class _Multimeter(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1491,7 +1491,7 @@ class _Galvanometer(CircuitBase):
             "IsLocked": False,
             "Properties": {"量程": 3.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1592,7 +1592,7 @@ class _Microammeter(CircuitBase):
             "IsLocked": False,
             "Properties": {"量程": 0.1, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1696,7 +1696,7 @@ class _ElectricityMeter(CircuitBase):
             "IsLocked": False,
             "Properties": {"示数": 0.0, "额定电流": 6.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1815,7 +1815,7 @@ class _ResistanceBox(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1919,7 +1919,7 @@ class _SimpleAmmeter(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2024,7 +2024,7 @@ class _SimpleVoltmeter(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},

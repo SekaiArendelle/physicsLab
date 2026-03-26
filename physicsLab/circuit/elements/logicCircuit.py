@@ -78,7 +78,7 @@ class _LogicInput(CircuitBase):
                 "开关": int(self.output_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -92,7 +92,7 @@ class _LogicInput(CircuitBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Logic_Input({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Logic_Input({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"output_status={self.output_status})"
         )
@@ -193,7 +193,7 @@ class _LogicOutput(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": "0,180,0",
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -354,7 +354,7 @@ class _YesGate(_2PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -427,7 +427,7 @@ class _NoGate(_2PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -572,7 +572,7 @@ class _OrGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -654,7 +654,7 @@ class _AndGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -736,7 +736,7 @@ class _NorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -818,7 +818,7 @@ class _NandGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -900,7 +900,7 @@ class _XorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -982,7 +982,7 @@ class _XnorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1064,7 +1064,7 @@ class _ImpGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1152,7 +1152,7 @@ class _NimpGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1284,7 +1284,7 @@ class _HalfAdder(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1408,7 +1408,7 @@ class _FullAdder(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1536,7 +1536,7 @@ class _HalfSubtractor(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1663,7 +1663,7 @@ class _FullSubtractor(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1800,7 +1800,7 @@ class _Multiplier(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1937,7 +1937,7 @@ class _DFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2058,7 +2058,7 @@ class _TFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2179,7 +2179,7 @@ class _RealTFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2303,7 +2303,7 @@ class _JKFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2434,7 +2434,7 @@ class _Counter(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2569,7 +2569,7 @@ class _RandomGenerator(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2731,7 +2731,7 @@ class _EightBitInput(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2740,7 +2740,7 @@ class _EightBitInput(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Eight_Bit_Input({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Eight_Bit_Input({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"input_num={self.input_num})"
         )
@@ -2915,7 +2915,7 @@ class _EightBitDisplay(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -3066,7 +3066,7 @@ class _SchmittTrigger(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -3089,7 +3089,7 @@ class _SchmittTrigger(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Schmitt_Trigger({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Schmitt_Trigger({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"high_level={self.high_level}, "
             f"low_level={self.low_level}, "

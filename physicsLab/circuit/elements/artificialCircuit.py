@@ -90,7 +90,7 @@ class _NE555(CircuitBase):
                 "重设": 10,
                 "接地": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -252,7 +252,7 @@ class _BasicCapacitor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -282,7 +282,7 @@ class _BasicCapacitor(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Capacitor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Capacitor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"peak_voltage={self.peak_voltage}, "
             f"capacitance={self.capacitance}, "
@@ -409,7 +409,7 @@ class _BasicInductor(CircuitBase):
                 "理想模式": int(self.is_ideal),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -444,7 +444,7 @@ class _BasicInductor(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Inductor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Inductor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"rated_current={self.rated_current}, "
             f"inductance={self.inductance}, "
@@ -536,7 +536,7 @@ class _BasicDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -640,7 +640,7 @@ class _LightEmittingDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流1": 0.0, "电压1": 0.0, "功率1": 0.0, "亮度1": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -733,7 +733,7 @@ class _GroundComponent(CircuitBase):
             "IsLocked": False,
             "Properties": {"锁定": int(self.lock_status)},
             "Statistics": {"电流": 0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -848,7 +848,7 @@ class _Transformer(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -977,7 +977,7 @@ class _TappedTransformer(CircuitBase):
                 "电流2": 0.0,
                 "电压2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1107,7 +1107,7 @@ class _MutualInductor(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1225,7 +1225,7 @@ class _Rectifier(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1364,7 +1364,7 @@ class _Transistor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电压BC": 0.0, "电压BE": 0.0, "电压CE": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1385,7 +1385,7 @@ class _Transistor(CircuitBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Transistor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Transistor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, is_PNP={self.is_PNP}"
         )
 
@@ -1490,7 +1490,7 @@ class _Comparator(CircuitBase):
             "IsLocked": False,
             "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1637,7 +1637,7 @@ class _OperationalAmplifier(CircuitBase):
                 "输出电流": 0,
                 "输出功率": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1650,7 +1650,7 @@ class _OperationalAmplifier(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Operational_Amplifier({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Operational_Amplifier({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ}, "
             f"gain={self.gain}, "
             f"max_voltage={self.max_voltage}, "
@@ -1799,7 +1799,7 @@ class _RelayComponent(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -1954,7 +1954,7 @@ class _N_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2079,7 +2079,7 @@ class _P_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 1.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2184,7 +2184,7 @@ class _CurrentSource(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2319,7 +2319,7 @@ class _SinewaveSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2393,7 +2393,7 @@ class _SquareSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2467,7 +2467,7 @@ class _TriangleSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2541,7 +2541,7 @@ class _SawtoothSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -2615,7 +2615,7 @@ class _PulseSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": self._rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},

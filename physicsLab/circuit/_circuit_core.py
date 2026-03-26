@@ -257,7 +257,7 @@ class CircuitBase(ElementBase):
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}"
-            f"({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"({self.position.x}, {self.position.y}, {self.position.z}, "
             f"elementXYZ={self.is_elementXYZ})"
         )
 
@@ -306,7 +306,7 @@ class CircuitBase(ElementBase):
                 f"Parameter elementXYZ must be of type `Optional[bool]`, but got value {elementXYZ} of type `{type(elementXYZ).__name__}`"
             )
 
-        self._position = coordinate_system.Position(x, y, z)
+        self.__position = coordinate_system.Position(x, y, z)
 
         _Expe: _Experiment = self.experiment
 
@@ -328,10 +328,10 @@ class CircuitBase(ElementBase):
                 self_list.remove(self)
 
         errors.assert_true(hasattr(self, "_position"))
-        if self._position in _Expe._position2elements.keys():
-            _Expe._position2elements[self._position].append(self)
+        if self.position in _Expe._position2elements.keys():
+            _Expe._position2elements[self.position].append(self)
         else:
-            _Expe._position2elements[self._position] = [self]
+            _Expe._position2elements[self.position] = [self]
 
         return self
 
