@@ -327,7 +327,6 @@ class CircuitBase(ElementBase):
             if self in self_list:
                 self_list.remove(self)
 
-        errors.assert_true(hasattr(self, "_position"))
         if self.position in _Expe._position2elements.keys():
             _Expe._position2elements[self.position].append(self)
         else:

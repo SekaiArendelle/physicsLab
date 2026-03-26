@@ -888,8 +888,7 @@ class ElementBase:
 
         self.data["Position"] = f"{x},{z},{y}"
 
-        errors.assert_true(hasattr(self, "_position"))
-        if self.__position in _Expe._position2elements.keys():
+        if self.position in _Expe._position2elements.keys():
             _Expe._position2elements[self.__position].append(self)
         else:
             _Expe._position2elements[self.__position] = [self]
