@@ -1,14 +1,7 @@
 from physicsLab import plAR
 from physicsLab import _warn
 from physicsLab import errors
-from physicsLab._core import _Experiment
-from .._circuit_core import (
-    CircuitBase,
-    InputPin,
-    OutputPin,
-    _deprecated_init_attr_experiment,
-    _deprecated_assign_element_to_experiment,
-)
+from .._circuit_core import CircuitBase, InputPin, OutputPin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -110,40 +103,6 @@ class _LogicInput(CircuitBase):
         return 1
 
 
-class Logic_Input(_LogicInput):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        output_status: bool = False,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            output_status=output_status,
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _LogicOutput(CircuitBase):
     """逻辑输出"""
 
@@ -212,38 +171,6 @@ class _LogicOutput(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 1
-
-
-class Logic_Output(_LogicOutput):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _2PinGate(CircuitBase):
@@ -352,38 +279,6 @@ class _YesGate(_2PinGate):
         }
 
 
-class Yes_Gate(_YesGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _NoGate(_2PinGate):
     """非门"""
 
@@ -429,38 +324,6 @@ class _NoGate(_2PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 2
-
-
-class No_Gate(_NoGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _3PinGate(CircuitBase):
@@ -572,38 +435,6 @@ class _OrGate(_3PinGate):
         return 3
 
 
-class Or_Gate(_OrGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _AndGate(_3PinGate):
     """与门"""
 
@@ -649,38 +480,6 @@ class _AndGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
-
-
-class And_Gate(_AndGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _NorGate(_3PinGate):
@@ -730,38 +529,6 @@ class _NorGate(_3PinGate):
         return 3
 
 
-class Nor_Gate(_NorGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _NandGate(_3PinGate):
     """与非门"""
 
@@ -807,38 +574,6 @@ class _NandGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
-
-
-class Nand_Gate(_NandGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _XorGate(_3PinGate):
@@ -888,38 +623,6 @@ class _XorGate(_3PinGate):
         return 3
 
 
-class Xor_Gate(_XorGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _XnorGate(_3PinGate):
     """同或门"""
 
@@ -967,38 +670,6 @@ class _XnorGate(_3PinGate):
         return 3
 
 
-class Xnor_Gate(_XnorGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _ImpGate(_3PinGate):
     """蕴含门"""
 
@@ -1044,38 +715,6 @@ class _ImpGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
-
-
-class Imp_Gate(_ImpGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _NimpGate(_3PinGate):
@@ -1128,38 +767,6 @@ class _NimpGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
-
-
-class Nimp_Gate(_NimpGate):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _BigElement(CircuitBase):
@@ -1279,38 +886,6 @@ class _HalfAdder(_BigElement):
         return 4
 
 
-class Half_Adder(_HalfAdder):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _FullAdder(_BigElement):
     """全加器"""
 
@@ -1404,38 +979,6 @@ class _FullAdder(_BigElement):
         return 5
 
 
-class Full_Adder(_FullAdder):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _HalfSubtractor(_BigElement):
     """半减器"""
 
@@ -1523,38 +1066,6 @@ class _HalfSubtractor(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
-
-
-class Half_Subtractor(_HalfSubtractor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _FullSubtractor(_BigElement):
@@ -1651,38 +1162,6 @@ class _FullSubtractor(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 5
-
-
-class Full_Subtractor(_FullSubtractor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _Multiplier(_BigElement):
@@ -1799,38 +1278,6 @@ class _Multiplier(_BigElement):
         return 8
 
 
-class Multiplier(_Multiplier):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _DFlipflop(_BigElement):
     """D触发器"""
 
@@ -1915,38 +1362,6 @@ class _DFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
-
-
-class D_Flipflop(_DFlipflop):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _TFlipflop(_BigElement):
@@ -2035,38 +1450,6 @@ class _TFlipflop(_BigElement):
         return 4
 
 
-class T_Flipflop(_TFlipflop):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _RealTFlipflop(_BigElement):
     """T触发器"""
 
@@ -2151,38 +1534,6 @@ class _RealTFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
-
-
-class Real_T_Flipflop(_RealTFlipflop):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _JKFlipflop(_BigElement):
@@ -2276,38 +1627,6 @@ class _JKFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 5
-
-
-class JK_Flipflop(_JKFlipflop):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _Counter(_BigElement):
@@ -2410,38 +1729,6 @@ class _Counter(_BigElement):
         return 6
 
 
-class Counter(_Counter):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _RandomGenerator(_BigElement):
     """随机数发生器"""
 
@@ -2540,38 +1827,6 @@ class _RandomGenerator(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 6
-
-
-class Random_Generator(_RandomGenerator):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _EightBitInput(CircuitBase):
@@ -2731,40 +1986,6 @@ class _EightBitInput(CircuitBase):
         return 8
 
 
-class Eight_Bit_Input(_EightBitInput):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        input_num: int = 0,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            input_num=input_num,
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _EightBitDisplay(CircuitBase):
     """八位显示器"""
 
@@ -2889,38 +2110,6 @@ class _EightBitDisplay(CircuitBase):
         return 8
 
 
-class Eight_Bit_Display(_EightBitDisplay):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 3,
-        low_level: num_type = 0,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _SchmittTrigger(CircuitBase):
     """施密特触发器"""
 
@@ -3021,35 +2210,3 @@ class _SchmittTrigger(CircuitBase):
         return self._o_pin
 
 
-class Schmitt_Trigger(_SchmittTrigger):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        high_level: num_type = 5.0,
-        low_level: Optional[num_type] = None,
-        inverted: bool = False,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            high_level=high_level,
-            low_level=low_level,
-            inverted=inverted,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()

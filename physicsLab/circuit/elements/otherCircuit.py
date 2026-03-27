@@ -2,13 +2,7 @@ import physicsLab.plAR as plar
 from physicsLab import _warn
 from physicsLab import coordinate_system
 
-from physicsLab._core import _Experiment
-from .._circuit_core import (
-    CircuitBase,
-    Pin,
-    _deprecated_init_attr_experiment,
-    _deprecated_assign_element_to_experiment,
-)
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -93,34 +87,6 @@ class _Buzzer(CircuitBase):
         return 2
 
 
-class Buzzer(_Buzzer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _SparkGap(CircuitBase):
     """火花隙"""
 
@@ -183,34 +149,6 @@ class _SparkGap(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
-
-
-class Spark_Gap(_SparkGap):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _TeslaCoil(CircuitBase):
@@ -277,34 +215,6 @@ class _TeslaCoil(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
-
-
-class Tesla_Coil(_TeslaCoil):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _ColorLightEmittingDiode(CircuitBase):
@@ -403,34 +313,6 @@ class _ColorLightEmittingDiode(CircuitBase):
         return 4
 
 
-class Color_Light_Emitting_Diode(_ColorLightEmittingDiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _DualLightEmittingDiode(CircuitBase):
     """演示发光二极管"""
 
@@ -506,34 +388,6 @@ class _DualLightEmittingDiode(CircuitBase):
         return 2
 
 
-class Dual_Light_Emitting_Diode(_DualLightEmittingDiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _ElectricBell(CircuitBase):
     """电铃"""
 
@@ -604,34 +458,6 @@ class _ElectricBell(CircuitBase):
         return 2
 
 
-class Electric_Bell(_ElectricBell):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _MusicalBox(CircuitBase):
     """八音盒"""
 
@@ -700,34 +526,6 @@ class _MusicalBox(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
-
-
-class Musical_Box(_MusicalBox):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _ResistanceLaw(CircuitBase):
@@ -873,34 +671,6 @@ class _ResistanceLaw(CircuitBase):
         return 8
 
 
-class Resistance_Law(_ResistanceLaw):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _Solenoid(CircuitBase):
     """通电螺线管"""
 
@@ -993,34 +763,6 @@ class _Solenoid(CircuitBase):
         return 4
 
 
-class Solenoid(_Solenoid):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _ElectricFan(CircuitBase):
     """小电扇"""
 
@@ -1101,34 +843,6 @@ class _ElectricFan(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
-
-
-class Electric_Fan(_ElectricFan):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _SimpleInstrument(CircuitBase):
@@ -1350,44 +1064,3 @@ class _SimpleInstrument(CircuitBase):
         return 2
 
 
-class Simple_Instrument(_SimpleInstrument):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        pitches: Union[List[int], Tuple[int]],
-        experiment: Optional[_Experiment] = None,
-        identifier: Optional[str] = None,
-        label: Optional[str] = None,
-        rated_oltage: num_type = 3.0,
-        volume: num_type = 1,
-        bpm: int = 100,
-        instrument: int = 0,
-        is_ideal: bool = False,
-        is_pulse: bool = True,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            pitches=pitches,
-            identifier=identifier,
-            experiment=experiment,
-            label=label,
-            rated_oltage=rated_oltage,
-            volume=volume,
-            bpm=bpm,
-            instrument=instrument,
-            is_ideal=is_ideal,
-            is_pulse=is_pulse,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()

@@ -1,11 +1,5 @@
 from physicsLab import coordinate_system
-from .._circuit_core import (
-    CircuitBase,
-    Pin,
-    _deprecated_init_attr_experiment,
-    _deprecated_assign_element_to_experiment,
-)
-from physicsLab._core import _Experiment
+from .._circuit_core import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -156,40 +150,6 @@ class _Accelerometer(_MemsBase):
         return "加速度计"
 
 
-class Accelerometer(_Accelerometer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.2290000021457672,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _AnalogJoystick(CircuitBase):
     """模拟摇杆"""
 
@@ -281,34 +241,6 @@ class _AnalogJoystick(CircuitBase):
         return self._y3_pin
 
 
-class Analog_Joystick(_AnalogJoystick):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _AttitudeSensor(_MemsBase):
     """姿态传感器"""
 
@@ -359,40 +291,6 @@ class _AttitudeSensor(_MemsBase):
     @staticmethod
     def zh_name() -> str:
         return "姿态传感器"
-
-
-class Attitude_Sensor(_AttitudeSensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 180,
-        shifting: num_type = 2.5,
-        response_factor: num_type = 0.0125,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _GravitySensor(_MemsBase):
@@ -447,40 +345,6 @@ class _GravitySensor(_MemsBase):
         return "重力加速计"
 
 
-class Gravity_Sensor(_GravitySensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.229,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _Gyroscope(_MemsBase):
     """陀螺仪传感器"""
 
@@ -531,40 +395,6 @@ class _Gyroscope(_MemsBase):
     @staticmethod
     def zh_name() -> str:
         return "陀螺仪传感器"
-
-
-class Gyroscope(_Gyroscope):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 150,
-        shifting: num_type = 2.5,
-        response_factor: num_type = 0.0125,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _LinearAccelerometer(_MemsBase):
@@ -619,40 +449,6 @@ class _LinearAccelerometer(_MemsBase):
         return "线性加速度计"
 
 
-class Linear_Accelerometer(_LinearAccelerometer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.229,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _MagneticFieldSensor(_MemsBase):
     """磁场传感器"""
 
@@ -703,40 +499,6 @@ class _MagneticFieldSensor(_MemsBase):
     @staticmethod
     def zh_name() -> str:
         return "磁场传感器"
-
-
-class Magnetic_Field_Sensor(_MagneticFieldSensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 0.04,
-        shifting: num_type = 3.2,
-        response_factor: num_type = 80,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
 
 
 class _Photodiode(CircuitBase):
@@ -805,34 +567,6 @@ class _Photodiode(CircuitBase):
         return "光电二极管"
 
 
-class Photodiode(_Photodiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _Photoresistor(CircuitBase):
     """光敏电阻"""
 
@@ -899,34 +633,6 @@ class _Photoresistor(CircuitBase):
         return "光敏电阻"
 
 
-class Photoresistor(_Photoresistor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
 class _ProximitySensor(CircuitBase):
     """临近传感器"""
 
@@ -983,29 +689,3 @@ class _ProximitySensor(CircuitBase):
         return self._o_pin
 
 
-class Proximity_Sensor(_ProximitySensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()

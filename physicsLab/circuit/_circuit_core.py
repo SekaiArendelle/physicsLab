@@ -190,36 +190,7 @@ def del_wire(source_pin: Pin, target_pin: Pin) -> None:
     _expe.Wires.remove(Wire(source_pin, target_pin))
 
 
-def _deprecated_init_attr_experiment(
-    self: "CircuitBase",
-    *,
-    experiment: Optional[_Experiment] = None,
-):
-    if not isinstance(experiment, (_Experiment, type(None))):
-        raise TypeError(
-            f"Parameter experiment must be of type `Optional[Experiment]`, but got value {experiment} of type {type(experiment).__name__}"
-        )
-
-    _Expe: _Experiment
-    if experiment is None:
-        _Expe = get_current_experiment()
-    else:
-        _Expe = experiment
-    if _Expe.experiment_type != ExperimentType.Circuit:
-        raise errors.ExperimentTypeError(
-            f"Can't create {self.__class__.__name__} because experiment_type is {_Expe.experiment_type}"
-        )
-    self.experiment = _Expe
-
-    return self
-
-
-def _deprecated_assign_element_to_experiment(self: "CircuitBase") -> None:
-    self.experiment.Elements.append(self)
-    self.experiment._id2element[self.identifier] = self
-
-
-class CircuitBase(ElementBase):
+class CircuitBase:
     """所有电学元件的父类"""
 
     experiment: _Experiment  # 元件所属的实验
