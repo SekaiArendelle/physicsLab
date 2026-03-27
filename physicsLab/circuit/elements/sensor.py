@@ -13,7 +13,6 @@ from physicsLab._typing import (
 
 
 class _MemsBase(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_x_pin"], Pin],
         Tuple[Literal["_y_pin"], Pin],
@@ -105,7 +104,6 @@ class _MemsBase(CircuitBase):
 
 
 class Accelerometer(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -141,8 +139,8 @@ class Accelerometer(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -156,7 +154,6 @@ class Accelerometer(_MemsBase):
 
 
 class AnalogJoystick(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_x1_pin"], Pin],
         Tuple[Literal["_x2_pin"], Pin],
@@ -200,8 +197,8 @@ class AnalogJoystick(CircuitBase):
             "IsLocked": False,
             "Properties": {"额定电阻": 10000, "锁定": int(self.lock_status)},
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -246,7 +243,6 @@ class AnalogJoystick(CircuitBase):
 
 
 class AttitudeSensor(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -282,8 +278,8 @@ class AttitudeSensor(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -297,7 +293,6 @@ class AttitudeSensor(_MemsBase):
 
 
 class GravitySensor(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -333,8 +328,8 @@ class GravitySensor(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -348,7 +343,6 @@ class GravitySensor(_MemsBase):
 
 
 class Gyroscope(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -384,8 +378,8 @@ class Gyroscope(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -399,7 +393,6 @@ class Gyroscope(_MemsBase):
 
 
 class LinearAccelerometer(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -435,8 +428,8 @@ class LinearAccelerometer(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -450,7 +443,6 @@ class LinearAccelerometer(_MemsBase):
 
 
 class MagneticFieldSensor(_MemsBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -486,8 +478,8 @@ class MagneticFieldSensor(_MemsBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -501,7 +493,6 @@ class MagneticFieldSensor(_MemsBase):
 
 
 class Photodiode(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -536,8 +527,8 @@ class Photodiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -566,7 +557,6 @@ class Photodiode(CircuitBase):
 
 
 class Photoresistor(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -601,8 +591,8 @@ class Photoresistor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -631,7 +621,6 @@ class Photoresistor(CircuitBase):
 
 
 class ProximitySensor(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
     _o_pin: Pin
 
@@ -660,8 +649,8 @@ class ProximitySensor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,

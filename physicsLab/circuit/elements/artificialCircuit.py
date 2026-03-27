@@ -79,8 +79,8 @@ class NE555(CircuitBase):
                 "重设": 10,
                 "接地": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -132,7 +132,6 @@ class NE555(CircuitBase):
 
 
 class BasicCapacitor(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -207,8 +206,8 @@ class BasicCapacitor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -237,7 +236,7 @@ class BasicCapacitor(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Capacitor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Capacitor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"peak_voltage={self.peak_voltage}, "
             f"capacitance={self.capacitance}, "
             f"internal_resistance={self.internal_resistance}, "
@@ -246,7 +245,6 @@ class BasicCapacitor(CircuitBase):
 
 
 class BasicInductor(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -321,8 +319,8 @@ class BasicInductor(CircuitBase):
                 "理想模式": int(self.is_ideal),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -356,7 +354,7 @@ class BasicInductor(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Inductor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Inductor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"rated_current={self.rated_current}, "
             f"inductance={self.inductance}, "
             f"internal_resistance={self.internal_resistance}, "
@@ -365,7 +363,6 @@ class BasicInductor(CircuitBase):
 
 
 class BasicDiode(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -405,8 +402,8 @@ class BasicDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -434,7 +431,6 @@ class BasicDiode(CircuitBase):
 
 
 class LightEmittingDiode(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -475,8 +471,8 @@ class LightEmittingDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流1": 0.0, "电压1": 0.0, "功率1": 0.0, "亮度1": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -504,7 +500,6 @@ class LightEmittingDiode(CircuitBase):
 
 
 class GroundComponent(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
     _i_pin: Pin
 
@@ -534,8 +529,8 @@ class GroundComponent(CircuitBase):
             "IsLocked": False,
             "Properties": {"锁定": int(self.lock_status)},
             "Statistics": {"电流": 0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -559,7 +554,6 @@ class GroundComponent(CircuitBase):
 
 
 class Transformer(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -615,8 +609,8 @@ class Transformer(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -652,7 +646,6 @@ class Transformer(CircuitBase):
 
 
 class TappedTransformer(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -710,8 +703,8 @@ class TappedTransformer(CircuitBase):
                 "电流2": 0.0,
                 "电压2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -751,7 +744,6 @@ class TappedTransformer(CircuitBase):
 
 
 class MutualInductor(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -806,8 +798,8 @@ class MutualInductor(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -843,7 +835,6 @@ class MutualInductor(CircuitBase):
 
 
 class Rectifier(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -890,8 +881,8 @@ class Rectifier(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -927,7 +918,6 @@ class Rectifier(CircuitBase):
 
 
 class Transistor(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_B_pin"], Pin],
         Tuple[Literal["_C_pin"], Pin],
@@ -995,8 +985,8 @@ class Transistor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电压BC": 0.0, "电压BE": 0.0, "电压CE": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1016,7 +1006,7 @@ class Transistor(CircuitBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Transistor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Transistor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"is_PNP={self.is_PNP}"
         )
 
@@ -1041,7 +1031,6 @@ class Transistor(CircuitBase):
 
 
 class Comparator(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_pin"], Pin],
         Tuple[Literal["_i_up_pin"], Pin],
@@ -1081,8 +1070,8 @@ class Comparator(CircuitBase):
             "IsLocked": False,
             "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1114,7 +1103,6 @@ class Comparator(CircuitBase):
 
 
 class OperationalAmplifier(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_i_neg_pin"], Pin],
         Tuple[Literal["_i_pos_pin"], Pin],
@@ -1194,8 +1182,8 @@ class OperationalAmplifier(CircuitBase):
                 "输出电流": 0,
                 "输出功率": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1207,7 +1195,7 @@ class OperationalAmplifier(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Operational_Amplifier({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Operational_Amplifier({self.position.x}, {self.position.y}, {self.position.z}, "
             f"gain={self.gain}, "
             f"max_voltage={self.max_voltage}, "
             f"min_voltage={self.min_voltage})"
@@ -1236,7 +1224,6 @@ class OperationalAmplifier(CircuitBase):
 
 
 class RelayComponent(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_l_low_pin"], Pin],
@@ -1315,8 +1302,8 @@ class RelayComponent(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1356,7 +1343,6 @@ class RelayComponent(CircuitBase):
 
 
 class N_MOSFET(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_D_pin"], Pin],
         Tuple[Literal["_S_pin"], Pin],
@@ -1428,8 +1414,8 @@ class N_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1461,7 +1447,6 @@ class N_MOSFET(CircuitBase):
 
 
 class P_MOSFET(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_G_pin"], Pin],
         Tuple[Literal["_D_pin"], Pin],
@@ -1513,8 +1498,8 @@ class P_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 1.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1546,7 +1531,6 @@ class P_MOSFET(CircuitBase):
 
 
 class CurrentSource(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -1584,8 +1568,8 @@ class CurrentSource(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1613,7 +1597,6 @@ class CurrentSource(CircuitBase):
 
 
 class _SourceElectricity(CircuitBase):
-
     _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -1656,7 +1639,6 @@ class _SourceElectricity(CircuitBase):
 
 
 class SinewaveSource(_SourceElectricity):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -1683,8 +1665,8 @@ class SinewaveSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1697,7 +1679,6 @@ class SinewaveSource(_SourceElectricity):
 
 
 class SquareSource(_SourceElectricity):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -1724,8 +1705,8 @@ class SquareSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1738,7 +1719,6 @@ class SquareSource(_SourceElectricity):
 
 
 class TriangleSource(_SourceElectricity):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -1765,8 +1745,8 @@ class TriangleSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1779,7 +1759,6 @@ class TriangleSource(_SourceElectricity):
 
 
 class SawtoothSource(_SourceElectricity):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -1806,8 +1785,8 @@ class SawtoothSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1820,7 +1799,6 @@ class SawtoothSource(_SourceElectricity):
 
 
 class PulseSource(_SourceElectricity):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -1847,8 +1825,8 @@ class PulseSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,

@@ -19,7 +19,6 @@ from physicsLab._typing import (
 
 
 class Buzzer(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -59,8 +58,8 @@ class Buzzer(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -88,7 +87,6 @@ class Buzzer(CircuitBase):
 
 
 class SparkGap(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -122,8 +120,8 @@ class SparkGap(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"瞬间功率": 0.0, "瞬间电流": 0.0, "瞬间电压": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -151,7 +149,6 @@ class SparkGap(CircuitBase):
 
 
 class TeslaCoil(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -187,8 +184,8 @@ class TeslaCoil(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"瞬间功率": 0.0, "瞬间电流": 0.0, "瞬间电压": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -216,7 +213,6 @@ class TeslaCoil(CircuitBase):
 
 
 class ColorLightEmittingDiode(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_l_mid_pin"], Pin],
@@ -274,8 +270,8 @@ class ColorLightEmittingDiode(CircuitBase):
                 "功率3": 0.0,
                 "亮度3": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -311,7 +307,6 @@ class ColorLightEmittingDiode(CircuitBase):
 
 
 class DualLightEmittingDiode(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -356,8 +351,8 @@ class DualLightEmittingDiode(CircuitBase):
                 "功率2": 0.0,
                 "亮度2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -385,7 +380,6 @@ class DualLightEmittingDiode(CircuitBase):
 
 
 class ElectricBell(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -425,8 +419,8 @@ class ElectricBell(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -454,7 +448,6 @@ class ElectricBell(CircuitBase):
 
 
 class MusicalBox(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -494,8 +487,8 @@ class MusicalBox(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -523,7 +516,6 @@ class MusicalBox(CircuitBase):
 
 
 class ResistanceLaw(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_low_pin"], Pin],
         Tuple[Literal["_l_lowmid_pin"], Pin],
@@ -612,8 +604,8 @@ class ResistanceLaw(CircuitBase):
                 "电压3": 0.0,
                 "电流3": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -665,7 +657,6 @@ class ResistanceLaw(CircuitBase):
 
 
 class Solenoid(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_subred_pin"], Pin],
         Tuple[Literal["_subblack_pin"], Pin],
@@ -719,8 +710,8 @@ class Solenoid(CircuitBase):
                 "磁通量": 0.0,
                 "电压-外线圈": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -756,7 +747,6 @@ class Solenoid(CircuitBase):
 
 
 class ElectricFan(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -808,8 +798,8 @@ class ElectricFan(CircuitBase):
                 "输入功率": 0,
                 "输出功率": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -837,7 +827,6 @@ class ElectricFan(CircuitBase):
 
 
 class SimpleInstrument(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin], Tuple[Literal["_o_pin"], Pin]]
     _i_pin: Pin
     _o_pin: Pin
@@ -929,8 +918,8 @@ class SimpleInstrument(CircuitBase):
                 "电压": 0,
                 "电流": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -998,7 +987,7 @@ class SimpleInstrument(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Simple_Instrument({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Simple_Instrument({self.position.x}, {self.position.y}, {self.position.z}, "
             f"pitches={self.pitches}, "
             f"instrument={self._instrument}, "
             f"bpm={self._bpm}, "

@@ -17,7 +17,6 @@ from physicsLab import coordinate_system
 
 
 class LogicInput(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_o_pin"], OutputPin]]
     _o_pin: OutputPin
     output_status: bool
@@ -70,8 +69,8 @@ class LogicInput(CircuitBase):
                 "开关": int(self.output_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -84,7 +83,7 @@ class LogicInput(CircuitBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Logic_Input({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Logic_Input({self.position.x}, {self.position.y}, {self.position.z}, "
             f"output_status={self.output_status})"
         )
         return res
@@ -104,7 +103,6 @@ class LogicInput(CircuitBase):
 
 
 class LogicOutput(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_i_pin"], InputPin]]
     _i_pin: InputPin
 
@@ -146,7 +144,7 @@ class LogicOutput(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
             "Rotation": "0,180,0",
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
@@ -173,7 +171,6 @@ class LogicOutput(CircuitBase):
 
 
 class _2PinGate(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_i_pin"], InputPin], Tuple[Literal["_o_pin"], OutputPin]
     ]
@@ -226,7 +223,6 @@ class _2PinGate(CircuitBase):
 
 
 class YesGate(_2PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -268,8 +264,8 @@ class YesGate(_2PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -277,7 +273,6 @@ class YesGate(_2PinGate):
 
 
 class NoGate(_2PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -305,8 +300,8 @@ class NoGate(_2PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -323,7 +318,6 @@ class NoGate(_2PinGate):
 
 
 class _3PinGate(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_i_up_pin"], InputPin],
         Tuple[Literal["_i_low_pin"], InputPin],
@@ -384,7 +378,6 @@ class _3PinGate(CircuitBase):
 
 
 class OrGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -412,8 +405,8 @@ class OrGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -430,7 +423,6 @@ class OrGate(_3PinGate):
 
 
 class AndGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -458,8 +450,8 @@ class AndGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -476,7 +468,6 @@ class AndGate(_3PinGate):
 
 
 class NorGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -504,8 +495,8 @@ class NorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -522,7 +513,6 @@ class NorGate(_3PinGate):
 
 
 class NandGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -550,8 +540,8 @@ class NandGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -568,7 +558,6 @@ class NandGate(_3PinGate):
 
 
 class XorGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -596,8 +585,8 @@ class XorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -614,7 +603,6 @@ class XorGate(_3PinGate):
 
 
 class XnorGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -642,8 +630,8 @@ class XnorGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -660,7 +648,6 @@ class XnorGate(_3PinGate):
 
 
 class ImpGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -688,8 +675,8 @@ class ImpGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -706,7 +693,6 @@ class ImpGate(_3PinGate):
 
 
 class NimpGate(_3PinGate):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -739,8 +725,8 @@ class NimpGate(_3PinGate):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -784,7 +770,6 @@ class _BigElement(CircuitBase):
 
 
 class HalfAdder(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -830,8 +815,8 @@ class HalfAdder(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -869,7 +854,6 @@ class HalfAdder(_BigElement):
 
 
 class FullAdder(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -918,8 +902,8 @@ class FullAdder(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -961,7 +945,6 @@ class FullAdder(_BigElement):
 
 
 class HalfSubtractor(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1010,8 +993,8 @@ class HalfSubtractor(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1049,7 +1032,6 @@ class HalfSubtractor(_BigElement):
 
 
 class FullSubtractor(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1101,8 +1083,8 @@ class FullSubtractor(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1144,7 +1126,6 @@ class FullSubtractor(_BigElement):
 
 
 class Multiplier(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_upmid_pin"], OutputPin],
@@ -1202,8 +1183,8 @@ class Multiplier(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1257,7 +1238,6 @@ class Multiplier(_BigElement):
 
 
 class DFlipflop(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1303,8 +1283,8 @@ class DFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1342,7 +1322,6 @@ class DFlipflop(_BigElement):
 
 
 class TFlipflop(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1388,8 +1367,8 @@ class TFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1427,7 +1406,6 @@ class TFlipflop(_BigElement):
 
 
 class RealTFlipflop(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1473,8 +1451,8 @@ class RealTFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1512,7 +1490,6 @@ class RealTFlipflop(_BigElement):
 
 
 class JKFlipflop(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_low_pin"], OutputPin],
@@ -1561,8 +1538,8 @@ class JKFlipflop(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1604,7 +1581,6 @@ class JKFlipflop(_BigElement):
 
 
 class Counter(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_upmid_pin"], OutputPin],
@@ -1656,8 +1632,8 @@ class Counter(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1703,7 +1679,6 @@ class Counter(_BigElement):
 
 
 class RandomGenerator(_BigElement):
-
     _all_pins: Tuple[
         Tuple[Literal["_o_up_pin"], OutputPin],
         Tuple[Literal["_o_upmid_pin"], OutputPin],
@@ -1755,8 +1730,8 @@ class RandomGenerator(_BigElement):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1878,8 +1853,8 @@ class EightBitInput(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1887,7 +1862,7 @@ class EightBitInput(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Eight_Bit_Input({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Eight_Bit_Input({self.position.x}, {self.position.y}, {self.position.z}, "
             f"input_num={self.input_num})"
         )
 
@@ -2020,8 +1995,8 @@ class EightBitDisplay(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2075,7 +2050,6 @@ class EightBitDisplay(CircuitBase):
 
 
 class SchmittTrigger(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_i_pin"], InputPin],
         Tuple[Literal["_o_pin"], OutputPin],
@@ -2135,8 +2109,8 @@ class SchmittTrigger(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2158,7 +2132,7 @@ class SchmittTrigger(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Schmitt_Trigger({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Schmitt_Trigger({self.position.x}, {self.position.y}, {self.position.z}, "
             f"high_level={self.high_level}, "
             f"low_level={self.low_level}, "
             f"inverted={self.inverted})"

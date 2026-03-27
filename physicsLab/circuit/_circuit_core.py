@@ -2,7 +2,6 @@ from physicsLab import errors
 from physicsLab import coordinate_system
 
 from physicsLab.enums import ExperimentType, WireColor
-from physicsLab._tools import randString
 from physicsLab._core import (
     _Experiment,
     get_current_experiment,
@@ -11,8 +10,6 @@ from physicsLab._typing import (
     Optional,
     Self,
     num_type,
-    override,
-    final,
     List,
     Tuple,
     Iterator,
@@ -190,13 +187,11 @@ def del_wire(source_pin: Pin, target_pin: Pin) -> None:
 
 
 class CircuitBase:
-    """所有电学元件的父类"""
-
-    _position: coordinate_system.Position
-    _rotation: coordinate_system.Rotation
+    __position: coordinate_system.Position
+    __rotation: coordinate_system.Rotation
     __identifier: str
-    _lock_status: bool
-    _label: Optional[str]
+    __lock_status: bool
+    __label: Optional[str]
 
     def __init__(
         self,
@@ -210,9 +205,9 @@ class CircuitBase:
                 f"position must be an instance of coordinate_system.Position, "
                 f"got {type(position).__name__}"
             )
-        self.set_position(position.x, position.y, position.z)
+        self.position = position
         self.identifier = identifier
-        self.set_rotation(0, 0, 180)
+        self.rotation = coordinate_system.Rotation(0, 0, 180)
         self.lock_status = lock_status
         self.label = label
 
@@ -228,99 +223,57 @@ class CircuitBase:
             )
         self.__identifier = value
 
-    def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__name__}"
-            f"({self._position.x}, {self._position.y}, {self._position.z}, "
-            f")"
-        )
+    @property
+    def rotation(self) -> coordinate_system.Rotation:
+        return self.__rotation
 
-    @final
-    def set_rotation(self, x_r: num_type, y_r: num_type, z_r: num_type) -> Self:
-        """设置元件的角度"""
-        if not isinstance(x_r, (int, float)):
+    @rotation.setter
+    def rotation(self, value: coordinate_system.Rotation) -> None:
+        if not isinstance(value, coordinate_system.Rotation):
             raise TypeError(
-                f"Parameter x_r must be of type `int | float`, but got value {x_r} of type `{type(x_r).__name__}`"
-            )
-        if not isinstance(y_r, (int, float)):
-            raise TypeError(
-                f"Parameter y_r must be of type `int | float`, but got value {y_r} of type `{type(y_r).__name__}`"
-            )
-        if not isinstance(z_r, (int, float)):
-            raise TypeError(
-                f"Parameter z_r must be of type `int | float`, but got value {z_r} of type `{type(z_r).__name__}`"
+                f"rotation must be an instance of coordinate_system.Rotation, got {type(value).__name__}"
             )
 
-        self._rotation = coordinate_system.Rotation(x_r, y_r, z_r)
-        return self
-
-    @override
-    def set_position(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-    ) -> Self:
-        """设置元件的位置"""
-        if not isinstance(x, (int, float)):
-            raise TypeError(
-                f"Parameter x must be of type `int | float`, but got value {x} of type `{type(x).__name__}`"
-            )
-        if not isinstance(y, (int, float)):
-            raise TypeError(
-                f"Parameter y must be of type `int | float`, but got value {y} of type `{type(y).__name__}`"
-            )
-        if not isinstance(z, (int, float)):
-            raise TypeError(
-                f"Parameter z must be of type `int | float`, but got value {z} of type `{type(z).__name__}`"
-            )
-        self._position = coordinate_system.Position(x, y, z)
-
-        _Expe: _Experiment = self.experiment
-
-        for self_list in _Expe._position2elements.values():
-            if self in self_list:
-                self_list.remove(self)
-
-        errors.assert_true(hasattr(self, "_position"))
-        if self._position in _Expe._position2elements.keys():
-            _Expe._position2elements[self._position].append(self)
-        else:
-            _Expe._position2elements[self._position] = [self]
-
-        return self
+        self.__rotation = value
 
     @property
-    @final
+    def position(self) -> coordinate_system.Position:
+        return self.__position
+
+    @position.setter
+    def position(
+        self,
+        value: coordinate_system.Position,
+    ) -> None:
+        if not isinstance(value, coordinate_system.Position):
+            raise TypeError(
+                f"position must be an instance of coordinate_system.Position, got {type(value).__name__}"
+            )
+
+        self.__position = value
+
+    @property
     def lock_status(self) -> bool:
-        return self._lock_status
+        return self.__lock_status
 
     @lock_status.setter
-    @final
     def lock_status(self, value: bool) -> None:
-        """是否锁定元件 (位置不会受元件间碰撞的影响)
-
-        Args:
-            status: 是否锁定元件
-        """
         if not isinstance(value, bool):
             raise TypeError(
                 f"lock_status must be of type `bool`, but got value {value} of type {type(value).__name__}"
             )
 
-        self._lock_status = value
+        self.__lock_status = value
 
     @property
-    @final
     def label(self) -> Optional[str]:
-        return self._label
+        return self.__label
 
     @label.setter
-    @final
     def label(self, value: Optional[str]) -> None:
         if not isinstance(value, (str, type(None))):
             raise TypeError(
                 f"label must be of type `Optional[str]`, but got value {value} of type `{type(value).__name__}`"
             )
 
-        self._label = value
+        self.__label = value

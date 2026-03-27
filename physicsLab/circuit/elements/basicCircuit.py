@@ -17,7 +17,6 @@ from physicsLab._typing import (
 
 
 class _SwitchBase(CircuitBase):
-
     def __init__(
         self,
         position: coordinate_system.Position,
@@ -29,7 +28,6 @@ class _SwitchBase(CircuitBase):
 
 
 class SimpleSwitch(_SwitchBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -100,8 +98,8 @@ class SimpleSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -109,7 +107,7 @@ class SimpleSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Simple_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Simple_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"switch_state={self.switch_state})"
         )
 
@@ -117,7 +115,6 @@ class SimpleSwitch(_SwitchBase):
 
 
 class SPDTSwitch(_SwitchBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_mid_pin"], Pin],
@@ -177,8 +174,8 @@ class SPDTSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Z": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -186,7 +183,7 @@ class SPDTSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"SPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"SPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"switch_state={self.switch_state})"
         )
 
@@ -210,7 +207,6 @@ class SPDTSwitch(_SwitchBase):
 
 
 class DPDTSwitch(_SwitchBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_low_pin"], Pin],
         Tuple[Literal["_mid_low_pin"], Pin],
@@ -279,8 +275,8 @@ class DPDTSwitch(_SwitchBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -288,7 +284,7 @@ class DPDTSwitch(_SwitchBase):
 
     def __repr__(self) -> str:
         res = (
-            f"DPDT_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"DPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"switch_state={self.switch_state})"
         )
 
@@ -324,7 +320,6 @@ class DPDTSwitch(_SwitchBase):
 
 
 class PushSwitch(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -353,8 +348,8 @@ class PushSwitch(CircuitBase):
             "IsLocked": False,
             "Properties": {"开关": 0.0, "默认开关": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -383,7 +378,6 @@ class PushSwitch(CircuitBase):
 
 
 class AirSwitch(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -419,8 +413,8 @@ class AirSwitch(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -463,7 +457,7 @@ class AirSwitch(CircuitBase):
     @override
     def __repr__(self) -> str:
         res = (
-            f"Air_Switch({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Air_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
             f"switch_state={self.switch_state})"
         )
 
@@ -471,7 +465,6 @@ class AirSwitch(CircuitBase):
 
 
 class IncandescentLamp(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -513,8 +506,8 @@ class IncandescentLamp(CircuitBase):
                 "灯泡温度": 300.0,
                 "电阻": 0.5,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -543,7 +536,6 @@ class IncandescentLamp(CircuitBase):
 
 
 class BatterySource(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -593,8 +585,8 @@ class BatterySource(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0, "功率": 0, "电压": 0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -623,7 +615,6 @@ class BatterySource(CircuitBase):
 
 
 class StudentSource(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_l_mid_pin"], Pin],
@@ -685,8 +676,8 @@ class StudentSource(CircuitBase):
                 "电阻1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -723,7 +714,6 @@ class StudentSource(CircuitBase):
 
 
 class Resistor(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -772,8 +762,8 @@ class Resistor(CircuitBase):
                 "电压": 0,
                 "电流": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -807,13 +797,12 @@ class Resistor(CircuitBase):
 
     def __repr__(self) -> str:
         return (
-            f"Resistor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Resistor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"resistance={self.resistance})"
         )
 
 
 class FuseComponent(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -854,8 +843,8 @@ class FuseComponent(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -884,7 +873,6 @@ class FuseComponent(CircuitBase):
 
 
 class SlideRheostat(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_low_pin"], Pin],
         Tuple[Literal["_r_low_pin"], Pin],
@@ -941,8 +929,8 @@ class SlideRheostat(CircuitBase):
                 "电压1": 0.0,
                 "电流1": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -979,7 +967,6 @@ class SlideRheostat(CircuitBase):
 
 
 class Multimeter(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -1015,8 +1002,8 @@ class Multimeter(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1045,7 +1032,6 @@ class Multimeter(CircuitBase):
 
 
 class Galvanometer(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_mid_pin"], Pin],
@@ -1080,8 +1066,8 @@ class Galvanometer(CircuitBase):
             "IsLocked": False,
             "Properties": {"量程": 3.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1114,7 +1100,6 @@ class Galvanometer(CircuitBase):
 
 
 class Microammeter(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_mid_pin"], Pin],
@@ -1149,8 +1134,8 @@ class Microammeter(CircuitBase):
             "IsLocked": False,
             "Properties": {"量程": 0.1, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1183,7 +1168,6 @@ class Microammeter(CircuitBase):
 
 
 class ElectricityMeter(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_l_mid_pin"], Pin],
@@ -1221,8 +1205,8 @@ class ElectricityMeter(CircuitBase):
             "IsLocked": False,
             "Properties": {"示数": 0.0, "额定电流": 6.0, "锁定": int(self.lock_status)},
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1259,7 +1243,6 @@ class ElectricityMeter(CircuitBase):
 
 
 class ResistanceBox(CircuitBase):
-
     _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
     _l_pin: Pin
     _r_pin: Pin
@@ -1308,8 +1291,8 @@ class ResistanceBox(CircuitBase):
                 "电压": 0.0,
                 "电流": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1338,7 +1321,6 @@ class ResistanceBox(CircuitBase):
 
 
 class SimpleAmmeter(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_mid_pin"], Pin],
@@ -1378,8 +1360,8 @@ class SimpleAmmeter(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1412,7 +1394,6 @@ class SimpleAmmeter(CircuitBase):
 
 
 class SimpleVoltmeter(CircuitBase):
-
     _all_pins: Tuple[
         Tuple[Literal["_l_pin"], Pin],
         Tuple[Literal["_mid_pin"], Pin],
@@ -1451,8 +1432,8 @@ class SimpleVoltmeter(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0, "刻度": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
