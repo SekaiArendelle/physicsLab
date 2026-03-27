@@ -827,51 +827,6 @@ class ElementBase:
     def zh_name():
         raise NotImplementedError
 
-    def set_position(self, x: num_type, y: num_type, z: num_type) -> Self:
-        """设置元件的位置"""
-        # TODO remove this method
-        if not isinstance(x, (int, float)):
-            raise TypeError(
-                f"Parameter x must be of type `int` or `float`, but got `{x}` of type `{type(x).__name__}`"
-            )
-        if not isinstance(y, (int, float)):
-            raise TypeError(
-                f"Parameter y must be of type `int` or `float`, but got `{y}` of type `{type(y).__name__}`"
-            )
-        if not isinstance(z, (int, float)):
-            raise TypeError(
-                f"Parameter z must be of type `int` or `float`, but got `{z}` of type `{type(z).__name__}`"
-            )
-
-        x, y, z = _tools.round_data(x), _tools.round_data(y), _tools.round_data(z)
-        errors.assert_true(hasattr(self, "experiment"))
-        _Expe: _Experiment = self.experiment
-
-        for self_list in _Expe._position2elements.values():
-            if self in self_list:
-                self_list.remove(self)
-
-        self.data["Position"] = f"{x},{z},{y}"
-
-        errors.assert_true(hasattr(self, "_position"))
-        if self._position in _Expe._position2elements.keys():
-            _Expe._position2elements[self._position].append(self)
-        else:
-            _Expe._position2elements[self._position] = [self]
-
-        return self
-
-    @final
-    def _set_identifier(self, identifier: Optional[str] = None) -> None:
-        if not isinstance(identifier, (str, type(None))):
-            raise TypeError(
-                f"Parameter identifier must be of type `Optional[str]`, but got `{identifier}` of type `{type(identifier).__name__}`"
-            )
-        if identifier is None:
-            self.data["Identifier"] = _tools.randString(33)
-        else:
-            self.data["Identifier"] = identifier
-
     @final
     def get_position(self) -> coordinate_system.Position:
         """获取元件的坐标"""
