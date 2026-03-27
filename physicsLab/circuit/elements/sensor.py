@@ -98,7 +98,7 @@ class _MemsBase(CircuitBase):
         self._response_factor = value
 
 
-class _Accelerometer(_MemsBase):
+class Accelerometer(_MemsBase):
     """加速度计"""
 
     def __init__(
@@ -150,7 +150,7 @@ class _Accelerometer(_MemsBase):
         return "加速度计"
 
 
-class _AnalogJoystick(CircuitBase):
+class AnalogJoystick(CircuitBase):
     """模拟摇杆"""
 
     _all_pins: Tuple[
@@ -241,7 +241,7 @@ class _AnalogJoystick(CircuitBase):
         return self._y3_pin
 
 
-class _AttitudeSensor(_MemsBase):
+class AttitudeSensor(_MemsBase):
     """姿态传感器"""
 
     def __init__(
@@ -293,7 +293,7 @@ class _AttitudeSensor(_MemsBase):
         return "姿态传感器"
 
 
-class _GravitySensor(_MemsBase):
+class GravitySensor(_MemsBase):
     """重力加速计"""
 
     def __init__(
@@ -345,7 +345,7 @@ class _GravitySensor(_MemsBase):
         return "重力加速计"
 
 
-class _Gyroscope(_MemsBase):
+class Gyroscope(_MemsBase):
     """陀螺仪传感器"""
 
     def __init__(
@@ -397,7 +397,7 @@ class _Gyroscope(_MemsBase):
         return "陀螺仪传感器"
 
 
-class _LinearAccelerometer(_MemsBase):
+class LinearAccelerometer(_MemsBase):
     """线性加速度计"""
 
     def __init__(
@@ -449,7 +449,7 @@ class _LinearAccelerometer(_MemsBase):
         return "线性加速度计"
 
 
-class _MagneticFieldSensor(_MemsBase):
+class MagneticFieldSensor(_MemsBase):
     """磁场传感器"""
 
     def __init__(
@@ -501,7 +501,7 @@ class _MagneticFieldSensor(_MemsBase):
         return "磁场传感器"
 
 
-class _Photodiode(CircuitBase):
+class Photodiode(CircuitBase):
     """光电二极管"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -567,7 +567,7 @@ class _Photodiode(CircuitBase):
         return "光电二极管"
 
 
-class _Photoresistor(CircuitBase):
+class Photoresistor(CircuitBase):
     """光敏电阻"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -633,7 +633,7 @@ class _Photoresistor(CircuitBase):
         return "光敏电阻"
 
 
-class _ProximitySensor(CircuitBase):
+class ProximitySensor(CircuitBase):
     """临近传感器"""
 
     _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]

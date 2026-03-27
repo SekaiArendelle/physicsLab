@@ -28,7 +28,7 @@ class _SwitchBase(CircuitBase):
         super().__init__(position, identifier, lock_status, label)
 
 
-class _SimpleSwitch(_SwitchBase):
+class SimpleSwitch(_SwitchBase):
     """简单开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -117,7 +117,7 @@ class _SimpleSwitch(_SwitchBase):
         return res
 
 
-class _SPDTSwitch(_SwitchBase):
+class SPDTSwitch(_SwitchBase):
     """单刀双掷开关"""
 
     _all_pins: Tuple[
@@ -211,7 +211,7 @@ class _SPDTSwitch(_SwitchBase):
         return 3
 
 
-class _DPDTSwitch(_SwitchBase):
+class DPDTSwitch(_SwitchBase):
     """双刀双掷开关"""
 
     _all_pins: Tuple[
@@ -326,7 +326,7 @@ class _DPDTSwitch(_SwitchBase):
         return 6
 
 
-class _PushSwitch(CircuitBase):
+class PushSwitch(CircuitBase):
     """按钮开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -386,7 +386,7 @@ class _PushSwitch(CircuitBase):
         return 2
 
 
-class _AirSwitch(CircuitBase):
+class AirSwitch(CircuitBase):
     """空气开关"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -475,7 +475,7 @@ class _AirSwitch(CircuitBase):
         return res
 
 
-class _IncandescentLamp(CircuitBase):
+class IncandescentLamp(CircuitBase):
     """白炽灯泡"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -548,7 +548,7 @@ class _IncandescentLamp(CircuitBase):
         return 2
 
 
-class _BatterySource(CircuitBase):
+class BatterySource(CircuitBase):
     """一节电池"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -629,7 +629,7 @@ class _BatterySource(CircuitBase):
         return 2
 
 
-class _StudentSource(CircuitBase):
+class StudentSource(CircuitBase):
     """学生电源"""
 
     _all_pins: Tuple[
@@ -730,7 +730,7 @@ class _StudentSource(CircuitBase):
         return self._r_pin
 
 
-class _Resistor(CircuitBase):
+class Resistor(CircuitBase):
     """电阻"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -821,7 +821,7 @@ class _Resistor(CircuitBase):
         )
 
 
-class _FuseComponent(CircuitBase):
+class FuseComponent(CircuitBase):
     """保险丝"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -893,7 +893,7 @@ class _FuseComponent(CircuitBase):
         return 2
 
 
-class _SlideRheostat(CircuitBase):
+class SlideRheostat(CircuitBase):
     """滑动变阻器"""
 
     _all_pins: Tuple[
@@ -989,7 +989,7 @@ class _SlideRheostat(CircuitBase):
         return self._r_up_pin
 
 
-class _Multimeter(CircuitBase):
+class Multimeter(CircuitBase):
     """多用电表"""
 
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
@@ -1056,7 +1056,7 @@ class _Multimeter(CircuitBase):
         return 2
 
 
-class _Galvanometer(CircuitBase):
+class Galvanometer(CircuitBase):
     """灵敏电流计"""
 
     _all_pins: Tuple[
@@ -1126,7 +1126,7 @@ class _Galvanometer(CircuitBase):
         return self._r_pin
 
 
-class _Microammeter(CircuitBase):
+class Microammeter(CircuitBase):
     """微安表"""
 
     _all_pins: Tuple[
@@ -1196,7 +1196,7 @@ class _Microammeter(CircuitBase):
         return self._r_pin
 
 
-class _ElectricityMeter(CircuitBase):
+class ElectricityMeter(CircuitBase):
     """电能表"""
 
     _all_pins: Tuple[
@@ -1273,7 +1273,7 @@ class _ElectricityMeter(CircuitBase):
         return self._r_pin
 
 
-class _ResistanceBox(CircuitBase):
+class ResistanceBox(CircuitBase):
     """电阻箱"""
 
     _all_pins: Tuple[Tuple[Literal["_l_pin"], Pin], Tuple[Literal["_r_pin"], Pin]]
@@ -1353,7 +1353,7 @@ class _ResistanceBox(CircuitBase):
         return self._r_pin
 
 
-class _SimpleAmmeter(CircuitBase):
+class SimpleAmmeter(CircuitBase):
     """直流安培表"""
 
     _all_pins: Tuple[
@@ -1428,7 +1428,7 @@ class _SimpleAmmeter(CircuitBase):
         return self._r_pin
 
 
-class _SimpleVoltmeter(CircuitBase):
+class SimpleVoltmeter(CircuitBase):
     """直流电压表"""
 
     _all_pins: Tuple[

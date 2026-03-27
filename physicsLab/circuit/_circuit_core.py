@@ -6,7 +6,6 @@ from physicsLab._tools import randString
 from physicsLab._core import (
     _Experiment,
     get_current_experiment,
-    ElementBase,
 )
 from physicsLab._typing import (
     Optional,
