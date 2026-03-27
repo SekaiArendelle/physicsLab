@@ -1,7 +1,8 @@
 import uuid
 from physicsLab import coordinate_system
 from physicsLab._tools import round_data
-from .._base import CircuitBase, Pin
+from .._base import CircuitBase
+from ..pin import Pin
 from physicsLab.enums import SwitchState, PDTSwitchState
 from physicsLab._typing import (
     Optional,
@@ -51,8 +52,8 @@ class SimpleSwitch(_SwitchBase):
         )
         self.switch_state = switch_state
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -139,9 +140,9 @@ class SPDTSwitch(_SwitchBase):
         super().__init__(position, identifier, lock_status, label, rotation)
         self.switch_state = switch_state
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 2)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_pin", Pin(self, 2, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -236,12 +237,12 @@ class DPDTSwitch(_SwitchBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_low_pin", Pin(self, 0)),
-            ("_mid_low_pin", Pin(self, 1)),
-            ("_r_low_pin", Pin(self, 2)),
-            ("_l_up_pin", Pin(self, 3)),
-            ("_mid_up_pin", Pin(self, 4)),
-            ("_r_up_pin", Pin(self, 5)),
+            ("_l_low_pin", Pin(self, 0, "l_low")),
+            ("_mid_low_pin", Pin(self, 1, "mid_low")),
+            ("_r_low_pin", Pin(self, 2, "r_low")),
+            ("_l_up_pin", Pin(self, 3, "l_up")),
+            ("_mid_up_pin", Pin(self, 4, "mid_up")),
+            ("_r_up_pin", Pin(self, 5, "r_up")),
         )
         super().__init__(position, identifier, lock_status, label, rotation)
         self.switch_state = switch_state
@@ -338,8 +339,8 @@ class PushSwitch(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -399,8 +400,8 @@ class AirSwitch(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -485,8 +486,8 @@ class IncandescentLamp(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -570,8 +571,8 @@ class BatterySource(CircuitBase):
             )
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -647,10 +648,10 @@ class StudentSource(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_l_mid_pin", Pin(self, 1)),
-            ("_r_mid_pin", Pin(self, 2)),
-            ("_r_pin", Pin(self, 3)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_l_mid_pin", Pin(self, 1, "l_mid")),
+            ("_r_mid_pin", Pin(self, 2, "r_mid")),
+            ("_r_pin", Pin(self, 3, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -744,8 +745,8 @@ class Resistor(CircuitBase):
             )
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -827,8 +828,8 @@ class FuseComponent(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -905,10 +906,10 @@ class SlideRheostat(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_low_pin", Pin(self, 0)),
-            ("_r_low_pin", Pin(self, 1)),
-            ("_l_up_pin", Pin(self, 2)),
-            ("_r_up_pin", Pin(self, 3)),
+            ("_l_low_pin", Pin(self, 0, "l_low")),
+            ("_r_low_pin", Pin(self, 1, "r_low")),
+            ("_l_up_pin", Pin(self, 2, "l_up")),
+            ("_r_up_pin", Pin(self, 3, "r_up")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -993,8 +994,8 @@ class Multimeter(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1064,9 +1065,9 @@ class Galvanometer(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 2)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_pin", Pin(self, 2, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1133,9 +1134,9 @@ class Microammeter(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 2)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_pin", Pin(self, 2, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1204,10 +1205,10 @@ class ElectricityMeter(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_l_mid_pin", Pin(self, 2)),
-            ("_r_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 3)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_l_mid_pin", Pin(self, 2, "l_mid")),
+            ("_r_mid_pin", Pin(self, 1, "r_mid")),
+            ("_r_pin", Pin(self, 3, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1280,8 +1281,8 @@ class ResistanceBox(CircuitBase):
             )
 
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_r_pin", Pin(self, 1)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_r_pin", Pin(self, 1, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1357,9 +1358,9 @@ class SimpleAmmeter(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 2)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_pin", Pin(self, 2, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1431,9 +1432,9 @@ class SimpleVoltmeter(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_pin", Pin(self, 0)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_pin", Pin(self, 2)),
+            ("_l_pin", Pin(self, 0, "l")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_pin", Pin(self, 2, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)

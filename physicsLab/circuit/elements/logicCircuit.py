@@ -1,8 +1,8 @@
 import uuid
 from physicsLab import plAR
 from physicsLab import _warn
-from physicsLab import errors
-from .._base import CircuitBase, InputPin, OutputPin
+from .._base import CircuitBase
+from ..pin import InputPin, OutputPin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -51,7 +51,7 @@ class LogicInput(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self.output_status: bool = output_status
-        self._all_pins = (("_o_pin", OutputPin(self, 0)),)
+        self._all_pins = (("_o_pin", OutputPin(self, 0, "o")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(position, identifier, lock_status, label, rotation)
@@ -127,7 +127,7 @@ class LogicOutput(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (("_i_pin", InputPin(self, 0)),)
+        self._all_pins = (("_i_pin", InputPin(self, 0, "i")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(position, identifier, lock_status, label, rotation)
@@ -200,8 +200,8 @@ class _2PinGate(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self._all_pins = (
-            ("_i_pin", InputPin(self, 0)),
-            ("_o_pin", OutputPin(self, 1)),
+            ("_i_pin", InputPin(self, 0, "i")),
+            ("_o_pin", OutputPin(self, 1, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -360,9 +360,9 @@ class _3PinGate(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0)),
-            ("_i_low_pin", InputPin(self, 1)),
-            ("_o_pin", OutputPin(self, 2)),
+            ("_i_up_pin", InputPin(self, 0, "i_up")),
+            ("_i_low_pin", InputPin(self, 1, "i_low")),
+            ("_o_pin", OutputPin(self, 2, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -866,10 +866,10 @@ class HalfAdder(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -959,11 +959,11 @@ class FullAdder(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_mid_pin", InputPin(self, 3)),
-            ("_i_low_pin", InputPin(self, 4)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
+            ("_i_low_pin", InputPin(self, 4, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1058,10 +1058,10 @@ class HalfSubtractor(_BigElement):
         if plAR_version is not None and plAR_version < (2, 5, 0):
             _warn.warning("Half Subtractor is not supported in this version of plAR")
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1154,11 +1154,11 @@ class FullSubtractor(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_mid_pin", InputPin(self, 3)),
-            ("_i_low_pin", InputPin(self, 4)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
+            ("_i_low_pin", InputPin(self, 4, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1258,14 +1258,14 @@ class Multiplier(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_upmid_pin", OutputPin(self, 1)),
-            ("_o_lowmid_pin", OutputPin(self, 2)),
-            ("_o_low_pin", OutputPin(self, 3)),
-            ("_i_up_pin", InputPin(self, 4)),
-            ("_i_upmid_pin", InputPin(self, 5)),
-            ("_i_lowmid_pin", InputPin(self, 6)),
-            ("_i_low_pin", InputPin(self, 7)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
+            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
+            ("_o_low_pin", OutputPin(self, 3, "o_low")),
+            ("_i_up_pin", InputPin(self, 4, "i_up")),
+            ("_i_upmid_pin", InputPin(self, 5, "i_upmid")),
+            ("_i_lowmid_pin", InputPin(self, 6, "i_lowmid")),
+            ("_i_low_pin", InputPin(self, 7, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1369,10 +1369,10 @@ class DFlipflop(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1460,10 +1460,10 @@ class TFlipflop(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1551,10 +1551,10 @@ class RealTFlipflop(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1644,11 +1644,11 @@ class JKFlipflop(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_low_pin", OutputPin(self, 1)),
-            ("_i_up_pin", InputPin(self, 2)),
-            ("_i_mid_pin", InputPin(self, 3)),
-            ("_i_low_pin", InputPin(self, 4)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_low_pin", OutputPin(self, 1, "o_low")),
+            ("_i_up_pin", InputPin(self, 2, "i_up")),
+            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
+            ("_i_low_pin", InputPin(self, 4, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1744,12 +1744,12 @@ class Counter(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_upmid_pin", OutputPin(self, 1)),
-            ("_o_lowmid_pin", OutputPin(self, 2)),
-            ("_o_low_pin", OutputPin(self, 3)),
-            ("_i_up_pin", InputPin(self, 4)),
-            ("_i_low_pin", InputPin(self, 5)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
+            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
+            ("_o_low_pin", OutputPin(self, 3, "o_low")),
+            ("_i_up_pin", InputPin(self, 4, "i_up")),
+            ("_i_low_pin", InputPin(self, 5, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1849,12 +1849,12 @@ class RandomGenerator(_BigElement):
             rotation=rotation,
         )
         self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0)),
-            ("_o_upmid_pin", OutputPin(self, 1)),
-            ("_o_lowmid_pin", OutputPin(self, 2)),
-            ("_o_low_pin", OutputPin(self, 3)),
-            ("_i_up_pin", InputPin(self, 4)),
-            ("_i_low_pin", InputPin(self, 5)),
+            ("_o_up_pin", OutputPin(self, 0, "o_up")),
+            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
+            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
+            ("_o_low_pin", OutputPin(self, 3, "o_low")),
+            ("_i_up_pin", InputPin(self, 4, "i_up")),
+            ("_i_low_pin", InputPin(self, 5, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1969,14 +1969,14 @@ class EightBitInput(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0)),
-            ("_i_upmid_pin", InputPin(self, 1)),
-            ("_i_lowmid_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
-            ("_o_up_pin", OutputPin(self, 4)),
-            ("_o_upmid_pin", OutputPin(self, 5)),
-            ("_o_lowmid_pin", OutputPin(self, 6)),
-            ("_o_low_pin", OutputPin(self, 7)),
+            ("_i_up_pin", InputPin(self, 0, "i_up")),
+            ("_i_upmid_pin", InputPin(self, 1, "i_upmid")),
+            ("_i_lowmid_pin", InputPin(self, 2, "i_lowmid")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
+            ("_o_up_pin", OutputPin(self, 4, "o_up")),
+            ("_o_upmid_pin", OutputPin(self, 5, "o_upmid")),
+            ("_o_lowmid_pin", OutputPin(self, 6, "o_lowmid")),
+            ("_o_low_pin", OutputPin(self, 7, "o_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -2113,14 +2113,14 @@ class EightBitDisplay(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0)),
-            ("_i_upmid_pin", InputPin(self, 1)),
-            ("_i_lowmid_pin", InputPin(self, 2)),
-            ("_i_low_pin", InputPin(self, 3)),
-            ("_o_up_pin", OutputPin(self, 4)),
-            ("_o_upmid_pin", OutputPin(self, 5)),
-            ("_o_lowmid_pin", OutputPin(self, 6)),
-            ("_o_low_pin", OutputPin(self, 7)),
+            ("_i_up_pin", InputPin(self, 0, "i_up")),
+            ("_i_upmid_pin", InputPin(self, 1, "i_upmid")),
+            ("_i_lowmid_pin", InputPin(self, 2, "i_lowmid")),
+            ("_i_low_pin", InputPin(self, 3, "i_low")),
+            ("_o_up_pin", OutputPin(self, 4, "o_up")),
+            ("_o_upmid_pin", OutputPin(self, 5, "o_upmid")),
+            ("_o_lowmid_pin", OutputPin(self, 6, "o_lowmid")),
+            ("_o_low_pin", OutputPin(self, 7, "o_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -2233,8 +2233,8 @@ class SchmittTrigger(CircuitBase):
         )
         self.inverted: bool = inverted
         self._all_pins = (
-            ("_i_pin", InputPin(self, 0)),
-            ("_o_pin", OutputPin(self, 1)),
+            ("_i_pin", InputPin(self, 0, "i")),
+            ("_o_pin", OutputPin(self, 1, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)

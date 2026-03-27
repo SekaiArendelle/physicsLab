@@ -3,7 +3,8 @@ import physicsLab.plAR as plar
 from physicsLab import _warn
 from physicsLab import coordinate_system
 
-from .._base import CircuitBase, Pin
+from .._base import CircuitBase
+from ..pin import Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -32,8 +33,8 @@ class Buzzer(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -101,8 +102,8 @@ class SparkGap(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -164,8 +165,8 @@ class TeslaCoil(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -236,10 +237,10 @@ class ColorLightEmittingDiode(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_l_mid_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_l_mid_pin", Pin(self, 1, "l_mid")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_pin", Pin(self, 3, "r")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -324,8 +325,8 @@ class DualLightEmittingDiode(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -398,8 +399,8 @@ class ElectricBell(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -467,8 +468,8 @@ class MusicalBox(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -551,14 +552,14 @@ class ResistanceLaw(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_low_pin", Pin(self, 0)),
-            ("_l_lowmid_pin", Pin(self, 1)),
-            ("_l_upmid_pin", Pin(self, 2)),
-            ("_l_up_pin", Pin(self, 3)),
-            ("_r_low_pin", Pin(self, 4)),
-            ("_r_lowmid_pin", Pin(self, 5)),
-            ("_r_upmid_pin", Pin(self, 6)),
-            ("_r_up_pin", Pin(self, 7)),
+            ("_l_low_pin", Pin(self, 0, "l_low")),
+            ("_l_lowmid_pin", Pin(self, 1, "l_lowmid")),
+            ("_l_upmid_pin", Pin(self, 2, "l_upmid")),
+            ("_l_up_pin", Pin(self, 3, "l_up")),
+            ("_r_low_pin", Pin(self, 4, "r_low")),
+            ("_r_lowmid_pin", Pin(self, 5, "r_lowmid")),
+            ("_r_upmid_pin", Pin(self, 6, "r_upmid")),
+            ("_r_up_pin", Pin(self, 7, "r_up")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -685,10 +686,10 @@ class Solenoid(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_subred_pin", Pin(self, 0)),
-            ("_subblack_pin", Pin(self, 1)),
-            ("_red_pin", Pin(self, 2)),
-            ("_black_pin", Pin(self, 3)),
+            ("_subred_pin", Pin(self, 0, "subred")),
+            ("_subblack_pin", Pin(self, 1, "subblack")),
+            ("_red_pin", Pin(self, 2, "red")),
+            ("_black_pin", Pin(self, 3, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -769,8 +770,8 @@ class ElectricFan(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -867,8 +868,8 @@ class SimpleInstrument(CircuitBase):
         @param is_pulse: 简单乐器是否只响一次
         """
         self._all_pins = (
-            ("_i_pin", Pin(self, 0)),
-            ("_o_pin", Pin(self, 1)),
+            ("_i_pin", Pin(self, 0, "i")),
+            ("_o_pin", Pin(self, 1, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)

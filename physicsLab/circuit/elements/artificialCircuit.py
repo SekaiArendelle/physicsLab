@@ -1,7 +1,8 @@
 import uuid
 from physicsLab import coordinate_system
 from physicsLab._tools import round_data
-from .._base import CircuitBase, Pin
+from .._base import CircuitBase
+from ..pin import Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -44,14 +45,14 @@ class NE555(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_vcc_pin", Pin(self, 0)),
-            ("_dis_pin", Pin(self, 1)),
-            ("_thr_pin", Pin(self, 2)),
-            ("_ctrl_pin", Pin(self, 3)),
-            ("_trig_pin", Pin(self, 4)),
-            ("_out_pin", Pin(self, 5)),
-            ("_reset_pin", Pin(self, 6)),
-            ("_ground_pin", Pin(self, 7)),
+            ("_vcc_pin", Pin(self, 0, "vcc")),
+            ("_dis_pin", Pin(self, 1, "dis")),
+            ("_thr_pin", Pin(self, 2, "thr")),
+            ("_ctrl_pin", Pin(self, 3, "ctrl")),
+            ("_trig_pin", Pin(self, 4, "trig")),
+            ("_out_pin", Pin(self, 5, "out")),
+            ("_reset_pin", Pin(self, 6, "reset")),
+            ("_ground_pin", Pin(self, 7, "ground")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -176,8 +177,8 @@ class BasicCapacitor(CircuitBase):
         self.is_ideal: bool = is_ideal
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -285,8 +286,8 @@ class BasicInductor(CircuitBase):
         self.is_ideal: bool = is_ideal
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -364,8 +365,8 @@ class BasicDiode(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -428,8 +429,8 @@ class LightEmittingDiode(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -491,7 +492,7 @@ class GroundComponent(CircuitBase):
         lock_status: bool = True,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
-        self._all_pins = (("_i_pin", Pin(self, 0)),)
+        self._all_pins = (("_i_pin", Pin(self, 0, "i")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(position, identifier, lock_status, label, rotation)
@@ -550,10 +551,10 @@ class Transformer(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -640,11 +641,11 @@ class TappedTransformer(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
-            ("_mid_pin", Pin(self, 4)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
+            ("_mid_pin", Pin(self, 4, "mid")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -732,10 +733,10 @@ class MutualInductor(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -819,10 +820,10 @@ class Rectifier(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -919,9 +920,9 @@ class Transistor(CircuitBase):
         self.max_power: num_type = max_power
 
         self._all_pins = (
-            ("_B_pin", Pin(self, 0)),
-            ("_C_pin", Pin(self, 1)),
-            ("_E_pin", Pin(self, 2)),
+            ("_B_pin", Pin(self, 0, "B")),
+            ("_C_pin", Pin(self, 1, "C")),
+            ("_E_pin", Pin(self, 2, "E")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1005,9 +1006,9 @@ class Comparator(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_o_pin", Pin(self, 0)),
-            ("_i_up_pin", Pin(self, 1)),
-            ("_i_low_pin", Pin(self, 2)),
+            ("_o_pin", Pin(self, 0, "o")),
+            ("_i_up_pin", Pin(self, 1, "i_up")),
+            ("_i_low_pin", Pin(self, 2, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1102,9 +1103,9 @@ class OperationalAmplifier(CircuitBase):
         self.min_voltage: num_type = min_voltage
 
         self._all_pins = (
-            ("_i_neg_pin", Pin(self, 0)),
-            ("_i_pos_pin", Pin(self, 1)),
-            ("_o_pin", Pin(self, 2)),
+            ("_i_neg_pin", Pin(self, 0, "i_neg")),
+            ("_i_pos_pin", Pin(self, 1, "i_pos")),
+            ("_o_pin", Pin(self, 2, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1220,11 +1221,11 @@ class RelayComponent(CircuitBase):
         self.coil_resistance: num_type = coil_resistance
 
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_up_pin", Pin(self, 3)),
-            ("_r_low_pin", Pin(self, 4)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_up_pin", Pin(self, 3, "r_up")),
+            ("_r_low_pin", Pin(self, 4, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1325,9 +1326,9 @@ class N_MOSFET(CircuitBase):
         self.max_power: num_type = max_power
 
         self._all_pins = (
-            ("_D_pin", Pin(self, 2)),
-            ("_S_pin", Pin(self, 1)),
-            ("_G_pin", Pin(self, 0)),
+            ("_D_pin", Pin(self, 2, "D")),
+            ("_S_pin", Pin(self, 1, "S")),
+            ("_G_pin", Pin(self, 0, "G")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1405,9 +1406,9 @@ class P_MOSFET(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_G_pin", Pin(self, 0)),
-            ("_D_pin", Pin(self, 1)),
-            ("_S_pin", Pin(self, 2)),
+            ("_G_pin", Pin(self, 0, "G")),
+            ("_D_pin", Pin(self, 1, "D")),
+            ("_S_pin", Pin(self, 2, "S")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1480,8 +1481,8 @@ class CurrentSource(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -1542,8 +1543,8 @@ class _SourceElectricity(CircuitBase):
         rotation: coordinate_system.Rotation,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)

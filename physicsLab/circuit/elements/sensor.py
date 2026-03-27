@@ -1,6 +1,7 @@
 import uuid
 from physicsLab import coordinate_system
-from .._base import CircuitBase, Pin
+from .._base import CircuitBase
+from ..pin import Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -40,9 +41,9 @@ class _MemsBase(CircuitBase):
         self.shifting = shifting
         self.response_factor = response_factor
         self._all_pins = (
-            ("_x_pin", Pin(self, 0)),
-            ("_y_pin", Pin(self, 1)),
-            ("_z_pin", Pin(self, 2)),
+            ("_x_pin", Pin(self, 0, "x")),
+            ("_y_pin", Pin(self, 1, "y")),
+            ("_z_pin", Pin(self, 2, "z")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -182,12 +183,12 @@ class AnalogJoystick(CircuitBase):
     ) -> None:
         # build fields first, then call base init
         self._all_pins = (
-            ("_x1_pin", Pin(self, 0)),
-            ("_x2_pin", Pin(self, 1)),
-            ("_x3_pin", Pin(self, 2)),
-            ("_y1_pin", Pin(self, 3)),
-            ("_y2_pin", Pin(self, 4)),
-            ("_y3_pin", Pin(self, 5)),
+            ("_x1_pin", Pin(self, 0, "x1")),
+            ("_x2_pin", Pin(self, 1, "x2")),
+            ("_x3_pin", Pin(self, 2, "x3")),
+            ("_y1_pin", Pin(self, 3, "y1")),
+            ("_y2_pin", Pin(self, 4, "y2")),
+            ("_y3_pin", Pin(self, 5, "y3")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -520,8 +521,8 @@ class Photodiode(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -585,8 +586,8 @@ class Photoresistor(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
@@ -648,7 +649,7 @@ class ProximitySensor(CircuitBase):
         label: Optional[str] = None,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
-        self._all_pins = (("_o_pin", Pin(self, 0)),)
+        self._all_pins = (("_o_pin", Pin(self, 0, "o")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         super().__init__(position, identifier, lock_status, label, rotation)
