@@ -31,9 +31,10 @@ class _MemsBase(CircuitBase):
         ranges: num_type,
         shifting: num_type,
         response_factor: num_type,
-        identifier: str = str(uuid.uuid4()),
-        lock_status: bool = True,
-        label: Optional[str] = None,
+        identifier: str,
+        lock_status: bool,
+        label: Optional[str],
+        rotation: coordinate_system.Rotation,
     ) -> None:
         self.ranges = ranges
         self.shifting = shifting
@@ -45,7 +46,7 @@ class _MemsBase(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, identifier, lock_status, label, rotation)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -113,6 +114,7 @@ class Accelerometer(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -123,6 +125,7 @@ class Accelerometer(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -175,6 +178,7 @@ class AnalogJoystick(CircuitBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # build fields first, then call base init
         self._all_pins = (
@@ -187,7 +191,7 @@ class AnalogJoystick(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, identifier, lock_status, label, rotation)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -252,6 +256,7 @@ class AttitudeSensor(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -262,6 +267,7 @@ class AttitudeSensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -302,6 +308,7 @@ class GravitySensor(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -312,6 +319,7 @@ class GravitySensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -352,6 +360,7 @@ class Gyroscope(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -362,6 +371,7 @@ class Gyroscope(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -402,6 +412,7 @@ class LinearAccelerometer(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -412,6 +423,7 @@ class LinearAccelerometer(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -452,6 +464,7 @@ class MagneticFieldSensor(_MemsBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         # this class is deprecated
         super().__init__(
@@ -462,6 +475,7 @@ class MagneticFieldSensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -503,6 +517,7 @@ class Photodiode(CircuitBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -510,7 +525,7 @@ class Photodiode(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, identifier, lock_status, label, rotation)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -567,6 +582,7 @@ class Photoresistor(CircuitBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (
             ("_red_pin", Pin(self, 0)),
@@ -574,7 +590,7 @@ class Photoresistor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, identifier, lock_status, label, rotation)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -630,11 +646,12 @@ class ProximitySensor(CircuitBase):
         identifier: str = str(uuid.uuid4()),
         lock_status: bool = True,
         label: Optional[str] = None,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
     ) -> None:
         self._all_pins = (("_o_pin", Pin(self, 0)),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, identifier, lock_status, label, rotation)
 
     def as_dict(self) -> CircuitElementData:
         return {

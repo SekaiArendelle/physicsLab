@@ -1,19 +1,10 @@
+import abc
 from physicsLab import errors
 from physicsLab import coordinate_system
 
 from physicsLab.enums import ExperimentType, WireColor
-from physicsLab._core import (
-    _Experiment,
-    get_current_experiment,
-)
-from physicsLab._typing import (
-    Optional,
-    Self,
-    num_type,
-    List,
-    Tuple,
-    Iterator,
-)
+from physicsLab._core import get_current_experiment
+from physicsLab._typing import Optional, List, CircuitElementData
 
 
 class _PinMeta(type):
@@ -199,6 +190,7 @@ class CircuitBase:
         identifier: str,
         lock_status: bool,
         label: Optional[str],
+        rotation: coordinate_system.Rotation,
     ) -> None:
         if not isinstance(position, coordinate_system.Position):
             raise TypeError(
@@ -206,8 +198,8 @@ class CircuitBase:
                 f"got {type(position).__name__}"
             )
         self.position = position
+        self.rotation = rotation
         self.identifier = identifier
-        self.rotation = coordinate_system.Rotation(0, 0, 180)
         self.lock_status = lock_status
         self.label = label
 
@@ -277,3 +269,9 @@ class CircuitBase:
             )
 
         self.__label = value
+
+    @abc.abstractmethod
+    def as_dict(self) -> CircuitElementData:
+        raise NotImplementedError(
+            "Subclasses of CircuitBase must implement the as_dict method"
+        )
