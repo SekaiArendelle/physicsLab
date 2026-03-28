@@ -1,25 +1,4 @@
-
-"""physicsLab的异常系统
-有2个主要的组成部分: 可恢复的异常, 不可恢复的错误
-
-* 可恢复的异常: 基于Python的Exception自定义的一系列错误类
-
-* 不可恢复的错误:
-    当某些错误发生的时候, physicsLab认为程序抽象机已经崩溃, 无法继续运行
-    也就是说, 当该错误发生时, 仅表明程序出现了bug, 因此坚决不给用户捕获异常的可能
-    因此一旦这些错误发生, physicsLab会调用os.abort来终止程序, 而不是抛出一个异常
-    被视为 不可恢复的错误 的有:
-    * assertion_error: 断言错误, physicsLab认为其为不可恢复的错误, 因此请不要使用 AssertionError
-"""
-
-import os
-import sys
-import threading
-
 from ._typing import NoReturn
-from physicsLab import _unwind
-from physicsLab import _colorUtils
-from physicsLab._typing import Optional
 
 BUG_REPORT: str = (
     "please send a bug-report at "
@@ -27,41 +6,15 @@ BUG_REPORT: str = (
     "with your code, *.sav and traceback / coredump for Python"
 )
 
+class UnreachableError(Exception):
+    def __init__(self) -> None:
+        ...
 
-def _unrecoverable_error(err_type: str, msg: Optional[str]) -> NoReturn:
-    """不可恢复的错误, 表明程序抽象机已崩溃
-    会打印的错误信息并退出程序
-    """
-    _colorUtils.cprint(_colorUtils.Red(err_type), end="", file=sys.stderr)
-    if msg is None:
-        print("\n", file=sys.stderr)
-    else:
-        _colorUtils.cprint(": ", _colorUtils.Red(msg), file=sys.stderr)
-    sys.stdout.flush()
-    sys.stderr.flush()
-    os.abort()
-
-
-_unrecoverable_error_lock = threading.Lock()
-
-
-def assertion_error(msg: str) -> NoReturn:
-    """断言错误, physicsLab认为其为不可恢复的错误"""
-    _unrecoverable_error_lock.acquire()
-    _unwind.print_stack(full=True)
-    _unrecoverable_error("AssertionError", msg)
-
-
-def assert_true(
-    condition: bool,
-    msg: str = BUG_REPORT,
-) -> None:
-    if not condition:
-        assertion_error(msg)
-
+    def __str__(self) -> str:
+        return f"Unreachable touched, {BUG_REPORT}"
 
 def unreachable() -> NoReturn:
-    assertion_error(f"Unreachable touched, {BUG_REPORT}")
+    raise UnreachableError()
 
 
 class InvalidWireError(Exception):

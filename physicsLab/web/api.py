@@ -18,7 +18,7 @@ from physicsLab import quantum_physics
 from physicsLab import enums
 from physicsLab import errors
 from physicsLab.enums import Tag, Category
-from physicsLab._typing import Optional, List, TypedDict, Callable, Awaitable
+from physicsLab._typing import Optional, List, Callable, Awaitable
 
 
 def _serialize_token(token: Optional[str]) -> str:
@@ -54,7 +54,7 @@ def _check_response(
     Returns:
         dict: Physics-Lab-AR API response structure
     """
-    errors.assert_true(err_callback is None or callable(err_callback))
+    assert err_callback is None or callable(err_callback)
 
     response.raise_for_status()
 
@@ -280,8 +280,6 @@ class User:
                 f"Parameter `domain` must be of type `str`, but got value `{domain}` of type `{type(domain).__name__}`"
             )
 
-        # TODO Use assert_true to check types
-        assert auth_code is not None, errors.BUG_REPORT
         self.token: Optional[str] = token
         self.auth_code: str = auth_code
         # True: Account bound; False: Account not bound, anonymous login
