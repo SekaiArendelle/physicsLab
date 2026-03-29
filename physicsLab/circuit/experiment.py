@@ -880,10 +880,10 @@ def _dict_to_element(element_dict: dict) -> CircuitBase:
         return elements.SimpleInstrument(
             position=position,
             rotation=rotation,
-            pitches=tuple(pitches),
+            pitches=pitches,
             rated_oltage=props["额定电压"],
             volume=props["音量"],
-            instrument=int(props["乐器"]),
+            instrument=int(props.get("乐器", 0)),
             bpm=int(props["节拍"]),
             is_ideal=bool(props["理想模式"]),
             is_pulse=bool(props["脉冲"]),

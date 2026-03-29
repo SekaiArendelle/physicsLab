@@ -844,7 +844,7 @@ class SimpleInstrument(CircuitBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation,
-        pitches: Union[List[int], Tuple[int]],
+        pitches: List[int],
         identifier: str = str(uuid.uuid4()),
         label: Optional[str] = None,
         rated_oltage: num_type = 3.0,
@@ -869,7 +869,7 @@ class SimpleInstrument(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        self.pitches: List[int] = list(pitches)
+        self.pitches: List[int] = pitches
         self.set_rated_oltage(rated_oltage)
         self.set_volume(volume)
         self.set_bpm(bpm)

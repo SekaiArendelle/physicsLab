@@ -1,4 +1,5 @@
 import json
+from physicsLab import errors
 from ._base import CircuitBase, Pin
 from .wire import WireInfo
 from physicsLab import coordinate_system
@@ -61,6 +62,10 @@ class CircuitStatusSave:
         if not isinstance(element, CircuitBase):
             raise TypeError(
                 f"parameter element must be of type `CircuitBase`, but got value {element} of type {type(element).__name__}"
+            )
+        if element.identifier in self.id2element:
+            raise errors.ElementExistError(
+                f"element with identifier {element.identifier} already exists"
             )
         self.elements.append(element)
         self.id2element[element.identifier] = element

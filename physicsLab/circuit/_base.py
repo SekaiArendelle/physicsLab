@@ -108,6 +108,13 @@ class CircuitBase:
             "Subclasses of CircuitBase must implement the all_pins method"
         )
 
+    @staticmethod
+    @abc.abstractmethod
+    def count_all_pins() -> int:
+        raise NotImplementedError(
+            "Subclasses of CircuitBase must implement the count_all_pins method"
+        )
+
 
 class Pin:
     __element: CircuitBase

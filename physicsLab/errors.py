@@ -91,18 +91,17 @@ class ExperimentTypeError(Exception):
         return self.err_msg
 
 
-# 用于get_Element 获取元件引用失败
-class ElementNotFound(Exception):
+class ElementNotExistError(Exception):
     def __init__(self, err_msg: str = "Can't find element") -> None:
         self.err_msg = err_msg
 
     def __str__(self) -> str:
         return self.err_msg
 
-
-class ExperimentError(Exception):
-    def __init__(self, string: str = "") -> None:
-        self.err_msg: str = string
+class ElementExistError(Exception):
+    def __init__(self, err_msg: str) -> None:
+        assert isinstance(err_msg, str)
+        self.err_msg = err_msg
 
     def __str__(self) -> str:
         return self.err_msg
