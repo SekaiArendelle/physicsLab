@@ -57,11 +57,11 @@ class TestCircuitExperiment(unittest.TestCase):
             expe.crt_a_wire(a.o, b.i, color=ColorOfWire.red)
             self.assertEqual(expe.get_wires_count(), 1)
 
+            expe.del_a_wire(a.o, b.i)
+            self.assertEqual(expe.get_wires_count(), 0)
+
             expe.crt_wires(a.o, b.i, c.i, color=ColorOfWire.blue)
             self.assertEqual(expe.get_wires_count(), 2)
-
-            expe.del_a_wire(a.o, b.i)
-            self.assertEqual(expe.get_wires_count(), 1)
 
             expe.clear_wires()
             self.assertEqual(expe.get_wires_count(), 0)
