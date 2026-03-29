@@ -1,28 +1,29 @@
-"""在命令行打印出有颜色的字
-为physicsLab最基础, 最底层的设施,
-所以不能依赖physicsLab的任何其他设施, 包括 errors.py
+"""Print colored text in the terminal.
+
+This module is one of the lowest-level utilities in ``physicsLab`` and should
+not depend on other project modules (including ``errors.py``).
 
 Usage:
     >>> from physicsLab._colorUtils import *
-    >>> cprint(Red("test")) # 输出红色字
-    # 支持变参函数, 一次性打印多个不同颜色的Object
-    # 但不像python的print一样支持sep参数 [设计如此]
+    >>> cprint(Red("test"))  # Prints red text
+    # Supports variadic arguments and mixed colored/plain objects.
+    # Unlike ``print``, ``sep`` is intentionally not supported.
     >>> cprint(Green("test"), "test", Yellow("test"), 1111, 3.14)
-    >>> cprint(Blue("test")) # 还支持以下颜色
+    >>> cprint(Blue("test"))  # Other supported colors:
     >>> cprint(Magenta("test"))
     >>> cprint(Cyan("test"))
     >>> cprint(White("test"))
     >>> cprint(Black("test"))
-    >>> cprint(Red("test"), file=sys.stderr) # 输出到stderr
-    >>> cprint(Red("test"), end='') # 支持print那样指定end
-    # 如果你不希望打印出颜色字 (即使使用了Red("xxx")之类的), 请使用python原生print
-    >>> print(Green("test"), "test", Yellow("test")) # 此时打印无颜色
+    >>> cprint(Red("test"), file=sys.stderr)  # Print to stderr
+    >>> cprint(Red("test"), end='')  # Supports custom ``end`` like ``print``
+    # Use built-in ``print`` if you want plain text output only.
+    >>> print(Green("test"), "test", Yellow("test"))  # No color in output
 """
 
 import platform
 from physicsLab._typing import final
 
-# 设置终端的编码为UTF-8
+# Set terminal encoding to UTF-8.
 import io
 import sys
 
@@ -31,7 +32,7 @@ if platform.system() in ("Windows", "Linux"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
-# Windows 11 默认支持ANSI转义, 因此只有Windows 10及以下才使用Win32 API
+# Windows 11 supports ANSI escape sequences by default; use Win32 API only on older versions.
 _USE_WIN32_COLOR_API = platform.system() == "Windows" and (
     sys.getwindowsversion().major,
     sys.getwindowsversion().minor,
@@ -98,7 +99,7 @@ class _Color:
         if _USE_WIN32_COLOR_API:
             import ctypes
 
-            # 临时更改终端打印字符的属性
+            # Temporarily change terminal text attributes.
             csbi = _CONSOLE_SCREEN_BUFFER_INFO()
             if file is sys.stdout:
                 _GetConsoleScreenBufferInfo(_stdout_handle, ctypes.byref(csbi))
@@ -109,7 +110,7 @@ class _Color:
             else:
                 assert False
             print(self.msg, flush=True, end="", file=file)
-            # 恢复终端打印字符的属性
+            # Restore terminal text attributes.
             if file is sys.stdout:
                 _SetConsoleTextAttribute(_stdout_handle, csbi.wAttributes)
             elif file is sys.stderr:
@@ -177,7 +178,7 @@ class White(_Color):
 
 
 def cprint(*args, end="\n", file=sys.stdout) -> None:
-    # 先刷新再打印, 避免在Windows下打印缓冲区的内容还未输出就被改变了Attribute
+    # Flush before printing so buffered content is not affected by color changes on Windows.
     # e.g.
     # print("test")
     # _colorUtils.cprint("test")
@@ -194,7 +195,7 @@ def cprint(*args, end="\n", file=sys.stdout) -> None:
         else:
             print(arg, end="", file=file)
     print(end, end="", file=file)
-    # 再次刷新，确保终端的输出已经输出
+    # Flush again to ensure all terminal output is written.
     # e.g.
     # cprint(Green("test"), file=sys.stderr)
     # cprint(Red("ttt"), file=sys.stdout)

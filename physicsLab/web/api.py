@@ -450,7 +450,7 @@ class User:
                     "Skip": skip,
                     "Take": take,
                     "Days": 0,
-                    "Sort": 0,  # TODO 这个也许是那个史上热门之类的?
+                    "Sort": 0,  # TODO: This might map to a "most popular all-time" sort mode.
                     "ShowAnnouncement": False,
                 }
             },
@@ -1397,7 +1397,7 @@ class User:
         display_type: str = "Follower",
         skip: int = 0,
         take: int = 20,
-        query: str = "",  # TODO 获取编辑，志愿者列表啊之类的貌似也是这个api
+        query: str = "",  # TODO: This API may also support querying editors/volunteers.
     ) -> dict:
         """Get user's followers/following list
 

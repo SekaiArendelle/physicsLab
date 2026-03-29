@@ -875,13 +875,16 @@ class SimpleInstrument(CircuitBase):
         is_pulse: bool = True,
         lock_status: bool = True,
     ) -> None:
-        """@param rated_oltage: 额定电压
-        @param volume: 音量 (响度)
-        @param pitch: 音高
-        @param instrument: 演奏的乐器，暂时只支持传入数字
-        @param bpm: 节奏
-        @param is_ideal: 是否为理想模式
-        @param is_pulse: 简单乐器是否只响一次
+        """Initialize a simple instrument.
+
+        Args:
+            rated_oltage: Rated voltage.
+            volume: Playback volume.
+            pitch: Pitch value.
+            instrument: Instrument ID (currently numeric only).
+            bpm: Tempo in beats per minute.
+            is_ideal: Whether to use ideal mode.
+            is_pulse: Whether the instrument plays only once per trigger.
         """
         self._all_pins = (
             ("_i_pin", Pin(self, 0, "i")),
@@ -1062,13 +1065,18 @@ class SimpleInstrument(CircuitBase):
 
     @staticmethod
     def str2num_pitch(pitch: str, rising_falling: Optional[bool] = None) -> int:
-        """输入格式：
-            pitch: C4, A5 ...
-            rising_falling = True 时，为升调，为 False 时降调
+        """Convert pitch notation to the numeric pitch value.
 
-        输入范围：
-            C0 ~ C8
-            注: C0: 24, C1: 36, C2: 48, C3: 60, ..., C8: 120
+        Args:
+            pitch: Pitch notation such as ``C4`` or ``A5``.
+            rising_falling: ``True`` for sharp, ``False`` for flat, ``None`` for natural.
+
+        Returns:
+            int: Numeric pitch value.
+
+        Notes:
+            Supported range is ``C0`` to ``C8``.
+            Examples: ``C0=24``, ``C1=36``, ``C2=48``, ``C3=60``, ..., ``C8=120``.
         """
         if not isinstance(pitch, str) or not isinstance(
             rising_falling, (bool, type(None))

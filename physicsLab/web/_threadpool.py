@@ -1,7 +1,8 @@
-"""在 Python3.14之前, Thread.join 在 Windows 上会阻塞异常的传播, 详见:
+"""Before Python 3.14, ``Thread.join`` on Windows may block exception propagation.
     https://www.bilibili.com/video/BV1au411q7LN/?spm_id_from=333.999.0.0
 
-因此, 我无法直接使用ThreadPoolExecutor, 我就自己写了一个线程池
+Because of that behavior, this module provides a lightweight custom thread pool
+instead of using ``ThreadPoolExecutor`` directly.
 """
 
 import queue
@@ -98,7 +99,11 @@ class _Task:
 
 class ThreadPool:
     def __init__(self, *, max_workers: int) -> None:
-        """@param max_workers: 最大线程数"""
+        """Initialize the thread pool.
+
+        Args:
+            max_workers: Maximum number of worker threads.
+        """
         if not isinstance(max_workers, int):
             raise TypeError(
                 f"Parameter `max_workers` must be of type `int`, but got value `{max_workers}` of type `{type(max_workers).__name__}`"

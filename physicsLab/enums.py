@@ -3,15 +3,15 @@ from enum import Enum, unique
 
 @unique
 class ExperimentType(Enum):
-    """实验的类型"""
+    """Experiment type."""
 
-    # 电学实验
+    # Circuit experiment
     Circuit = 0
 
 
 @unique
 class Category(Enum):
-    """实验区与黑洞区"""
+    """Community content categories."""
 
     Experiment = "Experiment"
     Discussion = "Discussion"
@@ -19,10 +19,10 @@ class Category(Enum):
 
 @unique
 class Tag(Enum):
-    """标签"""
+    """Community tags."""
 
-    # TODO 投稿 标签
-    # 实验区
+    # TODO: Submission tags
+    # Experiment area
     Circuit = "Type-0"
     Celestial = "Type-3"
     Electromagnetism = "Type-4"
@@ -38,13 +38,13 @@ class Tag(Enum):
     Curricular = "教学实验"
     NoRemixes = "禁止改编"
     ApplyForFeature = "精选申请"
-    # 黑洞区
+    # Discussion area
     BUG = "BUG"
     Discussion = "交流"
     Stories = "小说专区"
     Charroom = "聊天"
     Q_A = "问与答"
-    # 远古标签
+    # Legacy tags
     Logic_Circuit = "逻辑电路"
     DC_Circuit = "直流电路"
     AC_Circuit = "交流电路"
@@ -54,12 +54,12 @@ class Tag(Enum):
 
 @unique
 class OpenMode(Enum):
-    """用Experiment打开存档的模式"""
+    """Modes for opening an experiment with ``Experiment`` APIs."""
 
-    load_by_sav_name = 0  # 存档的名字 (在物实内给存档取的名字)
-    load_by_filepath = 1  # 用户自己提供的存档的完整路径
-    load_by_plar_app = 2  # 通过网络请求从物实读取的存档
-    crt = 3  # 新建存档
+    load_by_sav_name = 0  # Save name as shown in Physics-Lab-AR.
+    load_by_filepath = 1  # Full path provided by the user.
+    load_by_plar_app = 2  # Load via network request from Physics-Lab-AR.
+    crt = 3  # Create a new save.
 
 
 @unique

@@ -149,10 +149,13 @@ class BasicCapacitor(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        """@param capacitance: 电容, 单位为F
-        @param is_ideal: 是否为理想模式
-        @param peak_voltage: 峰值电压, 单位为V
-        @param internal_resistance: 内阻, 单位为Ω
+        """Initialize a capacitor element.
+
+        Args:
+            capacitance: Capacitance in farads (F).
+            is_ideal: Whether to use ideal mode.
+            peak_voltage: Peak voltage in volts (V).
+            internal_resistance: Internal resistance in ohms (Ohm).
         """
         if not isinstance(peak_voltage, (int, float)):
             raise TypeError(
@@ -260,10 +263,13 @@ class BasicInductor(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        """@param rated_current: 电感额定电流，单位为 A
-        @param inductance: 电感，单位为 Henry
-        @param internal_resistance: 电感内部阻抗，单位为 Ohm
-        @param is_ideal: 是否为理想模式
+        """Initialize an inductor element.
+
+        Args:
+            rated_current: Rated current in amperes (A).
+            inductance: Inductance in henries (H).
+            internal_resistance: Internal resistance in ohms (Ohm).
+            is_ideal: Whether to use ideal mode.
         """
         if not isinstance(rated_current, (int, float)):
             raise TypeError(
@@ -982,7 +988,7 @@ class Transistor(CircuitBase):
             f"is_PNP={self.is_PNP}"
         )
 
-        # TODO 不论是否是默认参数都显示写到res里
+        # TODO: Always include all parameters in repr, even when default values are used.
         if self.gain != 100.0:
             res += f", gain={self.gain}"
         if self.max_power != 5.0:
@@ -1096,9 +1102,12 @@ class OperationalAmplifier(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        """@param gain: 增益系数
-        @param max_voltage: 最大电压
-        @param min_voltage: 最小电压
+        """Initialize an operational amplifier element.
+
+        Args:
+            gain: Gain factor.
+            max_voltage: Maximum output voltage.
+            min_voltage: Minimum output voltage.
         """
         if not isinstance(gain, (int, float)):
             raise TypeError(

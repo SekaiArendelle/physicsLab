@@ -1,4 +1,4 @@
-"""该文件提供更方便的遍历物实社区一些数据的迭代器"""
+"""Convenient iterators for traversing Physics-Lab-AR community data."""
 
 import time
 import urllib3
@@ -14,8 +14,10 @@ _DEFAULT_MAX_WORKERS: int = 4
 
 
 def _run_task(max_retry: Optional[int], func: Callable, *args, **kwargs):
-    """运行func, 直到成功或达到max_retry的条件
-    @param max_retry: 最大重试次数(大于等于0), 为None时不限制重试次数
+    """Run ``func`` until success or until retry policy is exhausted.
+
+    Args:
+        max_retry: Maximum retry count (>= 0). ``None`` means unlimited retries.
     """
     assert (max_retry is None or max_retry >= 0) and callable(func)
 
@@ -49,7 +51,7 @@ def _run_task(max_retry: Optional[int], func: Callable, *args, **kwargs):
 
 
 class NotificationsIter:
-    """遍历通知页面的消息的迭代器"""
+    """Iterate messages from the notifications page."""
 
     TAKE_AMOUNT: int = -101
 
@@ -61,12 +63,17 @@ class NotificationsIter:
         max_retry: Optional[int] = 0,
         max_workers: int = _DEFAULT_MAX_WORKERS,
     ) -> None:
-        """@param user: 执行查询操作的用户
-        @param category_id: 消息类型:
-            0: 全部, 1: 系统邮件, 2: 关注和粉丝, 3: 评论和回复, 4: 作品通知, 5: 管理记录
-        @param start_skip: 开始查询的消息的偏移量, 默认为0
-        @param max_retry: 单个请求失败后最多重试次数, 默认为0, 即不重试, None为无限次数重试(不推荐)
-        @param max_workers: 最大线程数
+        """Initialize a notifications iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            category_id: Message category:
+                0: all, 1: system mail, 2: follows/fans, 3: comments/replies,
+                4: content notifications, 5: moderation records.
+            start_skip: Initial message offset. Defaults to 0.
+            max_retry: Maximum retries per request. Defaults to 0 (no retry).
+                ``None`` means unlimited retries (not recommended).
+            max_workers: Maximum worker thread count.
         """
         if not isinstance(user, User):
             raise TypeError(
@@ -107,7 +114,7 @@ class NotificationsIter:
         tasks: List[_Task] = []
         with ThreadPool(max_workers=self.max_workers) as executor:
             while True:
-                # 避免tasks里面的任务过多导致break停止循环的时候迟迟无法退出
+                # Avoid too many queued tasks so shutdown can complete quickly.
                 if len(tasks) < 2500:
                     tasks.append(
                         executor.submit(
@@ -131,9 +138,9 @@ class NotificationsIter:
 
 
 class ExperimentsIter:
-    """遍历实验的迭代器"""
+    """Iterate experiments from the community feed."""
 
-    # 利用物实bug一次性获取更多的实验
+    # Uses current backend behavior to request more items per page.
     TAKE_AMOUNT: int = -101
 
     def __init__(
@@ -150,14 +157,17 @@ class ExperimentsIter:
         max_workers: int = _DEFAULT_MAX_WORKERS,
         exclude_languages: Optional[List[str]] = None,
     ) -> None:
-        """@param user: 执行查询操作的用户
-        @param tags: 包含的标签列表
-        @param exclude_tags: 排除的标签列表
-        @param category: 实验类别
-        @param languages: 语言列表
-        @param user_id: 用户ID
-        @param max_retry: 最大重试次数
-        @param max_workers: 最大线程数
+        """Initialize an experiments iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            tags: Tags to include.
+            exclude_tags: Tags to exclude.
+            category: Experiment category.
+            languages: Languages to include.
+            user_id: Filter by creator user ID.
+            max_retry: Maximum retries per request.
+            max_workers: Maximum worker thread count.
         """
         if not isinstance(category, Category):
             raise TypeError(
@@ -260,7 +270,7 @@ class ExperimentsIter:
 
 
 class BannedMsgIter:
-    """遍历指定一段时间的封禁信息 (可指定用户)"""
+    """Iterate ban records in a time range, optionally for one user."""
 
     banned_template = {
         "ID": "5d57f3c139523f0f640c2211",
@@ -278,15 +288,17 @@ class BannedMsgIter:
         get_banned_template: bool = False,
         max_workers: int = _DEFAULT_MAX_WORKERS,
     ) -> None:
-        """获取封禁记录
-        @param user: 查询者
-        @param user_id: 被查询者的id, None表示查询所有用户封禁记录
-        @param start_time: 开始时间, None表示遍历完所有封禁记录
-        @param end_time: 结束时间, None为当前时间
-        @param max_retry: 最大重试次数(大于等于0), 为None时不限制重试次数
-        @param get_banned_template: 是否获取封禁信息的模板, False则使用physicsLab提供的模板
-                模板可能会被紫兰斋修改, 但消息模板基本都是稳定的
-        @param max_workers: 最大线程数
+        """Initialize a ban-record iterator.
+
+        Args:
+            user: Authenticated user used to query data.
+            user_id: Target user ID. ``None`` means all users.
+            start_time: Start timestamp in seconds. ``None`` means no lower bound.
+            end_time: End timestamp in seconds. ``None`` means now.
+            max_retry: Maximum retries per request (>= 0). ``None`` means unlimited.
+            get_banned_template: Whether to fetch the latest ban template from server.
+                If ``False``, use the built-in template.
+            max_workers: Maximum worker thread count.
         """
         if not isinstance(user, User):
             raise TypeError(
@@ -376,7 +388,7 @@ class BannedMsgIter:
 
 
 class CommentsIter:
-    """获取评论的迭代器"""
+    """Iterate comments for a user, experiment, or discussion."""
 
     def __init__(
         self,
@@ -386,11 +398,14 @@ class CommentsIter:
         start_time: int = 0,
         max_retry: Optional[int] = 0,
     ) -> None:
-        """@param user: 执行查询操作的用户
-        @param content_id: 用户id或实验id
-        @param category: 只能为 "User" 或 "Experiment" 或 "Discussion"
-        @param start_time: 起始查询评论的时间, 默认是最新的评论往下遍历到最后一条评论
-        @param: max_retry: 网络请求失败时重试的次数
+        """Initialize a comments iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            content_id: Target user ID or experiment/discussion ID.
+            category: One of ``"User"``, ``"Experiment"``, or ``"Discussion"``.
+            start_time: Start timestamp in seconds. Iteration proceeds from newer to older.
+            max_retry: Retry count for transient request failures.
         """
         if not isinstance(user, User):
             raise TypeError(
@@ -445,7 +460,7 @@ class CommentsIter:
 
 
 class WarnedMsgIter:
-    """获取一段时间的指定用户的警告信息的迭代器"""
+    """Iterate warning messages for a user within a time range."""
 
     def __init__(
         self,
@@ -455,12 +470,14 @@ class WarnedMsgIter:
         end_time: Optional[num_type] = None,
         maybe_warned_message_callback: Optional[Callable] = None,
     ) -> None:
-        """查询警告记录
-        @param user: 执行查询操作的用户
-        @param user_id: 被查询者的id, 但无法查询所有用户的警告记录
-        @param start_time: 开始时间
-        @param end_time: 结束时间, None为当前时间
-        @param banned_message_callback: 封禁记录回调函数
+        """Initialize a warning-message iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            user_id: Target user ID. Querying all users is not supported.
+            start_time: Start timestamp in seconds.
+            end_time: End timestamp in seconds. ``None`` means now.
+            maybe_warned_message_callback: Callback for possible warning messages.
         """
         if not isinstance(user, User):
             raise TypeError(
@@ -520,9 +537,9 @@ class WarnedMsgIter:
 
 
 class RelationsIter:
-    """获取用户的关注/粉丝的迭代器"""
+    """Iterate followers or followings for a user."""
 
-    # 利用物实bug在每次请求中获取更多的数据
+    # Uses current backend behavior to request more items per page.
     TAKE_AMOUNT = -101
 
     def __init__(
@@ -535,13 +552,15 @@ class RelationsIter:
         query: str = "",
         max_workers: int = _DEFAULT_MAX_WORKERS,
     ) -> None:
-        """查询用户关系
-        @param user: 执行查询操作的用户
-        @param user_id: 被查询者的id
-        @param display_type: 关系类型, "Follower"为粉丝, "Following"为关注
-        @param max_retry: 最大重试次数(大于等于0), 为None时不限制重试次数
-        @param amount: Follower/Following的数量, 为None时api将自动查询
-        @param max_workers: 最大线程数
+        """Initialize a relations iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            user_id: Target user ID.
+            display_type: ``"Follower"`` or ``"Following"``.
+            max_retry: Maximum retries (>= 0). ``None`` means unlimited.
+            amount: Number of relations to fetch. ``None`` queries automatically.
+            max_workers: Maximum worker thread count.
         """
         if not isinstance(user, User):
             raise TypeError(
@@ -616,7 +635,7 @@ class RelationsIter:
 
 
 class AvatarsIter:
-    """遍历头像的迭代器"""
+    """Iterate avatar images for a user/content target."""
 
     def __init__(
         self,
@@ -630,13 +649,16 @@ class AvatarsIter:
         max_img_index: Optional[int] = None,
         max_workers: int = _DEFAULT_MAX_WORKERS,
     ) -> None:
-        """@param user: 执行查询操作的用户
-        @param user_id: 用户id
-        @param category: 只能为 "Experiment" 或 "Discussion" 或 "User"
-        @param size_category: 只能为 "small.round" 或 "thumbnail" 或 "full"
-        @param user: 查询者, None为匿名用户
-        @param max_retry: 最大重试次数(大于等于0), 为None时不限制重试次数
-        @param max_workers: 最大线程数
+        """Initialize an avatar iterator.
+
+        Args:
+            user: Authenticated user used to fetch data.
+            target_id: Target user/content ID.
+            category: One of ``"Experiment"``, ``"Discussion"``, or ``"User"``.
+            size_category: One of ``"small.round"``, ``"thumbnail"``, or ``"full"``.
+            max_retry: Maximum retries (>= 0). ``None`` means unlimited.
+            max_img_index: Upper bound for image index. ``None`` queries automatically.
+            max_workers: Maximum worker thread count.
         """
         if not isinstance(target_id, str):
             raise TypeError(

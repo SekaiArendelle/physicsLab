@@ -10,7 +10,7 @@ from .circuit import *
 from .celestial import *
 from .electromagnetism import *
 
-# `physicsLab`自定义异常类
+# Custom exception classes defined by `physicsLab`.
 from .errors import *
 
 from physicsLab.quantum_physics import *

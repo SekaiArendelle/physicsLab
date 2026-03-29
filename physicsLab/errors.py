@@ -29,21 +29,21 @@ class InvalidWireError(Exception):
 
 
 class InvalidSavError(Exception):
-    """存档文件错误"""
+    """Raised when a save archive file is invalid."""
 
     def __str__(self):
         return "The archive file is incorrect"
 
 
 class ExperimentExistError(Exception):
-    """实验已存在"""
+    """Raised when creating an experiment that already exists."""
 
     def __str__(self):
         return "Duplicate name archives are forbidden"
 
 
 class ExperimentNotExistError(Exception):
-    """实验不存在"""
+    """Raised when an experiment cannot be found."""
 
     def __init__(self, err_msg: str = "The experiment does not exist") -> None:
         self.err_msg = err_msg
@@ -93,7 +93,7 @@ class ResponseFail(Exception):
 
 
 class MaxRetryError(Exception):
-    """重试次数过多"""
+    """Raised when retry attempts exceed the configured limit."""
 
     def __init__(self, err_msg: str):
         self.err_msg = err_msg
