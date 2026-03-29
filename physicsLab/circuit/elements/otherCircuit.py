@@ -890,12 +890,12 @@ class SimpleInstrument(CircuitBase):
         for name, pin in self._all_pins:
             setattr(self, name, pin)
         self.pitches: List[int] = pitches
-        self.set_rated_oltage(rated_oltage)
-        self.set_volume(volume)
-        self.set_bpm(bpm)
-        self.set_instrument(instrument)
-        self.set_is_ideal(is_ideal)
-        self.set_is_pulse(is_pulse)
+        self.rated_oltage = rated_oltage
+        self.volume = volume
+        self.bpm = bpm
+        self.instrument = instrument
+        self.is_ideal = is_ideal
+        self.is_pulse = is_pulse
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -918,14 +918,14 @@ class SimpleInstrument(CircuitBase):
             )
 
         properties = {
-            "额定电压": self._rated_oltage,
+            "额定电压": self.rated_oltage,
             "额定功率": 0.3,
-            "音量": self._volume,
-            "节拍": self._bpm,
+            "音量": self.volume,
+            "节拍": self.bpm,
             "锁定": int(self.lock_status),
-            "乐器": self._instrument,
-            "理想模式": int(self._is_ideal),
-            "脉冲": int(self._is_pulse),
+            "乐器": self.instrument,
+            "理想模式": int(self.is_ideal),
+            "脉冲": int(self.is_pulse),
             "电平": 0.0,
         }
         for i, a_pitch in enumerate(self.pitches):
@@ -957,53 +957,83 @@ class SimpleInstrument(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def set_rated_oltage(self, value: num_type) -> None:
+    @property
+    def rated_oltage(self) -> num_type:
+        return self.__rated_oltage
+
+    @rated_oltage.setter
+    def rated_oltage(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"rated_oltage must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._rated_oltage = value
+        self.__rated_oltage = value
 
-    def set_volume(self, value: num_type) -> None:
+    @property
+    def volume(self) -> num_type:
+        return self.__volume
+
+    @volume.setter
+    def volume(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"volume must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
         if not 0 <= value <= 1:
             raise ValueError(f"volume must be in range [0, 1], but got {value}")
-        self._volume = value
+        self.__volume = value
 
-    def set_bpm(self, value: int) -> None:
+    @property
+    def bpm(self) -> int:
+        return self.__bpm
+
+    @bpm.setter
+    def bpm(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError(
                 f"bpm must be of type `int`, but got value {value} of type `{type(value).__name__}`"
             )
         if not 20 <= value <= 240:
             raise ValueError(f"bpm must be in range [20, 240], but got {value}")
-        self._bpm = value
+        self.__bpm = value
 
-    def set_instrument(self, value: int) -> None:
+    @property
+    def instrument(self) -> int:
+        return self.__instrument
+
+    @instrument.setter
+    def instrument(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError(
                 f"instrument must be of type `int`, but got value {value} of type `{type(value).__name__}`"
             )
         if not 0 <= value <= 128:
             raise ValueError(f"instrument must be in range [0, 128], but got {value}")
-        self._instrument = value
+        self.__instrument = value
 
-    def set_is_ideal(self, value: bool) -> None:
+    @property
+    def is_ideal(self) -> bool:
+        return self.__is_ideal
+
+    @is_ideal.setter
+    def is_ideal(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError(
                 f"is_ideal must be of type `bool`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._is_ideal = value
+        self.__is_ideal = value
 
-    def set_is_pulse(self, value: bool) -> None:
+    @property
+    def is_pulse(self) -> bool:
+        return self.__is_pulse
+
+    @is_pulse.setter
+    def is_pulse(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError(
                 f"is_pulse must be of type `bool`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._is_pulse = value
+        self.__is_pulse = value
 
     @property
     def i(self) -> Pin:
@@ -1021,12 +1051,12 @@ class SimpleInstrument(CircuitBase):
         return (
             f"Simple_Instrument({self.position.x}, {self.position.y}, {self.position.z}, "
             f"pitches={self.pitches}, "
-            f"instrument={self._instrument}, "
-            f"bpm={self._bpm}, "
-            f"volume={self._volume}, "
-            f"rated_oltage={self._rated_oltage}, "
-            f"is_ideal={self._is_ideal}, "
-            f"is_pulse={self._is_pulse}"
+            f"instrument={self.__instrument}, "
+            f"bpm={self.__bpm}, "
+            f"volume={self.__volume}, "
+            f"rated_oltage={self.__rated_oltage}, "
+            f"is_ideal={self.__is_ideal}, "
+            f"is_pulse={self.__is_pulse}"
             f")"
         )
 
