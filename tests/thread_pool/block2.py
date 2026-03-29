@@ -7,9 +7,11 @@ sys.path.append(PHYSICS_LAB_DIR)
 
 from physicsLab.web._threadpool import ThreadPool
 
+
 def wait():
     while True:
         pass
+
 
 if __name__ == "__main__":
     pool = ThreadPool(max_workers=4)

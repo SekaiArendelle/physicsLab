@@ -1,4 +1,3 @@
-
 from enum import Enum, unique
 
 
@@ -64,7 +63,7 @@ class OpenMode(Enum):
 
 
 @unique
-class WireColor(Enum):
+class ColorOfWire(Enum):
     black = "黑"
     blue = "蓝"
     red = "红"
@@ -77,10 +76,12 @@ class GetUserMode(Enum):
     by_id = 0
     by_name = 1
 
+
 @unique
 class SwitchState(Enum):
     OFF = 0
     ON = 1
+
 
 @unique
 class PDTSwitchState(Enum):

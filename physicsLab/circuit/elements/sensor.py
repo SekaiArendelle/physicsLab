@@ -1,11 +1,6 @@
+import uuid
 from physicsLab import coordinate_system
-from .._circuit_core import (
-    CircuitBase,
-    Pin,
-    _deprecated_init_attr_experiment,
-    _deprecated_assign_element_to_experiment,
-)
-from physicsLab._core import _Experiment
+from .._base import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -18,8 +13,6 @@ from physicsLab._typing import (
 
 
 class _MemsBase(CircuitBase):
-    """三引脚集成式传感器基类"""
-
     _all_pins: Tuple[
         Tuple[Literal["_x_pin"], Pin],
         Tuple[Literal["_y_pin"], Pin],
@@ -28,31 +21,32 @@ class _MemsBase(CircuitBase):
     _x_pin: Pin
     _y_pin: Pin
     _z_pin: Pin
-    _ranges: num_type
-    _shifting: num_type
-    _response_factor: num_type
+    __ranges: num_type
+    __shifting: num_type
+    __response_factor: num_type
 
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation,
         ranges: num_type,
         shifting: num_type,
         response_factor: num_type,
-        identifier: Optional[str] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
+        identifier: str,
+        lock_status: bool,
+        label: Optional[str],
     ) -> None:
-        self.set_ranges(ranges)
-        self.set_shifting(shifting)
-        self.set_response_factor(response_factor)
+        self.ranges = ranges
+        self.shifting = shifting
+        self.response_factor = response_factor
         self._all_pins = (
-            ("_x_pin", Pin(self, 0)),
-            ("_y_pin", Pin(self, 1)),
-            ("_z_pin", Pin(self, 2)),
+            ("_x_pin", Pin(self, 0, "x")),
+            ("_y_pin", Pin(self, 1, "y")),
+            ("_z_pin", Pin(self, 2, "z")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -73,43 +67,48 @@ class _MemsBase(CircuitBase):
     def z(self) -> Pin:
         return self._z_pin
 
-    def get_ranges(self) -> num_type:
-        return self._ranges
+    @property
+    def ranges(self) -> num_type:
+        return self.__ranges
 
-    def set_ranges(self, value: num_type) -> None:
+    @ranges.setter
+    def ranges(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"ranges must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._ranges = value
+        self.__ranges = value
 
-    def get_shifting(self) -> num_type:
-        return self._shifting
+    @property
+    def shifting(self) -> num_type:
+        return self.__shifting
 
-    def set_shifting(self, value: num_type) -> None:
+    @shifting.setter
+    def shifting(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"shifting must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._shifting = value
+        self.__shifting = value
 
-    def get_response_factor(self) -> num_type:
-        return self._response_factor
+    @property
+    def response_factor(self) -> num_type:
+        return self.__response_factor
 
-    def set_response_factor(self, value: num_type) -> None:
+    @response_factor.setter
+    def response_factor(self, value: num_type) -> None:
         if not isinstance(value, (int, float)):
             raise TypeError(
                 f"response_factor must be of type `int | float`, but got value {value} of type `{type(value).__name__}`"
             )
-        self._response_factor = value
+        self.__response_factor = value
 
 
-class _Accelerometer(_MemsBase):
-    """加速度计"""
-
+class Accelerometer(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
@@ -118,6 +117,8 @@ class _Accelerometer(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -126,6 +127,7 @@ class _Accelerometer(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -135,15 +137,15 @@ class _Accelerometer(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -156,43 +158,7 @@ class _Accelerometer(_MemsBase):
         return "加速度计"
 
 
-class Accelerometer(_Accelerometer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.2290000021457672,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _AnalogJoystick(CircuitBase):
-    """模拟摇杆"""
-
+class AnalogJoystick(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_x1_pin"], Pin],
         Tuple[Literal["_x2_pin"], Pin],
@@ -211,22 +177,25 @@ class _AnalogJoystick(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # build fields first, then call base init
         self._all_pins = (
-            ("_x1_pin", Pin(self, 0)),
-            ("_x2_pin", Pin(self, 1)),
-            ("_x3_pin", Pin(self, 2)),
-            ("_y1_pin", Pin(self, 3)),
-            ("_y2_pin", Pin(self, 4)),
-            ("_y3_pin", Pin(self, 5)),
+            ("_x1_pin", Pin(self, 0, "x1")),
+            ("_x2_pin", Pin(self, 1, "x2")),
+            ("_x3_pin", Pin(self, 2, "x3")),
+            ("_y1_pin", Pin(self, 3, "y1")),
+            ("_y2_pin", Pin(self, 4, "y2")),
+            ("_y3_pin", Pin(self, 5, "y3")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -236,8 +205,8 @@ class _AnalogJoystick(CircuitBase):
             "IsLocked": False,
             "Properties": {"额定电阻": 10000, "锁定": int(self.lock_status)},
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -281,40 +250,11 @@ class _AnalogJoystick(CircuitBase):
         return self._y3_pin
 
 
-class Analog_Joystick(_AnalogJoystick):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _AttitudeSensor(_MemsBase):
-    """姿态传感器"""
-
+class AttitudeSensor(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 180,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
@@ -323,6 +263,8 @@ class _AttitudeSensor(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -331,6 +273,7 @@ class _AttitudeSensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -340,15 +283,15 @@ class _AttitudeSensor(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -361,46 +304,11 @@ class _AttitudeSensor(_MemsBase):
         return "姿态传感器"
 
 
-class Attitude_Sensor(_AttitudeSensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 180,
-        shifting: num_type = 2.5,
-        response_factor: num_type = 0.0125,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _GravitySensor(_MemsBase):
-    """重力加速计"""
-
+class GravitySensor(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
@@ -409,6 +317,8 @@ class _GravitySensor(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -417,6 +327,7 @@ class _GravitySensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -426,15 +337,15 @@ class _GravitySensor(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -447,46 +358,11 @@ class _GravitySensor(_MemsBase):
         return "重力加速计"
 
 
-class Gravity_Sensor(_GravitySensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.229,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _Gyroscope(_MemsBase):
-    """陀螺仪传感器"""
-
+class Gyroscope(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 150,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
@@ -495,6 +371,8 @@ class _Gyroscope(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -503,6 +381,7 @@ class _Gyroscope(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -512,15 +391,15 @@ class _Gyroscope(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -533,46 +412,11 @@ class _Gyroscope(_MemsBase):
         return "陀螺仪传感器"
 
 
-class Gyroscope(_Gyroscope):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 150,
-        shifting: num_type = 2.5,
-        response_factor: num_type = 0.0125,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _LinearAccelerometer(_MemsBase):
-    """线性加速度计"""
-
+class LinearAccelerometer(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
@@ -581,6 +425,8 @@ class _LinearAccelerometer(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -589,6 +435,7 @@ class _LinearAccelerometer(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -598,15 +445,15 @@ class _LinearAccelerometer(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -619,46 +466,11 @@ class _LinearAccelerometer(_MemsBase):
         return "线性加速度计"
 
 
-class Linear_Accelerometer(_LinearAccelerometer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 2,
-        shifting: num_type = 0.75,
-        response_factor: num_type = 0.229,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _MagneticFieldSensor(_MemsBase):
-    """磁场传感器"""
-
+class MagneticFieldSensor(_MemsBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         ranges: num_type = 0.04,
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
@@ -667,6 +479,8 @@ class _MagneticFieldSensor(_MemsBase):
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -675,6 +489,7 @@ class _MagneticFieldSensor(_MemsBase):
             identifier=identifier,
             lock_status=lock_status,
             label=label,
+            rotation=rotation,
         )
 
     def as_dict(self) -> CircuitElementData:
@@ -684,15 +499,15 @@ class _MagneticFieldSensor(_MemsBase):
             "IsBroken": False,
             "IsLocked": False,
             "Properties": {
-                "量程": self._ranges,
+                "量程": self.ranges,
                 "输出阻抗": 10000,
-                "偏移": self._shifting,
-                "响应系数": self._response_factor,
+                "偏移": self.shifting,
+                "响应系数": self.response_factor,
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -705,43 +520,7 @@ class _MagneticFieldSensor(_MemsBase):
         return "磁场传感器"
 
 
-class Magnetic_Field_Sensor(_MagneticFieldSensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        ranges: num_type = 0.04,
-        shifting: num_type = 3.2,
-        response_factor: num_type = 80,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            ranges=ranges,
-            shifting=shifting,
-            response_factor=response_factor,
-            identifier=identifier,
-            lock_status=lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _Photodiode(CircuitBase):
-    """光电二极管"""
-
+class Photodiode(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -749,17 +528,20 @@ class _Photodiode(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -776,8 +558,8 @@ class _Photodiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -805,37 +587,7 @@ class _Photodiode(CircuitBase):
         return "光电二极管"
 
 
-class Photodiode(_Photodiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _Photoresistor(CircuitBase):
-    """光敏电阻"""
-
+class Photoresistor(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -843,17 +595,20 @@ class _Photoresistor(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -870,8 +625,8 @@ class _Photoresistor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -899,51 +654,24 @@ class _Photoresistor(CircuitBase):
         return "光敏电阻"
 
 
-class Photoresistor(_Photoresistor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()
-
-
-class _ProximitySensor(CircuitBase):
-    """临近传感器"""
-
+class ProximitySensor(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
     _o_pin: Pin
 
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
-        self._all_pins = (("_o_pin", Pin(self, 0)),)
+        self._all_pins = (("_o_pin", Pin(self, 0, "o")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(position, identifier, lock_status, label)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -958,8 +686,8 @@ class _ProximitySensor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0},
             "DiagramRotation": 0,
@@ -981,31 +709,3 @@ class _ProximitySensor(CircuitBase):
     @property
     def o(self) -> Pin:
         return self._o_pin
-
-
-class Proximity_Sensor(_ProximitySensor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        lock_status: bool = True,
-        label: Optional[str] = None,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            lock_status,
-            label=label,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        return self.as_dict()

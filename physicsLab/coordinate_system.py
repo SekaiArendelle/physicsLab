@@ -204,7 +204,9 @@ class AngularVelocity:
         return f"{self.x},{self.z},{self.y}"
 
 
-def construct_angular_velocity_from_plsav_str(angular_velocity_str: str) -> AngularVelocity:
+def construct_angular_velocity_from_plsav_str(
+    angular_velocity_str: str,
+) -> AngularVelocity:
     try:
         x_str, z_str, y_str = angular_velocity_str.split(",")
         x = float(x_str)

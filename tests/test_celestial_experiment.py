@@ -8,18 +8,32 @@ import sys
 sys.path.append(SCRIPT_DIR)
 sys.path.append(LIBRARY_DIR)
 
-import base
+import _user
 import pathlib
+import inspect
+import re
 import unittest
 import _constant
-from physicsLab import Position, Velocity, generate_a_new_sav_path, Category
+from physicsLab import (
+    Position,
+    Velocity,
+    generate_a_new_sav_path,
+    Category,
+    find_path_of_sav_name,
+    crt_celestial_experiment,
+    load_celestial_experiment_by_file_path,
+    load_celestial_experiment_from_app,
+    load_celestial_experiment_by_sav_name,
+    ElementNotExistError,
+    ExperimentNotExistError,
+)
 from physicsLab.celestial import planets
-from physicsLab.celestial import experiment
+from physicsLab.celestial._base import CelestialBase
 
 
 class TestCelestialExperiment(unittest.TestCase):
     def test_remove_element(self):
-        with experiment.crt_celestial_experiment(None) as expe:
+        with crt_celestial_experiment(None) as expe:
             sun = planets.Sun(Position(0, 0, 0))
             earth = planets.Earth(Position(10, 0, 0))
             expe.crt_elements(sun, earth)
@@ -29,23 +43,26 @@ class TestCelestialExperiment(unittest.TestCase):
 
     def test_load_celestial_experiment_by_sav_name(self):
         name = "__test_load_celestial_experiment_by_sav_name__"
-        path = experiment.find_path_of_sav_name(name)
+        path = find_path_of_sav_name(name)
         if path is None:
-            with experiment.crt_celestial_experiment(name) as expe:
+            with crt_celestial_experiment(name) as expe:
                 expe.crt_elements(planets.Sun(Position(0, 0, 0)))
-                expe.save_to(generate_a_new_sav_path())
+                new_sav_path = generate_a_new_sav_path()
+                if not new_sav_path.parent.exists():
+                    new_sav_path.parent.mkdir(parents=True)
+                expe.save_to(new_sav_path)
 
-        expe, filepath = experiment.load_celestial_experiment_by_sav_name(name)
+        expe, filepath = load_celestial_experiment_by_sav_name(name)
         self.assertGreaterEqual(expe.get_elements_count(), 1)
         filepath.unlink()
 
     def test_merge(self):
-        with experiment.crt_celestial_experiment(None) as expe:
+        with crt_celestial_experiment(None) as expe:
             sun = planets.Sun(Position(0, 0, 0))
             expe.crt_elements(sun)
             self.assertEqual(expe.get_elements_count(), 1)
 
-            with experiment.crt_celestial_experiment(None) as expe2:
+            with crt_celestial_experiment(None) as expe2:
                 earth = planets.Earth(Position(10, 0, 0))
                 moon = planets.Moon(Position(10.1, 0, 0))
                 expe2.crt_elements(earth, moon)
@@ -54,25 +71,69 @@ class TestCelestialExperiment(unittest.TestCase):
                 self.assertEqual(expe.get_elements_count(), 3)
 
     def test_load_all_element(self):
-        with experiment.load_celestial_experiment_by_file_path(pathlib.Path(_constant.TEST_DATA_DIR) / "All-Celestial-Elements.sav") as expe:
+        with load_celestial_experiment_by_file_path(
+            pathlib.Path(_constant.TEST_DATA_DIR) / "All-Celestial-Elements.sav"
+        ) as expe:
             self.assertTrue(expe.get_elements_count() == 27)
             expe.save_to(pathlib.Path(os.devnull))
 
-
     def test_load_all_element_from_exported_sav(self):
-        with experiment.load_celestial_experiment_by_file_path(pathlib.Path(_constant.TEST_DATA_DIR) / "Export-All-Celestial-Elements.sav") as expe:
+        with load_celestial_experiment_by_file_path(
+            pathlib.Path(_constant.TEST_DATA_DIR) / "Export-All-Celestial-Elements.sav"
+        ) as expe:
             self.assertTrue(expe.get_elements_count() == 27)
             expe.save_to(pathlib.Path(os.devnull))
 
     def test_load_from_app(self):
-        with experiment.load_celestial_experiment_from_app("677500138c54132a83289f9c", Category.Discussion, user=base.user) as expe:
+        with load_celestial_experiment_from_app(
+            "677500138c54132a83289f9c", Category.Discussion, user=_user.user
+        ) as expe:
             self.assertTrue(expe.get_elements_count() == 27)
             expe.save_to(pathlib.Path(os.devnull))
+
+    def test_get_element_by_index(self):
+        with crt_celestial_experiment(None) as expe:
+            sun = planets.Sun(Position(0, 0, 0))
+            earth = planets.Earth(Position(10, 0, 0))
+            expe.crt_elements(sun, earth)
+            self.assertEqual(expe.get_element_by_index(0), sun)
+            self.assertEqual(expe.get_element_by_index(1), earth)
+
+            with self.assertRaises(ElementNotExistError):
+                expe.get_element_by_index(2)
+
+    def test_get_element_by_id(self):
+        with crt_celestial_experiment(None) as expe:
+            sun = planets.Sun(Position(0, 0, 0))
+            earth = planets.Earth(Position(10, 0, 0))
+            expe.crt_elements(sun, earth)
+            self.assertEqual(expe.get_element_by_id(sun.identifier), sun)
+            self.assertEqual(expe.get_element_by_id(earth.identifier), earth)
+
+            with self.assertRaises(ElementNotExistError):
+                expe.get_element_by_id("nonexistent_id")
+
+    def test_get_element_by_position(self):
+        with crt_celestial_experiment(None) as expe:
+            sun = planets.Sun(Position(0, 0, 0))
+            earth = planets.Earth(Position(10, 0, 0))
+            expe.crt_elements(sun, earth)
+            self.assertEqual(expe.get_element_by_position(sun.position), sun)
+            self.assertEqual(expe.get_element_by_position(earth.position), earth)
+
+            with self.assertRaises(ElementNotExistError):
+                expe.get_element_by_position(Position(1, 1, 1))
+
+    def test_load_nonexistent_file_path(self):
+        with self.assertRaises(ExperimentNotExistError):
+            load_celestial_experiment_by_file_path(
+                pathlib.Path(_constant.TEST_DATA_DIR) / "nonexistent_file.sav"
+            )
 
 
 class TestCelestialElements(unittest.TestCase):
     def test_mercury(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Mercury(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -81,7 +142,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_venus(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Venus(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -90,7 +151,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_sun(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Sun(Position(1, 2, 3), velocity=Velocity(0.1, 0.2, 0.3))
         expe.crt_elements(_instance)
 
@@ -102,7 +163,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_earth(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Earth(Position(1, 2, 3), velocity=Velocity(0, 1, 0))
         expe.crt_elements(_instance)
 
@@ -112,7 +173,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_mars(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Mars(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -121,7 +182,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_jupiter(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Jupiter(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -130,7 +191,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_saturn(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Saturn(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -139,7 +200,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_uranus(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Uranus(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -148,7 +209,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_neptune(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Neptune(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -157,7 +218,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_pluto(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Pluto(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -166,7 +227,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_blue_giant(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.BlueGiant(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -175,7 +236,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_red_giant(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.RedGiant(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -184,7 +245,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_red_dwarf(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.RedDwarf(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -193,7 +254,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_white_dwarf(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.WhiteDwarf(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -202,7 +263,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_blackhole(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Blackhole(Position(1, 2, 3), velocity=Velocity(0, 0, 0))
         expe.crt_elements(_instance)
 
@@ -212,7 +273,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_fantasy_star(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.FantasyStar(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -221,7 +282,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_moon(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Moon(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -231,7 +292,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_chocolate_ball(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.ChocolateBall(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -240,7 +301,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_continential(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Continential(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -249,7 +310,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_arctic(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Arctic(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -258,7 +319,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_arid(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Arid(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -267,7 +328,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_barren(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Barren(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -276,7 +337,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_desert(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Desert(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -285,7 +346,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_jungle(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Jungle(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -294,7 +355,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_toxic(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Toxic(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -303,7 +364,7 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_lava(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Lava(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
@@ -312,13 +373,42 @@ class TestCelestialElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
 
     def test_ocean(self):
-        expe = experiment.crt_celestial_experiment(None)
+        expe = crt_celestial_experiment(None)
         _instance = planets.Ocean(Position(1, 2, 3))
         expe.crt_elements(_instance)
 
         self.assertEqual(_instance.as_dict()["Model"], "Ocean")
         self.assertEqual(_instance.position, Position(1, 2, 3))
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
+
+    def test_all_celestial_classes_are_covered(self):
+        all_celestial_classes = {
+            name
+            for name, obj in inspect.getmembers(planets, inspect.isclass)
+            if issubclass(obj, CelestialBase)
+            and obj is not CelestialBase
+            and obj.__module__.startswith("physicsLab.celestial.")
+            and not name.startswith("_")
+        }
+
+        covered_classes = set()
+        for method_name, method in inspect.getmembers(
+            self.__class__, inspect.isfunction
+        ):
+            if not method_name.startswith("test_"):
+                continue
+            if method_name == "test_all_celestial_classes_are_covered":
+                continue
+
+            source = inspect.getsource(method)
+            covered_classes.update(re.findall(r"planets\.(\w+)\(", source))
+
+        missing = sorted(all_celestial_classes - covered_classes)
+        self.assertEqual(
+            missing,
+            [],
+            msg=f"Missing TestCelestialElements coverage for: {', '.join(missing)}",
+        )
 
 
 if __name__ == "__main__":

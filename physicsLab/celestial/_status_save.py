@@ -1,6 +1,7 @@
 import uuid
 import json
 from physicsLab import coordinate_system
+from physicsLab import errors
 from physicsLab._typing import List, Dict, num_type
 from . import _base
 
@@ -138,9 +139,13 @@ class CelestialStatusSave:
             raise TypeError(
                 f"parameter element must be of type `CelestialBase`, but got value {element} of type {type(element).__name__}"
             )
-        self.__elements.append(element)
-        self.__id2element[element.identifier] = element
-        self.__position2element[element.position] = element
+        if element.identifier in self.id2element:
+            raise errors.ElementExistError(
+                f"An element with the same identifier already exists, identifier: {element.identifier}"
+            )
+        self.elements.append(element)
+        self.id2element[element.identifier] = element
+        self.position2element[element.position] = element
 
     def append_range(self, other: "CelestialStatusSave") -> None:
         if not isinstance(other, CelestialStatusSave):
@@ -155,23 +160,33 @@ class CelestialStatusSave:
             raise TypeError(
                 f"parameter element must be of type `CelestialBase`, but got value {element} of type {type(element).__name__}"
             )
-        self.__elements.remove(element)
-        del self.__id2element[element.identifier]
-        del self.__position2element[element.position]
+        self.elements.remove(element)
+        del self.id2element[element.identifier]
+        del self.position2element[element.position]
 
     def get_element_by_index(self, index: int) -> _base.CelestialBase:
         if not isinstance(index, int):
             raise TypeError(
                 f"parameter index must be of type `int`, but got value {index} of type {type(index).__name__}"
             )
-        return self.__elements[index]
+        if index >= len(self.elements) or index < -len(self.elements):
+            raise errors.ElementNotExistError(
+                f"parameter index out of range, index: {index}, but elements count is {len(self.elements)}"
+            )
+
+        return self.elements[index]
 
     def get_element_by_id(self, identifier: str) -> _base.CelestialBase:
         if not isinstance(identifier, str):
             raise TypeError(
                 f"parameter identifier must be of type `str`, but got value {identifier} of type {type(identifier).__name__}"
             )
-        return self.__id2element[identifier]
+        if identifier not in self.id2element:
+            raise errors.ElementNotExistError(
+                f"Can't find element with identifier {identifier}"
+            )
+
+        return self.id2element[identifier]
 
     def get_element_by_position(
         self, position: coordinate_system.Position
@@ -180,7 +195,12 @@ class CelestialStatusSave:
             raise TypeError(
                 f"parameter position must be of type `Position`, but got value {position} of type {type(position).__name__}"
             )
-        return self.__position2element[position]
+        if position not in self.position2element:
+            raise errors.ElementNotExistError(
+                f"Can't find element with position {position}"
+            )
+
+        return self.position2element[position]
 
     def as_dict(self) -> dict:
         return {

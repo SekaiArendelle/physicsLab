@@ -1,5 +1,5 @@
-
 """该文件提供更方便的遍历物实社区一些数据的迭代器"""
+
 import time
 import urllib3
 import requests
@@ -17,7 +17,7 @@ def _run_task(max_retry: Optional[int], func: Callable, *args, **kwargs):
     """运行func, 直到成功或达到max_retry的条件
     @param max_retry: 最大重试次数(大于等于0), 为None时不限制重试次数
     """
-    errors.assert_true((max_retry is None or max_retry >= 0) and callable(func))
+    assert (max_retry is None or max_retry >= 0) and callable(func)
 
     if max_retry is None:
         while True:

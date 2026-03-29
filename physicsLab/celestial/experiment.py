@@ -1,8 +1,8 @@
 import time
 import json
 import pathlib
-from physicsLab import constant
 from physicsLab import errors
+from physicsLab.utils import find_path_of_sav_name
 from physicsLab import coordinate_system
 from physicsLab.enums import Category
 from physicsLab.web import User, anonymous_login
@@ -169,6 +169,7 @@ class CelestialExperiment:
                 "Multilingual": False,
             },
             "CreationDate": 0,
+            "InternalName": self.name,
             "Speed": 1.0,
             "SpeedMinimum": 0.1,
             "SpeedMaximum": 10.0,
@@ -189,7 +190,8 @@ class CelestialExperiment:
                 f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
             )
 
-        path.write_text(json.dumps(self.as_plsav_dict()), encoding="utf-8")
+        with open(path, "w", encoding="utf-8", newline='\n') as f:
+            json.dump(self.as_plsav_dict(), f, ensure_ascii=True)
 
     def merge(self, other: "CelestialExperiment") -> Self:
         if not isinstance(other, CelestialExperiment):
@@ -284,8 +286,11 @@ def load_celestial_experiment_by_file_path(
         raise TypeError(
             f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
         )
+    if not path.exists() or not path.is_file():
+        raise errors.ExperimentNotExistError(f'File "{path}" does not exist')
 
-    plasv_dict = json.loads(path.read_text(encoding="utf-8"))
+    with open(path, "r", encoding="utf-8") as f:
+        plasv_dict = json.load(f)
     if plasv_dict["Type"] != 3:
         raise errors.ExperimentTypeError(
             f'"{path}" does not contain a celestial experiment'
@@ -312,32 +317,6 @@ def load_celestial_experiment_by_file_path(
             result.crt_a_element(_dict_to_element(element_dict))
 
         return result
-
-
-def find_path_of_sav_name(sav_name: str) -> Optional[pathlib.Path]:
-    if not isinstance(sav_name, str):
-        raise TypeError(
-            f"sav_name must be of type `str`, but got value {sav_name} of type {type(sav_name).__name__}"
-        )
-
-    for file in constant.QUANTAM_PHYSICS_EXPERIMENT_DIR.glob("*.sav"):
-        if not file.is_file():
-            continue
-
-        plsav_dict: dict = json.loads(file.read_text(encoding="utf-8"))
-        if "Summary" not in plsav_dict.keys():
-            continue
-        summary_dict: Optional[dict] = plsav_dict["Summary"]
-        if summary_dict is None:
-            continue
-        if "Subject" in summary_dict.keys():
-            if summary_dict["Subject"] == sav_name:
-                return file
-        elif "Subject" in plsav_dict.keys():
-            if plsav_dict["Subject"] == sav_name:
-                return file
-
-    return None
 
 
 def load_celestial_experiment_by_sav_name(

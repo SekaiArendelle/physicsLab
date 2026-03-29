@@ -1,5 +1,3 @@
-
-
 import json
 import urllib.request
 from physicsLab._typing import Union, Dict

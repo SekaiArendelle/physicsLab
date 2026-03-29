@@ -1,12 +1,6 @@
-from physicsLab._core import _Experiment
+import uuid
 from physicsLab import coordinate_system
-from physicsLab._tools import round_data
-from .._circuit_core import (
-    CircuitBase,
-    Pin,
-    _deprecated_init_attr_experiment,
-    _deprecated_assign_element_to_experiment,
-)
+from .._base import CircuitBase, Pin
 from physicsLab._typing import (
     Optional,
     num_type,
@@ -20,11 +14,7 @@ from physicsLab._typing import (
 )
 
 
-class _NE555(CircuitBase):
-    """555定时器"""
-
-    is_bigElement = True
-
+class NE555(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_vcc_pin"], Pin],
         Tuple[Literal["_dis_pin"], Pin],
@@ -47,28 +37,26 @@ class _NE555(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_vcc_pin", Pin(self, 0)),
-            ("_dis_pin", Pin(self, 1)),
-            ("_thr_pin", Pin(self, 2)),
-            ("_ctrl_pin", Pin(self, 3)),
-            ("_trig_pin", Pin(self, 4)),
-            ("_out_pin", Pin(self, 5)),
-            ("_reset_pin", Pin(self, 6)),
-            ("_ground_pin", Pin(self, 7)),
+            ("_vcc_pin", Pin(self, 0, "vcc")),
+            ("_dis_pin", Pin(self, 1, "dis")),
+            ("_thr_pin", Pin(self, 2, "thr")),
+            ("_ctrl_pin", Pin(self, 3, "ctrl")),
+            ("_trig_pin", Pin(self, 4, "trig")),
+            ("_out_pin", Pin(self, 5, "out")),
+            ("_reset_pin", Pin(self, 6, "reset")),
+            ("_ground_pin", Pin(self, 7, "ground")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -88,8 +76,8 @@ class _NE555(CircuitBase):
                 "重设": 10,
                 "接地": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -140,38 +128,7 @@ class _NE555(CircuitBase):
         return self._ground_pin
 
 
-class NE555(_NE555):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _BasicCapacitor(CircuitBase):
-    """电容"""
-
+class BasicCapacitor(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -183,6 +140,7 @@ class _BasicCapacitor(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         peak_voltage: num_type = 16,
         capacitance: num_type = 1e-06,
         internal_resistance: num_type = 5,
@@ -219,17 +177,14 @@ class _BasicCapacitor(CircuitBase):
         self.is_ideal: bool = is_ideal
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -246,8 +201,8 @@ class _BasicCapacitor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -276,7 +231,7 @@ class _BasicCapacitor(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Capacitor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Capacitor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"peak_voltage={self.peak_voltage}, "
             f"capacitance={self.capacitance}, "
             f"internal_resistance={self.internal_resistance}, "
@@ -284,46 +239,7 @@ class _BasicCapacitor(CircuitBase):
         )
 
 
-class Basic_Capacitor(_BasicCapacitor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        peak_voltage: num_type = 16,
-        capacitance: num_type = 1e-06,
-        internal_resistance: num_type = 5,
-        is_ideal: bool = False,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            peak_voltage=peak_voltage,
-            capacitance=capacitance,
-            internal_resistance=internal_resistance,
-            is_ideal=is_ideal,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _BasicInductor(CircuitBase):
-    """电感"""
-
+class BasicInductor(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -335,6 +251,7 @@ class _BasicInductor(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         rated_current: num_type = 1,
         inductance: num_type = 0.05,
         internal_resistance: num_type = 1,
@@ -371,17 +288,14 @@ class _BasicInductor(CircuitBase):
         self.is_ideal: bool = is_ideal
 
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -398,8 +312,8 @@ class _BasicInductor(CircuitBase):
                 "理想模式": int(self.is_ideal),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -425,15 +339,10 @@ class _BasicInductor(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    def fix_inductance(self) -> Self:
-        """修正电感值的浮点误差"""
-        self.inductance = round_data(self.inductance)
-        return self
-
     @override
     def __repr__(self) -> str:
         return (
-            f"Basic_Inductor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Basic_Inductor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"rated_current={self.rated_current}, "
             f"inductance={self.inductance}, "
             f"internal_resistance={self.internal_resistance}, "
@@ -441,46 +350,7 @@ class _BasicInductor(CircuitBase):
         )
 
 
-class Basic_Inductor(_BasicInductor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        rated_current: num_type = 1,
-        inductance: num_type = 0.05,
-        internal_resistance: num_type = 1,
-        is_ideal: bool = False,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            rated_current=rated_current,
-            inductance=inductance,
-            internal_resistance=internal_resistance,
-            is_ideal=is_ideal,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _BasicDiode(CircuitBase):
-    """二极管"""
-
+class BasicDiode(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -488,22 +358,20 @@ class _BasicDiode(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -520,8 +388,8 @@ class _BasicDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "电压": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -548,38 +416,7 @@ class _BasicDiode(CircuitBase):
         return 2
 
 
-class Basic_Diode(_BasicDiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _LightEmittingDiode(CircuitBase):
-    """发光二极管"""
-
+class LightEmittingDiode(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -587,22 +424,20 @@ class _LightEmittingDiode(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -620,8 +455,8 @@ class _LightEmittingDiode(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流1": 0.0, "电压1": 0.0, "功率1": 0.0, "亮度1": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -648,57 +483,24 @@ class _LightEmittingDiode(CircuitBase):
         return 2
 
 
-class Light_Emitting_Diode(_LightEmittingDiode):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _GroundComponent(CircuitBase):
-    """接地元件"""
-
+class GroundComponent(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
     _i_pin: Pin
 
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (("_i_pin", Pin(self, 0)),)
+        self._all_pins = (("_i_pin", Pin(self, 0, "i")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -709,8 +511,8 @@ class _GroundComponent(CircuitBase):
             "IsLocked": False,
             "Properties": {"锁定": int(self.lock_status)},
             "Statistics": {"电流": 0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -733,38 +535,7 @@ class _GroundComponent(CircuitBase):
         return self._i_pin
 
 
-class Ground_Component(_GroundComponent):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _Transformer(CircuitBase):
-    """理想变压器"""
-
+class Transformer(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -779,24 +550,22 @@ class _Transformer(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -820,8 +589,8 @@ class _Transformer(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -856,38 +625,7 @@ class _Transformer(CircuitBase):
         return self._r_low_pin
 
 
-class Transformer(_Transformer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _TappedTransformer(CircuitBase):
-    """中心抽头变压器"""
-
+class TappedTransformer(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -904,25 +642,23 @@ class _TappedTransformer(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
-            ("_mid_pin", Pin(self, 4)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
+            ("_mid_pin", Pin(self, 4, "mid")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -945,8 +681,8 @@ class _TappedTransformer(CircuitBase):
                 "电流2": 0.0,
                 "电压2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -985,38 +721,7 @@ class _TappedTransformer(CircuitBase):
         return self._mid_pin
 
 
-class Tapped_Transformer(_TappedTransformer):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _MutualInductor(CircuitBase):
-    """理想互感"""
-
+class MutualInductor(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -1031,24 +736,22 @@ class _MutualInductor(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1071,8 +774,8 @@ class _MutualInductor(CircuitBase):
                 "电压2": 0.0,
                 "功率2": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1107,38 +810,7 @@ class _MutualInductor(CircuitBase):
         return self._r_low_pin
 
 
-class Mutual_Inductor(_MutualInductor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _Rectifier(CircuitBase):
-    """全波整流器"""
-
+class Rectifier(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_r_up_pin"], Pin],
@@ -1153,24 +825,22 @@ class _Rectifier(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_r_up_pin", Pin(self, 1)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_r_low_pin", Pin(self, 3)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_r_up_pin", Pin(self, 1, "r_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_r_low_pin", Pin(self, 3, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1185,8 +855,8 @@ class _Rectifier(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1221,38 +891,7 @@ class _Rectifier(CircuitBase):
         return self._r_low_pin
 
 
-class Rectifier(_Rectifier):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _Transistor(CircuitBase):
-    """三极管"""
-
+class Transistor(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_B_pin"], Pin],
         Tuple[Literal["_C_pin"], Pin],
@@ -1268,6 +907,7 @@ class _Transistor(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         is_PNP: bool = True,
         gain: num_type = 100,
         max_power: num_type = 1000,
@@ -1293,18 +933,15 @@ class _Transistor(CircuitBase):
         self.max_power: num_type = max_power
 
         self._all_pins = (
-            ("_B_pin", Pin(self, 0)),
-            ("_C_pin", Pin(self, 1)),
-            ("_E_pin", Pin(self, 2)),
+            ("_B_pin", Pin(self, 0, "B")),
+            ("_C_pin", Pin(self, 1, "C")),
+            ("_E_pin", Pin(self, 2, "E")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1320,8 +957,8 @@ class _Transistor(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电压BC": 0.0, "电压BE": 0.0, "电压CE": 0.0, "功率": 0.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1341,7 +978,7 @@ class _Transistor(CircuitBase):
 
     def __repr__(self) -> str:
         res = (
-            f"Transistor({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Transistor({self.position.x}, {self.position.y}, {self.position.z}, "
             f"is_PNP={self.is_PNP}"
         )
 
@@ -1365,44 +1002,7 @@ class _Transistor(CircuitBase):
         return self._E_pin
 
 
-class Transistor(_Transistor):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        is_PNP: bool = True,
-        gain: num_type = 100,
-        max_power: num_type = 1000,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            is_PNP=is_PNP,
-            gain=gain,
-            max_power=max_power,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _Comparator(CircuitBase):
-    """比较器"""
-
+class Comparator(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_o_pin"], Pin],
         Tuple[Literal["_i_up_pin"], Pin],
@@ -1415,23 +1015,21 @@ class _Comparator(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_o_pin", Pin(self, 0)),
-            ("_i_up_pin", Pin(self, 1)),
-            ("_i_low_pin", Pin(self, 2)),
+            ("_o_pin", Pin(self, 0, "o")),
+            ("_i_up_pin", Pin(self, 1, "i_up")),
+            ("_i_low_pin", Pin(self, 2, "i_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1442,8 +1040,8 @@ class _Comparator(CircuitBase):
             "IsLocked": False,
             "Properties": {"高电平": 3.0, "低电平": 0.0, "锁定": int(self.lock_status)},
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1474,38 +1072,7 @@ class _Comparator(CircuitBase):
         return self._i_low_pin
 
 
-class Comparator(_Comparator):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _OperationalAmplifier(CircuitBase):
-    """运算放大器"""
-
+class OperationalAmplifier(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_i_neg_pin"], Pin],
         Tuple[Literal["_i_pos_pin"], Pin],
@@ -1521,6 +1088,7 @@ class _OperationalAmplifier(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         gain: num_type = 10_000_000,
         max_voltage: num_type = 1000,
         min_voltage: num_type = -1000,
@@ -1552,18 +1120,15 @@ class _OperationalAmplifier(CircuitBase):
         self.min_voltage: num_type = min_voltage
 
         self._all_pins = (
-            ("_i_neg_pin", Pin(self, 0)),
-            ("_i_pos_pin", Pin(self, 1)),
-            ("_o_pin", Pin(self, 2)),
+            ("_i_neg_pin", Pin(self, 0, "i_neg")),
+            ("_i_pos_pin", Pin(self, 1, "i_pos")),
+            ("_o_pin", Pin(self, 2, "o")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1585,8 +1150,8 @@ class _OperationalAmplifier(CircuitBase):
                 "输出电流": 0,
                 "输出功率": 0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1598,7 +1163,7 @@ class _OperationalAmplifier(CircuitBase):
     @override
     def __repr__(self) -> str:
         return (
-            f"Operational_Amplifier({self._position.x}, {self._position.y}, {self._position.z}, "
+            f"Operational_Amplifier({self.position.x}, {self.position.y}, {self.position.z}, "
             f"gain={self.gain}, "
             f"max_voltage={self.max_voltage}, "
             f"min_voltage={self.min_voltage})"
@@ -1626,44 +1191,7 @@ class _OperationalAmplifier(CircuitBase):
         return self._o_pin
 
 
-class Operational_Amplifier(_OperationalAmplifier):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        gain: num_type = 10_000_000,
-        max_voltage: num_type = 1000,
-        min_voltage: num_type = -1000,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            gain=gain,
-            max_voltage=max_voltage,
-            min_voltage=min_voltage,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _RelayComponent(CircuitBase):
-    """继电器"""
-
+class RelayComponent(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_l_up_pin"], Pin],
         Tuple[Literal["_l_low_pin"], Pin],
@@ -1680,6 +1208,7 @@ class _RelayComponent(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         pull_in_current: num_type = 0.02,
         rated_current: num_type = 10,
         coil_inductance: num_type = 0.2,
@@ -1711,20 +1240,17 @@ class _RelayComponent(CircuitBase):
         self.coil_resistance: num_type = coil_resistance
 
         self._all_pins = (
-            ("_l_up_pin", Pin(self, 0)),
-            ("_l_low_pin", Pin(self, 2)),
-            ("_mid_pin", Pin(self, 1)),
-            ("_r_up_pin", Pin(self, 3)),
-            ("_r_low_pin", Pin(self, 4)),
+            ("_l_up_pin", Pin(self, 0, "l_up")),
+            ("_l_low_pin", Pin(self, 2, "l_low")),
+            ("_mid_pin", Pin(self, 1, "mid")),
+            ("_r_up_pin", Pin(self, 3, "r_up")),
+            ("_r_low_pin", Pin(self, 4, "r_low")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1742,8 +1268,8 @@ class _RelayComponent(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1782,46 +1308,7 @@ class _RelayComponent(CircuitBase):
         return self._r_low_pin
 
 
-class Relay_Component(_RelayComponent):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        pull_in_current: num_type = 0.02,
-        rated_current: num_type = 10,
-        coil_inductance: num_type = 0.2,
-        coil_resistance: num_type = 20,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            pull_in_current=pull_in_current,
-            rated_current=rated_current,
-            coil_inductance=coil_inductance,
-            coil_resistance=coil_resistance,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _N_MOSFET(CircuitBase):
-    """N-MOSFET"""
-
+class N_MOSFET(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_D_pin"], Pin],
         Tuple[Literal["_S_pin"], Pin],
@@ -1834,6 +1321,7 @@ class _N_MOSFET(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         beta: num_type = 0.027,
         threshold: num_type = 1.5,
         max_power: num_type = 1000,
@@ -1859,18 +1347,15 @@ class _N_MOSFET(CircuitBase):
         self.max_power: num_type = max_power
 
         self._all_pins = (
-            ("_D_pin", Pin(self, 2)),
-            ("_S_pin", Pin(self, 1)),
-            ("_G_pin", Pin(self, 0)),
+            ("_D_pin", Pin(self, 2, "D")),
+            ("_S_pin", Pin(self, 1, "S")),
+            ("_G_pin", Pin(self, 0, "G")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1893,8 +1378,8 @@ class _N_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 0.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -1925,44 +1410,7 @@ class _N_MOSFET(CircuitBase):
         return self._G_pin
 
 
-class N_MOSFET(_N_MOSFET):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        beta: num_type = 0.027,
-        threshold: num_type = 1.5,
-        max_power: num_type = 1000,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            beta=beta,
-            threshold=threshold,
-            max_power=max_power,
-            identifier=identifier,
-            label=label,
-            lock_status=lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _P_MOSFET(CircuitBase):
-    """P-MOSFET"""
-
+class P_MOSFET(CircuitBase):
     _all_pins: Tuple[
         Tuple[Literal["_G_pin"], Pin],
         Tuple[Literal["_D_pin"], Pin],
@@ -1975,23 +1423,21 @@ class _P_MOSFET(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_G_pin", Pin(self, 0)),
-            ("_D_pin", Pin(self, 1)),
-            ("_S_pin", Pin(self, 2)),
+            ("_G_pin", Pin(self, 0, "G")),
+            ("_D_pin", Pin(self, 1, "D")),
+            ("_S_pin", Pin(self, 2, "S")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2014,8 +1460,8 @@ class _P_MOSFET(CircuitBase):
                 "功率": 0.0,
                 "状态": 1.0,
             },
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2046,38 +1492,7 @@ class _P_MOSFET(CircuitBase):
         return self._D_pin
 
 
-class P_MOSFET(_P_MOSFET):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _CurrentSource(CircuitBase):
-    """电流源"""
-
+class CurrentSource(CircuitBase):
     _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -2085,22 +1500,20 @@ class _CurrentSource(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2115,8 +1528,8 @@ class _CurrentSource(CircuitBase):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2143,38 +1556,7 @@ class _CurrentSource(CircuitBase):
         return 2
 
 
-class Current_Source(_CurrentSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
 class _SourceElectricity(CircuitBase):
-    """波形发生器基类"""
-
     _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
     _red_pin: Pin
     _black_pin: Pin
@@ -2182,23 +1564,20 @@ class _SourceElectricity(CircuitBase):
     def __init__(
         self,
         position: coordinate_system.Position,
-        /,
-        identifier: Optional[str] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
+        rotation: coordinate_system.Rotation,
+        identifier: str,
+        label: Optional[str],
+        lock_status: bool,
     ) -> None:
         self._all_pins = (
-            ("_red_pin", Pin(self, 0)),
-            ("_black_pin", Pin(self, 1)),
+            ("_red_pin", Pin(self, 0, "red")),
+            ("_black_pin", Pin(self, 1, "black")),
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
-        super().__init__(
-            position,
-            identifier,
-            lock_status,
-            label,
-        )
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, lock_status, label)
 
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
@@ -2216,18 +1595,19 @@ class _SourceElectricity(CircuitBase):
         return 2
 
 
-class _SinewaveSource(_SourceElectricity):
-    """正弦波发生器"""
-
+class SinewaveSource(_SourceElectricity):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(position, identifier, label, lock_status)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, label, lock_status)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2245,8 +1625,8 @@ class _SinewaveSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2258,47 +1638,19 @@ class _SinewaveSource(_SourceElectricity):
         return "正弦波发生器"
 
 
-class Sinewave_Source(_SinewaveSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _SquareSource(_SourceElectricity):
-    """方波发生器"""
-
+class SquareSource(_SourceElectricity):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(position, identifier, label, lock_status)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, label, lock_status)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2316,8 +1668,8 @@ class _SquareSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2329,47 +1681,19 @@ class _SquareSource(_SourceElectricity):
         return "方波发生器"
 
 
-class Square_Source(_SquareSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _TriangleSource(_SourceElectricity):
-    """三角波发生器"""
-
+class TriangleSource(_SourceElectricity):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(position, identifier, label, lock_status)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, label, lock_status)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2387,8 +1711,8 @@ class _TriangleSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2400,47 +1724,19 @@ class _TriangleSource(_SourceElectricity):
         return "三角波发生器"
 
 
-class Triangle_Source(_TriangleSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _SawtoothSource(_SourceElectricity):
-    """锯齿波发生器"""
-
+class SawtoothSource(_SourceElectricity):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(position, identifier, label, lock_status)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, label, lock_status)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2458,8 +1754,8 @@ class _SawtoothSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2471,47 +1767,19 @@ class _SawtoothSource(_SourceElectricity):
         return "锯齿波发生器"
 
 
-class Sawtooth_Source(_SawtoothSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
-
-
-class _PulseSource(_SourceElectricity):
-    """尖峰波发生器"""
-
+class PulseSource(_SourceElectricity):
     def __init__(
         self,
         position: coordinate_system.Position,
+        rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
         # this class is deprecated
-        super().__init__(position, identifier, label, lock_status)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
+        super().__init__(position, rotation, identifier, label, lock_status)
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2529,8 +1797,8 @@ class _PulseSource(_SourceElectricity):
                 "锁定": int(self.lock_status),
             },
             "Statistics": {"电流": 0.0, "功率": 0.0, "电压": -3.0},
-            "Position": self._position.as_postion_str_in_plsav(),
-            "Rotation": self._rotation.as_rotation_str_in_plsav(),
+            "Position": self.position.as_postion_str_in_plsav(),
+            "Rotation": self.rotation.as_rotation_str_in_plsav(),
             "DiagramCached": False,
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
@@ -2540,32 +1808,3 @@ class _PulseSource(_SourceElectricity):
     @staticmethod
     def zh_name() -> str:
         return "尖峰波发生器"
-
-
-class Pulse_Source(_PulseSource):
-    def __init__(
-        self,
-        x: num_type,
-        y: num_type,
-        z: num_type,
-        /,
-        *,
-        identifier: Optional[str] = None,
-        experiment: Optional[_Experiment] = None,
-        label: Optional[str] = None,
-        lock_status: bool = True,
-    ) -> None:
-        # this class is deprecated
-        _deprecated_init_attr_experiment(self, experiment=experiment)
-        super().__init__(
-            coordinate_system.Position(x, y, z),
-            identifier,
-            label,
-            lock_status,
-        )
-        _deprecated_assign_element_to_experiment(self)
-
-    @property
-    def data(self) -> CircuitElementData:
-        # [[depreccated]]
-        return self.as_dict()
