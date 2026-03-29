@@ -8,7 +8,7 @@ import sys
 sys.path.append(SCRIPT_DIR)
 sys.path.append(LIBRARY_DIR)
 
-import base
+import _user
 import pathlib
 import unittest
 import _constant
@@ -82,7 +82,7 @@ class TestCelestialExperiment(unittest.TestCase):
 
     def test_load_from_app(self):
         with load_celestial_experiment_from_app(
-            "677500138c54132a83289f9c", Category.Discussion, user=base.user
+            "677500138c54132a83289f9c", Category.Discussion, user=_user.user
         ) as expe:
             self.assertTrue(expe.get_elements_count() == 27)
             expe.save_to(pathlib.Path(os.devnull))

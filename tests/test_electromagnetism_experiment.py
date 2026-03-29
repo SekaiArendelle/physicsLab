@@ -11,7 +11,7 @@ sys.path.append(LIBRARY_DIR)
 import pathlib
 import unittest
 import _constant
-import base
+import _user
 from physicsLab import (
     Position,
     Velocity,
@@ -70,7 +70,7 @@ class TestElectromagnetismExperiment(unittest.TestCase):
 
     def test_load_electromagnetism_experiment_from_app(self):
         with load_electromagnetism_experiment_from_app(
-            "67750037c45f930f41ccee02", Category.Discussion, base.user
+            "67750037c45f930f41ccee02", Category.Discussion, _user.user
         ) as expe:
             self.assertEqual(expe.get_elements_count(), 7)
 

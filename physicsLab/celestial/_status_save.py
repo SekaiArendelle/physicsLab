@@ -169,6 +169,10 @@ class CelestialStatusSave:
             raise TypeError(
                 f"parameter index must be of type `int`, but got value {index} of type {type(index).__name__}"
             )
+        if index >= len(self.elements) or index < -len(self.elements):
+            raise errors.ElementNotExistError(
+                f"parameter index out of range, index: {index}, but elements count is {len(self.elements)}"
+            )
         return self.elements[index]
 
     def get_element_by_id(self, identifier: str) -> _base.CelestialBase:

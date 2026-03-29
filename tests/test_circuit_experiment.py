@@ -11,7 +11,7 @@ sys.path.append(LIBRARY_DIR)
 import pathlib
 import unittest
 
-import base
+import _user
 import _constant
 
 from physicsLab import (
@@ -118,7 +118,7 @@ class TestCircuitExperiment(unittest.TestCase):
 
     def test_load_from_app(self):
         with load_circuit_experiment_from_app(
-            "6774ffb4c45f930f41ccedf8", Category.Discussion, user=base.user
+            "6774ffb4c45f930f41ccedf8", Category.Discussion, user=_user.user
         ) as expe:
             self.assertEqual(expe.get_elements_count(), 91)
             expe.save_to(pathlib.Path(os.devnull))
