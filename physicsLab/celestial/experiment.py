@@ -169,6 +169,7 @@ class CelestialExperiment:
                 "Multilingual": False,
             },
             "CreationDate": 0,
+            "InternalName": self.name,
             "Speed": 1.0,
             "SpeedMinimum": 0.1,
             "SpeedMaximum": 10.0,
