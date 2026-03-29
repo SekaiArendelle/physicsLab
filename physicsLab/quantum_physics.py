@@ -1,9 +1,9 @@
-import os
-import json
 import platform
 
+import os
+import json
+
 from typing import Optional, Tuple
-from physicsLab.constant import WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR
 
 
 def get_quantum_physics_version() -> Optional[Tuple[int, int, int]]:
@@ -11,6 +11,7 @@ def get_quantum_physics_version() -> Optional[Tuple[int, int, int]]:
     if platform.system() != "Windows":
         return None
 
+    from physicsLab.constant import WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR
     try:
         a_dir = os.listdir(os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Unity"))
         if len(a_dir) != 1:
@@ -32,6 +33,7 @@ def get_quantum_physics_path() -> Optional[str]:
     if platform.system() != "Windows":
         return None
 
+    from physicsLab.constant import WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR
     with open(os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Player-prev.log")) as f:
         f.readline()
         f.readline()

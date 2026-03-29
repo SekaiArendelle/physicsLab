@@ -1,4 +1,13 @@
 import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LIBRARY_DIR = os.path.dirname(SCRIPT_DIR)
+
+import sys
+
+sys.path.append(SCRIPT_DIR)
+sys.path.append(LIBRARY_DIR)
+
 import pathlib
 import unittest
 
