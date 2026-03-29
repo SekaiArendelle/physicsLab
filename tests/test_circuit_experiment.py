@@ -764,7 +764,9 @@ class TestCircuitElements(unittest.TestCase):
         }
 
         covered_classes = set()
-        for method_name, method in inspect.getmembers(self.__class__, inspect.isfunction):
+        for method_name, method in inspect.getmembers(
+            self.__class__, inspect.isfunction
+        ):
             if not method_name.startswith("test_"):
                 continue
             if method_name == "test_all_circuit_element_subclasses_are_covered":

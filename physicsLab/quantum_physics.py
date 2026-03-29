@@ -12,13 +12,20 @@ def get_quantum_physics_version() -> Optional[Tuple[int, int, int]]:
         return None
 
     from physicsLab.constant import WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR
+
     try:
-        a_dir = os.listdir(os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Unity"))
+        a_dir = os.listdir(
+            os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Unity")
+        )
         if len(a_dir) != 1:
             return None
 
         a_file = os.path.join(
-            WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Unity", a_dir[0], "Analytics", "values"
+            WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR,
+            "Unity",
+            a_dir[0],
+            "Analytics",
+            "values",
         )
 
         with open(a_file) as f:
@@ -34,7 +41,10 @@ def get_quantum_physics_path() -> Optional[str]:
         return None
 
     from physicsLab.constant import WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR
-    with open(os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Player-prev.log")) as f:
+
+    with open(
+        os.path.join(WIN_QUANTAM_PHYSICS_STORAGE_STRING_DIR, "Player-prev.log")
+    ) as f:
         f.readline()
         f.readline()
         res = os.path.dirname(os.path.dirname(f.readline()[25:-2]))

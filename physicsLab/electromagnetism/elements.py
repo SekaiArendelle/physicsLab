@@ -3,6 +3,7 @@ from physicsLab import coordinate_system
 from ._base import ElectromagnetismBase
 from physicsLab._typing import Optional
 
+
 class NegativeCharge(ElectromagnetismBase):
     def __init__(
         self,

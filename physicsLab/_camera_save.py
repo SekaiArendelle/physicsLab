@@ -3,6 +3,7 @@ from enum import Enum, unique
 from physicsLab._typing import num_type
 from physicsLab import coordinate_system
 
+
 @unique
 class CameraMode(Enum):
     circuit_mode = 0

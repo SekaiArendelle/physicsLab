@@ -1,4 +1,3 @@
-
 from enum import Enum, unique
 
 
@@ -77,10 +76,12 @@ class GetUserMode(Enum):
     by_id = 0
     by_name = 1
 
+
 @unique
 class SwitchState(Enum):
     OFF = 0
     ON = 1
+
 
 @unique
 class PDTSwitchState(Enum):

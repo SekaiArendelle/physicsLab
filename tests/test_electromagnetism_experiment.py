@@ -225,7 +225,9 @@ class TestElectromagnetismElements(unittest.TestCase):
         }
 
         covered_classes = set()
-        for method_name, method in inspect.getmembers(self.__class__, inspect.isfunction):
+        for method_name, method in inspect.getmembers(
+            self.__class__, inspect.isfunction
+        ):
             if not method_name.startswith("test_"):
                 continue
             if method_name == "test_all_electromagnetism_classes_are_covered":

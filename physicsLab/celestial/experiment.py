@@ -189,7 +189,8 @@ class CelestialExperiment:
                 f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
             )
 
-        path.write_text(json.dumps(self.as_plsav_dict()), encoding="utf-8")
+        with open(path, "w", encoding="utf-8", newline='\n') as f:
+            json.dump(self.as_plsav_dict(), f, ensure_ascii=True)
 
     def merge(self, other: "CelestialExperiment") -> Self:
         if not isinstance(other, CelestialExperiment):
@@ -287,7 +288,7 @@ def load_celestial_experiment_by_file_path(
     if not path.exists() or not path.is_file():
         raise errors.ExperimentNotExistError(f'File "{path}" does not exist')
 
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         plasv_dict = json.load(f)
     if plasv_dict["Type"] != 3:
         raise errors.ExperimentTypeError(

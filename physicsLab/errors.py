@@ -6,12 +6,13 @@ BUG_REPORT: str = (
     "with your code, *.sav and traceback / coredump for Python"
 )
 
+
 class UnreachableError(Exception):
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def __str__(self) -> str:
         return f"Unreachable touched, {BUG_REPORT}"
+
 
 def unreachable() -> NoReturn:
     raise UnreachableError()
@@ -56,14 +57,12 @@ class ExperimentTypeError(Exception):
 
     __err_msg: str
 
-    def __init__(
-        self,
-        err_msg: str
-    ) -> None:
+    def __init__(self, err_msg: str) -> None:
         self.__err_msg = err_msg
 
     def __str__(self) -> str:
         return self.__err_msg
+
 
 class ElementNotExistError(Exception):
     def __init__(self, err_msg: str = "Can't find element") -> None:
@@ -71,6 +70,7 @@ class ElementNotExistError(Exception):
 
     def __str__(self) -> str:
         return self.err_msg
+
 
 class ElementExistError(Exception):
     def __init__(self, err_msg: str) -> None:

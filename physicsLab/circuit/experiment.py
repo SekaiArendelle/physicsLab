@@ -255,7 +255,8 @@ class CircuitExperiment:
             raise TypeError(
                 f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
             )
-        path.write_text(json.dumps(self.as_plsav_dict()), encoding="utf-8")
+        with path.open("w", encoding="utf-8", newline='\n') as f:
+            json.dump(self.as_plsav_dict(), f, ensure_ascii=True)
 
     def merge(self, other: "CircuitExperiment") -> Self:
         if not isinstance(other, CircuitExperiment):
