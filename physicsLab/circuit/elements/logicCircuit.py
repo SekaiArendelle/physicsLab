@@ -26,7 +26,7 @@ class LogicInput(CircuitBase):
         output_status: bool = False,
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
@@ -52,6 +52,8 @@ class LogicInput(CircuitBase):
         self._all_pins = (("_o_pin", OutputPin(self, 0, "o")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -111,7 +113,7 @@ class LogicOutput(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
@@ -128,6 +130,8 @@ class LogicOutput(CircuitBase):
         self._all_pins = (("_i_pin", InputPin(self, 0, "i")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -203,6 +207,8 @@ class _2PinGate(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def all_pins(
@@ -230,10 +236,12 @@ class YesGate(_2PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -282,10 +290,12 @@ class NoGate(_2PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -364,6 +374,8 @@ class _3PinGate(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def all_pins(
@@ -395,10 +407,12 @@ class OrGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -447,10 +461,12 @@ class AndGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -499,10 +515,12 @@ class NorGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -551,10 +569,12 @@ class NandGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -603,10 +623,12 @@ class XorGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -655,10 +677,12 @@ class XnorGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -707,10 +731,12 @@ class ImpGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -759,10 +785,12 @@ class NimpGate(_3PinGate):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -825,6 +853,8 @@ class _BigElement(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     @staticmethod
@@ -850,10 +880,12 @@ class HalfAdder(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -943,10 +975,12 @@ class FullAdder(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1039,10 +1073,12 @@ class HalfSubtractor(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1137,10 +1173,12 @@ class FullSubtractor(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1250,10 +1288,12 @@ class Multiplier(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1361,10 +1401,12 @@ class DFlipflop(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1452,10 +1494,12 @@ class TFlipflop(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1543,10 +1587,12 @@ class RealTFlipflop(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1636,10 +1682,12 @@ class JKFlipflop(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1736,10 +1784,12 @@ class Counter(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1841,10 +1891,12 @@ class RandomGenerator(_BigElement):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             rotation,
@@ -1955,7 +2007,7 @@ class EightBitInput(CircuitBase):
         input_num: int,
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
@@ -1986,6 +2038,8 @@ class EightBitInput(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -2104,7 +2158,7 @@ class EightBitDisplay(CircuitBase):
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
         high_level: num_type = 3,
         low_level: num_type = 0,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
@@ -2130,6 +2184,8 @@ class EightBitDisplay(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -2217,7 +2273,7 @@ class SchmittTrigger(CircuitBase):
         high_level: num_type = 5.0,
         low_level: Optional[num_type] = None,
         inverted: bool = False,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
@@ -2244,6 +2300,8 @@ class SchmittTrigger(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:

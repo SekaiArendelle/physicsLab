@@ -92,7 +92,10 @@ class TestCircuitExperiment(unittest.TestCase):
             with crt_circuit_experiment(name) as expe:
                 a = elements.LogicInput(Position(0, 0, 0), Rotation(0, 0, 180))
                 expe.crt_a_element(a)
-                expe.save_to(generate_a_new_sav_path())
+                new_sav_path = generate_a_new_sav_path()
+                if not new_sav_path.parent.exists():
+                    new_sav_path.parent.mkdir(parents=True)
+                expe.save_to(new_sav_path)
 
         expe, filepath = load_circuit_experiment_by_sav_name(name)
         self.assertGreaterEqual(expe.get_elements_count(), 1)

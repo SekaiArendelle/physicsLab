@@ -57,9 +57,12 @@ class TestElectromagnetismExperiment(unittest.TestCase):
             "__test_load_electromagnetism_experiment_by_sav_name__"
         )
         if path is None:
+            new_sav_path = generate_a_new_sav_path()
+            if not new_sav_path.parent.exists():
+                new_sav_path.parent.mkdir(parents=True)
             crt_electromagnetism_experiment(
                 "__test_load_electromagnetism_experiment_by_sav_name__"
-            ).save_to(generate_a_new_sav_path())
+            ).save_to(new_sav_path)
         expe, filepath = load_electromagnetism_experiment_by_sav_name(
             "__test_load_electromagnetism_experiment_by_sav_name__"
         )

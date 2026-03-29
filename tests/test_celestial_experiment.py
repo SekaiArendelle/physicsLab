@@ -43,7 +43,10 @@ class TestCelestialExperiment(unittest.TestCase):
         if path is None:
             with crt_celestial_experiment(name) as expe:
                 expe.crt_elements(planets.Sun(Position(0, 0, 0)))
-                expe.save_to(generate_a_new_sav_path())
+                new_sav_path = generate_a_new_sav_path()
+                if not new_sav_path.parent.exists():
+                    new_sav_path.parent.mkdir(parents=True)
+                expe.save_to(new_sav_path)
 
         expe, filepath = load_celestial_experiment_by_sav_name(name)
         self.assertGreaterEqual(expe.get_elements_count(), 1)

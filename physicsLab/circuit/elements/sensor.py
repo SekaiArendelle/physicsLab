@@ -112,11 +112,13 @@ class Accelerometer(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.2290000021457672,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -176,7 +178,7 @@ class AnalogJoystick(CircuitBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
@@ -191,6 +193,8 @@ class AnalogJoystick(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -254,11 +258,13 @@ class AttitudeSensor(_MemsBase):
         ranges: num_type = 180,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -306,11 +312,13 @@ class GravitySensor(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -358,11 +366,13 @@ class Gyroscope(_MemsBase):
         ranges: num_type = 150,
         shifting: num_type = 2.5,
         response_factor: num_type = 0.0125,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -410,11 +420,13 @@ class LinearAccelerometer(_MemsBase):
         ranges: num_type = 2,
         shifting: num_type = 0.75,
         response_factor: num_type = 0.229,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -462,11 +474,13 @@ class MagneticFieldSensor(_MemsBase):
         ranges: num_type = 0.04,
         shifting: num_type = 3.2,
         response_factor: num_type = 80,
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         # this class is deprecated
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(
             position,
             ranges=ranges,
@@ -515,7 +529,7 @@ class Photodiode(CircuitBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
@@ -525,6 +539,8 @@ class Photodiode(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -580,7 +596,7 @@ class Photoresistor(CircuitBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
@@ -590,6 +606,8 @@ class Photoresistor(CircuitBase):
         )
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:
@@ -644,13 +662,15 @@ class ProximitySensor(CircuitBase):
         self,
         position: coordinate_system.Position,
         rotation: coordinate_system.Rotation = coordinate_system.Rotation(0, 0, 180),
-        identifier: str = str(uuid.uuid4()),
+        identifier: Optional[str] = None,
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
         self._all_pins = (("_o_pin", Pin(self, 0, "o")),)
         for name, pin in self._all_pins:
             setattr(self, name, pin)
+        if identifier is None:
+            identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
     def as_dict(self) -> CircuitElementData:

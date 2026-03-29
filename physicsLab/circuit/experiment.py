@@ -313,7 +313,7 @@ def _dict_to_element(element_dict: dict) -> CircuitBase:
     )
     identifier = element_dict["Identifier"]
     lock_status = bool(element_dict["IsLocked"])
-    label = element_dict["Label"]
+    label = element_dict.get("Label")
     props = element_dict["Properties"]
 
     if model_id == "555 Timer":
