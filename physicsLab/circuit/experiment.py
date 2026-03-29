@@ -127,21 +127,8 @@ class CircuitExperiment:
         if source_pin == target_pin:
             raise errors.InvalidWireError("Cannot create a wire between the same pin")
 
-        if (
-            source_pin.element not in self.status_save.elements
-            or target_pin.element not in self.status_save.elements
-        ):
-            raise errors.InvalidWireError(
-                "Cannot create a wire between pins from another experiment"
-            )
-
         wire_info = WireInfo(color=color)
-        if self.status_save.circuit_graph.has_edge(source_pin, target_pin):
-            self.status_save.circuit_graph.assign_edge(
-                source_pin, target_pin, wire_info
-            )
-        else:
-            self.status_save.append_wire(source_pin, target_pin, wire_info)
+        self.status_save.append_wire(source_pin, target_pin, wire_info)
 
         return self
 
@@ -159,10 +146,8 @@ class CircuitExperiment:
         return self
 
     def del_a_wire(self, source_pin: Pin, target_pin: Pin) -> Self:
-        try:
-            self.status_save.remove_wire(source_pin, target_pin)
-        except ValueError as e:
-            raise errors.InvalidWireError(str(e))
+        self.status_save.remove_wire(source_pin, target_pin)
+
         return self
 
     def clear_wires(self) -> Self:
