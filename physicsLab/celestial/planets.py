@@ -59,6 +59,15 @@ class Mercury(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Mercury("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -119,6 +128,15 @@ class Venus(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Venus("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -181,6 +199,15 @@ class Earth(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Earth("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -241,6 +268,15 @@ class Mars(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Mars("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -303,6 +339,15 @@ class Jupiter(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Jupiter("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -363,6 +408,15 @@ class Saturn(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Saturn("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -425,6 +479,15 @@ class Uranus(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Uranus("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -485,6 +548,15 @@ class Neptune(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Neptune("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -547,6 +619,15 @@ class Pluto(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Pluto("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -607,6 +688,15 @@ class Sun(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Sun("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -669,6 +759,15 @@ class BlueGiant(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"BlueGiant("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -729,6 +828,15 @@ class RedGiant(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"RedGiant("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -791,6 +899,15 @@ class RedDwarf(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"RedDwarf("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -851,6 +968,15 @@ class WhiteDwarf(CelestialBase):
             "Aphelion": 10.0,
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"WhiteDwarf("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -913,6 +1039,15 @@ class Blackhole(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Blackhole("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -973,6 +1108,15 @@ class FantasyStar(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"FantasyStar("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -1035,6 +1179,15 @@ class Moon(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Moon("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1095,6 +1248,15 @@ class ChocolateBall(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"ChocolateBall("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -1157,6 +1319,15 @@ class Continential(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Continential("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1217,6 +1388,15 @@ class Arctic(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Arctic("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -1279,6 +1459,15 @@ class Arid(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Arid("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1339,6 +1528,15 @@ class Barren(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Barren("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -1401,6 +1599,15 @@ class Desert(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Desert("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1461,6 +1668,15 @@ class Jungle(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Jungle("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod
@@ -1523,6 +1739,15 @@ class Toxic(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Toxic("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1584,6 +1809,15 @@ class Lava(CelestialBase):
             "LeavingKepler": False,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Lava("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1644,6 +1878,15 @@ class Ocean(CelestialBase):
             "Aphelion": "NaN",
             "LeavingKepler": False,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"Ocean("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"velocity=coordinate_system.Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
+            f"acceleration=coordinate_system.Acceleration({self.acceleration.x}, {self.acceleration.y}, {self.acceleration.z}), "
+            f"identifier={self.identifier!r})"
+        )
 
     @final
     @staticmethod

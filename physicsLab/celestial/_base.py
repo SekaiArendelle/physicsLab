@@ -79,3 +79,9 @@ class CelestialBase:
         raise NotImplementedError(
             "The method `as_dict` must be implemented in the subclass"
         )
+
+    @abc.abstractmethod
+    def to_constructor_str(self) -> str:
+        raise NotImplementedError(
+            "The method `to_constructor_str` must be implemented in the subclass"
+        )
