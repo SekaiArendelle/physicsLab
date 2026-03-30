@@ -82,12 +82,18 @@ class LogicInput(CircuitBase):
     ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
         return iter(self._all_pins)
 
-    def __repr__(self) -> str:
-        res = (
-            f"Logic_Input({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"output_status={self.output_status})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"LogicInput("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"output_status={self.output_status}, "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
-        return res
 
     @final
     @staticmethod
@@ -2063,10 +2069,17 @@ class EightBitInput(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Eight_Bit_Input({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"input_num={self.input_num})"
+            f"EightBitInput("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"input_num={self.input_num}, "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
     @property
@@ -2339,12 +2352,17 @@ class SchmittTrigger(CircuitBase):
     def zh_name() -> str:
         return "施密特触发器"
 
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Schmitt_Trigger({self.position.x}, {self.position.y}, {self.position.z}, "
+            f"SchmittTrigger("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"high_level={self.high_level}, "
             f"low_level={self.low_level}, "
-            f"inverted={self.inverted})"
+            f"inverted={self.inverted}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
     @property

@@ -7,7 +7,6 @@ from physicsLab._typing import (
     num_type,
     CircuitElementData,
     Self,
-    override,
     final,
     Iterator,
     Tuple,
@@ -111,13 +110,16 @@ class SimpleSwitch(_SwitchBase):
             "Label": self.label,
         }
 
-    def __repr__(self) -> str:
-        res = (
-            f"Simple_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"switch_state={self.switch_state})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"SimpleSwitch("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"switch_state=SwitchState.{self.switch_state.name}, "
+            f"identifier={self.identifier!r}, "
+            f"lock_status={self.lock_status}, "
+            f"label={self.label!r})"
         )
-
-        return res
 
 
 class SPDTSwitch(_SwitchBase):
@@ -190,13 +192,16 @@ class SPDTSwitch(_SwitchBase):
             "DiagramRotation": 0,
         }
 
-    def __repr__(self) -> str:
-        res = (
-            f"SPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"switch_state={self.switch_state})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"SPDTSwitch("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"switch_state=PDTSwitchState.{self.switch_state.name}, "
+            f"identifier={self.identifier!r}, "
+            f"lock_status={self.lock_status}, "
+            f"label={self.label!r})"
         )
-
-        return res
 
     @property
     def l(self) -> Pin:
@@ -294,13 +299,16 @@ class DPDTSwitch(_SwitchBase):
             "DiagramRotation": 0,
         }
 
-    def __repr__(self) -> str:
-        res = (
-            f"DPDT_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"switch_state={self.switch_state})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"DPDTSwitch("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"switch_state=PDTSwitchState.{self.switch_state.name}, "
+            f"identifier={self.identifier!r}, "
+            f"lock_status={self.lock_status}, "
+            f"label={self.label!r})"
         )
-
-        return res
 
     @property
     def l_up(self) -> Pin:
@@ -472,14 +480,16 @@ class AirSwitch(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    @override
-    def __repr__(self) -> str:
-        res = (
-            f"Air_Switch({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"switch_state={self.switch_state})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"AirSwitch("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"identifier={self.identifier!r}, "
+            f"lock_status={self.lock_status}, "
+            f"label={self.label!r}, "
+            f"switch_state=SwitchState.{self.switch_state.name})"
         )
-
-        return res
 
 
 class IncandescentLamp(CircuitBase):
@@ -820,10 +830,15 @@ class Resistor(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Resistor({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"resistance={self.resistance})"
+            f"Resistor("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"resistance={self.resistance}, "
+            f"identifier={self.identifier!r}, "
+            f"lock_status={self.lock_status}, "
+            f"label={self.label!r})"
         )
 
 

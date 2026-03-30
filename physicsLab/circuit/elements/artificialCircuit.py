@@ -6,7 +6,6 @@ from physicsLab._typing import (
     num_type,
     CircuitElementData,
     Self,
-    override,
     final,
     Tuple,
     Iterator,
@@ -231,14 +230,18 @@ class BasicCapacitor(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    @override
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Basic_Capacitor({self.position.x}, {self.position.y}, {self.position.z}, "
+            f"BasicCapacitor("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"peak_voltage={self.peak_voltage}, "
             f"capacitance={self.capacitance}, "
             f"internal_resistance={self.internal_resistance}, "
-            f"is_ideal={self.is_ideal})"
+            f"is_ideal={self.is_ideal}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
 
@@ -345,14 +348,18 @@ class BasicInductor(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
-    @override
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Basic_Inductor({self.position.x}, {self.position.y}, {self.position.z}, "
+            f"BasicInductor("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"rated_current={self.rated_current}, "
             f"inductance={self.inductance}, "
             f"internal_resistance={self.internal_resistance}, "
-            f"is_ideal={self.is_ideal})"
+            f"is_ideal={self.is_ideal}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
 
@@ -982,18 +989,18 @@ class Transistor(CircuitBase):
     def count_all_pins() -> int:
         return 3
 
-    def __repr__(self) -> str:
-        res = (
-            f"Transistor({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"is_PNP={self.is_PNP}"
+    def to_constructor_str(self) -> str:
+        return (
+            f"Transistor("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"is_PNP={self.is_PNP}, "
+            f"gain={self.gain}, "
+            f"max_power={self.max_power}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
-
-        # TODO: Always include all parameters in repr, even when default values are used.
-        if self.gain != 100.0:
-            res += f", gain={self.gain}"
-        if self.max_power != 5.0:
-            res += f", max_power={self.max_power}"
-        return res + ")"
 
     @property
     def B(self) -> Pin:
@@ -1169,13 +1176,17 @@ class OperationalAmplifier(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
 
-    @override
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Operational_Amplifier({self.position.x}, {self.position.y}, {self.position.z}, "
+            f"OperationalAmplifier("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"gain={self.gain}, "
             f"max_voltage={self.max_voltage}, "
-            f"min_voltage={self.min_voltage})"
+            f"min_voltage={self.min_voltage}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
     @final

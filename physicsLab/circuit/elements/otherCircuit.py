@@ -9,7 +9,6 @@ from physicsLab._typing import (
     CircuitElementData,
     Union,
     List,
-    override,
     Tuple,
     final,
     Literal,
@@ -1049,18 +1048,21 @@ class SimpleInstrument(CircuitBase):
     def all_pins(self) -> Iterator[Tuple[str, Pin]]:
         return iter(self._all_pins)
 
-    @override
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Simple_Instrument({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"pitches={self.pitches}, "
-            f"instrument={self.__instrument}, "
-            f"bpm={self.__bpm}, "
-            f"volume={self.__volume}, "
-            f"rated_oltage={self.__rated_oltage}, "
-            f"is_ideal={self.__is_ideal}, "
-            f"is_pulse={self.__is_pulse}"
-            f")"
+            f"SimpleInstrument("
+            f"position=coordinate_system.Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=coordinate_system.Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"pitches={self.pitches!r}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"rated_oltage={self.rated_oltage}, "
+            f"volume={self.volume}, "
+            f"bpm={self.bpm}, "
+            f"instrument={self.instrument}, "
+            f"is_ideal={self.is_ideal}, "
+            f"is_pulse={self.is_pulse}, "
+            f"lock_status={self.lock_status})"
         )
 
     @staticmethod
