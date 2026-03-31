@@ -273,7 +273,7 @@ class Compass(ElectromagnetismBase):
             f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"identifier={self.identifier!r}, "
             f"velocity=Velocity({self.velocity.x}, {self.velocity.y}, {self.velocity.z}), "
-                f"angular_velocity=AngularVelocity({self.angular_velocity.x}, {self.angular_velocity.y}, {self.angular_velocity.z}), "
+            f"angular_velocity=AngularVelocity({self.angular_velocity.x}, {self.angular_velocity.y}, {self.angular_velocity.z}), "
             f"lock_status={self.lock_status})"
         )
 
