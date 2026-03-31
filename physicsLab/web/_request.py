@@ -1,3 +1,4 @@
+import ssl
 import json
 import urllib.request
 from physicsLab._typing import Union, Dict
@@ -41,13 +42,12 @@ def get_https(domain: str, path: str, port: int = 443, verify: bool = True) -> b
             f"Parameter verify must be of type `bool`, but got value {verify} of type `{type(verify).__name__}`"
         )
 
-    if verify == False:
-        import ssl
-
-        ssl._create_default_https_context = ssl._create_unverified_context
-
     url = f"https://{domain}:{port}/{path}"
-    req = urllib.request.urlopen(url)
+    if verify:
+        req = urllib.request.urlopen(url)
+    else:
+        context = ssl._create_unverified_context()
+        req = urllib.request.urlopen(url, context=context)
 
     return req.read()
 
@@ -129,8 +129,6 @@ def post_https(
         )
 
     if verify == False:
-        import ssl
-
         ssl._create_default_https_context = ssl._create_unverified_context
 
     if isinstance(body, dict):

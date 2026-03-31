@@ -1716,9 +1716,9 @@ def anonymous_login(
     domain: str = "physics-api-cn.turtlesim.com",
 ) -> User:
     """Anonymous login to Physics-Lab-AR"""
-    plar_version = quantum_physics.get_quantum_physics_version()
-    if plar_version is not None:
-        plar_version = int(f"{plar_version[0]}{plar_version[1]}{plar_version[2]}")
+    _version = quantum_physics.get_quantum_physics_version()
+    if _version is not None:
+        plar_version = int(f"{_version[0]}{_version[1]}{_version[2]}")
     else:
         plar_version = 2411
 
@@ -1776,9 +1776,9 @@ def email_login(
             f"Parameter password must be of type `str`, but got value {password} of type `{type(password).__name__}`"
         )
 
-    plar_version = quantum_physics.get_quantum_physics_version()
-    if plar_version is not None:
-        plar_version = int(f"{plar_version[0]}{plar_version[1]}{plar_version[2]}")
+    _version = quantum_physics.get_quantum_physics_version()
+    if _version is not None:
+        plar_version = int(f"{_version[0]}{_version[1]}{_version[2]}")
     else:
         plar_version = 2411
 
@@ -1836,9 +1836,9 @@ def token_login(
             f"Parameter password must be of type `str`, but got value {auth_code} of type `{type(auth_code).__name__}`"
         )
 
-    plar_version = quantum_physics.get_quantum_physics_version()
-    if plar_version is not None:
-        plar_version = int(f"{plar_version[0]}{plar_version[1]}{plar_version[2]}")
+    _version = quantum_physics.get_quantum_physics_version()
+    if _version is not None:
+        plar_version = int(f"{_version[0]}{_version[1]}{_version[2]}")
     else:
         plar_version = 2411
 
