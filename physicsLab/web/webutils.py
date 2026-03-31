@@ -336,7 +336,7 @@ class BannedMsgIter:
             raise ValueError("Parameter `max_workers` must be greater than 0")
 
         if get_banned_template:
-            response = self.user.get_messages(5, take=1, no_templates=False)["Data"]
+            response = user.get_messages(5, take=1, no_templates=False)["Data"]
             for template in response["Templates"]:
                 if template["Identifier"] == self.banned_template["Identifier"]:
                     self.banned_template = template
