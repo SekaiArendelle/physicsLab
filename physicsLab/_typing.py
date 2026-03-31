@@ -1,5 +1,5 @@
 from typing import *
-from typing_extensions import *
+from typing_extensions import * # type: ignore
 
 num_type: TypeAlias = Union[int, float]
 
