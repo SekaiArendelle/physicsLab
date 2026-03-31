@@ -28,7 +28,11 @@ def find_path_of_sav_name(sav_name: str) -> Optional[pathlib.Path]:
         if not file.is_file():
             continue
 
-        plsav_dict: dict = json.loads(file.read_text(encoding="utf-8"))
+        with open(file, encoding="utf-8") as f:
+            try:
+                plsav_dict: dict = json.load(f)
+            except (json.decoder.JSONDecodeError, UnicodeDecodeError, OSError):
+                continue
         if "Summary" not in plsav_dict.keys():
             continue
         summary_dict: Optional[dict] = plsav_dict["Summary"]
