@@ -82,12 +82,18 @@ class LogicInput(CircuitBase):
     ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
         return iter(self._all_pins)
 
-    def __repr__(self) -> str:
-        res = (
-            f"Logic_Input({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"output_status={self.output_status})"
+    def to_constructor_str(self) -> str:
+        return (
+            f"LogicInput("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"output_status={self.output_status}, "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
-        return res
 
     @final
     @staticmethod
@@ -159,6 +165,18 @@ class LogicOutput(CircuitBase):
         self,
     ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
         return iter(self._all_pins)
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"LogicOutput("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -252,6 +270,18 @@ class YesGate(_2PinGate):
             lock_status,
         )
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"YesGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -326,6 +356,18 @@ class NoGate(_2PinGate):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"NoGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -444,6 +486,18 @@ class OrGate(_3PinGate):
             "DiagramRotation": 0,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"OrGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -497,6 +551,18 @@ class AndGate(_3PinGate):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"AndGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -552,6 +618,18 @@ class NorGate(_3PinGate):
             "DiagramRotation": 0,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"NorGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -605,6 +683,18 @@ class NandGate(_3PinGate):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"NandGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -660,6 +750,18 @@ class XorGate(_3PinGate):
             "DiagramRotation": 0,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"XorGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -713,6 +815,18 @@ class XnorGate(_3PinGate):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"XnorGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -768,6 +882,18 @@ class ImpGate(_3PinGate):
             "DiagramRotation": 0,
         }
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"ImpGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -821,6 +947,18 @@ class NimpGate(_3PinGate):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"NimpGate("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -945,6 +1083,18 @@ class HalfAdder(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"HalfAdder("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1045,6 +1195,18 @@ class FullAdder(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"FullAdder("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1142,6 +1304,18 @@ class HalfSubtractor(_BigElement):
     @property
     def o_low(self) -> OutputPin:
         return self._o_low_pin
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"HalfSubtractor("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -1251,6 +1425,18 @@ class FullSubtractor(_BigElement):
     @property
     def o_low(self) -> OutputPin:
         return self._o_low_pin
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"FullSubtractor("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -1373,6 +1559,18 @@ class Multiplier(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Multiplier("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1465,6 +1663,18 @@ class DFlipflop(_BigElement):
     @property
     def o_low(self) -> OutputPin:
         return self._o_low_pin
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"DFlipflop("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -1559,6 +1769,18 @@ class TFlipflop(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"TFlipflop("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1651,6 +1873,18 @@ class RealTFlipflop(_BigElement):
     @property
     def o_low(self) -> OutputPin:
         return self._o_low_pin
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"RealTFlipflop("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -1751,6 +1985,18 @@ class JKFlipflop(_BigElement):
     @property
     def o_low(self) -> OutputPin:
         return self._o_low_pin
+
+    def to_constructor_str(self) -> str:
+        return (
+            f"JKFlipflop("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
 
     @final
     @staticmethod
@@ -1859,6 +2105,18 @@ class Counter(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"Counter("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -1966,6 +2224,18 @@ class RandomGenerator(_BigElement):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"RandomGenerator("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -2063,10 +2333,17 @@ class EightBitInput(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Eight_Bit_Input({self.position.x}, {self.position.y}, {self.position.z}, "
-            f"input_num={self.input_num})"
+            f"EightBitInput("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"input_num={self.input_num}, "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
     @property
@@ -2245,6 +2522,18 @@ class EightBitDisplay(CircuitBase):
     def o_low(self) -> OutputPin:
         return self._o_low_pin
 
+    def to_constructor_str(self) -> str:
+        return (
+            f"EightBitDisplay("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
+            f"high_level={self.high_level}, "
+            f"low_level={self.low_level}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
+        )
+
     @final
     @staticmethod
     def zh_name() -> str:
@@ -2339,12 +2628,17 @@ class SchmittTrigger(CircuitBase):
     def zh_name() -> str:
         return "施密特触发器"
 
-    def __repr__(self) -> str:
+    def to_constructor_str(self) -> str:
         return (
-            f"Schmitt_Trigger({self.position.x}, {self.position.y}, {self.position.z}, "
+            f"SchmittTrigger("
+            f"position=Position({self.position.x}, {self.position.y}, {self.position.z}), "
+            f"rotation=Rotation({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"high_level={self.high_level}, "
             f"low_level={self.low_level}, "
-            f"inverted={self.inverted})"
+            f"inverted={self.inverted}, "
+            f"identifier={self.identifier!r}, "
+            f"label={self.label!r}, "
+            f"lock_status={self.lock_status})"
         )
 
     @property

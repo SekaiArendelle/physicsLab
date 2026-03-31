@@ -190,7 +190,7 @@ class CelestialExperiment:
                 f"path must be of type `Path`, but got value {path} of type {type(path).__name__}"
             )
 
-        with open(path, "w", encoding="utf-8", newline='\n') as f:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(self.as_plsav_dict(), f, ensure_ascii=True)
 
     def merge(self, other: "CelestialExperiment") -> Self:
