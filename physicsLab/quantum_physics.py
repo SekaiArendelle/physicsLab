@@ -30,8 +30,14 @@ def get_quantum_physics_version() -> Optional[Tuple[int, int, int]]:
 
         with open(a_file) as f:
             ver_str: str = json.load(f)["app_ver"]
-        return eval(f"({ver_str.replace('.', ',')})")
+        parts = ver_str.split(".")
+        if len(parts) != 3:
+            return None
+        major, minor, patch = parts
+        return int(major), int(minor), int(patch)
     except (json.decoder.JSONDecodeError, UnicodeDecodeError, FileNotFoundError):
+        return None
+    except ValueError:
         return None
 
 

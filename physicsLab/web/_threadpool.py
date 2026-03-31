@@ -10,7 +10,7 @@ import platform
 from threading import Thread, Condition
 from enum import Enum, unique
 from physicsLab import errors
-from physicsLab._typing import List, Callable, Self, Any, Optional
+from physicsLab._typing import List, Callable, Self, Any, Optional, Union, Type
 
 
 class CanceledError(Exception):
@@ -112,7 +112,7 @@ class ThreadPool:
             raise ValueError
 
         self.max_workers = max_workers
-        self.task_queue = queue.SimpleQueue()
+        self.task_queue: queue.SimpleQueue[Union[_Task, Type[_EndOfQueue]]] = queue.SimpleQueue()
         self.threads: List[Thread] = []
 
     def _office(self) -> None:
@@ -123,7 +123,7 @@ class ThreadPool:
             except queue.Empty:
                 continue
             if _task is _EndOfQueue:
-                self.task_queue.put_nowait(_EndOfQueue)
+                self.submit_end()
                 return
             assert isinstance(_task, _Task)
             _task.status_event.set_as_running()
@@ -163,11 +163,12 @@ class ThreadPool:
                 task = self.task_queue.get_nowait()
             except queue.Empty:
                 break
+            if task is _EndOfQueue:
+                break
 
-            if task.status == _Status.wait:
-                task.status = _Status.cancelled
-            else:
-                errors.unreachable()
+            assert isinstance(task, _Task)
+
+            task.status_event.set_as_cancelled()
 
         self.submit_end()
 

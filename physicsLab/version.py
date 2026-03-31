@@ -63,7 +63,10 @@ class _Version:
         return self.to_tuple() == value.to_tuple()
 
     def __ne__(self, value: object) -> bool:
-        return self.to_tuple() != value
+        if not isinstance(value, _Version):
+            return True
+
+        return self.to_tuple() != value.to_tuple()
 
     def __gt__(self, value: object) -> bool:
         if not isinstance(value, _Version):
