@@ -7,17 +7,14 @@ from physicslab._typing import (
     Optional,
     num_type,
     CircuitElementData,
-    Union,
     List,
     Tuple,
     final,
-    Literal,
     Iterator,
 )
 
 
 class Buzzer(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -29,12 +26,8 @@ class Buzzer(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -81,6 +74,11 @@ class Buzzer(CircuitBase):
     def zh_name() -> str:
         return "嗡鸣器"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -89,16 +87,12 @@ class Buzzer(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class SparkGap(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -110,12 +104,8 @@ class SparkGap(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -156,6 +146,11 @@ class SparkGap(CircuitBase):
     def zh_name() -> str:
         return "火花隙"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -164,16 +159,12 @@ class SparkGap(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class TeslaCoil(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -185,12 +176,8 @@ class TeslaCoil(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -233,6 +220,11 @@ class TeslaCoil(CircuitBase):
     def zh_name() -> str:
         return "特斯拉线圈"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -241,21 +233,12 @@ class TeslaCoil(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class ColorLightEmittingDiode(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_l_mid_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_r_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _l_mid_pin: Pin
     _l_low_pin: Pin
@@ -269,14 +252,10 @@ class ColorLightEmittingDiode(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_l_mid_pin", Pin(self, 1, "l_mid")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_r_pin", Pin(self, 3, "r")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._l_mid_pin = Pin(self, 1, "l_mid")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._r_pin = Pin(self, 3, "r")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -332,6 +311,13 @@ class ColorLightEmittingDiode(CircuitBase):
     def zh_name() -> str:
         return "彩色发光二极管"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "l_mid", cls.l_mid
+        yield "l_low", cls.l_low
+        yield "r", cls.r
+
     @property
     def l_up(self) -> Pin:
         return self._l_up_pin
@@ -348,16 +334,12 @@ class ColorLightEmittingDiode(CircuitBase):
     def r(self) -> Pin:
         return self._r_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 4
 
 
 class DualLightEmittingDiode(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -369,12 +351,8 @@ class DualLightEmittingDiode(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -426,6 +404,11 @@ class DualLightEmittingDiode(CircuitBase):
     def zh_name() -> str:
         return "演示发光二极管"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -434,16 +417,12 @@ class DualLightEmittingDiode(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class ElectricBell(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -455,12 +434,8 @@ class ElectricBell(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -507,6 +482,11 @@ class ElectricBell(CircuitBase):
     def zh_name() -> str:
         return "电铃"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -515,16 +495,12 @@ class ElectricBell(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class MusicalBox(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -536,12 +512,8 @@ class MusicalBox(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -588,6 +560,11 @@ class MusicalBox(CircuitBase):
     def zh_name() -> str:
         return "八音盒"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -596,25 +573,12 @@ class MusicalBox(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class ResistanceLaw(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_l_lowmid_pin"], Pin],
-        Tuple[Literal["_l_upmid_pin"], Pin],
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-        Tuple[Literal["_r_lowmid_pin"], Pin],
-        Tuple[Literal["_r_upmid_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-    ]
     _l_low_pin: Pin
     _l_lowmid_pin: Pin
     _l_upmid_pin: Pin
@@ -632,18 +596,14 @@ class ResistanceLaw(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_low_pin", Pin(self, 0, "l_low")),
-            ("_l_lowmid_pin", Pin(self, 1, "l_lowmid")),
-            ("_l_upmid_pin", Pin(self, 2, "l_upmid")),
-            ("_l_up_pin", Pin(self, 3, "l_up")),
-            ("_r_low_pin", Pin(self, 4, "r_low")),
-            ("_r_lowmid_pin", Pin(self, 5, "r_lowmid")),
-            ("_r_upmid_pin", Pin(self, 6, "r_upmid")),
-            ("_r_up_pin", Pin(self, 7, "r_up")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_low_pin = Pin(self, 0, "l_low")
+        self._l_lowmid_pin = Pin(self, 1, "l_lowmid")
+        self._l_upmid_pin = Pin(self, 2, "l_upmid")
+        self._l_up_pin = Pin(self, 3, "l_up")
+        self._r_low_pin = Pin(self, 4, "r_low")
+        self._r_lowmid_pin = Pin(self, 5, "r_lowmid")
+        self._r_upmid_pin = Pin(self, 6, "r_upmid")
+        self._r_up_pin = Pin(self, 7, "r_up")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -718,6 +678,17 @@ class ResistanceLaw(CircuitBase):
     def zh_name() -> str:
         return "电阻定律实验"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_low", cls.l_low
+        yield "l_lowmid", cls.l_lowmid
+        yield "l_upmid", cls.l_upmid
+        yield "l_up", cls.l_up
+        yield "r_low", cls.r_low
+        yield "r_lowmid", cls.r_lowmid
+        yield "r_upmid", cls.r_upmid
+        yield "r_up", cls.r_up
+
     @property
     def l_low(self) -> Pin:
         return self._l_low_pin
@@ -750,21 +721,12 @@ class ResistanceLaw(CircuitBase):
     def r_up(self) -> Pin:
         return self._r_up_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 8
 
 
 class Solenoid(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_subred_pin"], Pin],
-        Tuple[Literal["_subblack_pin"], Pin],
-        Tuple[Literal["_red_pin"], Pin],
-        Tuple[Literal["_black_pin"], Pin],
-    ]
     _subred_pin: Pin
     _subblack_pin: Pin
     _red_pin: Pin
@@ -778,14 +740,10 @@ class Solenoid(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_subred_pin", Pin(self, 0, "subred")),
-            ("_subblack_pin", Pin(self, 1, "subblack")),
-            ("_red_pin", Pin(self, 2, "red")),
-            ("_black_pin", Pin(self, 3, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._subred_pin = Pin(self, 0, "subred")
+        self._subblack_pin = Pin(self, 1, "subblack")
+        self._red_pin = Pin(self, 2, "red")
+        self._black_pin = Pin(self, 3, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -837,6 +795,13 @@ class Solenoid(CircuitBase):
     def zh_name() -> str:
         return "通电螺线管"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "subred", cls.subred
+        yield "subblack", cls.subblack
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def subred(self) -> Pin:
         return self._subred_pin
@@ -853,16 +818,12 @@ class Solenoid(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 4
 
 
 class ElectricFan(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -874,12 +835,8 @@ class ElectricFan(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -938,6 +895,11 @@ class ElectricFan(CircuitBase):
     def zh_name() -> str:
         return "小电扇"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
+
     @property
     def red(self) -> Pin:
         return self._red_pin
@@ -946,16 +908,12 @@ class ElectricFan(CircuitBase):
     def black(self) -> Pin:
         return self._black_pin
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
 
 
 class SimpleInstrument(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin], Tuple[Literal["_o_pin"], Pin]]
     _i_pin: Pin
     _o_pin: Pin
 
@@ -985,12 +943,8 @@ class SimpleInstrument(CircuitBase):
             is_ideal: Whether to use ideal mode.
             is_pulse: Whether the instrument plays only once per trigger.
         """
-        self._all_pins = (
-            ("_i_pin", Pin(self, 0, "i")),
-            ("_o_pin", Pin(self, 1, "o")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_pin = Pin(self, 0, "i")
+        self._o_pin = Pin(self, 1, "o")
         self.pitches: List[int] = pitches
         self.rated_oltage = rated_oltage
         self.volume = volume
@@ -1058,6 +1012,11 @@ class SimpleInstrument(CircuitBase):
             "DiagramPosition": {"X": 0, "Y": 0, "Magnitude": 0.0},
             "DiagramRotation": 0,
         }
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i", cls.i
+        yield "o", cls.o
 
     @property
     def rated_oltage(self) -> num_type:
@@ -1144,9 +1103,6 @@ class SimpleInstrument(CircuitBase):
     @property
     def o(self) -> Pin:
         return self._o_pin
-
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
 
     def to_constructor_str(self) -> str:
         return (

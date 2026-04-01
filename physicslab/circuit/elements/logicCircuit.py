@@ -8,14 +8,11 @@ from physicslab._typing import (
     final,
     Tuple,
     Iterator,
-    Union,
-    Literal,
 )
 from physicslab import coordinate_system
 
 
 class LogicInput(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_o_pin"], OutputPin]]
     _o_pin: OutputPin
     output_status: bool
 
@@ -49,9 +46,7 @@ class LogicInput(CircuitBase):
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
         self.output_status: bool = output_status
-        self._all_pins = (("_o_pin", OutputPin(self, 0, "o")),)
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_pin = OutputPin(self, 0, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -77,11 +72,6 @@ class LogicInput(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
-
     def to_constructor_str(self) -> str:
         return (
             f"LogicInput("
@@ -100,6 +90,10 @@ class LogicInput(CircuitBase):
     def zh_name() -> str:
         return "逻辑输入"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "o", cls.o
+
     @property
     def o(self) -> OutputPin:
         return self._o_pin
@@ -110,7 +104,6 @@ class LogicInput(CircuitBase):
 
 
 class LogicOutput(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_i_pin"], InputPin]]
     _i_pin: InputPin
 
     def __init__(
@@ -133,9 +126,7 @@ class LogicOutput(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (("_i_pin", InputPin(self, 0, "i")),)
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_pin = InputPin(self, 0, "i")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -161,11 +152,6 @@ class LogicOutput(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
-
     def to_constructor_str(self) -> str:
         return (
             f"LogicOutput("
@@ -183,6 +169,10 @@ class LogicOutput(CircuitBase):
     def zh_name() -> str:
         return "逻辑输出"
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i", cls.i
+
     @property
     def i(self) -> InputPin:
         return self._i_pin
@@ -193,9 +183,6 @@ class LogicOutput(CircuitBase):
 
 
 class _2PinGate(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_i_pin"], InputPin], Tuple[Literal["_o_pin"], OutputPin]
-    ]
     _i_pin: InputPin
     _o_pin: OutputPin
 
@@ -219,20 +206,16 @@ class _2PinGate(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (
-            ("_i_pin", InputPin(self, 0, "i")),
-            ("_o_pin", OutputPin(self, 1, "o")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_pin = InputPin(self, 0, "i")
+        self._o_pin = OutputPin(self, 1, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i", cls.i
+        yield "o", cls.o
 
     @property
     def i(self) -> InputPin:
@@ -380,11 +363,6 @@ class NoGate(_2PinGate):
 
 
 class _3PinGate(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-        Tuple[Literal["_o_pin"], OutputPin],
-    ]
     _i_up_pin: InputPin
     _i_low_pin: InputPin
     _o_pin: OutputPin
@@ -409,21 +387,18 @@ class _3PinGate(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0, "i_up")),
-            ("_i_low_pin", InputPin(self, 1, "i_low")),
-            ("_o_pin", OutputPin(self, 2, "o")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_up_pin = InputPin(self, 0, "i_up")
+        self._i_low_pin = InputPin(self, 1, "i_low")
+        self._o_pin = OutputPin(self, 2, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o", cls.o
 
     @property
     def i_up(self) -> InputPin:
@@ -1001,12 +976,6 @@ class _BigElement(CircuitBase):
 
 
 class HalfAdder(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1033,14 +1002,10 @@ class HalfAdder(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_low_pin = InputPin(self, 3, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1062,10 +1027,12 @@ class HalfAdder(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1106,13 +1073,6 @@ class HalfAdder(_BigElement):
 
 
 class FullAdder(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_mid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _i_up_pin: InputPin
     _i_mid_pin: InputPin
     _i_low_pin: InputPin
@@ -1140,15 +1100,11 @@ class FullAdder(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
-            ("_i_low_pin", InputPin(self, 4, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_mid_pin = InputPin(self, 3, "i_mid")
+        self._i_low_pin = InputPin(self, 4, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1170,10 +1126,13 @@ class FullAdder(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_mid", cls.i_mid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1218,12 +1177,6 @@ class FullAdder(_BigElement):
 
 
 class HalfSubtractor(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1250,14 +1203,10 @@ class HalfSubtractor(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_low_pin = InputPin(self, 3, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         version = quantum_physics.get_quantum_physics_version()
@@ -1284,10 +1233,12 @@ class HalfSubtractor(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1328,13 +1279,6 @@ class HalfSubtractor(_BigElement):
 
 
 class FullSubtractor(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_mid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1362,15 +1306,11 @@ class FullSubtractor(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
-            ("_i_low_pin", InputPin(self, 4, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_mid_pin = InputPin(self, 3, "i_mid")
+        self._i_low_pin = InputPin(self, 4, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         # TODO get version by passing parameter from constructor
@@ -1401,10 +1341,13 @@ class FullSubtractor(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_mid", cls.i_mid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1449,16 +1392,6 @@ class FullSubtractor(_BigElement):
 
 
 class Multiplier(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_upmid_pin"], OutputPin],
-        Tuple[Literal["_o_lowmid_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_upmid_pin"], InputPin],
-        Tuple[Literal["_i_lowmid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_upmid_pin: OutputPin
     _o_lowmid_pin: OutputPin
@@ -1489,18 +1422,14 @@ class Multiplier(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
-            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
-            ("_o_low_pin", OutputPin(self, 3, "o_low")),
-            ("_i_up_pin", InputPin(self, 4, "i_up")),
-            ("_i_upmid_pin", InputPin(self, 5, "i_upmid")),
-            ("_i_lowmid_pin", InputPin(self, 6, "i_lowmid")),
-            ("_i_low_pin", InputPin(self, 7, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_upmid_pin = OutputPin(self, 1, "o_upmid")
+        self._o_lowmid_pin = OutputPin(self, 2, "o_lowmid")
+        self._o_low_pin = OutputPin(self, 3, "o_low")
+        self._i_up_pin = InputPin(self, 4, "i_up")
+        self._i_upmid_pin = InputPin(self, 5, "i_upmid")
+        self._i_lowmid_pin = InputPin(self, 6, "i_lowmid")
+        self._i_low_pin = InputPin(self, 7, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1522,10 +1451,16 @@ class Multiplier(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_upmid", cls.i_upmid
+        yield "i_lowmid", cls.i_lowmid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_upmid", cls.o_upmid
+        yield "o_lowmid", cls.o_lowmid
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1582,12 +1517,6 @@ class Multiplier(_BigElement):
 
 
 class DFlipflop(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1614,14 +1543,10 @@ class DFlipflop(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_low_pin = InputPin(self, 3, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1643,10 +1568,12 @@ class DFlipflop(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1687,12 +1614,6 @@ class DFlipflop(_BigElement):
 
 
 class TFlipflop(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1719,14 +1640,10 @@ class TFlipflop(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_low_pin = InputPin(self, 3, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1748,10 +1665,12 @@ class TFlipflop(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1792,12 +1711,6 @@ class TFlipflop(_BigElement):
 
 
 class RealTFlipflop(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1824,14 +1737,10 @@ class RealTFlipflop(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_low_pin = InputPin(self, 3, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1853,10 +1762,12 @@ class RealTFlipflop(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -1897,13 +1808,6 @@ class RealTFlipflop(_BigElement):
 
 
 class JKFlipflop(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_mid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
     _i_up_pin: InputPin
@@ -1931,15 +1835,11 @@ class JKFlipflop(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_low_pin", OutputPin(self, 1, "o_low")),
-            ("_i_up_pin", InputPin(self, 2, "i_up")),
-            ("_i_mid_pin", InputPin(self, 3, "i_mid")),
-            ("_i_low_pin", InputPin(self, 4, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_low_pin = OutputPin(self, 1, "o_low")
+        self._i_up_pin = InputPin(self, 2, "i_up")
+        self._i_mid_pin = InputPin(self, 3, "i_mid")
+        self._i_low_pin = InputPin(self, 4, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -1961,10 +1861,13 @@ class JKFlipflop(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_mid", cls.i_mid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -2009,14 +1912,6 @@ class JKFlipflop(_BigElement):
 
 
 class Counter(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_upmid_pin"], OutputPin],
-        Tuple[Literal["_o_lowmid_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_upmid_pin: OutputPin
     _o_lowmid_pin: OutputPin
@@ -2045,16 +1940,12 @@ class Counter(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
-            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
-            ("_o_low_pin", OutputPin(self, 3, "o_low")),
-            ("_i_up_pin", InputPin(self, 4, "i_up")),
-            ("_i_low_pin", InputPin(self, 5, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_upmid_pin = OutputPin(self, 1, "o_upmid")
+        self._o_lowmid_pin = OutputPin(self, 2, "o_lowmid")
+        self._o_low_pin = OutputPin(self, 3, "o_low")
+        self._i_up_pin = InputPin(self, 4, "i_up")
+        self._i_low_pin = InputPin(self, 5, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2076,10 +1967,14 @@ class Counter(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_upmid", cls.o_upmid
+        yield "o_lowmid", cls.o_lowmid
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -2128,14 +2023,6 @@ class Counter(_BigElement):
 
 
 class RandomGenerator(_BigElement):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_upmid_pin"], OutputPin],
-        Tuple[Literal["_o_lowmid_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-    ]
     _o_up_pin: OutputPin
     _o_upmid_pin: OutputPin
     _o_lowmid_pin: OutputPin
@@ -2164,16 +2051,12 @@ class RandomGenerator(_BigElement):
             label,
             lock_status,
         )
-        self._all_pins = (
-            ("_o_up_pin", OutputPin(self, 0, "o_up")),
-            ("_o_upmid_pin", OutputPin(self, 1, "o_upmid")),
-            ("_o_lowmid_pin", OutputPin(self, 2, "o_lowmid")),
-            ("_o_low_pin", OutputPin(self, 3, "o_low")),
-            ("_i_up_pin", InputPin(self, 4, "i_up")),
-            ("_i_low_pin", InputPin(self, 5, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_up_pin = OutputPin(self, 0, "o_up")
+        self._o_upmid_pin = OutputPin(self, 1, "o_upmid")
+        self._o_lowmid_pin = OutputPin(self, 2, "o_lowmid")
+        self._o_low_pin = OutputPin(self, 3, "o_low")
+        self._i_up_pin = InputPin(self, 4, "i_up")
+        self._i_low_pin = InputPin(self, 5, "i_low")
 
     def as_dict(self) -> CircuitElementData:
         return {
@@ -2195,10 +2078,14 @@ class RandomGenerator(_BigElement):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_upmid", cls.o_upmid
+        yield "o_lowmid", cls.o_lowmid
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -2251,16 +2138,6 @@ class EightBitInput(CircuitBase):
     low_level: num_type
     high_level: num_type
 
-    _all_pins: Tuple[
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_upmid_pin"], InputPin],
-        Tuple[Literal["_i_lowmid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_upmid_pin"], OutputPin],
-        Tuple[Literal["_o_lowmid_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-    ]
     _i_up_pin: InputPin
     _i_upmid_pin: InputPin
     _i_lowmid_pin: InputPin
@@ -2296,18 +2173,14 @@ class EightBitInput(CircuitBase):
         self.input_num = input_num
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0, "i_up")),
-            ("_i_upmid_pin", InputPin(self, 1, "i_upmid")),
-            ("_i_lowmid_pin", InputPin(self, 2, "i_lowmid")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-            ("_o_up_pin", OutputPin(self, 4, "o_up")),
-            ("_o_upmid_pin", OutputPin(self, 5, "o_upmid")),
-            ("_o_lowmid_pin", OutputPin(self, 6, "o_lowmid")),
-            ("_o_low_pin", OutputPin(self, 7, "o_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_up_pin = InputPin(self, 0, "i_up")
+        self._i_upmid_pin = InputPin(self, 1, "i_upmid")
+        self._i_lowmid_pin = InputPin(self, 2, "i_lowmid")
+        self._i_low_pin = InputPin(self, 3, "i_low")
+        self._o_up_pin = OutputPin(self, 4, "o_up")
+        self._o_upmid_pin = OutputPin(self, 5, "o_upmid")
+        self._o_lowmid_pin = OutputPin(self, 6, "o_lowmid")
+        self._o_low_pin = OutputPin(self, 7, "o_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -2346,6 +2219,17 @@ class EightBitInput(CircuitBase):
             f"lock_status={self.lock_status})"
         )
 
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_upmid", cls.i_upmid
+        yield "i_lowmid", cls.i_lowmid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_upmid", cls.o_upmid
+        yield "o_lowmid", cls.o_lowmid
+        yield "o_low", cls.o_low
+
     @property
     def input_num(self) -> int:
         return self._input_num
@@ -2361,11 +2245,6 @@ class EightBitInput(CircuitBase):
                 f"input_num must be between 0 and 8 (inclusive), but got {value}"
             )
         self._input_num = value
-
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
 
     @property
     def i_up(self) -> InputPin:
@@ -2410,16 +2289,6 @@ class EightBitInput(CircuitBase):
 
 
 class EightBitDisplay(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_i_up_pin"], InputPin],
-        Tuple[Literal["_i_upmid_pin"], InputPin],
-        Tuple[Literal["_i_lowmid_pin"], InputPin],
-        Tuple[Literal["_i_low_pin"], InputPin],
-        Tuple[Literal["_o_up_pin"], OutputPin],
-        Tuple[Literal["_o_upmid_pin"], OutputPin],
-        Tuple[Literal["_o_lowmid_pin"], OutputPin],
-        Tuple[Literal["_o_low_pin"], OutputPin],
-    ]
     _i_up_pin: InputPin
     _i_upmid_pin: InputPin
     _i_lowmid_pin: InputPin
@@ -2449,18 +2318,14 @@ class EightBitDisplay(CircuitBase):
             )
         self.high_level: num_type = high_level
         self.low_level: num_type = low_level
-        self._all_pins = (
-            ("_i_up_pin", InputPin(self, 0, "i_up")),
-            ("_i_upmid_pin", InputPin(self, 1, "i_upmid")),
-            ("_i_lowmid_pin", InputPin(self, 2, "i_lowmid")),
-            ("_i_low_pin", InputPin(self, 3, "i_low")),
-            ("_o_up_pin", OutputPin(self, 4, "o_up")),
-            ("_o_upmid_pin", OutputPin(self, 5, "o_upmid")),
-            ("_o_lowmid_pin", OutputPin(self, 6, "o_lowmid")),
-            ("_o_low_pin", OutputPin(self, 7, "o_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_up_pin = InputPin(self, 0, "i_up")
+        self._i_upmid_pin = InputPin(self, 1, "i_upmid")
+        self._i_lowmid_pin = InputPin(self, 2, "i_lowmid")
+        self._i_low_pin = InputPin(self, 3, "i_low")
+        self._o_up_pin = OutputPin(self, 4, "o_up")
+        self._o_upmid_pin = OutputPin(self, 5, "o_upmid")
+        self._o_lowmid_pin = OutputPin(self, 6, "o_lowmid")
+        self._o_low_pin = OutputPin(self, 7, "o_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -2485,10 +2350,16 @@ class EightBitDisplay(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_up", cls.i_up
+        yield "i_upmid", cls.i_upmid
+        yield "i_lowmid", cls.i_lowmid
+        yield "i_low", cls.i_low
+        yield "o_up", cls.o_up
+        yield "o_upmid", cls.o_upmid
+        yield "o_lowmid", cls.o_lowmid
+        yield "o_low", cls.o_low
 
     @property
     def i_up(self) -> InputPin:
@@ -2545,10 +2416,6 @@ class EightBitDisplay(CircuitBase):
 
 
 class SchmittTrigger(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_i_pin"], InputPin],
-        Tuple[Literal["_o_pin"], OutputPin],
-    ]
     _i_pin: InputPin
     _o_pin: OutputPin
     high_level: num_type
@@ -2583,12 +2450,8 @@ class SchmittTrigger(CircuitBase):
             low_level if low_level is not None else high_level * 0.3
         )
         self.inverted: bool = inverted
-        self._all_pins = (
-            ("_i_pin", InputPin(self, 0, "i")),
-            ("_o_pin", OutputPin(self, 1, "o")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_pin = InputPin(self, 0, "i")
+        self._o_pin = OutputPin(self, 1, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -2614,11 +2477,6 @@ class SchmittTrigger(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(
-        self,
-    ) -> Iterator[Tuple[str, Union[InputPin, OutputPin]]]:
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         return 2
@@ -2640,6 +2498,11 @@ class SchmittTrigger(CircuitBase):
             f"label={self.label!r}, "
             f"lock_status={self.lock_status})"
         )
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i", cls.i
+        yield "o", cls.o
 
     @property
     def i(self) -> InputPin:

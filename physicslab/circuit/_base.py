@@ -112,12 +112,14 @@ class CircuitBase:
             "Subclasses of CircuitBase must implement the as_dict method"
         )
 
-    @abc.abstractmethod
     def all_pins(self) -> Iterator[Tuple[str, "Pin"]]:
-        """Yield ``(attribute_name, pin)`` pairs for every pin on this element."""
-        raise NotImplementedError(
-            "Subclasses of CircuitBase must implement the all_pins method"
-        )
+        """Yield ``(pin_name, pin_instance)`` pairs for all pins on this element."""
+        if type(self) is CircuitBase:
+            raise NotImplementedError(
+                "Subclasses of CircuitBase must implement the all_pins method"
+            )
+        for pin_name, pin_property in self.all_pins_property_iter():
+            yield pin_name, pin_property.__get__(self, self.__class__)
 
     @staticmethod
     @abc.abstractmethod
@@ -125,6 +127,19 @@ class CircuitBase:
         """Return the total number of pins this element type has."""
         raise NotImplementedError(
             "Subclasses of CircuitBase must implement the count_all_pins method"
+        )
+
+    @classmethod
+    @abc.abstractmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        """Iterate over all the properties of this class that are Pin instances.
+
+        This method must be implemented by subclasses; it is used by the default
+        implementation of :meth:`all_pins` to enumerate the element's pins.
+        """
+        raise NotImplementedError(
+            "Subclasses of CircuitBase must implement the all_pins_property_iter "
+            "method; the default implementation of `all_pins()` depends on it."
         )
 
     @abc.abstractmethod

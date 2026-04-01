@@ -10,18 +10,12 @@ from physicslab._typing import (
     final,
     Iterator,
     Tuple,
-    Literal,
 )
 
 
 class _MemsBase(CircuitBase):
     """Base class for MEMS sensor elements with X, Y and Z output pins."""
 
-    _all_pins: Tuple[
-        Tuple[Literal["_x_pin"], Pin],
-        Tuple[Literal["_y_pin"], Pin],
-        Tuple[Literal["_z_pin"], Pin],
-    ]
     _x_pin: Pin
     _y_pin: Pin
     _z_pin: Pin
@@ -43,18 +37,10 @@ class _MemsBase(CircuitBase):
         self.ranges = ranges
         self.shifting = shifting
         self.response_factor = response_factor
-        self._all_pins = (
-            ("_x_pin", Pin(self, 0, "x")),
-            ("_y_pin", Pin(self, 1, "y")),
-            ("_z_pin", Pin(self, 2, "z")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._x_pin = Pin(self, 0, "x")
+        self._y_pin = Pin(self, 1, "y")
+        self._z_pin = Pin(self, 2, "z")
         super().__init__(position, rotation, identifier, lock_status, label)
-
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        """Yield (attribute_name, pin) pairs for every pin on this element."""
-        return iter(self._all_pins)
 
     def to_constructor_str(self) -> str:
         """Return a Python constructor call string that reproduces this element."""
@@ -74,6 +60,12 @@ class _MemsBase(CircuitBase):
     def count_all_pins() -> int:
         """Return the total number of pins this element type has."""
         return 3
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "x", cls.x
+        yield "y", cls.y
+        yield "z", cls.z
 
     @property
     def x(self) -> Pin:
@@ -205,14 +197,6 @@ class Accelerometer(_MemsBase):
 class AnalogJoystick(CircuitBase):
     """Dual-axis analog joystick with three pins per axis."""
 
-    _all_pins: Tuple[
-        Tuple[Literal["_x1_pin"], Pin],
-        Tuple[Literal["_x2_pin"], Pin],
-        Tuple[Literal["_x3_pin"], Pin],
-        Tuple[Literal["_y1_pin"], Pin],
-        Tuple[Literal["_y2_pin"], Pin],
-        Tuple[Literal["_y3_pin"], Pin],
-    ]
     _x1_pin: Pin
     _x2_pin: Pin
     _x3_pin: Pin
@@ -229,16 +213,12 @@ class AnalogJoystick(CircuitBase):
         label: Optional[str] = None,
     ) -> None:
         # build fields first, then call base init
-        self._all_pins = (
-            ("_x1_pin", Pin(self, 0, "x1")),
-            ("_x2_pin", Pin(self, 1, "x2")),
-            ("_x3_pin", Pin(self, 2, "x3")),
-            ("_y1_pin", Pin(self, 3, "y1")),
-            ("_y2_pin", Pin(self, 4, "y2")),
-            ("_y3_pin", Pin(self, 5, "y3")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._x1_pin = Pin(self, 0, "x1")
+        self._x2_pin = Pin(self, 1, "x2")
+        self._x3_pin = Pin(self, 2, "x3")
+        self._y1_pin = Pin(self, 3, "y1")
+        self._y2_pin = Pin(self, 4, "y2")
+        self._y3_pin = Pin(self, 5, "y3")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -259,10 +239,6 @@ class AnalogJoystick(CircuitBase):
             "DiagramRotation": 0,
             "Label": self.label,
         }
-
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        """Yield (attribute_name, pin) pairs for every pin on this element."""
-        return iter(self._all_pins)
 
     @staticmethod
     def count_all_pins() -> int:
@@ -285,6 +261,15 @@ class AnalogJoystick(CircuitBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "模拟摇杆"
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "x1", cls.x1
+        yield "x2", cls.x2
+        yield "x3", cls.x3
+        yield "y1", cls.y1
+        yield "y2", cls.y2
+        yield "y3", cls.y3
 
     @property
     def x1(self) -> Pin:
@@ -680,7 +665,6 @@ class MagneticFieldSensor(_MemsBase):
 class Photodiode(CircuitBase):
     """Light-sensitive photodiode sensor element."""
 
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -692,12 +676,8 @@ class Photodiode(CircuitBase):
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -726,14 +706,15 @@ class Photodiode(CircuitBase):
             "Label": self.label,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        """Yield (attribute_name, pin) pairs for every pin on this element."""
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         """Return the total number of pins this element type has."""
         return 2
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -766,7 +747,6 @@ class Photodiode(CircuitBase):
 class Photoresistor(CircuitBase):
     """Light-dependent resistor (LDR) sensor element."""
 
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -778,12 +758,8 @@ class Photoresistor(CircuitBase):
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -812,14 +788,15 @@ class Photoresistor(CircuitBase):
             "Label": self.label,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        """Yield (attribute_name, pin) pairs for every pin on this element."""
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         """Return the total number of pins this element type has."""
         return 2
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -852,7 +829,6 @@ class Photoresistor(CircuitBase):
 class ProximitySensor(CircuitBase):
     """Proximity sensor element with a single digital output pin."""
 
-    _all_pins: Tuple[Tuple[Literal["_o_pin"], Pin]]
     _o_pin: Pin
 
     def __init__(
@@ -863,9 +839,7 @@ class ProximitySensor(CircuitBase):
         lock_status: bool = True,
         label: Optional[str] = None,
     ) -> None:
-        self._all_pins = (("_o_pin", Pin(self, 0, "o")),)
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_pin = Pin(self, 0, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -892,10 +866,6 @@ class ProximitySensor(CircuitBase):
             "Label": self.label,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        """Yield (attribute_name, pin) pairs for every pin on this element."""
-        return iter(self._all_pins)
-
     @staticmethod
     def count_all_pins() -> int:
         """Return the total number of pins this element type has."""
@@ -917,6 +887,10 @@ class ProximitySensor(CircuitBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "临近传感器"
+
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "o", cls.o
 
     @property
     def o(self) -> Pin:
