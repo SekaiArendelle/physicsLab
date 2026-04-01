@@ -130,10 +130,16 @@ class CircuitBase:
         )
 
     @classmethod
+    @abc.abstractmethod
     def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
-        """Iterate over all the properties of this class that are Pin instances."""
+        """Iterate over all the properties of this class that are Pin instances.
+
+        This method must be implemented by subclasses; it is used by the default
+        implementation of :meth:`all_pins` to enumerate the element's pins.
+        """
         raise NotImplementedError(
-            "Subclasses of CircuitBase must implement the all_pins_property_iter method"
+            "Subclasses of CircuitBase must implement the all_pins_property_iter "
+            "method; the default implementation of `all_pins()` depends on it."
         )
 
     @abc.abstractmethod
