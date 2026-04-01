@@ -62,4 +62,3 @@ class TestUtils(unittest.TestCase):
                 found = utils.find_path_of_sav_name("target-name")
 
             self.assertEqual(found, good_file)
-
