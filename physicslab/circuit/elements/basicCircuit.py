@@ -11,6 +11,7 @@ from physicslab._typing import (
     Tuple,
 )
 
+
 class _SwitchBase(CircuitBase):
     def __init__(
         self,
@@ -23,6 +24,7 @@ class _SwitchBase(CircuitBase):
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
+
 
 class SimpleSwitch(_SwitchBase):
     _red_pin: Pin
@@ -114,6 +116,7 @@ class SimpleSwitch(_SwitchBase):
             f"label={self.label!r})"
         )
 
+
 class SPDTSwitch(_SwitchBase):
     _l_pin: Pin
     _mid_pin: Pin
@@ -204,6 +207,7 @@ class SPDTSwitch(_SwitchBase):
     @staticmethod
     def count_all_pins() -> int:
         return 3
+
 
 class DPDTSwitch(_SwitchBase):
     _l_low_pin: Pin
@@ -317,6 +321,7 @@ class DPDTSwitch(_SwitchBase):
     def count_all_pins() -> int:
         return 6
 
+
 class PushSwitch(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -383,6 +388,7 @@ class PushSwitch(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class AirSwitch(CircuitBase):
     _red_pin: Pin
@@ -472,6 +478,7 @@ class AirSwitch(CircuitBase):
             f"switch_state=SwitchState.{self.switch_state.name})"
         )
 
+
 class IncandescentLamp(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -551,6 +558,7 @@ class IncandescentLamp(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class BatterySource(CircuitBase):
     _red_pin: Pin
@@ -641,6 +649,7 @@ class BatterySource(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class StudentSource(CircuitBase):
     _l_pin: Pin
@@ -744,6 +753,7 @@ class StudentSource(CircuitBase):
     def r(self) -> Pin:
         return self._r_pin
 
+
 class Resistor(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -832,6 +842,7 @@ class Resistor(CircuitBase):
             f"label={self.label!r})"
         )
 
+
 class FuseComponent(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -910,6 +921,7 @@ class FuseComponent(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class SlideRheostat(CircuitBase):
     _l_low_pin: Pin
@@ -1011,6 +1023,7 @@ class SlideRheostat(CircuitBase):
     def r_up(self) -> Pin:
         return self._r_up_pin
 
+
 class Multimeter(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -1084,6 +1097,7 @@ class Multimeter(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class Galvanometer(CircuitBase):
     _l_pin: Pin
@@ -1159,6 +1173,7 @@ class Galvanometer(CircuitBase):
     def r(self) -> Pin:
         return self._r_pin
 
+
 class Microammeter(CircuitBase):
     _l_pin: Pin
     _mid_pin: Pin
@@ -1232,6 +1247,7 @@ class Microammeter(CircuitBase):
     @property
     def r(self) -> Pin:
         return self._r_pin
+
 
 class ElectricityMeter(CircuitBase):
     _l_pin: Pin
@@ -1313,6 +1329,7 @@ class ElectricityMeter(CircuitBase):
     @property
     def r(self) -> Pin:
         return self._r_pin
+
 
 class ResistanceBox(CircuitBase):
     _l_pin: Pin
@@ -1402,6 +1419,7 @@ class ResistanceBox(CircuitBase):
     def r(self) -> Pin:
         return self._r_pin
 
+
 class SimpleAmmeter(CircuitBase):
     _l_pin: Pin
     _mid_pin: Pin
@@ -1480,6 +1498,7 @@ class SimpleAmmeter(CircuitBase):
     @property
     def r(self) -> Pin:
         return self._r_pin
+
 
 class SimpleVoltmeter(CircuitBase):
     _l_pin: Pin

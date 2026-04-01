@@ -13,6 +13,7 @@ from physicslab._typing import (
     Iterator,
 )
 
+
 class Buzzer(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -90,6 +91,7 @@ class Buzzer(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
+
 class SparkGap(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -160,6 +162,7 @@ class SparkGap(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class TeslaCoil(CircuitBase):
     _red_pin: Pin
@@ -233,6 +236,7 @@ class TeslaCoil(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class ColorLightEmittingDiode(CircuitBase):
     _l_up_pin: Pin
@@ -334,6 +338,7 @@ class ColorLightEmittingDiode(CircuitBase):
     def count_all_pins() -> int:
         return 4
 
+
 class DualLightEmittingDiode(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -416,6 +421,7 @@ class DualLightEmittingDiode(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
+
 class ElectricBell(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -493,6 +499,7 @@ class ElectricBell(CircuitBase):
     def count_all_pins() -> int:
         return 2
 
+
 class MusicalBox(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -569,6 +576,7 @@ class MusicalBox(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class ResistanceLaw(CircuitBase):
     _l_low_pin: Pin
@@ -717,6 +725,7 @@ class ResistanceLaw(CircuitBase):
     def count_all_pins() -> int:
         return 8
 
+
 class Solenoid(CircuitBase):
     _subred_pin: Pin
     _subblack_pin: Pin
@@ -813,6 +822,7 @@ class Solenoid(CircuitBase):
     def count_all_pins() -> int:
         return 4
 
+
 class ElectricFan(CircuitBase):
     _red_pin: Pin
     _black_pin: Pin
@@ -901,6 +911,7 @@ class ElectricFan(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class SimpleInstrument(CircuitBase):
     _i_pin: Pin

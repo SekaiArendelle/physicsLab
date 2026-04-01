@@ -12,6 +12,7 @@ from physicslab._typing import (
     Tuple,
 )
 
+
 class _MemsBase(CircuitBase):
     """Base class for MEMS sensor elements with X, Y and Z output pins."""
 
@@ -120,6 +121,7 @@ class _MemsBase(CircuitBase):
             )
         self.__response_factor = value
 
+
 class Accelerometer(_MemsBase):
     """Three-axis accelerometer sensor element."""
 
@@ -190,6 +192,7 @@ class Accelerometer(_MemsBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "加速度计"
+
 
 class AnalogJoystick(CircuitBase):
     """Dual-axis analog joystick with three pins per axis."""
@@ -298,6 +301,7 @@ class AnalogJoystick(CircuitBase):
         """Second output pin for the Y-axis potentiometer."""
         return self._y3_pin
 
+
 class AttitudeSensor(_MemsBase):
     """Three-axis attitude (orientation) sensor element."""
 
@@ -368,6 +372,7 @@ class AttitudeSensor(_MemsBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "姿态传感器"
+
 
 class GravitySensor(_MemsBase):
     """Three-axis gravity sensor element."""
@@ -440,6 +445,7 @@ class GravitySensor(_MemsBase):
         """Return the Chinese display name for this element."""
         return "重力加速计"
 
+
 class Gyroscope(_MemsBase):
     """Three-axis gyroscope sensor element."""
 
@@ -510,6 +516,7 @@ class Gyroscope(_MemsBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "陀螺仪传感器"
+
 
 class LinearAccelerometer(_MemsBase):
     """Three-axis linear accelerometer sensor element."""
@@ -582,6 +589,7 @@ class LinearAccelerometer(_MemsBase):
         """Return the Chinese display name for this element."""
         return "线性加速度计"
 
+
 class MagneticFieldSensor(_MemsBase):
     """Three-axis magnetic field sensor element."""
 
@@ -652,6 +660,7 @@ class MagneticFieldSensor(_MemsBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "磁场传感器"
+
 
 class Photodiode(CircuitBase):
     """Light-sensitive photodiode sensor element."""
@@ -734,6 +743,7 @@ class Photodiode(CircuitBase):
         """Return the Chinese display name for this element."""
         return "光电二极管"
 
+
 class Photoresistor(CircuitBase):
     """Light-dependent resistor (LDR) sensor element."""
 
@@ -814,6 +824,7 @@ class Photoresistor(CircuitBase):
     def zh_name() -> str:
         """Return the Chinese display name for this element."""
         return "光敏电阻"
+
 
 class ProximitySensor(CircuitBase):
     """Proximity sensor element with a single digital output pin."""

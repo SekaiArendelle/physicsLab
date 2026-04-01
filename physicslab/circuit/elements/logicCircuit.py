@@ -11,6 +11,7 @@ from physicslab._typing import (
 )
 from physicslab import coordinate_system
 
+
 class LogicInput(CircuitBase):
     _o_pin: OutputPin
     output_status: bool
@@ -101,6 +102,7 @@ class LogicInput(CircuitBase):
     def count_all_pins() -> int:
         return 1
 
+
 class LogicOutput(CircuitBase):
     _i_pin: InputPin
 
@@ -179,6 +181,7 @@ class LogicOutput(CircuitBase):
     def count_all_pins() -> int:
         return 1
 
+
 class _2PinGate(CircuitBase):
     _i_pin: InputPin
     _o_pin: OutputPin
@@ -225,6 +228,7 @@ class _2PinGate(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 2
+
 
 class YesGate(_2PinGate):
     def __init__(
@@ -291,6 +295,7 @@ class YesGate(_2PinGate):
             "DiagramRotation": 0,
         }
 
+
 class NoGate(_2PinGate):
     def __init__(
         self,
@@ -356,6 +361,7 @@ class NoGate(_2PinGate):
     def count_all_pins() -> int:
         return 2
 
+
 class _3PinGate(CircuitBase):
     _i_up_pin: InputPin
     _i_low_pin: InputPin
@@ -409,6 +415,7 @@ class _3PinGate(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 3
+
 
 class OrGate(_3PinGate):
     def __init__(
@@ -475,6 +482,7 @@ class OrGate(_3PinGate):
     def count_all_pins() -> int:
         return 3
 
+
 class AndGate(_3PinGate):
     def __init__(
         self,
@@ -539,6 +547,7 @@ class AndGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
+
 
 class NorGate(_3PinGate):
     def __init__(
@@ -605,6 +614,7 @@ class NorGate(_3PinGate):
     def count_all_pins() -> int:
         return 3
 
+
 class NandGate(_3PinGate):
     def __init__(
         self,
@@ -669,6 +679,7 @@ class NandGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
+
 
 class XorGate(_3PinGate):
     def __init__(
@@ -735,6 +746,7 @@ class XorGate(_3PinGate):
     def count_all_pins() -> int:
         return 3
 
+
 class XnorGate(_3PinGate):
     def __init__(
         self,
@@ -799,6 +811,7 @@ class XnorGate(_3PinGate):
     @staticmethod
     def count_all_pins() -> int:
         return 3
+
 
 class ImpGate(_3PinGate):
     def __init__(
@@ -865,6 +878,7 @@ class ImpGate(_3PinGate):
     def count_all_pins() -> int:
         return 3
 
+
 class NimpGate(_3PinGate):
     def __init__(
         self,
@@ -930,6 +944,7 @@ class NimpGate(_3PinGate):
     def count_all_pins() -> int:
         return 3
 
+
 class _BigElement(CircuitBase):
     def __init__(
         self,
@@ -958,6 +973,7 @@ class _BigElement(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 0
+
 
 class HalfAdder(_BigElement):
     _o_up_pin: OutputPin
@@ -1054,6 +1070,7 @@ class HalfAdder(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
+
 
 class FullAdder(_BigElement):
     _i_up_pin: InputPin
@@ -1158,6 +1175,7 @@ class FullAdder(_BigElement):
     def count_all_pins() -> int:
         return 5
 
+
 class HalfSubtractor(_BigElement):
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
@@ -1258,6 +1276,7 @@ class HalfSubtractor(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
+
 
 class FullSubtractor(_BigElement):
     _o_up_pin: OutputPin
@@ -1370,6 +1389,7 @@ class FullSubtractor(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 5
+
 
 class Multiplier(_BigElement):
     _o_up_pin: OutputPin
@@ -1495,6 +1515,7 @@ class Multiplier(_BigElement):
     def count_all_pins() -> int:
         return 8
 
+
 class DFlipflop(_BigElement):
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
@@ -1590,6 +1611,7 @@ class DFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
+
 
 class TFlipflop(_BigElement):
     _o_up_pin: OutputPin
@@ -1687,6 +1709,7 @@ class TFlipflop(_BigElement):
     def count_all_pins() -> int:
         return 4
 
+
 class RealTFlipflop(_BigElement):
     _o_up_pin: OutputPin
     _o_low_pin: OutputPin
@@ -1782,6 +1805,7 @@ class RealTFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 4
+
 
 class JKFlipflop(_BigElement):
     _o_up_pin: OutputPin
@@ -1885,6 +1909,7 @@ class JKFlipflop(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 5
+
 
 class Counter(_BigElement):
     _o_up_pin: OutputPin
@@ -1996,6 +2021,7 @@ class Counter(_BigElement):
     def count_all_pins() -> int:
         return 6
 
+
 class RandomGenerator(_BigElement):
     _o_up_pin: OutputPin
     _o_upmid_pin: OutputPin
@@ -2105,6 +2131,7 @@ class RandomGenerator(_BigElement):
     @staticmethod
     def count_all_pins() -> int:
         return 6
+
 
 class EightBitInput(CircuitBase):
     _input_num: int
@@ -2260,6 +2287,7 @@ class EightBitInput(CircuitBase):
     def count_all_pins() -> int:
         return 8
 
+
 class EightBitDisplay(CircuitBase):
     _i_up_pin: InputPin
     _i_upmid_pin: InputPin
@@ -2385,6 +2413,7 @@ class EightBitDisplay(CircuitBase):
     @staticmethod
     def count_all_pins() -> int:
         return 8
+
 
 class SchmittTrigger(CircuitBase):
     _i_pin: InputPin
