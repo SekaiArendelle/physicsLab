@@ -112,6 +112,15 @@ class CircuitBase:
             "Subclasses of CircuitBase must implement the as_dict method"
         )
 
+    def all_pins(self) -> Iterator[Tuple[str, "Pin"]]:
+        """Yield ``(pin_name, pin_instance)`` pairs for all pins on this element."""
+        if type(self) is CircuitBase:
+            raise NotImplementedError(
+                "Subclasses of CircuitBase must implement the all_pins method"
+            )
+        for pin_name, pin_property in self.all_pins_property_iter():
+            yield pin_name, pin_property.__get__(self, self.__class__)
+
     @staticmethod
     @abc.abstractmethod
     def count_all_pins() -> int:
