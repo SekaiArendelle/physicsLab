@@ -5,25 +5,13 @@ from physicslab._typing import (
     Optional,
     num_type,
     CircuitElementData,
-    Self,
     final,
     Tuple,
     Iterator,
-    Literal,
 )
 
 
 class NE555(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_vcc_pin"], Pin],
-        Tuple[Literal["_dis_pin"], Pin],
-        Tuple[Literal["_thr_pin"], Pin],
-        Tuple[Literal["_ctrl_pin"], Pin],
-        Tuple[Literal["_trig_pin"], Pin],
-        Tuple[Literal["_out_pin"], Pin],
-        Tuple[Literal["_reset_pin"], Pin],
-        Tuple[Literal["_ground_pin"], Pin],
-    ]
     _vcc_pin: Pin
     _dis_pin: Pin
     _thr_pin: Pin
@@ -41,18 +29,14 @@ class NE555(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_vcc_pin", Pin(self, 0, "vcc")),
-            ("_dis_pin", Pin(self, 1, "dis")),
-            ("_thr_pin", Pin(self, 2, "thr")),
-            ("_ctrl_pin", Pin(self, 3, "ctrl")),
-            ("_trig_pin", Pin(self, 4, "trig")),
-            ("_out_pin", Pin(self, 5, "out")),
-            ("_reset_pin", Pin(self, 6, "reset")),
-            ("_ground_pin", Pin(self, 7, "ground")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._vcc_pin = Pin(self, 0, "vcc")
+        self._dis_pin = Pin(self, 1, "dis")
+        self._thr_pin = Pin(self, 2, "thr")
+        self._ctrl_pin = Pin(self, 3, "ctrl")
+        self._trig_pin = Pin(self, 4, "trig")
+        self._out_pin = Pin(self, 5, "out")
+        self._reset_pin = Pin(self, 6, "reset")
+        self._ground_pin = Pin(self, 7, "ground")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -82,8 +66,16 @@ class NE555(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "vcc", cls.vcc
+        yield "dis", cls.dis
+        yield "thr", cls.thr
+        yield "ctrl", cls.ctrl
+        yield "trig", cls.trig
+        yield "out", cls.out
+        yield "reset", cls.reset
+        yield "ground", cls.ground
 
     def to_constructor_str(self) -> str:
         return (
@@ -105,40 +97,39 @@ class NE555(CircuitBase):
         return 8
 
     @property
-    def VCC(self) -> Pin:
+    def vcc(self) -> Pin:
         return self._vcc_pin
 
     @property
-    def Dis(self) -> Pin:
+    def dis(self) -> Pin:
         return self._dis_pin
 
     @property
-    def Thr(self) -> Pin:
+    def thr(self) -> Pin:
         return self._thr_pin
 
     @property
-    def Ctrl(self) -> Pin:
+    def ctrl(self) -> Pin:
         return self._ctrl_pin
 
     @property
-    def Trig(self) -> Pin:
+    def trig(self) -> Pin:
         return self._trig_pin
 
     @property
-    def Out(self) -> Pin:
+    def out(self) -> Pin:
         return self._out_pin
 
     @property
-    def Reset(self) -> Pin:
+    def reset(self) -> Pin:
         return self._reset_pin
 
     @property
-    def Ground(self) -> Pin:
+    def ground(self) -> Pin:
         return self._ground_pin
 
 
 class BasicCapacitor(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
     peak_voltage: num_type
@@ -188,12 +179,8 @@ class BasicCapacitor(CircuitBase):
         self.internal_resistance: num_type = internal_resistance
         self.is_ideal: bool = is_ideal
 
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -220,8 +207,10 @@ class BasicCapacitor(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -256,7 +245,6 @@ class BasicCapacitor(CircuitBase):
 
 
 class BasicInductor(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
     rated_current: num_type
@@ -306,12 +294,8 @@ class BasicInductor(CircuitBase):
         self.internal_resistance: num_type = internal_resistance
         self.is_ideal: bool = is_ideal
 
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -338,8 +322,10 @@ class BasicInductor(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -374,7 +360,6 @@ class BasicInductor(CircuitBase):
 
 
 class BasicDiode(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -386,12 +371,8 @@ class BasicDiode(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -418,8 +399,10 @@ class BasicDiode(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -450,7 +433,6 @@ class BasicDiode(CircuitBase):
 
 
 class LightEmittingDiode(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -462,12 +444,8 @@ class LightEmittingDiode(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -495,8 +473,10 @@ class LightEmittingDiode(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -527,7 +507,6 @@ class LightEmittingDiode(CircuitBase):
 
 
 class GroundComponent(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_i_pin"], Pin]]
     _i_pin: Pin
 
     def __init__(
@@ -538,9 +517,7 @@ class GroundComponent(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (("_i_pin", Pin(self, 0, "i")),)
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_pin = Pin(self, 0, "i")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -561,8 +538,9 @@ class GroundComponent(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i", cls.i
 
     def to_constructor_str(self) -> str:
         return (
@@ -589,12 +567,6 @@ class GroundComponent(CircuitBase):
 
 
 class Transformer(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _r_up_pin: Pin
     _l_low_pin: Pin
@@ -608,14 +580,10 @@ class Transformer(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_r_up_pin", Pin(self, 1, "r_up")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_r_low_pin", Pin(self, 3, "r_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._r_up_pin = Pin(self, 1, "r_up")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._r_low_pin = Pin(self, 3, "r_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -649,8 +617,12 @@ class Transformer(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "r_up", cls.r_up
+        yield "l_low", cls.l_low
+        yield "r_low", cls.r_low
 
     def to_constructor_str(self) -> str:
         return (
@@ -689,13 +661,6 @@ class Transformer(CircuitBase):
 
 
 class TappedTransformer(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-        Tuple[Literal["_mid_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _r_up_pin: Pin
     _l_low_pin: Pin
@@ -710,15 +675,11 @@ class TappedTransformer(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_r_up_pin", Pin(self, 1, "r_up")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_r_low_pin", Pin(self, 3, "r_low")),
-            ("_mid_pin", Pin(self, 4, "mid")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._r_up_pin = Pin(self, 1, "r_up")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._r_low_pin = Pin(self, 3, "r_low")
+        self._mid_pin = Pin(self, 4, "mid")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -751,8 +712,13 @@ class TappedTransformer(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "r_up", cls.r_up
+        yield "l_low", cls.l_low
+        yield "r_low", cls.r_low
+        yield "mid", cls.mid
 
     def to_constructor_str(self) -> str:
         return (
@@ -795,12 +761,6 @@ class TappedTransformer(CircuitBase):
 
 
 class MutualInductor(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _r_up_pin: Pin
     _l_low_pin: Pin
@@ -814,14 +774,10 @@ class MutualInductor(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_r_up_pin", Pin(self, 1, "r_up")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_r_low_pin", Pin(self, 3, "r_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._r_up_pin = Pin(self, 1, "r_up")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._r_low_pin = Pin(self, 3, "r_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -854,8 +810,12 @@ class MutualInductor(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "r_up", cls.r_up
+        yield "l_low", cls.l_low
+        yield "r_low", cls.r_low
 
     def to_constructor_str(self) -> str:
         return (
@@ -894,12 +854,6 @@ class MutualInductor(CircuitBase):
 
 
 class Rectifier(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _r_up_pin: Pin
     _l_low_pin: Pin
@@ -913,14 +867,10 @@ class Rectifier(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_r_up_pin", Pin(self, 1, "r_up")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_r_low_pin", Pin(self, 3, "r_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._r_up_pin = Pin(self, 1, "r_up")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._r_low_pin = Pin(self, 3, "r_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -945,8 +895,12 @@ class Rectifier(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "r_up", cls.r_up
+        yield "l_low", cls.l_low
+        yield "r_low", cls.r_low
 
     def to_constructor_str(self) -> str:
         return (
@@ -985,11 +939,6 @@ class Rectifier(CircuitBase):
 
 
 class Transistor(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_B_pin"], Pin],
-        Tuple[Literal["_C_pin"], Pin],
-        Tuple[Literal["_E_pin"], Pin],
-    ]
     _B_pin: Pin
     _C_pin: Pin
     _E_pin: Pin
@@ -1025,13 +974,9 @@ class Transistor(CircuitBase):
         self.gain: num_type = gain
         self.max_power: num_type = max_power
 
-        self._all_pins = (
-            ("_B_pin", Pin(self, 0, "B")),
-            ("_C_pin", Pin(self, 1, "C")),
-            ("_E_pin", Pin(self, 2, "E")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._B_pin = Pin(self, 0, "B")
+        self._C_pin = Pin(self, 1, "C")
+        self._E_pin = Pin(self, 2, "E")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1057,8 +1002,11 @@ class Transistor(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "B", cls.B
+        yield "C", cls.C
+        yield "E", cls.E
 
     @final
     @staticmethod
@@ -1096,11 +1044,6 @@ class Transistor(CircuitBase):
 
 
 class Comparator(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_o_pin"], Pin],
-        Tuple[Literal["_i_up_pin"], Pin],
-        Tuple[Literal["_i_low_pin"], Pin],
-    ]
     _o_pin: Pin
     _i_up_pin: Pin
     _i_low_pin: Pin
@@ -1113,13 +1056,9 @@ class Comparator(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_o_pin", Pin(self, 0, "o")),
-            ("_i_up_pin", Pin(self, 1, "i_up")),
-            ("_i_low_pin", Pin(self, 2, "i_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._o_pin = Pin(self, 0, "o")
+        self._i_up_pin = Pin(self, 1, "i_up")
+        self._i_low_pin = Pin(self, 2, "i_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1140,8 +1079,11 @@ class Comparator(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "o", cls.o
+        yield "i_up", cls.i_up
+        yield "i_low", cls.i_low
 
     def to_constructor_str(self) -> str:
         return (
@@ -1176,11 +1118,6 @@ class Comparator(CircuitBase):
 
 
 class OperationalAmplifier(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_i_neg_pin"], Pin],
-        Tuple[Literal["_i_pos_pin"], Pin],
-        Tuple[Literal["_o_pin"], Pin],
-    ]
     _i_neg_pin: Pin
     _i_pos_pin: Pin
     _o_pin: Pin
@@ -1225,13 +1162,9 @@ class OperationalAmplifier(CircuitBase):
         self.max_voltage: num_type = max_voltage
         self.min_voltage: num_type = min_voltage
 
-        self._all_pins = (
-            ("_i_neg_pin", Pin(self, 0, "i_neg")),
-            ("_i_pos_pin", Pin(self, 1, "i_pos")),
-            ("_o_pin", Pin(self, 2, "o")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._i_neg_pin = Pin(self, 0, "i_neg")
+        self._i_pos_pin = Pin(self, 1, "i_pos")
+        self._o_pin = Pin(self, 2, "o")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1263,8 +1196,11 @@ class OperationalAmplifier(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "i_neg", cls.i_neg
+        yield "i_pos", cls.i_pos
+        yield "o", cls.o
 
     def to_constructor_str(self) -> str:
         return (
@@ -1302,13 +1238,6 @@ class OperationalAmplifier(CircuitBase):
 
 
 class RelayComponent(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_l_up_pin"], Pin],
-        Tuple[Literal["_l_low_pin"], Pin],
-        Tuple[Literal["_mid_pin"], Pin],
-        Tuple[Literal["_r_up_pin"], Pin],
-        Tuple[Literal["_r_low_pin"], Pin],
-    ]
     _l_up_pin: Pin
     _l_low_pin: Pin
     _mid_pin: Pin
@@ -1349,15 +1278,11 @@ class RelayComponent(CircuitBase):
         self.coil_inductance: num_type = coil_inductance
         self.coil_resistance: num_type = coil_resistance
 
-        self._all_pins = (
-            ("_l_up_pin", Pin(self, 0, "l_up")),
-            ("_l_low_pin", Pin(self, 2, "l_low")),
-            ("_mid_pin", Pin(self, 1, "mid")),
-            ("_r_up_pin", Pin(self, 3, "r_up")),
-            ("_r_low_pin", Pin(self, 4, "r_low")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._l_up_pin = Pin(self, 0, "l_up")
+        self._l_low_pin = Pin(self, 2, "l_low")
+        self._mid_pin = Pin(self, 1, "mid")
+        self._r_up_pin = Pin(self, 3, "r_up")
+        self._r_low_pin = Pin(self, 4, "r_low")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1385,8 +1310,13 @@ class RelayComponent(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "l_up", cls.l_up
+        yield "l_low", cls.l_low
+        yield "mid", cls.mid
+        yield "r_up", cls.r_up
+        yield "r_low", cls.r_low
 
     def to_constructor_str(self) -> str:
         return (
@@ -1433,11 +1363,6 @@ class RelayComponent(CircuitBase):
 
 
 class N_MOSFET(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_D_pin"], Pin],
-        Tuple[Literal["_S_pin"], Pin],
-        Tuple[Literal["_G_pin"], Pin],
-    ]
     _D_pin: Pin
     _S_pin: Pin
     _G_pin: Pin
@@ -1470,13 +1395,9 @@ class N_MOSFET(CircuitBase):
         self.threshold: num_type = threshold
         self.max_power: num_type = max_power
 
-        self._all_pins = (
-            ("_D_pin", Pin(self, 2, "D")),
-            ("_S_pin", Pin(self, 1, "S")),
-            ("_G_pin", Pin(self, 0, "G")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._D_pin = Pin(self, 2, "D")
+        self._S_pin = Pin(self, 1, "S")
+        self._G_pin = Pin(self, 0, "G")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1509,8 +1430,11 @@ class N_MOSFET(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "D", cls.D
+        yield "S", cls.S
+        yield "G", cls.G
 
     def to_constructor_str(self) -> str:
         return (
@@ -1548,11 +1472,6 @@ class N_MOSFET(CircuitBase):
 
 
 class P_MOSFET(CircuitBase):
-    _all_pins: Tuple[
-        Tuple[Literal["_G_pin"], Pin],
-        Tuple[Literal["_D_pin"], Pin],
-        Tuple[Literal["_S_pin"], Pin],
-    ]
     _G_pin: Pin
     _S_pin: Pin
     _D_pin: Pin
@@ -1565,13 +1484,9 @@ class P_MOSFET(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_G_pin", Pin(self, 0, "G")),
-            ("_D_pin", Pin(self, 1, "D")),
-            ("_S_pin", Pin(self, 2, "S")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._G_pin = Pin(self, 0, "G")
+        self._D_pin = Pin(self, 1, "D")
+        self._S_pin = Pin(self, 2, "S")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1604,8 +1519,11 @@ class P_MOSFET(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "G", cls.G
+        yield "D", cls.D
+        yield "S", cls.S
 
     def to_constructor_str(self) -> str:
         return (
@@ -1640,7 +1558,6 @@ class P_MOSFET(CircuitBase):
 
 
 class CurrentSource(CircuitBase):
-    _all_pins: Tuple[Tuple[Literal["_red_pin"], Pin], Tuple[Literal["_black_pin"], Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -1652,12 +1569,8 @@ class CurrentSource(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1682,8 +1595,10 @@ class CurrentSource(CircuitBase):
             "DiagramRotation": 0,
         }
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:
@@ -1714,7 +1629,6 @@ class CurrentSource(CircuitBase):
 
 
 class _SourceElectricity(CircuitBase):
-    _all_pins: Tuple[Tuple[str, Pin], Tuple[str, Pin]]
     _red_pin: Pin
     _black_pin: Pin
 
@@ -1726,18 +1640,16 @@ class _SourceElectricity(CircuitBase):
         label: Optional[str],
         lock_status: bool,
     ) -> None:
-        self._all_pins = (
-            ("_red_pin", Pin(self, 0, "red")),
-            ("_black_pin", Pin(self, 1, "black")),
-        )
-        for name, pin in self._all_pins:
-            setattr(self, name, pin)
+        self._red_pin = Pin(self, 0, "red")
+        self._black_pin = Pin(self, 1, "black")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
 
-    def all_pins(self) -> Iterator[Tuple[str, Pin]]:
-        return iter(self._all_pins)
+    @classmethod
+    def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
+        yield "red", cls.red
+        yield "black", cls.black
 
     @property
     def red(self) -> Pin:

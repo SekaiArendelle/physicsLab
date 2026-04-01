@@ -175,7 +175,7 @@ class TestCircuitElements(unittest.TestCase):
         self.assertEqual(_instance.as_dict()["ModelID"], model_id)
         self.assertEqual(_instance.position, Position(1, 2, 3))
         self.assertEqual(_instance.as_dict()["Position"], "1,3,2")
-        self.assertEqual(_instance.count_all_pins(), len(list(_instance.all_pins())))
+        self.assertEqual(_instance.count_all_pins(), len(list(_instance.all_pins_property_iter())))
 
         self.assertIsNone(_instance.label)
         self.assertIsNone(_instance.as_dict()["Label"])
