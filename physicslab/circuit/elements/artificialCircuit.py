@@ -996,9 +996,9 @@ class Rectifier(CircuitBase):
 
 class Transistor(CircuitBase):
     """Represent a transistor component."""
-    _B_pin: Pin
-    _C_pin: Pin
-    _E_pin: Pin
+    _b_pin: Pin
+    _c_pin: Pin
+    _e_pin: Pin
     is_PNP: bool
     gain: num_type
     max_power: num_type
@@ -1031,9 +1031,9 @@ class Transistor(CircuitBase):
         self.gain: num_type = gain
         self.max_power: num_type = max_power
 
-        self._B_pin = Pin(self, 0, "B")
-        self._C_pin = Pin(self, 1, "C")
-        self._E_pin = Pin(self, 2, "E")
+        self._b_pin = Pin(self, 0, "B")
+        self._c_pin = Pin(self, 1, "C")
+        self._e_pin = Pin(self, 2, "E")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1061,9 +1061,9 @@ class Transistor(CircuitBase):
 
     @classmethod
     def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
-        yield "B", cls.B
-        yield "C", cls.C
-        yield "E", cls.E
+        yield "b", cls.b
+        yield "c", cls.c
+        yield "e", cls.e
 
     @final
     @staticmethod
@@ -1089,19 +1089,19 @@ class Transistor(CircuitBase):
         )
 
     @property
-    def B(self) -> Pin:
+    def b(self) -> Pin:
         """Execute the b routine."""
-        return self._B_pin
+        return self._b_pin
 
     @property
-    def C(self) -> Pin:
+    def c(self) -> Pin:
         """Execute the c routine."""
-        return self._C_pin
+        return self._c_pin
 
     @property
-    def E(self) -> Pin:
+    def e(self) -> Pin:
         """Execute the e routine."""
-        return self._E_pin
+        return self._e_pin
 
 
 class Comparator(CircuitBase):
@@ -1442,9 +1442,9 @@ class RelayComponent(CircuitBase):
 
 class N_MOSFET(CircuitBase):
     """Represent a n m o s f e t component."""
-    _D_pin: Pin
-    _S_pin: Pin
-    _G_pin: Pin
+    _d_pin: Pin
+    _s_pin: Pin
+    _g_pin: Pin
 
     def __init__(
         self,
@@ -1474,9 +1474,9 @@ class N_MOSFET(CircuitBase):
         self.threshold: num_type = threshold
         self.max_power: num_type = max_power
 
-        self._D_pin = Pin(self, 2, "D")
-        self._S_pin = Pin(self, 1, "S")
-        self._G_pin = Pin(self, 0, "G")
+        self._d_pin = Pin(self, 2, "D")
+        self._s_pin = Pin(self, 1, "S")
+        self._g_pin = Pin(self, 0, "G")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1511,9 +1511,9 @@ class N_MOSFET(CircuitBase):
 
     @classmethod
     def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
-        yield "D", cls.D
-        yield "S", cls.S
-        yield "G", cls.G
+        yield "d", cls.d
+        yield "s", cls.s
+        yield "g", cls.g
 
     def to_constructor_str(self) -> str:
         return (
@@ -1539,26 +1539,26 @@ class N_MOSFET(CircuitBase):
         return 3
 
     @property
-    def D(self) -> Pin:
+    def d(self) -> Pin:
         """Execute the d routine."""
-        return self._D_pin
+        return self._d_pin
 
     @property
-    def S(self) -> Pin:
+    def s(self) -> Pin:
         """Execute the s routine."""
-        return self._S_pin
+        return self._s_pin
 
     @property
-    def G(self) -> Pin:
+    def g(self) -> Pin:
         """Execute the g routine."""
-        return self._G_pin
+        return self._g_pin
 
 
 class P_MOSFET(CircuitBase):
     """Represent a p m o s f e t component."""
-    _G_pin: Pin
-    _S_pin: Pin
-    _D_pin: Pin
+    _g_pin: Pin
+    _s_pin: Pin
+    _d_pin: Pin
 
     def __init__(
         self,
@@ -1568,9 +1568,9 @@ class P_MOSFET(CircuitBase):
         label: Optional[str] = None,
         lock_status: bool = True,
     ) -> None:
-        self._G_pin = Pin(self, 0, "G")
-        self._D_pin = Pin(self, 1, "D")
-        self._S_pin = Pin(self, 2, "S")
+        self._g_pin = Pin(self, 0, "G")
+        self._d_pin = Pin(self, 1, "D")
+        self._s_pin = Pin(self, 2, "S")
         if identifier is None:
             identifier = str(uuid.uuid4())
         super().__init__(position, rotation, identifier, lock_status, label)
@@ -1605,9 +1605,9 @@ class P_MOSFET(CircuitBase):
 
     @classmethod
     def all_pins_property_iter(cls) -> Iterator[Tuple[str, property]]:
-        yield "G", cls.G
-        yield "D", cls.D
-        yield "S", cls.S
+        yield "g", cls.g
+        yield "d", cls.d
+        yield "s", cls.s
 
     def to_constructor_str(self) -> str:
         return (
@@ -1630,19 +1630,19 @@ class P_MOSFET(CircuitBase):
         return 3
 
     @property
-    def G(self) -> Pin:
+    def g(self) -> Pin:
         """Execute the g routine."""
-        return self._G_pin
+        return self._g_pin
 
     @property
-    def S(self) -> Pin:
+    def s(self) -> Pin:
         """Execute the s routine."""
-        return self._S_pin
+        return self._s_pin
 
     @property
-    def D(self) -> Pin:
+    def d(self) -> Pin:
         """Execute the d routine."""
-        return self._D_pin
+        return self._d_pin
 
 
 class CurrentSource(CircuitBase):
