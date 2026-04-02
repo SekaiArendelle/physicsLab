@@ -98,7 +98,7 @@ class LogicInput(CircuitBase):
         return "逻辑输入"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "o", cast(property, cls.o)
 
     @property
@@ -181,7 +181,7 @@ class LogicOutput(CircuitBase):
         return "逻辑输出"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i", cast(property, cls.i)
 
     @property
@@ -225,7 +225,7 @@ class _2PinGate(CircuitBase):
         super().__init__(position, rotation, identifier, lock_status, label)
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i", cast(property, cls.i)
         yield "o", cast(property, cls.o)
 
@@ -415,7 +415,7 @@ class _3PinGate(CircuitBase):
         super().__init__(position, rotation, identifier, lock_status, label)
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o", cast(property, cls.o)
@@ -1077,7 +1077,7 @@ class HalfAdder(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -1183,7 +1183,7 @@ class FullAdder(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_mid", cast(property, cls.i_mid)
         yield "i_low", cast(property, cls.i_low)
@@ -1298,7 +1298,7 @@ class HalfSubtractor(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -1413,7 +1413,7 @@ class FullSubtractor(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_mid", cast(property, cls.i_mid)
         yield "i_low", cast(property, cls.i_low)
@@ -1531,7 +1531,7 @@ class Multiplier(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_upmid", cast(property, cls.i_upmid)
         yield "i_lowmid", cast(property, cls.i_lowmid)
@@ -1659,7 +1659,7 @@ class DFlipflop(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -1763,7 +1763,7 @@ class TFlipflop(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -1867,7 +1867,7 @@ class RealTFlipflop(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -1973,7 +1973,7 @@ class JKFlipflop(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_mid", cast(property, cls.i_mid)
         yield "i_low", cast(property, cls.i_low)
@@ -2087,7 +2087,7 @@ class Counter(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -2207,7 +2207,7 @@ class RandomGenerator(_BigElement):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
         yield "o_up", cast(property, cls.o_up)
@@ -2357,7 +2357,7 @@ class EightBitInput(CircuitBase):
         )
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_upmid", cast(property, cls.i_upmid)
         yield "i_lowmid", cast(property, cls.i_lowmid)
@@ -2500,7 +2500,7 @@ class EightBitDisplay(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_up", cast(property, cls.i_up)
         yield "i_upmid", cast(property, cls.i_upmid)
         yield "i_lowmid", cast(property, cls.i_lowmid)
@@ -2661,7 +2661,7 @@ class SchmittTrigger(CircuitBase):
         )
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i", cast(property, cls.i)
         yield "o", cast(property, cls.o)
 

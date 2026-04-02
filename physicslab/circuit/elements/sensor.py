@@ -64,7 +64,7 @@ class _MemsBase(CircuitBase):
         return 3
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "x", cast(property, cls.x)
         yield "y", cast(property, cls.y)
         yield "z", cast(property, cls.z)
@@ -265,7 +265,7 @@ class AnalogJoystick(CircuitBase):
         return "模拟摇杆"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "x1", cast(property, cls.x1)
         yield "x2", cast(property, cls.x2)
         yield "x3", cast(property, cls.x3)
@@ -714,7 +714,7 @@ class Photodiode(CircuitBase):
         return 2
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -796,7 +796,7 @@ class Photoresistor(CircuitBase):
         return 2
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -891,7 +891,7 @@ class ProximitySensor(CircuitBase):
         return "临近传感器"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "o", cast(property, cls.o)
 
     @property

@@ -73,7 +73,7 @@ class NE555(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "vcc", cast(property, cls.vcc)
         yield "dis", cast(property, cls.dis)
         yield "thr", cast(property, cls.thr)
@@ -225,7 +225,7 @@ class BasicCapacitor(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -345,7 +345,7 @@ class BasicInductor(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -427,7 +427,7 @@ class BasicDiode(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -506,7 +506,7 @@ class LightEmittingDiode(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -576,7 +576,7 @@ class GroundComponent(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i", cast(property, cls.i)
 
     def to_constructor_str(self) -> str:
@@ -659,7 +659,7 @@ class Transformer(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "r_up", cast(property, cls.r_up)
         yield "l_low", cast(property, cls.l_low)
@@ -761,7 +761,7 @@ class TappedTransformer(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "r_up", cast(property, cls.r_up)
         yield "l_low", cast(property, cls.l_low)
@@ -867,7 +867,7 @@ class MutualInductor(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "r_up", cast(property, cls.r_up)
         yield "l_low", cast(property, cls.l_low)
@@ -959,7 +959,7 @@ class Rectifier(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "r_up", cast(property, cls.r_up)
         yield "l_low", cast(property, cls.l_low)
@@ -1073,7 +1073,7 @@ class Transistor(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "b", cast(property, cls.b)
         yield "c", cast(property, cls.c)
         yield "e", cast(property, cls.e)
@@ -1156,7 +1156,7 @@ class Comparator(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "o", cast(property, cls.o)
         yield "i_up", cast(property, cls.i_up)
         yield "i_low", cast(property, cls.i_low)
@@ -1279,7 +1279,7 @@ class OperationalAmplifier(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i_neg", cast(property, cls.i_neg)
         yield "i_pos", cast(property, cls.i_pos)
         yield "o", cast(property, cls.o)
@@ -1399,7 +1399,7 @@ class RelayComponent(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "l_low", cast(property, cls.l_low)
         yield "mid", cast(property, cls.mid)
@@ -1527,7 +1527,7 @@ class N_MOSFET(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "d", cast(property, cls.d)
         yield "s", cast(property, cls.s)
         yield "g", cast(property, cls.g)
@@ -1622,7 +1622,7 @@ class P_MOSFET(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "g", cast(property, cls.g)
         yield "d", cast(property, cls.d)
         yield "s", cast(property, cls.s)
@@ -1704,7 +1704,7 @@ class CurrentSource(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -1758,7 +1758,7 @@ class _SourceElectricity(CircuitBase):
         super().__init__(position, rotation, identifier, lock_status, label)
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 

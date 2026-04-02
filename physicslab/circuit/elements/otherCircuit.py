@@ -82,7 +82,7 @@ class Buzzer(CircuitBase):
         return "嗡鸣器"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -159,7 +159,7 @@ class SparkGap(CircuitBase):
         return "火花隙"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -238,7 +238,7 @@ class TeslaCoil(CircuitBase):
         return "特斯拉线圈"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -334,7 +334,7 @@ class ColorLightEmittingDiode(CircuitBase):
         return "彩色发光二极管"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_up", cast(property, cls.l_up)
         yield "l_mid", cast(property, cls.l_mid)
         yield "l_low", cast(property, cls.l_low)
@@ -434,7 +434,7 @@ class DualLightEmittingDiode(CircuitBase):
         return "演示发光二极管"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -517,7 +517,7 @@ class ElectricBell(CircuitBase):
         return "电铃"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -600,7 +600,7 @@ class MusicalBox(CircuitBase):
         return "八音盒"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -723,7 +723,7 @@ class ResistanceLaw(CircuitBase):
         return "电阻定律实验"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_low", cast(property, cls.l_low)
         yield "l_lowmid", cast(property, cls.l_lowmid)
         yield "l_upmid", cast(property, cls.l_upmid)
@@ -851,7 +851,7 @@ class Solenoid(CircuitBase):
         return "通电螺线管"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "subred", cast(property, cls.subred)
         yield "subblack", cast(property, cls.subblack)
         yield "red", cast(property, cls.red)
@@ -958,7 +958,7 @@ class ElectricFan(CircuitBase):
         return "小电扇"
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -1081,7 +1081,7 @@ class SimpleInstrument(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "i", cast(property, cls.i)
         yield "o", cast(property, cls.o)
 

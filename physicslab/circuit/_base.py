@@ -131,7 +131,7 @@ class CircuitBase:
 
     @classmethod
     @abc.abstractmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         """Iterate over all the properties of this class that are Pin instances.
 
         This method must be implemented by subclasses; it is used by the default

@@ -59,7 +59,7 @@ class SimpleSwitch(_SwitchBase):
         self._black_pin = Pin(self, 1, "black")
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -152,7 +152,7 @@ class SPDTSwitch(_SwitchBase):
         self._r_pin = Pin(self, 2, "r")
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "mid", cast(property, cls.mid)
         yield "r", cast(property, cls.r)
@@ -257,7 +257,7 @@ class DPDTSwitch(_SwitchBase):
         self.switch_state = switch_state
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_low", cast(property, cls.l_low)
         yield "mid_low", cast(property, cls.mid_low)
         yield "r_low", cast(property, cls.r_low)
@@ -386,7 +386,7 @@ class PushSwitch(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -466,7 +466,7 @@ class AirSwitch(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -567,7 +567,7 @@ class IncandescentLamp(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -661,7 +661,7 @@ class BatterySource(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -782,7 +782,7 @@ class StudentSource(CircuitBase):
         return 4
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "l_mid", cast(property, cls.l_mid)
         yield "r_mid", cast(property, cls.r_mid)
@@ -866,7 +866,7 @@ class Resistor(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -952,7 +952,7 @@ class FuseComponent(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -1069,7 +1069,7 @@ class SlideRheostat(CircuitBase):
         return 4
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l_low", cast(property, cls.l_low)
         yield "r_low", cast(property, cls.r_low)
         yield "l_up", cast(property, cls.l_up)
@@ -1140,7 +1140,7 @@ class Multimeter(CircuitBase):
         }
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "red", cast(property, cls.red)
         yield "black", cast(property, cls.black)
 
@@ -1236,7 +1236,7 @@ class Galvanometer(CircuitBase):
         return 3
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "mid", cast(property, cls.mid)
         yield "r", cast(property, cls.r)
@@ -1317,7 +1317,7 @@ class Microammeter(CircuitBase):
         return 3
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "mid", cast(property, cls.mid)
         yield "r", cast(property, cls.r)
@@ -1400,7 +1400,7 @@ class ElectricityMeter(CircuitBase):
         return 4
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "l_mid", cast(property, cls.l_mid)
         yield "r_mid", cast(property, cls.r_mid)
@@ -1506,7 +1506,7 @@ class ResistanceBox(CircuitBase):
         return 2
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "r", cast(property, cls.r)
 
@@ -1586,7 +1586,7 @@ class SimpleAmmeter(CircuitBase):
         return 3
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "mid", cast(property, cls.mid)
         yield "r", cast(property, cls.r)
@@ -1671,7 +1671,7 @@ class SimpleVoltmeter(CircuitBase):
         return 3
 
     @classmethod
-    def all_pins_property_iter(cls) -> Generator[tuple[str, property], None, None]:
+    def all_pins_property_iter(cls) -> Generator[Tuple[str, property], None, None]:
         yield "l", cast(property, cls.l)
         yield "mid", cast(property, cls.mid)
         yield "r", cast(property, cls.r)
