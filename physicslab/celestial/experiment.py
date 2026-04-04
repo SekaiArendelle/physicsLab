@@ -4,23 +4,28 @@ import time
 import json
 import pathlib
 from physicslab import errors
+from physicslab import enums
 from physicslab.utils import find_path_of_sav_name
 from physicslab import coordinate_system
 from physicslab.enums import Category
 from physicslab.web import User, anonymous_login
+from physicslab._summary import Summary, construct_summary_from_plsav_dict
+from physicslab._experiment import (
+    TYPE_TAG_CELESTIAL,
+)
 from . import planets
 from ._status_save import CelestialStatusSave
 from ._base import CelestialBase
-from physicslab._typing import Self, Optional, Tuple
+from physicslab._typing import Self, Optional, Tuple, Set
 from physicslab._camera_save import CameraMode, CameraSave
 
 
 class CelestialExperiment:
     """Manages a celestial experiment with elements and camera settings."""
 
-    __name: Optional[str]
     __status_save: CelestialStatusSave
     __camera_save: CameraSave
+    __summary: Summary
 
     def __init__(
         self,
@@ -31,10 +36,57 @@ class CelestialExperiment:
             coordinate_system.Position(0, 0, 1.083),
             coordinate_system.Rotation(90, 0, 0),
         ),
+        introduction: Optional[str] = None,
+        tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
-        self.name = name
         self.status_save = CelestialStatusSave()
         self.camera_save = camera_save
+        self.summary = Summary(
+            experiment_type=3,
+            subject=name,
+            description=introduction,
+            tags=set() if tags is None else tags,
+            type_tag=TYPE_TAG_CELESTIAL,
+            parent_id=None,
+            parent_name=None,
+            parent_category=None,
+            content_id=None,
+            editor=None,
+            coauthors=[],
+            localized_description=None,
+            model_id=None,
+            model_name=None,
+            model_tags=[],
+            version=0,
+            language=None,
+            visits=0,
+            stars=0,
+            supports=0,
+            remixes=0,
+            comments=0,
+            price=0,
+            popularity=0,
+            creation_date=int(time.time() * 1000),
+            update_date=0,
+            sorting_date=0,
+            summary_id=None,
+            category=None,
+            localized_subject=None,
+            image=0,
+            image_region=0,
+            user={
+                "ID": None,
+                "Nickname": None,
+                "Signature": None,
+                "Avatar": 0,
+                "AvatarRegion": 0,
+                "Decoration": 0,
+                "Verification": None,
+            },
+            visibility=0,
+            settings={},
+            multilingual=False,
+        )
 
     def __enter__(self) -> Self:
         return self
@@ -45,16 +97,11 @@ class CelestialExperiment:
     @property
     def name(self) -> Optional[str]:
         """Returns the experiment name."""
-        return self.__name
+        return self.summary.subject
 
     @name.setter
     def name(self, name: Optional[str]) -> None:
-        if not isinstance(name, (str, type(None))):
-            raise TypeError(
-                f"name must be of type `str | None`, but got value {name} of type {type(name).__name__}"
-            )
-
-        self.__name = name
+        self.summary.subject = name
 
     @property
     def status_save(self) -> CelestialStatusSave:
@@ -83,6 +130,37 @@ class CelestialExperiment:
             )
 
         self.__camera_save = camera_save
+
+    @property
+    def introduction(self) -> Optional[str]:
+        """Returns the experiment introduction (may be ``None``)."""
+        return self.summary.description
+
+    @introduction.setter
+    def introduction(self, introduction: Optional[str]) -> None:
+        self.summary.description = introduction
+
+    @property
+    def tags(self) -> Set[enums.Tag]:
+        """Community tags of this experiment."""
+        return self.summary.tags
+
+    @tags.setter
+    def tags(self, tags: Set[enums.Tag]) -> None:
+        self.summary.tags = tags
+
+    @property
+    def summary(self) -> Summary:
+        """Summary metadata of this experiment."""
+        return self.__summary
+
+    @summary.setter
+    def summary(self, summary: Summary) -> None:
+        if not isinstance(summary, Summary):
+            raise TypeError(
+                f"summary must be of type `Summary`, but got value {summary} of type {type(summary).__name__}"
+            )
+        self.__summary = summary
 
     def crt_a_element(self, element: CelestialBase) -> Self:
         """Adds a single celestial element to the experiment."""
@@ -138,51 +216,7 @@ class CelestialExperiment:
                 "Plots": None,
             },
             "ID": None,
-            "Summary": {
-                "Type": 3,
-                "ParentID": None,
-                "ParentName": None,
-                "ParentCategory": None,
-                "ContentID": None,
-                "Editor": None,
-                "Coauthors": [],
-                "Description": None,
-                "LocalizedDescription": None,
-                "Tags": ["Type-3"],
-                "ModelID": None,
-                "ModelName": None,
-                "ModelTags": [],
-                "Version": 0,
-                "Language": None,
-                "Visits": 0,
-                "Stars": 0,
-                "Supports": 0,
-                "Remixes": 0,
-                "Comments": 0,
-                "Price": 0,
-                "Popularity": 0,
-                "CreationDate": int(time.time() * 1000),
-                "UpdateDate": 0,
-                "SortingDate": 0,
-                "ID": None,
-                "Category": None,
-                "Subject": self.name,
-                "LocalizedSubject": None,
-                "Image": 0,
-                "ImageRegion": 0,
-                "User": {
-                    "ID": None,
-                    "Nickname": None,
-                    "Signature": None,
-                    "Avatar": 0,
-                    "AvatarRegion": 0,
-                    "Decoration": 0,
-                    "Verification": None,
-                },
-                "Visibility": 0,
-                "Settings": {},
-                "Multilingual": False,
-            },
+            "Summary": self.summary.as_dict(),
             "CreationDate": 0,
             "InternalName": self.name,
             "Speed": 1.0,
@@ -351,12 +385,12 @@ def load_celestial_experiment_by_file_path(
             f'"{path}" does not contain a celestial experiment'
         )
 
-    summary_dict = plasv_dict["Summary"]
-    if summary_dict is None:
-        subject = None
-    else:
-        subject = summary_dict["Subject"]
-    result = CelestialExperiment(subject)
+    summary = construct_summary_from_plsav_dict(
+        plasv_dict["Summary"], experiment_type=3, type_tag=TYPE_TAG_CELESTIAL
+    )
+    result = CelestialExperiment(
+        summary.subject, introduction=summary.description, tags=summary.tags
+    )
 
     if "Experiment" in plasv_dict.keys():
         status_save_list = json.loads(plasv_dict["Experiment"]["StatusSave"])[
@@ -435,7 +469,12 @@ def load_celestial_experiment_from_app(
             f'Content ID "{content_id}" does not correspond to a celestial experiment'
         )
 
-    result = CelestialExperiment(_summary["Subject"])
+    summary = construct_summary_from_plsav_dict(
+        _summary, experiment_type=3, type_tag=TYPE_TAG_CELESTIAL
+    )
+    result = CelestialExperiment(
+        summary.subject, introduction=summary.description, tags=summary.tags
+    )
 
     status_save_dict = json.loads(_experiment["StatusSave"])
     elements_list = status_save_dict["Elements"]

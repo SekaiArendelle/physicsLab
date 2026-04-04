@@ -33,10 +33,35 @@ from physicslab import (
 )
 from physicslab.circuit import elements
 from physicslab.circuit.base import CircuitBase
-from physicslab.enums import SwitchState, PDTSwitchState
+from physicslab.enums import SwitchState, PDTSwitchState, Tag
 
 
 class TestCircuitExperiment(unittest.TestCase):
+    def test_tags_round_trip_in_summary(self):
+        with crt_circuit_experiment("tags-test") as expe:
+            expe.tags = {Tag.FunExperiment, Tag.FunExperiment}
+            self.assertEqual(
+                expe.as_plsav_dict()["Summary"]["Tags"], ["Type-0", "娱乐实验"]
+            )
+
+        with load_circuit_experiment_by_file_path(
+            pathlib.Path(_constant.TEST_DATA_DIR) / "All-Circuit-Elements.sav"
+        ) as expe:
+            self.assertEqual(expe.as_plsav_dict()["Summary"]["Tags"], ["Type-0"])
+
+    def test_introduction_round_trip_in_summary(self):
+        intro = "line1\nline2"
+        with crt_circuit_experiment("intro-test") as expe:
+            expe.introduction = intro
+            self.assertEqual(
+                expe.as_plsav_dict()["Summary"]["Description"], ["line1", "line2"]
+            )
+
+        with load_circuit_experiment_by_file_path(
+            pathlib.Path(_constant.TEST_DATA_DIR) / "All-Circuit-Elements.sav"
+        ) as expe:
+            self.assertTrue(expe.introduction is None)
+
     def test_crt_and_remove_element(self):
         with crt_circuit_experiment(None) as expe:
             a = elements.LogicInput(Position(0, 0, 0), Rotation(0, 0, 180))
