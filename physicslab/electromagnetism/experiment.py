@@ -9,11 +9,8 @@ from physicslab.utils import find_path_of_sav_name
 from physicslab import coordinate_system
 from physicslab.enums import Category
 from physicslab.web import User, anonymous_login
+from physicslab._summary import Summary, construct_summary_from_plsav_dict
 from physicslab._experiment import (
-    serialize_introduction,
-    deserialize_introduction,
-    serialize_tags,
-    construct_tags,
     TYPE_TAG_ELECTROMAGNETISM,
 )
 from . import elements
@@ -26,11 +23,9 @@ from physicslab._typing import Self, Optional, Tuple, Set
 class ElectromagnetismExperiment:
     """Represents a complete electromagnetism experiment with elements and camera state."""
 
-    __name: Optional[str]
     __status_save: ElectromagnetismStatusSave
     __camera_save: CameraSave
-    __introduction: Optional[str]
-    __tags: Set[enums.Tag]
+    __summary: Summary
 
     def __init__(
         self,
@@ -44,11 +39,15 @@ class ElectromagnetismExperiment:
         introduction: Optional[str] = None,
         tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
-        self.name = name
         self.status_save = ElectromagnetismStatusSave()
         self.camera_save = camera_save
-        self.introduction = introduction
-        self.tags = set() if tags is None else tags
+        self.summary = Summary(
+            experiment_type=4,
+            subject=name,
+            description=introduction,
+            tags=set() if tags is None else tags,
+            type_tag=TYPE_TAG_ELECTROMAGNETISM,
+        )
 
     def __enter__(self) -> Self:
         return self
@@ -59,16 +58,11 @@ class ElectromagnetismExperiment:
     @property
     def name(self) -> Optional[str]:
         """Display name of this experiment (may be ``None``)."""
-        return self.__name
+        return self.summary.subject
 
     @name.setter
     def name(self, name: Optional[str]) -> None:
-        if not isinstance(name, (str, type(None))):
-            raise TypeError(
-                f"name must be of type `str | None`, but got value {name} of type {type(name).__name__}"
-            )
-
-        self.__name = name
+        self.summary.subject = name
 
     @property
     def status_save(self) -> ElectromagnetismStatusSave:
@@ -101,34 +95,33 @@ class ElectromagnetismExperiment:
     @property
     def introduction(self) -> Optional[str]:
         """Introduction of this experiment (may be ``None``)."""
-        return self.__introduction
+        return self.summary.description
 
     @introduction.setter
     def introduction(self, introduction: Optional[str]) -> None:
-        if not isinstance(introduction, (str, type(None))):
-            raise TypeError(
-                f"introduction must be of type `str | None`, but got value {introduction} of type {type(introduction).__name__}"
-            )
-
-        self.__introduction = introduction
+        self.summary.description = introduction
 
     @property
     def tags(self) -> Set[enums.Tag]:
         """Community tags of this experiment."""
-        return self.__tags.copy()
+        return self.summary.tags
 
     @tags.setter
     def tags(self, tags: Set[enums.Tag]) -> None:
-        if not isinstance(tags, set):
-            raise TypeError(
-                f"tags must be of type `set[Tag]`, but got value {tags} of type {type(tags).__name__}"
-            )
-        if not all(isinstance(tag, enums.Tag) for tag in tags):
-            raise TypeError(
-                f"tags must be of type `set[Tag]`, but got value {tags} of type `set` containing non-Tag elements"
-            )
+        self.summary.tags = tags
 
-        self.__tags = tags.copy()
+    @property
+    def summary(self) -> Summary:
+        """Summary metadata of this experiment."""
+        return self.__summary
+
+    @summary.setter
+    def summary(self, summary: Summary) -> None:
+        if not isinstance(summary, Summary):
+            raise TypeError(
+                f"summary must be of type `Summary`, but got value {summary} of type {type(summary).__name__}"
+            )
+        self.__summary = summary
 
     def crt_a_element(self, element: ElectromagnetismBase) -> Self:
         """Add a single element to this experiment and return ``self``."""
@@ -187,53 +180,7 @@ class ElectromagnetismExperiment:
                 "Plots": None,
             },
             "ID": None,
-            "Summary": {
-                "Type": 4,
-                "ParentID": None,
-                "ParentName": None,
-                "ParentCategory": None,
-                "ContentID": None,
-                "Editor": None,
-                "Coauthors": [],
-                "Description": serialize_introduction(self.introduction),
-                "LocalizedDescription": None,
-                "Tags": serialize_tags(
-                    self.tags, type_tag=TYPE_TAG_ELECTROMAGNETISM
-                ),
-                "ModelID": None,
-                "ModelName": None,
-                "ModelTags": [],
-                "Version": 0,
-                "Language": None,
-                "Visits": 0,
-                "Stars": 0,
-                "Supports": 0,
-                "Remixes": 0,
-                "Comments": 0,
-                "Price": 0,
-                "Popularity": 0,
-                "CreationDate": int(time.time() * 1000),
-                "UpdateDate": 0,
-                "SortingDate": 0,
-                "ID": None,
-                "Category": None,
-                "Subject": self.name,
-                "LocalizedSubject": None,
-                "Image": 0,
-                "ImageRegion": 0,
-                "User": {
-                    "ID": None,
-                    "Nickname": None,
-                    "Signature": None,
-                    "Avatar": 0,
-                    "AvatarRegion": 0,
-                    "Decoration": 0,
-                    "Verification": None,
-                },
-                "Visibility": 0,
-                "Settings": {},
-                "Multilingual": False,
-            },
+            "Summary": self.summary.as_dict(),
             "CreationDate": 0,
             "InternalName": self.name,
             "Speed": 1.0,
@@ -385,15 +332,12 @@ def load_electromagnetism_experiment_by_file_path(
         )
 
     summary_dict = plasv_dict["Summary"]
-    if summary_dict is None:
-        subject = None
-        introduction = None
-        tags = set()
-    else:
-        subject = summary_dict["Subject"]
-        introduction = deserialize_introduction(summary_dict.get("Description"))
-        tags = construct_tags(summary_dict.get("Tags"), TYPE_TAG_ELECTROMAGNETISM)
-    result = ElectromagnetismExperiment(subject, introduction=introduction, tags=tags)
+    summary = construct_summary_from_plsav_dict(
+        summary_dict, experiment_type=4, type_tag=TYPE_TAG_ELECTROMAGNETISM
+    )
+    result = ElectromagnetismExperiment(
+        summary.subject, introduction=summary.description, tags=summary.tags
+    )
 
     if "Experiment" in plasv_dict.keys():
         # tests/data/All-Electromagnetism-Elements.sav
@@ -474,10 +418,11 @@ def load_electromagnetism_experiment_from_app(
             f'Content ID "{content_id}" does not correspond to an electromagnetism experiment'
         )
 
+    summary = construct_summary_from_plsav_dict(
+        _summary, experiment_type=4, type_tag=TYPE_TAG_ELECTROMAGNETISM
+    )
     result = ElectromagnetismExperiment(
-        _summary["Subject"],
-        introduction=deserialize_introduction(_summary.get("Description")),
-        tags=construct_tags(_summary.get("Tags"), TYPE_TAG_ELECTROMAGNETISM),
+        summary.subject, introduction=summary.description, tags=summary.tags
     )
 
     status_save_dict = json.loads(_experiment["StatusSave"])

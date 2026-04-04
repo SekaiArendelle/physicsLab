@@ -13,12 +13,9 @@ from physicslab.enums import Category, ColorOfWire, SwitchState, PDTSwitchState
 from physicslab.web import User, anonymous_login
 from physicslab._camera_save import CameraMode, CameraSave
 from physicslab._typing import Optional, Self, Tuple, Set
+from physicslab._summary import Summary, construct_summary_from_plsav_dict
 from physicslab._experiment import (
-    serialize_tags,
-    construct_tags,
     TYPE_TAG_CIRCUIT,
-    serialize_introduction,
-    deserialize_introduction,
 )
 from . import elements
 from .base import CircuitBase, Pin
@@ -29,11 +26,9 @@ from .wire import WireInfo
 class CircuitExperiment:
     """Represents a complete circuit experiment with elements, wires and camera state."""
 
-    __name: Optional[str]
     __status_save: CircuitStatusSave
     __camera_save: CameraSave
-    __introduction: Optional[str]
-    __tags: Set[enums.Tag]
+    __summary: Summary
 
     def __init__(
         self,
@@ -47,11 +42,15 @@ class CircuitExperiment:
         introduction: Optional[str] = None,
         tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
-        self.name = name
         self.status_save = CircuitStatusSave()
         self.camera_save = camera_save
-        self.introduction = introduction
-        self.tags = set() if tags is None else tags
+        self.summary = Summary(
+            experiment_type=0,
+            subject=name,
+            description=introduction,
+            tags=set() if tags is None else tags,
+            type_tag=TYPE_TAG_CIRCUIT,
+        )
 
     def __enter__(self) -> Self:
         return self
@@ -62,16 +61,11 @@ class CircuitExperiment:
     @property
     def name(self) -> Optional[str]:
         """Display name of this experiment (may be ``None``)."""
-        return self.__name
+        return self.summary.subject
 
     @name.setter
     def name(self, name: Optional[str]) -> None:
-        if not isinstance(name, (str, type(None))):
-            raise TypeError(
-                f"name must be of type `str | None`, but got value {name} of type {type(name).__name__}"
-            )
-
-        self.__name = name
+        self.summary.subject = name
 
     @property
     def status_save(self) -> CircuitStatusSave:
@@ -104,34 +98,33 @@ class CircuitExperiment:
     @property
     def introduction(self) -> Optional[str]:
         """Introduction of this experiment (may be ``None``)."""
-        return self.__introduction
+        return self.summary.description
 
     @introduction.setter
     def introduction(self, introduction: Optional[str]) -> None:
-        if not isinstance(introduction, (str, type(None))):
-            raise TypeError(
-                f"introduction must be of type `str | None`, but got value {introduction} of type {type(introduction).__name__}"
-            )
-
-        self.__introduction = introduction
+        self.summary.description = introduction
 
     @property
     def tags(self) -> Set[enums.Tag]:
         """Community tags of this experiment."""
-        return self.__tags.copy()
+        return self.summary.tags
 
     @tags.setter
     def tags(self, tags: Set[enums.Tag]) -> None:
-        if not isinstance(tags, set):
-            raise TypeError(
-                f"tags must be of type `set[Tag]`, but got value {tags} of type {type(tags).__name__}"
-            )
-        if not all(isinstance(tag, enums.Tag) for tag in tags):
-            raise TypeError(
-                f"tags must be of type `set[Tag]`, but got value {tags} of type `set` containing non-Tag elements"
-            )
+        self.summary.tags = tags
 
-        self.__tags = tags
+    @property
+    def summary(self) -> Summary:
+        """Summary metadata of this experiment."""
+        return self.__summary
+
+    @summary.setter
+    def summary(self, summary: Summary) -> None:
+        if not isinstance(summary, Summary):
+            raise TypeError(
+                f"summary must be of type `Summary`, but got value {summary} of type {type(summary).__name__}"
+            )
+        self.__summary = summary
 
     def crt_a_element(self, element: CircuitBase) -> Self:
         """Add a single element to this experiment and return ``self``."""
@@ -241,51 +234,7 @@ class CircuitExperiment:
                 "Plots": None,
             },
             "ID": None,
-            "Summary": {
-                "Type": 0,
-                "ParentID": None,
-                "ParentName": None,
-                "ParentCategory": None,
-                "ContentID": None,
-                "Editor": None,
-                "Coauthors": [],
-                "Description": serialize_introduction(self.introduction),
-                "LocalizedDescription": None,
-                "Tags": serialize_tags(self.tags, type_tag=TYPE_TAG_CIRCUIT),
-                "ModelID": None,
-                "ModelName": None,
-                "ModelTags": [],
-                "Version": 0,
-                "Language": None,
-                "Visits": 0,
-                "Stars": 0,
-                "Supports": 0,
-                "Remixes": 0,
-                "Comments": 0,
-                "Price": 0,
-                "Popularity": 0,
-                "CreationDate": int(time.time() * 1000),
-                "UpdateDate": 0,
-                "SortingDate": 0,
-                "ID": None,
-                "Category": None,
-                "Subject": self.name,
-                "LocalizedSubject": None,
-                "Image": 0,
-                "ImageRegion": 0,
-                "User": {
-                    "ID": None,
-                    "Nickname": None,
-                    "Signature": None,
-                    "Avatar": 0,
-                    "AvatarRegion": 0,
-                    "Decoration": 0,
-                    "Verification": None,
-                },
-                "Visibility": 0,
-                "Settings": {},
-                "Multilingual": False,
-            },
+            "Summary": self.summary.as_dict(),
             "CreationDate": 0,
             "InternalName": self.name,
             "Speed": 1.0,
@@ -1121,19 +1070,25 @@ def load_circuit_experiment_by_file_path(path: pathlib.Path) -> CircuitExperimen
         )
 
     if isinstance(plasv_dict["Summary"], dict):
-        subject = plasv_dict["Summary"]["Subject"]
-        introduction = deserialize_introduction(
-            plasv_dict["Summary"].get("Description")
+        summary = construct_summary_from_plsav_dict(
+            plasv_dict["Summary"], experiment_type=0, type_tag=TYPE_TAG_CIRCUIT
         )
-        tags = construct_tags(plasv_dict["Summary"].get("Tags"), type_tag=TYPE_TAG_CIRCUIT)
     elif "Experiment" in plasv_dict and "Subject" in plasv_dict["Experiment"]:
-        subject = plasv_dict["Experiment"]["Subject"]
-        introduction = None
-        tags = set()
+        summary = Summary(
+            experiment_type=0,
+            subject=plasv_dict["Experiment"]["Subject"],
+            description=None,
+            tags=set(),
+            type_tag=TYPE_TAG_CIRCUIT,
+        )
     else:
-        subject = plasv_dict.get("Subject", None)
-        introduction = None
-        tags = set()
+        summary = Summary(
+            experiment_type=0,
+            subject=plasv_dict.get("Subject", None),
+            description=None,
+            tags=set(),
+            type_tag=TYPE_TAG_CIRCUIT,
+        )
 
     if "Experiment" in plasv_dict.keys():
         status_save_dict = json.loads(plasv_dict["Experiment"]["StatusSave"])
@@ -1143,10 +1098,10 @@ def load_circuit_experiment_by_file_path(path: pathlib.Path) -> CircuitExperimen
         camera_save = _construct_camera_save(plasv_dict["CameraSave"])
 
     result = CircuitExperiment(
-        subject,
+        summary.subject,
         camera_save=camera_save,
-        introduction=introduction,
-        tags=tags,
+        introduction=summary.description,
+        tags=summary.tags,
     )
 
     for element_dict in status_save_dict["Elements"]:
@@ -1229,10 +1184,13 @@ def load_circuit_experiment_from_app(
             f'Content ID "{content_id}" does not correspond to a circuit experiment'
         )
 
+    summary = construct_summary_from_plsav_dict(
+        _summary, experiment_type=0, type_tag=TYPE_TAG_CIRCUIT
+    )
     result = CircuitExperiment(
-        _summary["Subject"],
-        introduction=deserialize_introduction(_summary.get("Description")),
-        tags=construct_tags(_summary.get("Tags"), type_tag=TYPE_TAG_CIRCUIT),
+        summary.subject,
+        introduction=summary.description,
+        tags=summary.tags,
     )
     status_save_dict = json.loads(_experiment["StatusSave"])
     for element_dict in status_save_dict["Elements"]:
