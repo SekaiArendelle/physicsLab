@@ -1,23 +1,26 @@
 """High-level electromagnetism experiment API."""
 
-import uuid
 import json
 import time
 import pathlib
 from physicslab import errors
-from physicslab.utils import (
-    find_path_of_sav_name,
-    serialize_introduction,
-    deserialize_introduction,
-)
+from physicslab import enums
+from physicslab.utils import find_path_of_sav_name
 from physicslab import coordinate_system
 from physicslab.enums import Category
 from physicslab.web import User, anonymous_login
+from physicslab._experiment import (
+    serialize_introduction,
+    deserialize_introduction,
+    serialize_tags,
+    construct_tags,
+    TYPE_TAG_ELECTROMAGNETISM,
+)
 from . import elements
 from physicslab._camera_save import CameraMode, CameraSave
 from ._status_save import ElectromagnetismStatusSave
 from ._base import ElectromagnetismBase
-from physicslab._typing import Self, Optional, Tuple
+from physicslab._typing import Self, Optional, Tuple, Set
 
 
 class ElectromagnetismExperiment:
@@ -27,6 +30,7 @@ class ElectromagnetismExperiment:
     __status_save: ElectromagnetismStatusSave
     __camera_save: CameraSave
     __introduction: Optional[str]
+    __tags: Set[enums.Tag]
 
     def __init__(
         self,
@@ -38,11 +42,13 @@ class ElectromagnetismExperiment:
             coordinate_system.Rotation(90, 0, 0),
         ),
         introduction: Optional[str] = None,
+        tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
         self.name = name
         self.status_save = ElectromagnetismStatusSave()
         self.camera_save = camera_save
         self.introduction = introduction
+        self.tags = set() if tags is None else tags
 
     def __enter__(self) -> Self:
         return self
@@ -105,6 +111,24 @@ class ElectromagnetismExperiment:
             )
 
         self.__introduction = introduction
+
+    @property
+    def tags(self) -> Set[enums.Tag]:
+        """Community tags of this experiment."""
+        return self.__tags.copy()
+
+    @tags.setter
+    def tags(self, tags: Set[enums.Tag]) -> None:
+        if not isinstance(tags, set):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type {type(tags).__name__}"
+            )
+        if not all(isinstance(tag, enums.Tag) for tag in tags):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type `set` containing non-Tag elements"
+            )
+
+        self.__tags = tags.copy()
 
     def crt_a_element(self, element: ElectromagnetismBase) -> Self:
         """Add a single element to this experiment and return ``self``."""
@@ -173,7 +197,9 @@ class ElectromagnetismExperiment:
                 "Coauthors": [],
                 "Description": serialize_introduction(self.introduction),
                 "LocalizedDescription": None,
-                "Tags": ["Type-4"],
+                "Tags": serialize_tags(
+                    self.tags, type_tag=TYPE_TAG_ELECTROMAGNETISM
+                ),
                 "ModelID": None,
                 "ModelName": None,
                 "ModelTags": [],
@@ -362,10 +388,12 @@ def load_electromagnetism_experiment_by_file_path(
     if summary_dict is None:
         subject = None
         introduction = None
+        tags = set()
     else:
         subject = summary_dict["Subject"]
         introduction = deserialize_introduction(summary_dict.get("Description"))
-    result = ElectromagnetismExperiment(subject, introduction=introduction)
+        tags = construct_tags(summary_dict.get("Tags"), TYPE_TAG_ELECTROMAGNETISM)
+    result = ElectromagnetismExperiment(subject, introduction=introduction, tags=tags)
 
     if "Experiment" in plasv_dict.keys():
         # tests/data/All-Electromagnetism-Elements.sav
@@ -449,6 +477,7 @@ def load_electromagnetism_experiment_from_app(
     result = ElectromagnetismExperiment(
         _summary["Subject"],
         introduction=deserialize_introduction(_summary.get("Description")),
+        tags=construct_tags(_summary.get("Tags"), TYPE_TAG_ELECTROMAGNETISM),
     )
 
     status_save_dict = json.loads(_experiment["StatusSave"])

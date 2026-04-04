@@ -25,9 +25,6 @@ class Tag(Enum):
 
     # TODO: Submission tags
     # Experiment area
-    Circuit = "Type-0"
-    Celestial = "Type-3"
-    Electromagnetism = "Type-4"
     KnowledgeBase = "知识库"
     Featured = "精选"
     ElementarySchool = "小学"

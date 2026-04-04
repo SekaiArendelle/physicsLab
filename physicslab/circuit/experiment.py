@@ -3,18 +3,23 @@
 import json
 import pathlib
 import time
-import uuid
 from physicslab import coordinate_system
+from physicslab import enums
 from physicslab import errors
 from physicslab.utils import (
     find_path_of_sav_name,
-    serialize_introduction,
-    deserialize_introduction,
 )
 from physicslab.enums import Category, ColorOfWire, SwitchState, PDTSwitchState
 from physicslab.web import User, anonymous_login
 from physicslab._camera_save import CameraMode, CameraSave
-from physicslab._typing import Optional, Self, Tuple
+from physicslab._typing import Optional, Self, Tuple, Set
+from physicslab._experiment import (
+    serialize_tags,
+    construct_tags,
+    TYPE_TAG_CIRCUIT,
+    serialize_introduction,
+    deserialize_introduction,
+)
 from . import elements
 from .base import CircuitBase, Pin
 from ._status_save import CircuitStatusSave
@@ -28,6 +33,7 @@ class CircuitExperiment:
     __status_save: CircuitStatusSave
     __camera_save: CameraSave
     __introduction: Optional[str]
+    __tags: Set[enums.Tag]
 
     def __init__(
         self,
@@ -39,11 +45,13 @@ class CircuitExperiment:
             coordinate_system.Rotation(50, 0, 0),
         ),
         introduction: Optional[str] = None,
+        tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
         self.name = name
         self.status_save = CircuitStatusSave()
         self.camera_save = camera_save
         self.introduction = introduction
+        self.tags = set() if tags is None else tags
 
     def __enter__(self) -> Self:
         return self
@@ -106,6 +114,24 @@ class CircuitExperiment:
             )
 
         self.__introduction = introduction
+
+    @property
+    def tags(self) -> Set[enums.Tag]:
+        """Community tags of this experiment."""
+        return self.__tags.copy()
+
+    @tags.setter
+    def tags(self, tags: Set[enums.Tag]) -> None:
+        if not isinstance(tags, set):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type {type(tags).__name__}"
+            )
+        if not all(isinstance(tag, enums.Tag) for tag in tags):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type `set` containing non-Tag elements"
+            )
+
+        self.__tags = tags
 
     def crt_a_element(self, element: CircuitBase) -> Self:
         """Add a single element to this experiment and return ``self``."""
@@ -225,7 +251,7 @@ class CircuitExperiment:
                 "Coauthors": [],
                 "Description": serialize_introduction(self.introduction),
                 "LocalizedDescription": None,
-                "Tags": ["Type-0"],
+                "Tags": serialize_tags(self.tags, type_tag=TYPE_TAG_CIRCUIT),
                 "ModelID": None,
                 "ModelName": None,
                 "ModelTags": [],
@@ -1096,13 +1122,18 @@ def load_circuit_experiment_by_file_path(path: pathlib.Path) -> CircuitExperimen
 
     if isinstance(plasv_dict["Summary"], dict):
         subject = plasv_dict["Summary"]["Subject"]
-        introduction = deserialize_introduction(plasv_dict["Summary"].get("Description"))
+        introduction = deserialize_introduction(
+            plasv_dict["Summary"].get("Description")
+        )
+        tags = construct_tags(plasv_dict["Summary"].get("Tags"), type_tag=TYPE_TAG_CIRCUIT)
     elif "Experiment" in plasv_dict and "Subject" in plasv_dict["Experiment"]:
         subject = plasv_dict["Experiment"]["Subject"]
         introduction = None
+        tags = set()
     else:
         subject = plasv_dict.get("Subject", None)
         introduction = None
+        tags = set()
 
     if "Experiment" in plasv_dict.keys():
         status_save_dict = json.loads(plasv_dict["Experiment"]["StatusSave"])
@@ -1111,7 +1142,12 @@ def load_circuit_experiment_by_file_path(path: pathlib.Path) -> CircuitExperimen
         status_save_dict = json.loads(plasv_dict["StatusSave"])
         camera_save = _construct_camera_save(plasv_dict["CameraSave"])
 
-    result = CircuitExperiment(subject, camera_save, introduction)
+    result = CircuitExperiment(
+        subject,
+        camera_save=camera_save,
+        introduction=introduction,
+        tags=tags,
+    )
 
     for element_dict in status_save_dict["Elements"]:
         result.crt_a_element(_dict_to_element(element_dict))
@@ -1196,6 +1232,7 @@ def load_circuit_experiment_from_app(
     result = CircuitExperiment(
         _summary["Subject"],
         introduction=deserialize_introduction(_summary.get("Description")),
+        tags=construct_tags(_summary.get("Tags"), type_tag=TYPE_TAG_CIRCUIT),
     )
     status_save_dict = json.loads(_experiment["StatusSave"])
     for element_dict in status_save_dict["Elements"]:

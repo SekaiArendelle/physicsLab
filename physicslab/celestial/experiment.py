@@ -4,18 +4,22 @@ import time
 import json
 import pathlib
 from physicslab import errors
-from physicslab.utils import (
-    find_path_of_sav_name,
-    serialize_introduction,
-    deserialize_introduction,
-)
+from physicslab import enums
+from physicslab.utils import find_path_of_sav_name
 from physicslab import coordinate_system
 from physicslab.enums import Category
 from physicslab.web import User, anonymous_login
+from physicslab._experiment import (
+    serialize_introduction,
+    deserialize_introduction,
+    serialize_tags,
+    construct_tags,
+    TYPE_TAG_CELESTIAL,
+)
 from . import planets
 from ._status_save import CelestialStatusSave
 from ._base import CelestialBase
-from physicslab._typing import Self, Optional, Tuple
+from physicslab._typing import Self, Optional, Tuple, Set
 from physicslab._camera_save import CameraMode, CameraSave
 
 
@@ -26,6 +30,7 @@ class CelestialExperiment:
     __status_save: CelestialStatusSave
     __camera_save: CameraSave
     __introduction: Optional[str]
+    __tags: Set[enums.Tag]
 
     def __init__(
         self,
@@ -37,11 +42,13 @@ class CelestialExperiment:
             coordinate_system.Rotation(90, 0, 0),
         ),
         introduction: Optional[str] = None,
+        tags: Optional[Set[enums.Tag]] = None,
     ) -> None:
         self.name = name
         self.status_save = CelestialStatusSave()
         self.camera_save = camera_save
         self.introduction = introduction
+        self.tags = set() if tags is None else tags
 
     def __enter__(self) -> Self:
         return self
@@ -104,6 +111,24 @@ class CelestialExperiment:
             )
 
         self.__introduction = introduction
+
+    @property
+    def tags(self) -> Set[enums.Tag]:
+        """Community tags of this experiment."""
+        return self.__tags.copy()
+
+    @tags.setter
+    def tags(self, tags: Set[enums.Tag]) -> None:
+        if not isinstance(tags, set):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type {type(tags).__name__}"
+            )
+        if not all(isinstance(tag, enums.Tag) for tag in tags):
+            raise TypeError(
+                f"tags must be of type `set[Tag]`, but got value {tags} of type `set` containing non-Tag elements"
+            )
+
+        self.__tags = tags
 
     def crt_a_element(self, element: CelestialBase) -> Self:
         """Adds a single celestial element to the experiment."""
@@ -169,7 +194,7 @@ class CelestialExperiment:
                 "Coauthors": [],
                 "Description": serialize_introduction(self.introduction),
                 "LocalizedDescription": None,
-                "Tags": ["Type-3"],
+                "Tags": serialize_tags(self.tags, type_tag=TYPE_TAG_CELESTIAL),
                 "ModelID": None,
                 "ModelName": None,
                 "ModelTags": [],
@@ -376,10 +401,12 @@ def load_celestial_experiment_by_file_path(
     if summary_dict is None:
         subject = None
         introduction = None
+        tags = set()
     else:
         subject = summary_dict["Subject"]
         introduction = deserialize_introduction(summary_dict.get("Description"))
-    result = CelestialExperiment(subject, introduction=introduction)
+        tags = construct_tags(summary_dict.get("Tags"), TYPE_TAG_CELESTIAL)
+    result = CelestialExperiment(subject, introduction=introduction, tags=tags)
 
     if "Experiment" in plasv_dict.keys():
         status_save_list = json.loads(plasv_dict["Experiment"]["StatusSave"])[
@@ -461,6 +488,7 @@ def load_celestial_experiment_from_app(
     result = CelestialExperiment(
         _summary["Subject"],
         introduction=deserialize_introduction(_summary.get("Description")),
+        tags=construct_tags(_summary.get("Tags"), TYPE_TAG_CELESTIAL),
     )
 
     status_save_dict = json.loads(_experiment["StatusSave"])
